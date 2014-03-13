@@ -27,12 +27,36 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (IBAction)newAsterButtonPressed:(id)sender {
-    
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"asterViewInMain"]) {
+        self.asterDemoVC = segue.destinationViewController;
+    }
 }
 
-- (IBAction)explodeAsterButtonPressed:(id)sender {
+
+
+- (IBAction)explodeAsterBtnPressed:(id)sender
+{
 }
+
+- (IBAction)newAsterBtnPressed:(id)sender
+{
+    NSInteger idx = [self.generationType selectedRowInComponent:0];
+    NSLog(@"Generate: %@", [[self generationMethods] objectAtIndex:idx]);
+}
+
+
+
+- (NSArray*)generationMethods
+{
+    NSArray *asterGenerationMethods = @[@"Cube",
+                                        @"Truncated Icosahedron",
+                                        @"Dodecahedron"];
+    
+    return asterGenerationMethods;
+}
+
 
 -(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
 {
@@ -41,16 +65,17 @@
 
 -(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
-    return 3; // Numbers of rows
+    return [self generationMethods].count; // Numbers of rows
 }
 
 -(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-    NSArray *array = @[@"Cube",
-                       @"Truncated Icosahedron",
-                       @"Dodecahedron"];
-    return [array objectAtIndex:row]; // If it's a string
+    return [[self generationMethods] objectAtIndex:row]; // If it's a string
 }
 
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+{
+    NSLog(@"Selected %@", [[self generationMethods] objectAtIndex:row]);
+}
 
 @end

@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AsteroidDemoViewController.h"
 
 @interface ViewController : UIViewController <UIPickerViewDelegate, UIPickerViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UIPickerView *generationType;
+@property (weak, nonatomic) AsteroidDemoViewController *asterDemoVC;
 
 @end

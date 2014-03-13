@@ -21,7 +21,7 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 <connections>
-                                    <segue destination="KlG-RQ-U6M" kind="embed" id="jPq-0U-Enc"/>
+                                    <segue destination="KlG-RQ-U6M" kind="embed" identifier="asterViewInMain" id="jPq-0U-Enc"/>
                                 </connections>
                             </containerView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QRm-ZS-Ife">
@@ -44,7 +44,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="explodeAsterButtonPressed:" destination="Atq-Gi-IvL" eventType="touchUpInside" id="tFB-nT-r95"/>
+                                    <action selector="explodeAsterBtnPressed:" destination="Atq-Gi-IvL" eventType="touchUpInside" id="yJg-o0-PaQ"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jkc-xG-7Rc">
@@ -55,7 +55,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="newAsterButtonPressed:" destination="Atq-Gi-IvL" eventType="touchUpInside" id="95l-pe-fQ4"/>
+                                    <action selector="newAsterBtnPressed:" destination="Atq-Gi-IvL" eventType="touchUpInside" id="pHi-Ph-XF0"/>
                                 </connections>
                             </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="TEST ASTEROID CREATION" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8WB-Lp-XOt">
@@ -74,8 +74,8 @@
                                 <rect key="frame" x="15" y="93" width="327" height="216"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <connections>
-                                    <outlet property="dataSource" destination="Atq-Gi-IvL" id="B8g-i4-Bye"/>
-                                    <outlet property="delegate" destination="Atq-Gi-IvL" id="Hew-aI-PWT"/>
+                                    <outlet property="dataSource" destination="Atq-Gi-IvL" id="7Xu-fr-Niy"/>
+                                    <outlet property="delegate" destination="Atq-Gi-IvL" id="9xN-0k-UOK"/>
                                 </connections>
                             </pickerView>
                         </subviews>
@@ -84,7 +84,7 @@
                     </view>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <connections>
-                        <outlet property="generationType" destination="Ffj-Bw-abl" id="7bm-9g-QT1"/>
+                        <outlet property="generationType" destination="Ffj-Bw-abl" id="exu-Sd-oEc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nFJ-ph-KU9" userLabel="First Responder" sceneMemberID="firstResponder"/>
