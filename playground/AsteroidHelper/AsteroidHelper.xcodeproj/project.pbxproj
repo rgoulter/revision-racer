@@ -21,6 +21,10 @@
 		026D8EFD18D178000008549B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 026D8EDF18D178000008549B /* UIKit.framework */; };
 		026D8F0518D178000008549B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 026D8F0318D178000008549B /* InfoPlist.strings */; };
 		026D8F0718D178000008549B /* AsteroidHelperTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 026D8F0618D178000008549B /* AsteroidHelperTests.m */; };
+		026D8F5C18D17A210008549B /* StarfieldViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 026D8F5B18D17A200008549B /* StarfieldViewController.m */; };
+		026D8F5F18D17A5E0008549B /* AsteroidDemoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 026D8F5E18D17A5E0008549B /* AsteroidDemoViewController.m */; };
+		026D8F6218D17B840008549B /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 026D8F6018D17B840008549B /* GLKit.framework */; };
+		026D8F6318D17B840008549B /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 026D8F6118D17B840008549B /* OpenGLES.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +57,12 @@
 		026D8F0218D178000008549B /* AsteroidHelperTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AsteroidHelperTests-Info.plist"; sourceTree = "<group>"; };
 		026D8F0418D178000008549B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		026D8F0618D178000008549B /* AsteroidHelperTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AsteroidHelperTests.m; sourceTree = "<group>"; };
+		026D8F5A18D17A200008549B /* StarfieldViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StarfieldViewController.h; sourceTree = "<group>"; };
+		026D8F5B18D17A200008549B /* StarfieldViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StarfieldViewController.m; sourceTree = "<group>"; };
+		026D8F5D18D17A5E0008549B /* AsteroidDemoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsteroidDemoViewController.h; sourceTree = "<group>"; };
+		026D8F5E18D17A5E0008549B /* AsteroidDemoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsteroidDemoViewController.m; sourceTree = "<group>"; };
+		026D8F6018D17B840008549B /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
+		026D8F6118D17B840008549B /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +70,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				026D8F6218D17B840008549B /* GLKit.framework in Frameworks */,
+				026D8F6318D17B840008549B /* OpenGLES.framework in Frameworks */,
 				026D8EDE18D178000008549B /* CoreGraphics.framework in Frameworks */,
 				026D8EE018D178000008549B /* UIKit.framework in Frameworks */,
 				026D8EDC18D178000008549B /* Foundation.framework in Frameworks */,
@@ -101,6 +113,8 @@
 		026D8EDA18D178000008549B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				026D8F6018D17B840008549B /* GLKit.framework */,
+				026D8F6118D17B840008549B /* OpenGLES.framework */,
 				026D8EDB18D178000008549B /* Foundation.framework */,
 				026D8EDD18D178000008549B /* CoreGraphics.framework */,
 				026D8EDF18D178000008549B /* UIKit.framework */,
@@ -119,6 +133,10 @@
 				026D8EF118D178000008549B /* ViewController.m */,
 				026D8EF318D178000008549B /* Images.xcassets */,
 				026D8EE218D178000008549B /* Supporting Files */,
+				026D8F5A18D17A200008549B /* StarfieldViewController.h */,
+				026D8F5B18D17A200008549B /* StarfieldViewController.m */,
+				026D8F5D18D17A5E0008549B /* AsteroidDemoViewController.h */,
+				026D8F5E18D17A5E0008549B /* AsteroidDemoViewController.m */,
 			);
 			path = AsteroidHelper;
 			sourceTree = "<group>";
@@ -250,6 +268,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				026D8EF218D178000008549B /* ViewController.m in Sources */,
+				026D8F5C18D17A210008549B /* StarfieldViewController.m in Sources */,
+				026D8F5F18D17A5E0008549B /* AsteroidDemoViewController.m in Sources */,
 				026D8EEC18D178000008549B /* AppDelegate.m in Sources */,
 				026D8EE818D178000008549B /* main.m in Sources */,
 			);

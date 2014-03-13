@@ -7,7 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <GLKit/GLKit.h>
 
 @interface StarfieldViewController : GLKViewController
+{
+    GLuint vertexBuffer;
+    float rotation;
+}
+
+@property (strong, nonatomic) EAGLContext *context;
+@property (strong, nonatomic) GLKBaseEffect *effect;
+
+- (void)setUpGL;
+- (void)tearDownGL;
 
 @end
