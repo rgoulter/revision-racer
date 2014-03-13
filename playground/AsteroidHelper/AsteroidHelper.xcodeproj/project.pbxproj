@@ -1,0 +1,477 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		026D8EDC18D178000008549B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 026D8EDB18D178000008549B /* Foundation.framework */; };
+		026D8EDE18D178000008549B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 026D8EDD18D178000008549B /* CoreGraphics.framework */; };
+		026D8EE018D178000008549B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 026D8EDF18D178000008549B /* UIKit.framework */; };
+		026D8EE618D178000008549B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 026D8EE418D178000008549B /* InfoPlist.strings */; };
+		026D8EE818D178000008549B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 026D8EE718D178000008549B /* main.m */; };
+		026D8EEC18D178000008549B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 026D8EEB18D178000008549B /* AppDelegate.m */; };
+		026D8EEF18D178000008549B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 026D8EED18D178000008549B /* Main.storyboard */; };
+		026D8EF218D178000008549B /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 026D8EF118D178000008549B /* ViewController.m */; };
+		026D8EF418D178000008549B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 026D8EF318D178000008549B /* Images.xcassets */; };
+		026D8EFB18D178000008549B /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 026D8EFA18D178000008549B /* XCTest.framework */; };
+		026D8EFC18D178000008549B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 026D8EDB18D178000008549B /* Foundation.framework */; };
+		026D8EFD18D178000008549B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 026D8EDF18D178000008549B /* UIKit.framework */; };
+		026D8F0518D178000008549B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 026D8F0318D178000008549B /* InfoPlist.strings */; };
+		026D8F0718D178000008549B /* AsteroidHelperTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 026D8F0618D178000008549B /* AsteroidHelperTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		026D8EFE18D178000008549B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 026D8ED018D178000008549B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 026D8ED718D178000008549B;
+			remoteInfo = AsteroidHelper;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		026D8ED818D178000008549B /* AsteroidHelper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AsteroidHelper.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		026D8EDB18D178000008549B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		026D8EDD18D178000008549B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		026D8EDF18D178000008549B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		026D8EE318D178000008549B /* AsteroidHelper-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AsteroidHelper-Info.plist"; sourceTree = "<group>"; };
+		026D8EE518D178000008549B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		026D8EE718D178000008549B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		026D8EE918D178000008549B /* AsteroidHelper-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AsteroidHelper-Prefix.pch"; sourceTree = "<group>"; };
+		026D8EEA18D178000008549B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		026D8EEB18D178000008549B /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		026D8EEE18D178000008549B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		026D8EF018D178000008549B /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		026D8EF118D178000008549B /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		026D8EF318D178000008549B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		026D8EF918D178000008549B /* AsteroidHelperTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AsteroidHelperTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		026D8EFA18D178000008549B /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		026D8F0218D178000008549B /* AsteroidHelperTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AsteroidHelperTests-Info.plist"; sourceTree = "<group>"; };
+		026D8F0418D178000008549B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		026D8F0618D178000008549B /* AsteroidHelperTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AsteroidHelperTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		026D8ED518D178000008549B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				026D8EDE18D178000008549B /* CoreGraphics.framework in Frameworks */,
+				026D8EE018D178000008549B /* UIKit.framework in Frameworks */,
+				026D8EDC18D178000008549B /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		026D8EF618D178000008549B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				026D8EFB18D178000008549B /* XCTest.framework in Frameworks */,
+				026D8EFD18D178000008549B /* UIKit.framework in Frameworks */,
+				026D8EFC18D178000008549B /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		026D8ECF18D178000008549B = {
+			isa = PBXGroup;
+			children = (
+				026D8EE118D178000008549B /* AsteroidHelper */,
+				026D8F0018D178000008549B /* AsteroidHelperTests */,
+				026D8EDA18D178000008549B /* Frameworks */,
+				026D8ED918D178000008549B /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		026D8ED918D178000008549B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				026D8ED818D178000008549B /* AsteroidHelper.app */,
+				026D8EF918D178000008549B /* AsteroidHelperTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		026D8EDA18D178000008549B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				026D8EDB18D178000008549B /* Foundation.framework */,
+				026D8EDD18D178000008549B /* CoreGraphics.framework */,
+				026D8EDF18D178000008549B /* UIKit.framework */,
+				026D8EFA18D178000008549B /* XCTest.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		026D8EE118D178000008549B /* AsteroidHelper */ = {
+			isa = PBXGroup;
+			children = (
+				026D8EEA18D178000008549B /* AppDelegate.h */,
+				026D8EEB18D178000008549B /* AppDelegate.m */,
+				026D8EED18D178000008549B /* Main.storyboard */,
+				026D8EF018D178000008549B /* ViewController.h */,
+				026D8EF118D178000008549B /* ViewController.m */,
+				026D8EF318D178000008549B /* Images.xcassets */,
+				026D8EE218D178000008549B /* Supporting Files */,
+			);
+			path = AsteroidHelper;
+			sourceTree = "<group>";
+		};
+		026D8EE218D178000008549B /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				026D8EE318D178000008549B /* AsteroidHelper-Info.plist */,
+				026D8EE418D178000008549B /* InfoPlist.strings */,
+				026D8EE718D178000008549B /* main.m */,
+				026D8EE918D178000008549B /* AsteroidHelper-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		026D8F0018D178000008549B /* AsteroidHelperTests */ = {
+			isa = PBXGroup;
+			children = (
+				026D8F0618D178000008549B /* AsteroidHelperTests.m */,
+				026D8F0118D178000008549B /* Supporting Files */,
+			);
+			path = AsteroidHelperTests;
+			sourceTree = "<group>";
+		};
+		026D8F0118D178000008549B /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				026D8F0218D178000008549B /* AsteroidHelperTests-Info.plist */,
+				026D8F0318D178000008549B /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		026D8ED718D178000008549B /* AsteroidHelper */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 026D8F0A18D178000008549B /* Build configuration list for PBXNativeTarget "AsteroidHelper" */;
+			buildPhases = (
+				026D8ED418D178000008549B /* Sources */,
+				026D8ED518D178000008549B /* Frameworks */,
+				026D8ED618D178000008549B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AsteroidHelper;
+			productName = AsteroidHelper;
+			productReference = 026D8ED818D178000008549B /* AsteroidHelper.app */;
+			productType = "com.apple.product-type.application";
+		};
+		026D8EF818D178000008549B /* AsteroidHelperTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 026D8F0D18D178000008549B /* Build configuration list for PBXNativeTarget "AsteroidHelperTests" */;
+			buildPhases = (
+				026D8EF518D178000008549B /* Sources */,
+				026D8EF618D178000008549B /* Frameworks */,
+				026D8EF718D178000008549B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				026D8EFF18D178000008549B /* PBXTargetDependency */,
+			);
+			name = AsteroidHelperTests;
+			productName = AsteroidHelperTests;
+			productReference = 026D8EF918D178000008549B /* AsteroidHelperTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		026D8ED018D178000008549B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0500;
+				ORGANIZATIONNAME = nus.cs3217;
+				TargetAttributes = {
+					026D8EF818D178000008549B = {
+						TestTargetID = 026D8ED718D178000008549B;
+					};
+				};
+			};
+			buildConfigurationList = 026D8ED318D178000008549B /* Build configuration list for PBXProject "AsteroidHelper" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 026D8ECF18D178000008549B;
+			productRefGroup = 026D8ED918D178000008549B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				026D8ED718D178000008549B /* AsteroidHelper */,
+				026D8EF818D178000008549B /* AsteroidHelperTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		026D8ED618D178000008549B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				026D8EF418D178000008549B /* Images.xcassets in Resources */,
+				026D8EE618D178000008549B /* InfoPlist.strings in Resources */,
+				026D8EEF18D178000008549B /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		026D8EF718D178000008549B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				026D8F0518D178000008549B /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		026D8ED418D178000008549B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				026D8EF218D178000008549B /* ViewController.m in Sources */,
+				026D8EEC18D178000008549B /* AppDelegate.m in Sources */,
+				026D8EE818D178000008549B /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		026D8EF518D178000008549B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				026D8F0718D178000008549B /* AsteroidHelperTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		026D8EFF18D178000008549B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 026D8ED718D178000008549B /* AsteroidHelper */;
+			targetProxy = 026D8EFE18D178000008549B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		026D8EE418D178000008549B /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				026D8EE518D178000008549B /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		026D8EED18D178000008549B /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				026D8EEE18D178000008549B /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		026D8F0318D178000008549B /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				026D8F0418D178000008549B /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		026D8F0818D178000008549B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 2;
+			};
+			name = Debug;
+		};
+		026D8F0918D178000008549B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 2;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		026D8F0B18D178000008549B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "AsteroidHelper/AsteroidHelper-Prefix.pch";
+				INFOPLIST_FILE = "AsteroidHelper/AsteroidHelper-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		026D8F0C18D178000008549B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "AsteroidHelper/AsteroidHelper-Prefix.pch";
+				INFOPLIST_FILE = "AsteroidHelper/AsteroidHelper-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		026D8F0E18D178000008549B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/AsteroidHelper.app/AsteroidHelper";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "AsteroidHelper/AsteroidHelper-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "AsteroidHelperTests/AsteroidHelperTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		026D8F0F18D178000008549B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/AsteroidHelper.app/AsteroidHelper";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "AsteroidHelper/AsteroidHelper-Prefix.pch";
+				INFOPLIST_FILE = "AsteroidHelperTests/AsteroidHelperTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		026D8ED318D178000008549B /* Build configuration list for PBXProject "AsteroidHelper" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				026D8F0818D178000008549B /* Debug */,
+				026D8F0918D178000008549B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		026D8F0A18D178000008549B /* Build configuration list for PBXNativeTarget "AsteroidHelper" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				026D8F0B18D178000008549B /* Debug */,
+				026D8F0C18D178000008549B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		026D8F0D18D178000008549B /* Build configuration list for PBXNativeTarget "AsteroidHelperTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				026D8F0E18D178000008549B /* Debug */,
+				026D8F0F18D178000008549B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 026D8ED018D178000008549B /* Project object */;
+}
