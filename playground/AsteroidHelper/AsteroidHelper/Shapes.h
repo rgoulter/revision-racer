@@ -20,3 +20,10 @@
 @interface BOCube : BOShape
 
 @end
+
+// n.b. the incorrect spelling here is
+//  totally on purpose.
+
+@interface BOIsocahedron : BOShape
+
+@end

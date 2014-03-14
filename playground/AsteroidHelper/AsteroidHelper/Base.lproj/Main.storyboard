@@ -94,7 +94,7 @@
         <!--GLKit View Controller-->
         <scene sceneID="K57-ab-okP">
             <objects>
-                <glkViewController autoresizesArchivedViewToFullSize="NO" preferredFramesPerSecond="30" id="akq-9S-AYT" customClass="AsteroidDemoViewController" sceneMemberID="viewController">
+                <glkViewController autoresizesArchivedViewToFullSize="NO" preferredFramesPerSecond="30" id="akq-9S-AYT" customClass="StarfieldViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="2yP-RU-yxc"/>
                         <viewControllerLayoutGuide type="bottom" id="YpJ-3i-U3e"/>
@@ -128,7 +128,7 @@
         <!--GLKit View Controller-->
         <scene sceneID="uAB-F9-70q">
             <objects>
-                <glkViewController autoresizesArchivedViewToFullSize="NO" preferredFramesPerSecond="30" id="KlG-RQ-U6M" customClass="StarfieldViewController" sceneMemberID="viewController">
+                <glkViewController autoresizesArchivedViewToFullSize="NO" preferredFramesPerSecond="30" id="KlG-RQ-U6M" customClass="AsteroidDemoViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="69f-3l-DmU"/>
                         <viewControllerLayoutGuide type="bottom" id="CWL-4Z-BOY"/>

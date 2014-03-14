@@ -29,9 +29,11 @@
     view.context = self.context;
     view.drawableDepthFormat = GLKViewDrawableDepthFormat24;
     
-    // Default shape is cube.
+    // Default shape is isoc.
     if (!self.shape) {
-        self.shape = [[BOCube alloc] init];
+//        self.shape = [[BOCube alloc] init];
+        self.shape = [[BOIsocahedron alloc] init];
+        // BOIsocahedron
     }
     
     [self setUpGL];
