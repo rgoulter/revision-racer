@@ -51,6 +51,7 @@
 - (NSArray*)generationMethods
 {
     NSArray *asterGenerationMethods = @[@"Cube",
+                                        @"Icosahedron",
                                         @"Truncated Icosahedron",
                                         @"Dodecahedron"];
     
@@ -76,6 +77,23 @@
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
     NSLog(@"Selected %@", [[self generationMethods] objectAtIndex:row]);
+    
+    // Awful if-else array,
+    // rather than using SEL or whatever.
+    
+    NSString *selected = [[self generationMethods] objectAtIndex:row];
+    
+    if ([selected isEqualToString:@"Cube"]) {
+        
+    } else if ([selected isEqualToString:@"Icosahedron"]) {
+        // 1. wtf is the arrayshape of the, say, {{X, Y, Z}, {NX, NY, NZ}, ...}
+        // 2. how the fuck to get this to asterdemo? -- How to best manage resources like this?
+        //  -- are the BOs shared across VCs? Should be, right?
+    } else if ([selected isEqualToString:@"Truncated Icosahedron"]) {
+        
+    } else if ([selected isEqualToString:@"Dodecahedron"]) {
+        
+    }
 }
 
 @end

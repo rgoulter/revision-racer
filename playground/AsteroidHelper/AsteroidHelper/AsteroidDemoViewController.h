@@ -8,15 +8,16 @@
 
 #import <UIKit/UIKit.h>
 #import <GLKit/GLKit.h>
+#import "Shapes.h"
 
 @interface AsteroidDemoViewController : GLKViewController
 {
-    GLuint vertexBuffer;
     float rotation;
 }
 
 @property (strong, nonatomic) EAGLContext *context;
 @property (strong, nonatomic) GLKBaseEffect *effect;
+@property BOShape *shape;
 
 - (void)setUpGL;
 - (void)tearDownGL;

@@ -8,54 +8,6 @@
 
 #import "AsteroidDemoViewController.h"
 
-#define BUFFER_OFFSET(i) ((char *)NULL + (i))
-
-static GLfloat gCubeVertexData[216] =
-{
-    //x     y      z              nx     ny     nz
-    1.0f, -1.0f, -1.0f,         1.0f,  0.0f,  0.0f,
-    1.0f,  1.0f, -1.0f,         1.0f,  0.0f,  0.0f,
-    1.0f, -1.0f,  1.0f,         1.0f,  0.0f,  0.0f,
-    1.0f, -1.0f,  1.0f,         1.0f,  0.0f,  0.0f,
-    1.0f,  1.0f,  1.0f,         1.0f,  0.0f,  0.0f,
-    1.0f,  1.0f, -1.0f,         1.0f,  0.0f,  0.0f,
-    
-    1.0f,  1.0f, -1.0f,         0.0f,  1.0f,  0.0f,
-    -1.0f,  1.0f, -1.0f,         0.0f,  1.0f,  0.0f,
-    1.0f,  1.0f,  1.0f,         0.0f,  1.0f,  0.0f,
-    1.0f,  1.0f,  1.0f,         0.0f,  1.0f,  0.0f,
-    -1.0f,  1.0f, -1.0f,         0.0f,  1.0f,  0.0f,
-    -1.0f,  1.0f,  1.0f,         0.0f,  1.0f,  0.0f,
-    
-    -1.0f,  1.0f, -1.0f,        -1.0f,  0.0f,  0.0f,
-    -1.0f, -1.0f, -1.0f,        -1.0f,  0.0f,  0.0f,
-    -1.0f,  1.0f,  1.0f,        -1.0f,  0.0f,  0.0f,
-    -1.0f,  1.0f,  1.0f,        -1.0f,  0.0f,  0.0f,
-    -1.0f, -1.0f, -1.0f,        -1.0f,  0.0f,  0.0f,
-    -1.0f, -1.0f,  1.0f,        -1.0f,  0.0f,  0.0f,
-    
-    -1.0f, -1.0f, -1.0f,         0.0f, -1.0f,  0.0f,
-    1.0f, -1.0f, -1.0f,         0.0f, -1.0f,  0.0f,
-    -1.0f, -1.0f,  1.0f,         0.0f, -1.0f,  0.0f,
-    -1.0f, -1.0f,  1.0f,         0.0f, -1.0f,  0.0f,
-    1.0f, -1.0f, -1.0f,         0.0f, -1.0f,  0.0f,
-    1.0f, -1.0f,  1.0f,         0.0f, -1.0f,  0.0f,
-    
-    1.0f,  1.0f,  1.0f,         0.0f,  0.0f,  1.0f,
-    -1.0f,  1.0f,  1.0f,         0.0f,  0.0f,  1.0f,
-    1.0f, -1.0f,  1.0f,         0.0f,  0.0f,  1.0f,
-    1.0f, -1.0f,  1.0f,         0.0f,  0.0f,  1.0f,
-    -1.0f,  1.0f,  1.0f,         0.0f,  0.0f,  1.0f,
-    -1.0f, -1.0f,  1.0f,         0.0f,  0.0f,  1.0f,
-    
-    1.0f, -1.0f, -1.0f,         0.0f,  0.0f, -1.0f,
-    -1.0f, -1.0f, -1.0f,         0.0f,  0.0f, -1.0f,
-    1.0f,  1.0f, -1.0f,         0.0f,  0.0f, -1.0f,
-    1.0f,  1.0f, -1.0f,         0.0f,  0.0f, -1.0f,
-    -1.0f, -1.0f, -1.0f,         0.0f,  0.0f, -1.0f,
-    -1.0f,  1.0f, -1.0f,         0.0f,  0.0f, -1.0f
-};
-
 @implementation AsteroidDemoViewController
 
 @synthesize context;
@@ -76,6 +28,11 @@ static GLfloat gCubeVertexData[216] =
     GLKView *view = (GLKView *)self.view;
     view.context = self.context;
     view.drawableDepthFormat = GLKViewDrawableDepthFormat24;
+    
+    // Default shape is cube.
+    if (!self.shape) {
+        self.shape = [[BOCube alloc] init];
+    }
     
     [self setUpGL];
 }
@@ -106,21 +63,15 @@ static GLfloat gCubeVertexData[216] =
     self.effect.light0.diffuseColor = GLKVector4Make(1.0f, 0.4f, 0.4f, 1.0f);
     
     glEnable(GL_DEPTH_TEST);
-    glGenBuffers(1, &vertexBuffer);
-    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(gCubeVertexData), gCubeVertexData, GL_STATIC_DRAW);
     
-    glEnableVertexAttribArray(GLKVertexAttribPosition);
-    glVertexAttribPointer(GLKVertexAttribPosition, 3, GL_FLOAT, GL_FALSE, 24, BUFFER_OFFSET(0));
-    glEnableVertexAttribArray(GLKVertexAttribNormal);
-    glVertexAttribPointer(GLKVertexAttribNormal, 3, GL_FLOAT, GL_FALSE, 24, BUFFER_OFFSET(12));
+    [self.shape setUp];
 }
 
 - (void)tearDownGL
 {
     [EAGLContext setCurrentContext:self.context];
     
-    glDeleteBuffers(1, &vertexBuffer);
+    [self.shape tearDown];
     
     self.effect = nil;
 }
@@ -146,7 +97,7 @@ static GLfloat gCubeVertexData[216] =
     
     [self.effect prepareToDraw];
     
-    glDrawArrays(GL_TRIANGLES, 0, 36);
+    [self.shape draw];
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0259C2D318D3432200189043 /* Shapes.m in Sources */ = {isa = PBXBuildFile; fileRef = 0259C2D218D3432200189043 /* Shapes.m */; };
 		026D8EDC18D178000008549B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 026D8EDB18D178000008549B /* Foundation.framework */; };
 		026D8EDE18D178000008549B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 026D8EDD18D178000008549B /* CoreGraphics.framework */; };
 		026D8EE018D178000008549B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 026D8EDF18D178000008549B /* UIKit.framework */; };
@@ -38,6 +39,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0259C2D118D3432200189043 /* Shapes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Shapes.h; sourceTree = "<group>"; };
+		0259C2D218D3432200189043 /* Shapes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Shapes.m; sourceTree = "<group>"; };
 		026D8ED818D178000008549B /* AsteroidHelper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AsteroidHelper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		026D8EDB18D178000008549B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		026D8EDD18D178000008549B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -137,6 +140,8 @@
 				026D8F5B18D17A200008549B /* StarfieldViewController.m */,
 				026D8F5D18D17A5E0008549B /* AsteroidDemoViewController.h */,
 				026D8F5E18D17A5E0008549B /* AsteroidDemoViewController.m */,
+				0259C2D118D3432200189043 /* Shapes.h */,
+				0259C2D218D3432200189043 /* Shapes.m */,
 			);
 			path = AsteroidHelper;
 			sourceTree = "<group>";
@@ -270,6 +275,7 @@
 				026D8EF218D178000008549B /* ViewController.m in Sources */,
 				026D8F5C18D17A210008549B /* StarfieldViewController.m in Sources */,
 				026D8F5F18D17A5E0008549B /* AsteroidDemoViewController.m in Sources */,
+				0259C2D318D3432200189043 /* Shapes.m in Sources */,
 				026D8EEC18D178000008549B /* AppDelegate.m in Sources */,
 				026D8EE818D178000008549B /* main.m in Sources */,
 			);
@@ -482,6 +488,7 @@
 				026D8F0C18D178000008549B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		026D8F0D18D178000008549B /* Build configuration list for PBXNativeTarget "AsteroidHelperTests" */ = {
 			isa = XCConfigurationList;
@@ -490,6 +497,7 @@
 				026D8F0F18D178000008549B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
