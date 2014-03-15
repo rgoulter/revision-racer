@@ -115,20 +115,21 @@ static GLfloat gIsocahedronVertices[12*3] =
 // (but they use diff coords..)
 static GLushort gIsocahedronIndices[20 * 3] =
 {
-    0, 1, 6,
-    0, 6, 11,
+    // rearranged these while debugging.
     1, 0, 4,
     1, 4, 8,
+    4, 5, 8,
+    5, 4, 9,
+    4, 0, 9,
+    0, 1, 6,
+    0, 6, 11,
     1, 8, 10,
     2, 3, 5,
     2, 5, 9,
     2, 9, 11,
     3, 2, 7,
     3, 7, 10,
-    4, 5, 8,
-    4, 0, 9,
     5, 3, 8,
-    5, 4, 9,
     6, 1, 10,
     6, 7, 11,
     7, 6, 10,
@@ -147,21 +148,21 @@ static GLfloat gIsocahedronVertexData[20 * 3 * 6];
 void calcNormal(GLfloat data[], unsigned int ptIdx1, unsigned int ptIdx2,  unsigned int ptIdx3, GLfloat output[])
 {
     // u = 1->2
-    GLfloat u1 = data[ptIdx2 + 0] - data[ptIdx1 + 0];
-    GLfloat u2 = data[ptIdx2 + 1] - data[ptIdx1 + 1];
-    GLfloat u3 = data[ptIdx2 + 2] - data[ptIdx1 + 2];
+    GLfloat u1 = data[ptIdx2 * 3 + 0] - data[ptIdx1 * 3 + 0];
+    GLfloat u2 = data[ptIdx2 * 3 + 1] - data[ptIdx1 * 3 + 1];
+    GLfloat u3 = data[ptIdx2 * 3 + 2] - data[ptIdx1 * 3 + 2];
     
     // v = 2->3
-    GLfloat v1 = data[ptIdx3 + 0] - data[ptIdx2 + 0];
-    GLfloat v2 = data[ptIdx3 + 1] - data[ptIdx2 + 1];
-    GLfloat v3 = data[ptIdx3 + 2] - data[ptIdx2 + 2];
+    GLfloat v1 = data[ptIdx3 * 3 + 0] - data[ptIdx2 * 3 + 0];
+    GLfloat v2 = data[ptIdx3 * 3 + 1] - data[ptIdx2 * 3 + 1];
+    GLfloat v3 = data[ptIdx3 * 3 + 2] - data[ptIdx2 * 3 + 2];
     
     // Cross-Product
     // cf. Wikipedia
     // http://en.wikipedia.org/wiki/Cross_product#Matrix_notation
     
     GLfloat nx = u2 * v3 - u3 * v2;
-    GLfloat ny = u1 * v3 - u3 * v1;
+    GLfloat ny = -(u1 * v3 - u3 * v1);
     GLfloat nz = u1 * v2 - u2 * v1;
     
     GLfloat len = sqrtf(nx * nx + ny * ny + nz * nz);
@@ -203,6 +204,13 @@ void calculateIsocahedonData(GLfloat isoData[20 * 6])
         calcNormal(gIsocahedronVertices, idx1, idx2, idx3, isoData + faceOffset +  0 + 3);
         calcNormal(gIsocahedronVertices, idx1, idx2, idx3, isoData + faceOffset +  6 + 3);
         calcNormal(gIsocahedronVertices, idx1, idx2, idx3, isoData + faceOffset + 12 + 3);
+        
+        if (face < 5) {
+            float nx = isoData[faceOffset + 3 + 0];
+            float ny = isoData[faceOffset + 3 + 1];
+            float nz = isoData[faceOffset + 3 + 2];
+            NSLog(@"Row %d normal: %f, %f, %f", face, nx, ny, nz);
+        }
     }
 }
 
