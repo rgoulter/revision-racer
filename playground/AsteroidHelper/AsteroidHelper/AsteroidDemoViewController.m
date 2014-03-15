@@ -29,14 +29,14 @@
     view.context = self.context;
     view.drawableDepthFormat = GLKViewDrawableDepthFormat24;
     
+    [self setUpGL];
+    
     // Default shape is isoc.
     if (!self.shape) {
-//        self.shape = [[BOCube alloc] init];
-        self.shape = [[BOIcosahedron alloc] init];
+        self.shape = [[BOCube alloc] init];
+        //self.shape = [[BOIcosahedron alloc] init];
         // BOIsocahedron
     }
-    
-    [self setUpGL];
 }
 
 - (void)viewDidUnload
@@ -65,8 +65,6 @@
     self.effect.light0.diffuseColor = GLKVector4Make(1.0f, 0.4f, 0.4f, 1.0f);
     
     glEnable(GL_DEPTH_TEST);
-    
-    [self.shape setUp];
 }
 
 - (void)tearDownGL
@@ -105,6 +103,16 @@
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     self.paused = !self.paused;
+}
+
+- (void)setShape:(BOShape *)shape
+{
+    // Tidy up old shape
+    [_shape tearDown];
+    
+    _shape = shape;
+    
+    [_shape setUp];
 }
 
 @end

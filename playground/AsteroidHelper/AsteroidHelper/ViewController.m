@@ -84,11 +84,9 @@
     NSString *selected = [[self generationMethods] objectAtIndex:row];
     
     if ([selected isEqualToString:@"Cube"]) {
-        
+        self.asterDemoVC.shape = [[BOCube alloc] init];
     } else if ([selected isEqualToString:@"Icosahedron"]) {
-        // 1. wtf is the arrayshape of the, say, {{X, Y, Z}, {NX, NY, NZ}, ...}
-        // 2. how the fuck to get this to asterdemo? -- How to best manage resources like this?
-        //  -- are the BOs shared across VCs? Should be, right?
+        self.asterDemoVC.shape = [[BOIcosahedron alloc] init];
     } else if ([selected isEqualToString:@"Truncated Icosahedron"]) {
         
     } else if ([selected isEqualToString:@"Dodecahedron"]) {

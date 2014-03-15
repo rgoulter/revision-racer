@@ -17,7 +17,7 @@
 
 @property (strong, nonatomic) EAGLContext *context;
 @property (strong, nonatomic) GLKBaseEffect *effect;
-@property BOShape *shape;
+@property (nonatomic) BOShape *shape;
 
 - (void)setUpGL;
 - (void)tearDownGL;
