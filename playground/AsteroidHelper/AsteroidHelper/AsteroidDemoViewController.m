@@ -32,7 +32,7 @@
     // Default shape is isoc.
     if (!self.shape) {
 //        self.shape = [[BOCube alloc] init];
-        self.shape = [[BOIsocahedron alloc] init];
+        self.shape = [[BOIcosahedron alloc] init];
         // BOIsocahedron
     }
     
@@ -86,6 +86,7 @@
     self.effect.transform.projectionMatrix = projectionMatrix;
     
     GLKMatrix4 modelMatrix = GLKMatrix4MakeTranslation(0.0f, 0.0f, -7.0f);
+    //modelMatrix = GLKMatrix4Rotate(modelMatrix, rotation, 0.0f, 1.0f, 1.618f);
     modelMatrix = GLKMatrix4Rotate(modelMatrix, rotation, 1.0f, 1.0f, 0.7f);
     self.effect.transform.modelviewMatrix = modelMatrix;
     

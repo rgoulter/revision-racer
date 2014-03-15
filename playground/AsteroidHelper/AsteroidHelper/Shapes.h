@@ -24,6 +24,6 @@
 // n.b. the incorrect spelling here is
 //  totally on purpose.
 
-@interface BOIsocahedron : BOShape
+@interface BOIcosahedron : BOShape
 
 @end
