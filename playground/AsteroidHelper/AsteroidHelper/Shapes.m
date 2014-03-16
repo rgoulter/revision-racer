@@ -100,35 +100,35 @@ static GLfloat gIcosahedronVertices[12*3] =
 
 // cf. http://rbwhitaker.wikidot.com/index-and-vertex-buffers
 // (but they use diff coords..)
-static int gIcosahedronIndices[20 * 3] =
+static int gIcosahedronFaceIndices[20 * (3 + 1) + 1] =
 {
-    // rearranged these while debugging.
-    1, 0, 4,
-    1, 4, 8,
-    4, 5, 8,
-    5, 4, 9,
-    4, 0, 9,
-    0, 1, 6,
-    0, 6, 11,
-    1, 8, 10,
-    2, 3, 5,
-    2, 5, 9,
-    2, 9, 11,
-    3, 2, 7,
-    3, 7, 10,
-    5, 3, 8,
-    6, 1, 10,
-    6, 7, 11,
-    7, 6, 10,
-    7, 2, 11,
-    8, 3, 10,
-    9, 0, 11
+    1, 0, 4, -1,
+    1, 4, 8, -1,
+    4, 5, 8, -1,
+    5, 4, 9, -1,
+    4, 0, 9, -1,
+    0, 1, 6, -1,
+    0, 6, 11, -1,
+    1, 8, 10, -1,
+    2, 3, 5, -1,
+    2, 5, 9, -1,
+    2, 9, 11, -1,
+    3, 2, 7, -1,
+    3, 7, 10, -1,
+    5, 3, 8, -1,
+    6, 1, 10, -1,
+    6, 7, 11, -1,
+    7, 6, 10, -1,
+    7, 2, 11, -1,
+    8, 3, 10, -1,
+    9, 0, 11, -1,
+    -1
 };
 
 // 20 faces,
 // each face is 3 points,
 // each point is {x, y, z, nx, ny, nz};
-static GLfloat gIcosahedronVertexData[20 * 3 * 6];
+static vertexdata *gIcosahedronVertexData;
 
 
 
@@ -239,41 +239,6 @@ void calcNormal(GLfloat data[], unsigned int ptIdx1, unsigned int ptIdx2,  unsig
     output[2] = nz / len;
 }
 
-void calculateIsocahedonData(GLfloat isoData[20 * 6])
-{
-    int numFaces = 20;
-    
-    // for each face ...
-    for (int face = 0; face < numFaces; face++) {
-        int idx1 = gIcosahedronIndices[face * 3 + 0];
-        int idx2 = gIcosahedronIndices[face * 3 + 1];
-        int idx3 = gIcosahedronIndices[face * 3 + 2];
-        
-        unsigned int faceOffset = face * 3 * 6;
-        
-        // Point 1's x,y,z
-        isoData[faceOffset + 0] = gIcosahedronVertices[idx1 * 3 + 0];
-        isoData[faceOffset + 1] = gIcosahedronVertices[idx1 * 3 + 1];
-        isoData[faceOffset + 2] = gIcosahedronVertices[idx1 * 3 + 2];
-        
-        // Point 2's x,y,z
-        isoData[faceOffset + 6 + 0] = gIcosahedronVertices[idx2 * 3 + 0];
-        isoData[faceOffset + 6 + 1] = gIcosahedronVertices[idx2 * 3 + 1];
-        isoData[faceOffset + 6 + 2] = gIcosahedronVertices[idx2 * 3 + 2];
-        
-        // Point 3's x,y,z
-        isoData[faceOffset + 12 + 0] = gIcosahedronVertices[idx3 * 3 + 0];
-        isoData[faceOffset + 12 + 1] = gIcosahedronVertices[idx3 * 3 + 1];
-        isoData[faceOffset + 12 + 2] = gIcosahedronVertices[idx3 * 3 + 2];
-        
-        // Calculate the normal,
-        // normal of the face will be the normal for each vertex.
-        calcNormal(gIcosahedronVertices, idx1, idx2, idx3, isoData + faceOffset +  0 + 3);
-        calcNormal(gIcosahedronVertices, idx1, idx2, idx3, isoData + faceOffset +  6 + 3);
-        calcNormal(gIcosahedronVertices, idx1, idx2, idx3, isoData + faceOffset + 12 + 3);
-    }
-}
-
 
 
 vertexdata* calculateVertexData(GLfloat vertices[], int indices[])
@@ -338,9 +303,7 @@ vertexdata* calculateVertexData(GLfloat vertices[], int indices[])
 
             // calculate normals for triangle
             GLfloat nml[3];
-            calcNormal(vertices, idx3, idx2, idx1, nml);
-            // TODO **** NOTE THAT THIS IS PROBABLY INCORRECT JUST NOW,
-            // AND WE PROBABLY NEED TO REVERSE THE ABOVE INDICES.
+            calcNormal(vertices, idx1, idx2, idx3, nml);
             
             // copy normal data to triangle
             memcpy(currentTriData + 0 * 6 + 3, nml, 3 * sizeof(GLfloat));
@@ -364,6 +327,19 @@ vertexdata* calculateVertexData(GLfloat vertices[], int indices[])
     
     return vd;
 }
+
+
+
+void calculateIcosahedonData()
+{
+    if (gIcosahedronVertexData != NULL) {
+        free(gIcosahedronVertexData);
+    }
+    
+    gIcosahedronVertexData = calculateVertexData(gIcosahedronVertices, gIcosahedronFaceIndices);
+}
+
+
 
 void calculateDodecahedronData()
 {
@@ -422,11 +398,15 @@ void calculateDodecahedronData()
 - (void)setUp
 {
     // Calculate vertex data
-    calculateIsocahedonData(gIcosahedronVertexData);
+    calculateIcosahedonData();
     
     glGenBuffers(1, &vertexBuffer);
     glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(gIcosahedronVertexData), gIcosahedronVertexData, GL_STATIC_DRAW);
+    
+    // populate buffer from our struct.
+    int numBytes = sizeof(GLfloat) * 6 * gIcosahedronVertexData->numPoints;
+    GLfloat *data = gIcosahedronVertexData->data;
+    glBufferData(GL_ARRAY_BUFFER, numBytes, data, GL_STATIC_DRAW);
     
     glEnableVertexAttribArray(GLKVertexAttribPosition);
     glEnableVertexAttribArray(GLKVertexAttribNormal);
