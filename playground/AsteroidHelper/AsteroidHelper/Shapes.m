@@ -170,15 +170,23 @@ static GLfloat gDodecahedronVertices[20*3] =
 // each Dodecahedron face has 5 vertices;
 // each Dodecahedron has 12 faces.
 // specified in CCW order.
-static int gDodecahedronFaceIndices[12 * (5 + 1)] =
+static int gDodecahedronFaceIndices[12 * (5 + 1) + 1] =
 {
-    14, 5, 9, 1, 12, -1, // top front
-    12, 0, 8, 4, 14, -1, // top back
-    12, 1, 17, 16, 0, -1, // top right
-    14, 4, 18, 19, 5, -1, // top left.
+    14, 5, 9, 1, 12, -1,
+    12, 0, 8, 4, 14, -1,
+    12, 1, 17, 16, 0, -1,
+    14, 4, 18, 19, 5, -1,
     
-    9, 5, 19, 7, 11, -1,  // front left
-    11, 3, 17, 1, 9, -1,  // front right
+    9, 5, 19, 7, 11, -1,
+    11, 3, 17, 1, 9, -1,
+    10, 6, 18, 4, 8, -1,
+    8, 0, 16, 2, 10, -1,
+    
+    13, 3, 11, 7, 15, -1,
+    15, 6, 10, 2, 13, -1,
+    7, 19, 18, 6, 15, -1,
+    13, 2, 16, 17, 3, -1,
+    
     -1
 };
 
