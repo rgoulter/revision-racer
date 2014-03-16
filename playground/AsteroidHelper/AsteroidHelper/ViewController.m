@@ -90,7 +90,7 @@
     } else if ([selected isEqualToString:@"Truncated Icosahedron"]) {
         
     } else if ([selected isEqualToString:@"Dodecahedron"]) {
-        
+        self.asterDemoVC.shape = [[BODodecahedron alloc] init];
     }
 }
 

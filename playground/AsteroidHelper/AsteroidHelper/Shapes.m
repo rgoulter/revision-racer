@@ -10,6 +10,14 @@
 
 #define BUFFER_OFFSET(i) ((char *)NULL + (i))
 
+#define PHI 1.618
+
+typedef struct
+{
+    GLfloat *data;
+    unsigned int numPoints;
+} vertexdata;
+
 static GLfloat gCubeVertexData[216] =
 {
     //x     y      z              nx     ny     nz
@@ -62,7 +70,6 @@ static GLfloat gCubeVertexData[216] =
 // (      0,   +/- 1, +/- phi)
 // (  +/- 1, +/- phi,       0)
 // (+/- phi,       0,   +/- 1)
-#define PHI 1.618
 
 static GLfloat gIcosahedronVertices[12*3] =
 {
@@ -93,7 +100,7 @@ static GLfloat gIcosahedronVertices[12*3] =
 
 // cf. http://rbwhitaker.wikidot.com/index-and-vertex-buffers
 // (but they use diff coords..)
-static GLushort gIcosahedronIndices[20 * 3] =
+static int gIcosahedronIndices[20 * 3] =
 {
     // rearranged these while debugging.
     1, 0, 4,
@@ -122,6 +129,64 @@ static GLushort gIcosahedronIndices[20 * 3] =
 // each face is 3 points,
 // each point is {x, y, z, nx, ny, nz};
 static GLfloat gIcosahedronVertexData[20 * 3 * 6];
+
+
+
+// Dodecehedron vertices. (20 points)
+// Defined by:
+// (    +/- 1,     +/- 1,     +/- 1)
+// (        0, +/- 1/PHI,   +/- PHI)
+// (+/- 1/PHI,   +/- PHI,         0)
+// (  +/- PHI,         0, +/- 1/PHI)
+
+static GLfloat gDodecahedronVertices[20*3] =
+{
+    +1, +1, +1, // 0
+    +1, +1, -1,
+    +1, -1, +1,
+    +1, -1, -1, // 3
+    -1, +1, +1,
+    -1, +1, -1,
+    -1, -1, +1, // 6
+    -1, -1, -1, //7
+    
+    0, +1/PHI, +PHI, // 8
+    0, +1/PHI, -PHI,
+    0, -1/PHI, +PHI, // 10
+    0, -1/PHI, -PHI,
+    
+    +1/PHI, +PHI, 0, // 12
+    +1/PHI, -PHI, 0,
+    -1/PHI, +PHI, 0, // 14
+    -1/PHI, -PHI, 0,
+    
+    +PHI, 0, +1/PHI, // 16
+    +PHI, 0, -1/PHI,
+    -PHI, 0, +1/PHI, // 18
+    -PHI, 0, -1/PHI
+};
+
+// Faces are indices separated by -1.
+// each Dodecahedron face has 5 vertices;
+// each Dodecahedron has 12 faces.
+// specified in CCW order.
+static int gDodecahedronFaceIndices[12 * (5 + 1)] =
+{
+    14, 5, 9, 1, 12, -1, // top front
+    12, 0, 8, 4, 14, -1, // top back
+    12, 1, 17, 16, 0, -1, // top right
+    14, 4, 18, 19, 5, -1, // top left.
+    
+    9, 5, 19, 7, 11, -1,  // front left
+    11, 3, 17, 1, 9, -1,  // front right
+    -1
+};
+
+
+static vertexdata *gDodecahedronVertexData = NULL;
+
+
+
 
 // let pt1, 2, 3 be 3 pts of a triangle or polygon...
 // normal is cp of 1->2 X 2->3
@@ -188,6 +253,124 @@ void calculateIsocahedonData(GLfloat isoData[20 * 6])
 }
 
 
+vertexdata* calculateVertexData(GLfloat vertices[], int indices[])
+{
+    // Indices array:
+    // Each "polygon" is delimited by -1s.
+    // Terminate when -1 followed by -1.
+    
+    // Construct vertex data into vertexData array by
+    // mapping indices array to vertcies array,
+    // and calculating the normal for each "face".
+    
+    
+    // Seek how many points exist in the structure.
+    int totalNumPoints = 5;
+    int *currentFaceIndex = indices;
+    
+    while (currentFaceIndex[0] != -1) {
+        // Seek how many points there are for this face.
+        int numPoints = 0;
+        while (currentFaceIndex[numPoints] != -1) {
+            numPoints += 1;
+        }
+        
+        // For a regular polygon with n points,
+        // it can be triangulated with n - 2 triangles.
+        int numTri = numPoints - 2;
+        totalNumPoints += 3 * numTri;
+        
+        currentFaceIndex += numPoints + 1;
+    }
+    
+    // malloc the vertex data.
+    // Each point has {x, y, z, nx, ny, nz}
+    GLfloat *vertexData = (GLfloat*) malloc(totalNumPoints * 6 * sizeof(GLfloat));
+    
+    
+    currentFaceIndex = indices;
+    GLfloat *currentVertexData = vertexData;
+    
+    while (currentFaceIndex[0] != -1) {
+        // Seek how many points there are for this face.
+        int numPoints = 0;
+        while (currentFaceIndex[numPoints] != -1) {
+            numPoints += 1;
+        }
+        
+        // For a regular polygon with n points,
+        // it can be triangulated with n - 2 triangles.
+        int numTri = numPoints - 2;
+        
+        GLfloat *currentTriData = currentVertexData;
+        for (int i = 0; i < numTri; i++) {
+            // copy vertices 0, a, b
+            int idx1 = currentFaceIndex[0];
+            int idx2 = currentFaceIndex[i + 1];
+            int idx3 = currentFaceIndex[i + 2];
+            
+            GLfloat x1 = vertices[idx1 * 3 + 0];
+            GLfloat y1 = vertices[idx1 * 3 + 1];
+            GLfloat z1 = vertices[idx1 * 3 + 2];
+            
+            currentTriData[0 * 6 + 0] = x1;
+            currentTriData[0 * 6 + 1] = y1;
+            currentTriData[0 * 6 + 2] = z1;
+            
+            GLfloat x2 = vertices[idx2 * 3 + 0];
+            GLfloat y2 = vertices[idx2 * 3 + 1];
+            GLfloat z2 = vertices[idx2 * 3 + 2];
+            
+            currentTriData[1 * 6 + 0] = x2;
+            currentTriData[1 * 6 + 1] = y2;
+            currentTriData[1 * 6 + 2] = z2;
+            
+            GLfloat x3 = vertices[idx3 * 3 + 0];
+            GLfloat y3 = vertices[idx3 * 3 + 1];
+            GLfloat z3 = vertices[idx3 * 3 + 2];
+            
+            currentTriData[2 * 6 + 0] = x3;
+            currentTriData[2 * 6 + 1] = y3;
+            currentTriData[2 * 6 + 2] = z3;
+
+            // calculate normals for triangle
+            GLfloat nml[3];
+            calcNormal(vertices, idx3, idx2, idx1, nml);
+            // TODO **** NOTE THAT THIS IS PROBABLY INCORRECT JUST NOW,
+            // AND WE PROBABLY NEED TO REVERSE THE ABOVE INDICES.
+            
+            // copy normal data to triangle
+            memcpy(currentTriData + 0 * 6 + 3, nml, 3 * sizeof(GLfloat));
+            memcpy(currentTriData + 1 * 6 + 3, nml, 3 * sizeof(GLfloat));
+            memcpy(currentTriData + 2 * 6 + 3, nml, 3 * sizeof(GLfloat));
+            
+            // advance tri data pointer
+            currentTriData += 3 * 6;
+        }
+        
+        
+        // Advance pointers.
+        currentVertexData = currentTriData; // Next output is where the last output finished.
+        currentFaceIndex += numPoints + 1;  // each point idx + the -1
+    }
+    
+    
+    vertexdata *val = (vertexdata*) malloc(sizeof(vertexdata));
+    val->data = vertexData;
+    val->numPoints = totalNumPoints;
+    return val;
+}
+
+void calculateDodecahedronData()
+{
+    if (gDodecahedronVertexData != NULL) {
+        free(gDodecahedronVertexData);
+    }
+    
+    gDodecahedronVertexData = calculateVertexData(gDodecahedronVertices, gDodecahedronFaceIndices);
+}
+
+
 
 @implementation BOShape
 
@@ -226,6 +409,8 @@ void calculateIsocahedonData(GLfloat isoData[20 * 6])
 
 @end
 
+
+
 @implementation BOIcosahedron {
     GLuint vertexBuffer;
 }
@@ -260,6 +445,48 @@ void calculateIsocahedonData(GLfloat isoData[20 * 6])
 - (void)draw
 {
     glDrawArrays(GL_TRIANGLES, 0, 20 * 3);
+}
+
+@end
+
+
+
+
+@implementation BODodecahedron {
+    GLuint vertexBuffer;
+}
+
+- (void)setUp
+{
+    // Calculate vertex data
+    calculateDodecahedronData();
+    
+    glGenBuffers(1, &vertexBuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+    
+    // populate buffer from our struct.
+    int numBytes = sizeof(GLfloat) * 6 * gDodecahedronVertexData->numPoints;
+    GLfloat *data = gDodecahedronVertexData->data;
+    glBufferData(GL_ARRAY_BUFFER, numBytes, data, GL_STATIC_DRAW);
+    
+    glEnableVertexAttribArray(GLKVertexAttribPosition);
+    glEnableVertexAttribArray(GLKVertexAttribNormal);
+    
+    // we need the *4 since each GLfloat is 4-bytes.
+    // ergo, "stride" of 6*4 is because 4*{x,y,z,nx,ny,nz}.
+    // (Same for buffer offset).
+    glVertexAttribPointer(GLKVertexAttribPosition, 3, GL_FLOAT, GL_FALSE, 6 * 4, BUFFER_OFFSET(0 * 4));
+    glVertexAttribPointer(GLKVertexAttribNormal, 3, GL_FLOAT, GL_FALSE, 6 * 4, BUFFER_OFFSET(3 * 4));
+}
+
+- (void)tearDown
+{
+    glDeleteBuffers(1, &vertexBuffer);
+}
+
+- (void)draw
+{
+    glDrawArrays(GL_TRIANGLES, 0, gDodecahedronVertexData->numPoints);
 }
 
 @end

@@ -21,9 +21,10 @@
 
 @end
 
-// n.b. the incorrect spelling here is
-//  totally on purpose.
-
 @interface BOIcosahedron : BOShape
+
+@end
+
+@interface BODodecahedron : BOShape
 
 @end
