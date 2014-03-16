@@ -196,6 +196,20 @@ static vertexdata *gDodecahedronVertexData = NULL;
 
 
 
+void cpyPoint(GLfloat vertexArray[], unsigned int idx, GLfloat output[])
+{
+    // vertexArray = {x0, y0, z0, x1, y1, z1, ...}
+    GLfloat x = vertexArray[idx * 3 + 0];
+    GLfloat y = vertexArray[idx * 3 + 1];
+    GLfloat z = vertexArray[idx * 3 + 2];
+    
+    output[0] = x;
+    output[1] = y;
+    output[2] = z;
+}
+
+
+
 // let pt1, 2, 3 be 3 pts of a triangle or polygon...
 // normal is cp of 1->2 X 2->3
 void calcNormal(GLfloat data[], unsigned int ptIdx1, unsigned int ptIdx2,  unsigned int ptIdx3, GLfloat output[])
@@ -261,6 +275,7 @@ void calculateIsocahedonData(GLfloat isoData[20 * 6])
 }
 
 
+
 vertexdata* calculateVertexData(GLfloat vertices[], int indices[])
 {
     // Indices array:
@@ -288,7 +303,7 @@ vertexdata* calculateVertexData(GLfloat vertices[], int indices[])
         int numTri = numPoints - 2;
         totalNumPoints += 3 * numTri;
         
-        currentFaceIndex += numPoints + 1;
+        currentFaceIndex += numPoints + 1; // each point idx + the -1
     }
     
     // malloc the vertex data.
@@ -317,29 +332,9 @@ vertexdata* calculateVertexData(GLfloat vertices[], int indices[])
             int idx2 = currentFaceIndex[i + 1];
             int idx3 = currentFaceIndex[i + 2];
             
-            GLfloat x1 = vertices[idx1 * 3 + 0];
-            GLfloat y1 = vertices[idx1 * 3 + 1];
-            GLfloat z1 = vertices[idx1 * 3 + 2];
-            
-            currentTriData[0 * 6 + 0] = x1;
-            currentTriData[0 * 6 + 1] = y1;
-            currentTriData[0 * 6 + 2] = z1;
-            
-            GLfloat x2 = vertices[idx2 * 3 + 0];
-            GLfloat y2 = vertices[idx2 * 3 + 1];
-            GLfloat z2 = vertices[idx2 * 3 + 2];
-            
-            currentTriData[1 * 6 + 0] = x2;
-            currentTriData[1 * 6 + 1] = y2;
-            currentTriData[1 * 6 + 2] = z2;
-            
-            GLfloat x3 = vertices[idx3 * 3 + 0];
-            GLfloat y3 = vertices[idx3 * 3 + 1];
-            GLfloat z3 = vertices[idx3 * 3 + 2];
-            
-            currentTriData[2 * 6 + 0] = x3;
-            currentTriData[2 * 6 + 1] = y3;
-            currentTriData[2 * 6 + 2] = z3;
+            cpyPoint(vertices, idx1, currentTriData + 0 * 6);
+            cpyPoint(vertices, idx2, currentTriData + 1 * 6);
+            cpyPoint(vertices, idx3, currentTriData + 2 * 6);
 
             // calculate normals for triangle
             GLfloat nml[3];
@@ -363,10 +358,11 @@ vertexdata* calculateVertexData(GLfloat vertices[], int indices[])
     }
     
     
-    vertexdata *val = (vertexdata*) malloc(sizeof(vertexdata));
-    val->data = vertexData;
-    val->numPoints = totalNumPoints;
-    return val;
+    vertexdata *vd = (vertexdata*) malloc(sizeof(vertexdata));
+    vd->data = vertexData;
+    vd->numPoints = totalNumPoints;
+    
+    return vd;
 }
 
 void calculateDodecahedronData()
