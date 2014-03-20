@@ -28,6 +28,8 @@
     float _sx, _sy, _sz;
     float _tx, _ty, _tz;
     float _age;
+    
+    float _r, _g, _b;
 }
 
 - (id)init
@@ -113,6 +115,7 @@
 
 @implementation StarfieldViewController {
     NSMutableArray *_stars;
+    float _timeTillNextAster;
 }
 
 @synthesize context;
@@ -136,6 +139,8 @@
     view.drawableDepthFormat = GLKViewDrawableDepthFormat24;
     
     [self setUpGL];
+    
+    _timeTillNextAster = 0;
 }
 
 - (void)viewDidUnload
@@ -205,8 +210,11 @@
         }
     }
     
-    // Ensure we have enough stars.
-    while ([_stars count] < 2) {
+    // Create a new asteroid every now and then.
+    _timeTillNextAster -= self.timeSinceLastUpdate;
+    if (_timeTillNextAster < 0) {
+        _timeTillNextAster = 4 / 3 + (arc4random() % 300) / 300;
+        
         [self addARandomStar];
     }
 }
