@@ -29,6 +29,8 @@
     float _tx, _ty, _tz;
     float _age;
     
+    float _rotX, _rotDX, _rotY, _rotDY;
+    
     float _r, _g, _b;
 }
 
@@ -38,6 +40,11 @@
     
     if (self) {
         _age = 0;
+        
+        _rotX = (float)(arc4random() % 100) / 100;
+        _rotDX = (float)(arc4random() % 10) / 100;
+        _rotY = (float)(arc4random() % 100) / 100;
+        _rotDY = (float)(arc4random() % 10) / 100;
     }
     
     return self;
@@ -80,6 +87,9 @@
 - (void)tick:(NSTimeInterval)timeSinceLastUpdate
 {
     _age += timeSinceLastUpdate;
+    
+    _rotX += _rotDX;
+    _rotY += _rotDY;
 }
 
 - (GLKMatrix4)transformation:(GLKMatrix4)mat
@@ -90,14 +100,18 @@
     
     if (t > 1) { t = 1; }
     
-    // We could rotate here if we wanted to.
-    
     // calculate position; P = (1 - t) * A + t * B
     float x = (1 - t) * _sx + t * _tx;
     float y = (1 - t) * _sy + t * _ty;
     float z = (1 - t) * _sz + t * _tz;
     
-    return GLKMatrix4Translate(mat, x, y, z);
+    mat = GLKMatrix4Translate(mat, x, y, z);
+    
+    // We could rotate here if we wanted to.
+    mat = GLKMatrix4Rotate(mat, _rotX * M_2_PI, 1, 0, 0);
+    mat = GLKMatrix4Rotate(mat, _rotY * M_2_PI, 0, 1, 0);
+    
+    return mat;
 }
 
 - (BOOL)isExpired
