@@ -369,12 +369,6 @@ void calculateDodecahedronData()
     glGenBuffers(1, &vertexBuffer);
     glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
     glBufferData(GL_ARRAY_BUFFER, sizeof(gCubeVertexData), gCubeVertexData, GL_STATIC_DRAW);
-    
-    glEnableVertexAttribArray(GLKVertexAttribPosition);
-    glEnableVertexAttribArray(GLKVertexAttribNormal);
-    
-    glVertexAttribPointer(GLKVertexAttribPosition, 3, GL_FLOAT, GL_FALSE, 24, BUFFER_OFFSET(0));
-    glVertexAttribPointer(GLKVertexAttribNormal, 3, GL_FLOAT, GL_FALSE, 24, BUFFER_OFFSET(12));
 }
 
 - (void)tearDown
@@ -384,6 +378,14 @@ void calculateDodecahedronData()
 
 - (void)draw
 {
+    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+    
+    glEnableVertexAttribArray(GLKVertexAttribPosition);
+    glEnableVertexAttribArray(GLKVertexAttribNormal);
+    
+    glVertexAttribPointer(GLKVertexAttribPosition, 3, GL_FLOAT, GL_FALSE, 24, BUFFER_OFFSET(0));
+    glVertexAttribPointer(GLKVertexAttribNormal, 3, GL_FLOAT, GL_FALSE, 24, BUFFER_OFFSET(12));
+    
     glDrawArrays(GL_TRIANGLES, 0, 36);
 }
 
@@ -407,18 +409,6 @@ void calculateDodecahedronData()
     int numBytes = sizeof(GLfloat) * 6 * gIcosahedronVertexData->numPoints;
     GLfloat *data = gIcosahedronVertexData->data;
     glBufferData(GL_ARRAY_BUFFER, numBytes, data, GL_STATIC_DRAW);
-    
-    glEnableVertexAttribArray(GLKVertexAttribPosition);
-    glEnableVertexAttribArray(GLKVertexAttribNormal);
-    
-    glVertexAttribPointer(GLKVertexAttribPosition, 3, GL_FLOAT, GL_FALSE, 24, BUFFER_OFFSET(0));
-    glVertexAttribPointer(GLKVertexAttribNormal, 3, GL_FLOAT, GL_FALSE, 24, BUFFER_OFFSET(12));
-    
-    // we need the *4 since each GLfloat is 4-bytes.
-    // ergo, "stride" of 6*4 is because 4*{x,y,z,nx,ny,nz}.
-    // (Same for buffer offset).
-    glVertexAttribPointer(GLKVertexAttribPosition, 3, GL_FLOAT, GL_FALSE, 6 * 4, BUFFER_OFFSET(0 * 4));
-    glVertexAttribPointer(GLKVertexAttribNormal, 3, GL_FLOAT, GL_FALSE, 6 * 4, BUFFER_OFFSET(3 * 4));
 }
 
 - (void)tearDown
@@ -428,6 +418,17 @@ void calculateDodecahedronData()
 
 - (void)draw
 {
+    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+    
+    glEnableVertexAttribArray(GLKVertexAttribPosition);
+    glEnableVertexAttribArray(GLKVertexAttribNormal);
+    
+    // we need the *4 since each GLfloat is 4-bytes.
+    // ergo, "stride" of 6*4 is because 4*{x,y,z,nx,ny,nz}.
+    // (Same for buffer offset).
+    glVertexAttribPointer(GLKVertexAttribPosition, 3, GL_FLOAT, GL_FALSE, 6 * 4, BUFFER_OFFSET(0 * 4));
+    glVertexAttribPointer(GLKVertexAttribNormal, 3, GL_FLOAT, GL_FALSE, 6 * 4, BUFFER_OFFSET(3 * 4));
+    
     glDrawArrays(GL_TRIANGLES, 0, 20 * 3);
 }
 
@@ -452,15 +453,6 @@ void calculateDodecahedronData()
     int numBytes = sizeof(GLfloat) * 6 * gDodecahedronVertexData->numPoints;
     GLfloat *data = gDodecahedronVertexData->data;
     glBufferData(GL_ARRAY_BUFFER, numBytes, data, GL_STATIC_DRAW);
-    
-    glEnableVertexAttribArray(GLKVertexAttribPosition);
-    glEnableVertexAttribArray(GLKVertexAttribNormal);
-    
-    // we need the *4 since each GLfloat is 4-bytes.
-    // ergo, "stride" of 6*4 is because 4*{x,y,z,nx,ny,nz}.
-    // (Same for buffer offset).
-    glVertexAttribPointer(GLKVertexAttribPosition, 3, GL_FLOAT, GL_FALSE, 6 * 4, BUFFER_OFFSET(0 * 4));
-    glVertexAttribPointer(GLKVertexAttribNormal, 3, GL_FLOAT, GL_FALSE, 6 * 4, BUFFER_OFFSET(3 * 4));
 }
 
 - (void)tearDown
@@ -470,6 +462,17 @@ void calculateDodecahedronData()
 
 - (void)draw
 {
+    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+    
+    glEnableVertexAttribArray(GLKVertexAttribPosition);
+    glEnableVertexAttribArray(GLKVertexAttribNormal);
+    
+    // we need the *4 since each GLfloat is 4-bytes.
+    // ergo, "stride" of 6*4 is because 4*{x,y,z,nx,ny,nz}.
+    // (Same for buffer offset).
+    glVertexAttribPointer(GLKVertexAttribPosition, 3, GL_FLOAT, GL_FALSE, 6 * 4, BUFFER_OFFSET(0 * 4));
+    glVertexAttribPointer(GLKVertexAttribNormal, 3, GL_FLOAT, GL_FALSE, 6 * 4, BUFFER_OFFSET(3 * 4));
+    
     glDrawArrays(GL_TRIANGLES, 0, gDodecahedronVertexData->numPoints);
 }
 

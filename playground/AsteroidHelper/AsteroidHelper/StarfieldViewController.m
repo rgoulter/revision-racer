@@ -59,12 +59,12 @@
 
 - (void)setUp
 {
-    [_shape setUp];
+    //[_shape setUp];
 }
 
 - (void)tearDown
 {
-    [_shape tearDown];
+    //[_shape tearDown];
 }
 
 - (void)draw
@@ -115,6 +115,7 @@
 
 @implementation StarfieldViewController {
     NSMutableArray *_stars;
+    NSArray *_starShapes;
     float _timeTillNextAster;
 }
 
@@ -138,6 +139,7 @@
     view.context = self.context;
     view.drawableDepthFormat = GLKViewDrawableDepthFormat24;
     
+    _starShapes = @[[[BOCube alloc] init], [[BOIcosahedron alloc] init], [[BODodecahedron alloc] init]];
     [self setUpGL];
     
     _timeTillNextAster = 0;
@@ -170,10 +172,8 @@
     
     glEnable(GL_DEPTH_TEST);
     
-    // set up stars?
-    // (TODO: Not sure if BOShape's setUp behaves when called multiple times).
-    for (StarfieldStar *star in _stars) {
-        [star setUp];
+    for (BOShape *shape in _starShapes) {
+        [shape setUp];
     }
 }
 
@@ -181,9 +181,8 @@
 {
     [EAGLContext setCurrentContext:self.context];
     
-    // tear down stars
-    for (StarfieldStar *star in _stars) {
-        [star tearDown];
+    for (BOShape *shape in _starShapes) {
+        [shape tearDown];
     }
     
     self.effect = nil;
@@ -247,7 +246,8 @@
 {
     StarfieldStar *star = [[StarfieldStar alloc] init];
     
-    star.shape = [[BOCube alloc] init];
+    int rndShapeIdx = arc4random() % 3;
+    star.shape = [_starShapes objectAtIndex:rndShapeIdx];
     
     // This depends on the coords
     float rndX = (float)(arc4random() % 8) - 4;
