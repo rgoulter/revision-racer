@@ -206,7 +206,7 @@
     }
     
     // Ensure we have enough stars.
-    if ([_stars count] < 1) {
+    while ([_stars count] < 2) {
         [self addARandomStar];
     }
 }
@@ -215,8 +215,6 @@
 {
     glClearColor(0.6f, 0.6f, 0.65f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    
-    [self.effect prepareToDraw];
     
     // draw stars
     for (StarfieldStar *star in _stars) {
@@ -228,6 +226,7 @@
         float scale = 0.25;
         self.effect.transform.modelviewMatrix = GLKMatrix4Scale(modelMatrix, scale, scale, scale);
         
+        [self.effect prepareToDraw];
         [star draw];
     }
 }
