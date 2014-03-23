@@ -12,6 +12,8 @@
 
 #define PHI 1.618
 
+#define VBO_NUMCOLS 6
+
 typedef struct
 {
     GLfloat *data;
@@ -273,7 +275,7 @@ vertexdata* calculateVertexData(GLfloat vertices[], int indices[])
     
     // malloc the vertex data.
     // Each point has {x, y, z, nx, ny, nz}
-    GLfloat *vertexData = (GLfloat*) malloc(totalNumPoints * 6 * sizeof(GLfloat));
+    GLfloat *vertexData = (GLfloat*) malloc(totalNumPoints * VBO_NUMCOLS * sizeof(GLfloat));
     
     
     currentFaceIndex = indices;
@@ -297,21 +299,21 @@ vertexdata* calculateVertexData(GLfloat vertices[], int indices[])
             int idx2 = currentFaceIndex[i + 1];
             int idx3 = currentFaceIndex[i + 2];
             
-            cpyPoint(vertices, idx1, currentTriData + 0 * 6);
-            cpyPoint(vertices, idx2, currentTriData + 1 * 6);
-            cpyPoint(vertices, idx3, currentTriData + 2 * 6);
+            cpyPoint(vertices, idx1, currentTriData + 0 * VBO_NUMCOLS);
+            cpyPoint(vertices, idx2, currentTriData + 1 * VBO_NUMCOLS);
+            cpyPoint(vertices, idx3, currentTriData + 2 * VBO_NUMCOLS);
 
             // calculate normals for triangle
             GLfloat nml[3];
             calcNormal(vertices, idx1, idx2, idx3, nml);
             
             // copy normal data to triangle
-            memcpy(currentTriData + 0 * 6 + 3, nml, 3 * sizeof(GLfloat));
-            memcpy(currentTriData + 1 * 6 + 3, nml, 3 * sizeof(GLfloat));
-            memcpy(currentTriData + 2 * 6 + 3, nml, 3 * sizeof(GLfloat));
+            memcpy(currentTriData + 0 * VBO_NUMCOLS + 3, nml, 3 * sizeof(GLfloat));
+            memcpy(currentTriData + 1 * VBO_NUMCOLS + 3, nml, 3 * sizeof(GLfloat));
+            memcpy(currentTriData + 2 * VBO_NUMCOLS + 3, nml, 3 * sizeof(GLfloat));
             
             // advance tri data pointer
-            currentTriData += 3 * 6;
+            currentTriData += 3 * VBO_NUMCOLS;
         }
         
         
@@ -352,72 +354,29 @@ void calculateDodecahedronData()
 
 
 
-@implementation BOShape
-
-- (void)setUp {}
-- (void)tearDown {}
-- (void)draw {}
-
-@end
-
-@implementation BOCube {
+@implementation BOShape {
     GLuint vertexBuffer;
+    GLfloat *_vertexData;
+    unsigned int _numPoints;
 }
 
-- (void)setUp
+- (void)setVertexData:(GLfloat *)data withNumPoints:(unsigned int)n
 {
+    _vertexData = data;
+    _numPoints = n;
+}
+
+- (void)setUp {
     glGenBuffers(1, &vertexBuffer);
     glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(gCubeVertexData), gCubeVertexData, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * VBO_NUMCOLS * _numPoints, _vertexData, GL_STATIC_DRAW);
 }
 
-- (void)tearDown
-{
+- (void)tearDown {
     glDeleteBuffers(1, &vertexBuffer);
 }
 
-- (void)draw
-{
-    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-    
-    glEnableVertexAttribArray(GLKVertexAttribPosition);
-    glEnableVertexAttribArray(GLKVertexAttribNormal);
-    
-    glVertexAttribPointer(GLKVertexAttribPosition, 3, GL_FLOAT, GL_FALSE, 24, BUFFER_OFFSET(0));
-    glVertexAttribPointer(GLKVertexAttribNormal, 3, GL_FLOAT, GL_FALSE, 24, BUFFER_OFFSET(12));
-    
-    glDrawArrays(GL_TRIANGLES, 0, 36);
-}
-
-@end
-
-
-
-@implementation BOIcosahedron {
-    GLuint vertexBuffer;
-}
-
-- (void)setUp
-{
-    // Calculate vertex data
-    calculateIcosahedonData();
-    
-    glGenBuffers(1, &vertexBuffer);
-    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-    
-    // populate buffer from our struct.
-    int numBytes = sizeof(GLfloat) * 6 * gIcosahedronVertexData->numPoints;
-    GLfloat *data = gIcosahedronVertexData->data;
-    glBufferData(GL_ARRAY_BUFFER, numBytes, data, GL_STATIC_DRAW);
-}
-
-- (void)tearDown
-{
-    glDeleteBuffers(1, &vertexBuffer);
-}
-
-- (void)draw
-{
+- (void)draw {
     glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
     
     glEnableVertexAttribArray(GLKVertexAttribPosition);
@@ -426,10 +385,45 @@ void calculateDodecahedronData()
     // we need the *4 since each GLfloat is 4-bytes.
     // ergo, "stride" of 6*4 is because 4*{x,y,z,nx,ny,nz}.
     // (Same for buffer offset).
-    glVertexAttribPointer(GLKVertexAttribPosition, 3, GL_FLOAT, GL_FALSE, 6 * 4, BUFFER_OFFSET(0 * 4));
-    glVertexAttribPointer(GLKVertexAttribNormal, 3, GL_FLOAT, GL_FALSE, 6 * 4, BUFFER_OFFSET(3 * 4));
+    glVertexAttribPointer(GLKVertexAttribPosition, 3, GL_FLOAT, GL_FALSE, VBO_NUMCOLS * sizeof(GLfloat), BUFFER_OFFSET(0));
+    glVertexAttribPointer(GLKVertexAttribNormal, 3, GL_FLOAT, GL_FALSE, VBO_NUMCOLS * sizeof(GLfloat), BUFFER_OFFSET(12));
     
-    glDrawArrays(GL_TRIANGLES, 0, 20 * 3);
+    glDrawArrays(GL_TRIANGLES, 0, _numPoints);
+}
+
+@end
+
+@implementation BOCube
+
+- (id)init
+{
+    self = [super init];
+    
+    if (self) {
+        [self setVertexData:gCubeVertexData withNumPoints:36];
+    }
+    
+    return self;
+}
+
+@end
+
+
+
+@implementation BOIcosahedron
+
+- (id)init
+{
+    self = [super init];
+    
+    if (self) {
+        // Calculate vertex data
+        calculateIcosahedonData();
+        
+        [self setVertexData:gIcosahedronVertexData->data withNumPoints:gIcosahedronVertexData->numPoints];
+    }
+    
+    return self;
 }
 
 @end
@@ -437,43 +431,20 @@ void calculateDodecahedronData()
 
 
 
-@implementation BODodecahedron {
-    GLuint vertexBuffer;
-}
+@implementation BODodecahedron
 
-- (void)setUp
+- (id)init
 {
-    // Calculate vertex data
-    calculateDodecahedronData();
+    self = [super init];
     
-    glGenBuffers(1, &vertexBuffer);
-    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+    if (self) {
+        // Calculate vertex data
+        calculateDodecahedronData();
+        
+        [self setVertexData:gDodecahedronVertexData->data withNumPoints:gDodecahedronVertexData->numPoints];
+    }
     
-    // populate buffer from our struct.
-    int numBytes = sizeof(GLfloat) * 6 * gDodecahedronVertexData->numPoints;
-    GLfloat *data = gDodecahedronVertexData->data;
-    glBufferData(GL_ARRAY_BUFFER, numBytes, data, GL_STATIC_DRAW);
-}
-
-- (void)tearDown
-{
-    glDeleteBuffers(1, &vertexBuffer);
-}
-
-- (void)draw
-{
-    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-    
-    glEnableVertexAttribArray(GLKVertexAttribPosition);
-    glEnableVertexAttribArray(GLKVertexAttribNormal);
-    
-    // we need the *4 since each GLfloat is 4-bytes.
-    // ergo, "stride" of 6*4 is because 4*{x,y,z,nx,ny,nz}.
-    // (Same for buffer offset).
-    glVertexAttribPointer(GLKVertexAttribPosition, 3, GL_FLOAT, GL_FALSE, 6 * 4, BUFFER_OFFSET(0 * 4));
-    glVertexAttribPointer(GLKVertexAttribNormal, 3, GL_FLOAT, GL_FALSE, 6 * 4, BUFFER_OFFSET(3 * 4));
-    
-    glDrawArrays(GL_TRIANGLES, 0, gDodecahedronVertexData->numPoints);
+    return self;
 }
 
 @end
