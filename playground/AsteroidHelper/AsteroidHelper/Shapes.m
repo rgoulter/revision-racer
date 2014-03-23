@@ -370,15 +370,20 @@ void setVertexDataColor(GLfloat *data, int ptIdx, GLfloat r, GLfloat g, GLfloat 
     unsigned int _numPoints;
 }
 
+- (void)setColorAllToR:(GLfloat)r G:(GLfloat)g B:(GLfloat)b
+{
+    // Set vertex data color to blue (rgb = 0,0,1).
+    for (int i = 0; i < _numPoints; i++) {
+        setVertexDataColor(_vertexData, i, 0, 0, 1);
+    }
+}
+
 - (void)setVertexData:(GLfloat *)data withNumPoints:(unsigned int)n
 {
     _vertexData = data;
     _numPoints = n;
     
-    // Set vertex data color to blue (rgb = 0,0,1).
-    for (int i = 0; i < _numPoints; i++) {
-        setVertexDataColor(_vertexData, i, 0, 0, 1);
-    }
+    [self setColorAllToR:0 G:0 B:1];
 }
 
 - (void)setUp {
@@ -405,6 +410,7 @@ void setVertexDataColor(GLfloat *data, int ptIdx, GLfloat r, GLfloat g, GLfloat 
     glVertexAttribPointer(GLKVertexAttribNormal, 3, GL_FLOAT, GL_FALSE, VBO_NUMCOLS * sizeof(GLfloat), BUFFER_OFFSET(12));
     glVertexAttribPointer(GLKVertexAttribColor, 3, GL_FLOAT, GL_FALSE, VBO_NUMCOLS * sizeof(GLfloat), BUFFER_OFFSET(24));
     
+    glColor4f(0, 1, 1, 1);
     glDrawArrays(GL_TRIANGLES, 0, _numPoints);
 }
 

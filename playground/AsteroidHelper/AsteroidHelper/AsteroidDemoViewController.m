@@ -97,9 +97,32 @@
     glClearColor(0.6f, 0.6f, 0.65f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
-    [self.effect prepareToDraw];
+    // "Cheap-o-rama" technique for getting an asteroid outline.
+    // http://stackoverflow.com/questions/13692282/draw-outline-using-with-shader-program-in-opengl-es-2-0-on-android
     
+    // Calculate model view matrix.
+    GLKMatrix4 modelMatrix = self.effect.transform.modelviewMatrix;
+    
+    glDisable(GL_DEPTH_TEST);
+    
+    // We can scale the object down by applying the scale matrix here.
+    self.effect.transform.modelviewMatrix = GLKMatrix4Scale(modelMatrix, 1.05, 1.05, 1.05);
+    self.effect.colorMaterialEnabled = GL_FALSE;
+    self.effect.light0.enabled = GL_FALSE;
+    
+    [self.effect prepareToDraw];
     [self.shape draw];
+    
+    self.effect.transform.modelviewMatrix = modelMatrix;
+    self.effect.colorMaterialEnabled = GL_TRUE;
+    self.effect.light0.enabled = GL_TRUE;
+    
+    glEnable(GL_DEPTH_TEST);
+    
+    [self.effect prepareToDraw];
+    [self.shape draw];
+    
+    self.effect.transform.modelviewMatrix = modelMatrix;
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
