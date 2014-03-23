@@ -12,7 +12,7 @@
 
 #define PHI 1.618
 
-#define VBO_NUMCOLS 6
+#define VBO_NUMCOLS 9
 
 typedef struct
 {
@@ -20,50 +20,50 @@ typedef struct
     unsigned int numPoints;
 } vertexdata;
 
-static GLfloat gCubeVertexData[216] =
+static GLfloat gCubeVertexData[VBO_NUMCOLS * 3 * 2 * 6] =
 {
-    //x     y      z              nx     ny     nz
-    1.0f, -1.0f, -1.0f,         1.0f,  0.0f,  0.0f,
-    1.0f,  1.0f, -1.0f,         1.0f,  0.0f,  0.0f,
-    1.0f, -1.0f,  1.0f,         1.0f,  0.0f,  0.0f,
-    1.0f, -1.0f,  1.0f,         1.0f,  0.0f,  0.0f,
-    1.0f,  1.0f,  1.0f,         1.0f,  0.0f,  0.0f,
-    1.0f,  1.0f, -1.0f,         1.0f,  0.0f,  0.0f,
+    //x     y      z              nx     ny     nz     r  g  b
+    1.0f, -1.0f, -1.0f,         1.0f,  0.0f,  0.0f,    0, 0, 0,
+    1.0f,  1.0f, -1.0f,         1.0f,  0.0f,  0.0f,    0, 0, 0,
+    1.0f, -1.0f,  1.0f,         1.0f,  0.0f,  0.0f,    0, 0, 0,
+    1.0f, -1.0f,  1.0f,         1.0f,  0.0f,  0.0f,    0, 0, 0,
+    1.0f,  1.0f,  1.0f,         1.0f,  0.0f,  0.0f,    0, 0, 0,
+    1.0f,  1.0f, -1.0f,         1.0f,  0.0f,  0.0f,    0, 0, 0,
     
-    1.0f,  1.0f, -1.0f,         0.0f,  1.0f,  0.0f,
-    -1.0f,  1.0f, -1.0f,         0.0f,  1.0f,  0.0f,
-    1.0f,  1.0f,  1.0f,         0.0f,  1.0f,  0.0f,
-    1.0f,  1.0f,  1.0f,         0.0f,  1.0f,  0.0f,
-    -1.0f,  1.0f, -1.0f,         0.0f,  1.0f,  0.0f,
-    -1.0f,  1.0f,  1.0f,         0.0f,  1.0f,  0.0f,
+    1.0f,  1.0f, -1.0f,         0.0f,  1.0f,  0.0f,    0, 0, 0,
+    -1.0f,  1.0f, -1.0f,         0.0f,  1.0f,  0.0f,    0, 0, 0,
+    1.0f,  1.0f,  1.0f,         0.0f,  1.0f,  0.0f,    0, 0, 0,
+    1.0f,  1.0f,  1.0f,         0.0f,  1.0f,  0.0f,    0, 0, 0,
+    -1.0f,  1.0f, -1.0f,         0.0f,  1.0f,  0.0f,    0, 0, 0,
+    -1.0f,  1.0f,  1.0f,         0.0f,  1.0f,  0.0f,    0, 0, 0,
     
-    -1.0f,  1.0f, -1.0f,        -1.0f,  0.0f,  0.0f,
-    -1.0f, -1.0f, -1.0f,        -1.0f,  0.0f,  0.0f,
-    -1.0f,  1.0f,  1.0f,        -1.0f,  0.0f,  0.0f,
-    -1.0f,  1.0f,  1.0f,        -1.0f,  0.0f,  0.0f,
-    -1.0f, -1.0f, -1.0f,        -1.0f,  0.0f,  0.0f,
-    -1.0f, -1.0f,  1.0f,        -1.0f,  0.0f,  0.0f,
+    -1.0f,  1.0f, -1.0f,        -1.0f,  0.0f,  0.0f,    0, 0, 0,
+    -1.0f, -1.0f, -1.0f,        -1.0f,  0.0f,  0.0f,    0, 0, 0,
+    -1.0f,  1.0f,  1.0f,        -1.0f,  0.0f,  0.0f,    0, 0, 0,
+    -1.0f,  1.0f,  1.0f,        -1.0f,  0.0f,  0.0f,    0, 0, 0,
+    -1.0f, -1.0f, -1.0f,        -1.0f,  0.0f,  0.0f,    0, 0, 0,
+    -1.0f, -1.0f,  1.0f,        -1.0f,  0.0f,  0.0f,    0, 0, 0,
     
-    -1.0f, -1.0f, -1.0f,         0.0f, -1.0f,  0.0f,
-    1.0f, -1.0f, -1.0f,         0.0f, -1.0f,  0.0f,
-    -1.0f, -1.0f,  1.0f,         0.0f, -1.0f,  0.0f,
-    -1.0f, -1.0f,  1.0f,         0.0f, -1.0f,  0.0f,
-    1.0f, -1.0f, -1.0f,         0.0f, -1.0f,  0.0f,
-    1.0f, -1.0f,  1.0f,         0.0f, -1.0f,  0.0f,
+    -1.0f, -1.0f, -1.0f,         0.0f, -1.0f,  0.0f,    0, 0, 0,
+    1.0f, -1.0f, -1.0f,         0.0f, -1.0f,  0.0f,    0, 0, 0,
+    -1.0f, -1.0f,  1.0f,         0.0f, -1.0f,  0.0f,    0, 0, 0,
+    -1.0f, -1.0f,  1.0f,         0.0f, -1.0f,  0.0f,    0, 0, 0,
+    1.0f, -1.0f, -1.0f,         0.0f, -1.0f,  0.0f,    0, 0, 0,
+    1.0f, -1.0f,  1.0f,         0.0f, -1.0f,  0.0f,    0, 0, 0,
     
-    1.0f,  1.0f,  1.0f,         0.0f,  0.0f,  1.0f,
-    -1.0f,  1.0f,  1.0f,         0.0f,  0.0f,  1.0f,
-    1.0f, -1.0f,  1.0f,         0.0f,  0.0f,  1.0f,
-    1.0f, -1.0f,  1.0f,         0.0f,  0.0f,  1.0f,
-    -1.0f,  1.0f,  1.0f,         0.0f,  0.0f,  1.0f,
-    -1.0f, -1.0f,  1.0f,         0.0f,  0.0f,  1.0f,
+    1.0f,  1.0f,  1.0f,         0.0f,  0.0f,  1.0f,    0, 0, 0,
+    -1.0f,  1.0f,  1.0f,         0.0f,  0.0f,  1.0f,    0, 0, 0,
+    1.0f, -1.0f,  1.0f,         0.0f,  0.0f,  1.0f,    0, 0, 0,
+    1.0f, -1.0f,  1.0f,         0.0f,  0.0f,  1.0f,    0, 0, 0,
+    -1.0f,  1.0f,  1.0f,         0.0f,  0.0f,  1.0f,    0, 0, 0,
+    -1.0f, -1.0f,  1.0f,         0.0f,  0.0f,  1.0f,    0, 0, 0,
     
-    1.0f, -1.0f, -1.0f,         0.0f,  0.0f, -1.0f,
-    -1.0f, -1.0f, -1.0f,         0.0f,  0.0f, -1.0f,
-    1.0f,  1.0f, -1.0f,         0.0f,  0.0f, -1.0f,
-    1.0f,  1.0f, -1.0f,         0.0f,  0.0f, -1.0f,
-    -1.0f, -1.0f, -1.0f,         0.0f,  0.0f, -1.0f,
-    -1.0f,  1.0f, -1.0f,         0.0f,  0.0f, -1.0f
+    1.0f, -1.0f, -1.0f,         0.0f,  0.0f, -1.0f,    0, 0, 0,
+    -1.0f, -1.0f, -1.0f,         0.0f,  0.0f, -1.0f,    0, 0, 0,
+    1.0f,  1.0f, -1.0f,         0.0f,  0.0f, -1.0f,    0, 0, 0,
+    1.0f,  1.0f, -1.0f,         0.0f,  0.0f, -1.0f,    0, 0, 0,
+    -1.0f, -1.0f, -1.0f,         0.0f,  0.0f, -1.0f,    0, 0, 0,
+    -1.0f,  1.0f, -1.0f,         0.0f,  0.0f, -1.0f,    0, 0, 0
 };
 
 
@@ -354,6 +354,16 @@ void calculateDodecahedronData()
 
 
 
+void setVertexDataColor(GLfloat *data, int ptIdx, GLfloat r, GLfloat g, GLfloat b)
+{
+    // {x, y, z, nx, ny, nz, r, g, b}
+    data[VBO_NUMCOLS * ptIdx + 6] = r;
+    data[VBO_NUMCOLS * ptIdx + 7] = g;
+    data[VBO_NUMCOLS * ptIdx + 8] = b;
+}
+
+
+
 @implementation BOShape {
     GLuint vertexBuffer;
     GLfloat *_vertexData;
@@ -364,6 +374,11 @@ void calculateDodecahedronData()
 {
     _vertexData = data;
     _numPoints = n;
+    
+    // Set vertex data color to blue (rgb = 0,0,1).
+    for (int i = 0; i < _numPoints; i++) {
+        setVertexDataColor(_vertexData, i, 0, 0, 1);
+    }
 }
 
 - (void)setUp {
@@ -381,12 +396,14 @@ void calculateDodecahedronData()
     
     glEnableVertexAttribArray(GLKVertexAttribPosition);
     glEnableVertexAttribArray(GLKVertexAttribNormal);
+    glEnableVertexAttribArray(GLKVertexAttribColor);
     
     // we need the *4 since each GLfloat is 4-bytes.
     // ergo, "stride" of 6*4 is because 4*{x,y,z,nx,ny,nz}.
     // (Same for buffer offset).
     glVertexAttribPointer(GLKVertexAttribPosition, 3, GL_FLOAT, GL_FALSE, VBO_NUMCOLS * sizeof(GLfloat), BUFFER_OFFSET(0));
     glVertexAttribPointer(GLKVertexAttribNormal, 3, GL_FLOAT, GL_FALSE, VBO_NUMCOLS * sizeof(GLfloat), BUFFER_OFFSET(12));
+    glVertexAttribPointer(GLKVertexAttribColor, 3, GL_FLOAT, GL_FALSE, VBO_NUMCOLS * sizeof(GLfloat), BUFFER_OFFSET(24));
     
     glDrawArrays(GL_TRIANGLES, 0, _numPoints);
 }
