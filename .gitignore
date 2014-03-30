@@ -21,3 +21,9 @@ DerivedData
 
 # CocoaPods
 Pods
+
+
+# use this for
+#  #define CLIENT_ID ..
+#  #define DEV_SECRET ..
+quizlet_secrets.inc

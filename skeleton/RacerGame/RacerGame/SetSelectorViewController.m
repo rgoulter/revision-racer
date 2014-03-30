@@ -7,6 +7,7 @@
 //
 
 #import "SetSelectorViewController.h"
+#import "QuizletAPI.h"
 
 @interface SetSelectorViewController ()
 
@@ -37,6 +38,13 @@
 
 - (IBAction)backButtonPressed:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (IBAction)signInUser:(id)sender {
+    //Check if user is signed in
+    //TODO: Read Quizlet API for expiring tokens/codes to initiate sign-ins
+    
+    [QuizletAPI initiateLogin];
 }
 
 /*
