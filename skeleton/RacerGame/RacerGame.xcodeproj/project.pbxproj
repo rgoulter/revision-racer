@@ -1,0 +1,491 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		D96BA46F18E8675100D29E82 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D96BA46E18E8675100D29E82 /* CoreData.framework */; };
+		D9B229E618DB1F1800DDBA11 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9B229E518DB1F1800DDBA11 /* Foundation.framework */; };
+		D9B229E818DB1F1800DDBA11 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9B229E718DB1F1800DDBA11 /* CoreGraphics.framework */; };
+		D9B229EA18DB1F1800DDBA11 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9B229E918DB1F1800DDBA11 /* UIKit.framework */; };
+		D9B229F018DB1F1800DDBA11 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D9B229EE18DB1F1800DDBA11 /* InfoPlist.strings */; };
+		D9B229F218DB1F1800DDBA11 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D9B229F118DB1F1800DDBA11 /* main.m */; };
+		D9B229F618DB1F1800DDBA11 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D9B229F518DB1F1800DDBA11 /* AppDelegate.m */; };
+		D9B229F918DB1F1800DDBA11 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D9B229F718DB1F1800DDBA11 /* Main.storyboard */; };
+		D9B229FC18DB1F1800DDBA11 /* MainMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D9B229FB18DB1F1800DDBA11 /* MainMenuViewController.m */; };
+		D9B229FE18DB1F1800DDBA11 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D9B229FD18DB1F1800DDBA11 /* Images.xcassets */; };
+		D9B22A0518DB1F1800DDBA11 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9B22A0418DB1F1800DDBA11 /* XCTest.framework */; };
+		D9B22A0618DB1F1800DDBA11 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9B229E518DB1F1800DDBA11 /* Foundation.framework */; };
+		D9B22A0718DB1F1800DDBA11 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9B229E918DB1F1800DDBA11 /* UIKit.framework */; };
+		D9B22A0F18DB1F1800DDBA11 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D9B22A0D18DB1F1800DDBA11 /* InfoPlist.strings */; };
+		D9B22A1118DB1F1800DDBA11 /* RacerGameTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D9B22A1018DB1F1800DDBA11 /* RacerGameTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		D9B22A0818DB1F1800DDBA11 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D9B229DA18DB1F1800DDBA11 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D9B229E118DB1F1800DDBA11;
+			remoteInfo = RacerGame;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		D96BA46E18E8675100D29E82 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		D9B229E218DB1F1800DDBA11 /* RacerGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RacerGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D9B229E518DB1F1800DDBA11 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		D9B229E718DB1F1800DDBA11 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		D9B229E918DB1F1800DDBA11 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		D9B229ED18DB1F1800DDBA11 /* RacerGame-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "RacerGame-Info.plist"; sourceTree = "<group>"; };
+		D9B229EF18DB1F1800DDBA11 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		D9B229F118DB1F1800DDBA11 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		D9B229F318DB1F1800DDBA11 /* RacerGame-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RacerGame-Prefix.pch"; sourceTree = "<group>"; };
+		D9B229F418DB1F1800DDBA11 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		D9B229F518DB1F1800DDBA11 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		D9B229F818DB1F1800DDBA11 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		D9B229FA18DB1F1800DDBA11 /* MainMenuViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainMenuViewController.h; sourceTree = "<group>"; };
+		D9B229FB18DB1F1800DDBA11 /* MainMenuViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainMenuViewController.m; sourceTree = "<group>"; };
+		D9B229FD18DB1F1800DDBA11 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		D9B22A0318DB1F1800DDBA11 /* RacerGameTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RacerGameTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D9B22A0418DB1F1800DDBA11 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		D9B22A0C18DB1F1800DDBA11 /* RacerGameTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "RacerGameTests-Info.plist"; sourceTree = "<group>"; };
+		D9B22A0E18DB1F1800DDBA11 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		D9B22A1018DB1F1800DDBA11 /* RacerGameTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RacerGameTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D9B229DF18DB1F1800DDBA11 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D96BA46F18E8675100D29E82 /* CoreData.framework in Frameworks */,
+				D9B229E818DB1F1800DDBA11 /* CoreGraphics.framework in Frameworks */,
+				D9B229EA18DB1F1800DDBA11 /* UIKit.framework in Frameworks */,
+				D9B229E618DB1F1800DDBA11 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D9B22A0018DB1F1800DDBA11 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D9B22A0518DB1F1800DDBA11 /* XCTest.framework in Frameworks */,
+				D9B22A0718DB1F1800DDBA11 /* UIKit.framework in Frameworks */,
+				D9B22A0618DB1F1800DDBA11 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D96BA47018E867AC00D29E82 /* VControllers */ = {
+			isa = PBXGroup;
+			children = (
+				D9B229FA18DB1F1800DDBA11 /* MainMenuViewController.h */,
+				D9B229FB18DB1F1800DDBA11 /* MainMenuViewController.m */,
+			);
+			name = VControllers;
+			sourceTree = "<group>";
+		};
+		D9B229D918DB1F1800DDBA11 = {
+			isa = PBXGroup;
+			children = (
+				D9B229EB18DB1F1800DDBA11 /* RacerGame */,
+				D9B22A0A18DB1F1800DDBA11 /* RacerGameTests */,
+				D9B229E418DB1F1800DDBA11 /* Frameworks */,
+				D9B229E318DB1F1800DDBA11 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		D9B229E318DB1F1800DDBA11 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D9B229E218DB1F1800DDBA11 /* RacerGame.app */,
+				D9B22A0318DB1F1800DDBA11 /* RacerGameTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D9B229E418DB1F1800DDBA11 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D96BA46E18E8675100D29E82 /* CoreData.framework */,
+				D9B229E518DB1F1800DDBA11 /* Foundation.framework */,
+				D9B229E718DB1F1800DDBA11 /* CoreGraphics.framework */,
+				D9B229E918DB1F1800DDBA11 /* UIKit.framework */,
+				D9B22A0418DB1F1800DDBA11 /* XCTest.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D9B229EB18DB1F1800DDBA11 /* RacerGame */ = {
+			isa = PBXGroup;
+			children = (
+				D9B229F418DB1F1800DDBA11 /* AppDelegate.h */,
+				D9B229F518DB1F1800DDBA11 /* AppDelegate.m */,
+				D9B229F718DB1F1800DDBA11 /* Main.storyboard */,
+				D96BA47018E867AC00D29E82 /* VControllers */,
+				D9B229FD18DB1F1800DDBA11 /* Images.xcassets */,
+				D9B229EC18DB1F1800DDBA11 /* Supporting Files */,
+			);
+			path = RacerGame;
+			sourceTree = "<group>";
+		};
+		D9B229EC18DB1F1800DDBA11 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				D9B229ED18DB1F1800DDBA11 /* RacerGame-Info.plist */,
+				D9B229EE18DB1F1800DDBA11 /* InfoPlist.strings */,
+				D9B229F118DB1F1800DDBA11 /* main.m */,
+				D9B229F318DB1F1800DDBA11 /* RacerGame-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		D9B22A0A18DB1F1800DDBA11 /* RacerGameTests */ = {
+			isa = PBXGroup;
+			children = (
+				D9B22A1018DB1F1800DDBA11 /* RacerGameTests.m */,
+				D9B22A0B18DB1F1800DDBA11 /* Supporting Files */,
+			);
+			path = RacerGameTests;
+			sourceTree = "<group>";
+		};
+		D9B22A0B18DB1F1800DDBA11 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				D9B22A0C18DB1F1800DDBA11 /* RacerGameTests-Info.plist */,
+				D9B22A0D18DB1F1800DDBA11 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D9B229E118DB1F1800DDBA11 /* RacerGame */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D9B22A1418DB1F1800DDBA11 /* Build configuration list for PBXNativeTarget "RacerGame" */;
+			buildPhases = (
+				D9B229DE18DB1F1800DDBA11 /* Sources */,
+				D9B229DF18DB1F1800DDBA11 /* Frameworks */,
+				D9B229E018DB1F1800DDBA11 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = RacerGame;
+			productName = RacerGame;
+			productReference = D9B229E218DB1F1800DDBA11 /* RacerGame.app */;
+			productType = "com.apple.product-type.application";
+		};
+		D9B22A0218DB1F1800DDBA11 /* RacerGameTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D9B22A1718DB1F1800DDBA11 /* Build configuration list for PBXNativeTarget "RacerGameTests" */;
+			buildPhases = (
+				D9B229FF18DB1F1800DDBA11 /* Sources */,
+				D9B22A0018DB1F1800DDBA11 /* Frameworks */,
+				D9B22A0118DB1F1800DDBA11 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D9B22A0918DB1F1800DDBA11 /* PBXTargetDependency */,
+			);
+			name = RacerGameTests;
+			productName = RacerGameTests;
+			productReference = D9B22A0318DB1F1800DDBA11 /* RacerGameTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D9B229DA18DB1F1800DDBA11 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = "Hunar Khanna";
+				TargetAttributes = {
+					D9B22A0218DB1F1800DDBA11 = {
+						TestTargetID = D9B229E118DB1F1800DDBA11;
+					};
+				};
+			};
+			buildConfigurationList = D9B229DD18DB1F1800DDBA11 /* Build configuration list for PBXProject "RacerGame" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = D9B229D918DB1F1800DDBA11;
+			productRefGroup = D9B229E318DB1F1800DDBA11 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D9B229E118DB1F1800DDBA11 /* RacerGame */,
+				D9B22A0218DB1F1800DDBA11 /* RacerGameTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D9B229E018DB1F1800DDBA11 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D9B229FE18DB1F1800DDBA11 /* Images.xcassets in Resources */,
+				D9B229F018DB1F1800DDBA11 /* InfoPlist.strings in Resources */,
+				D9B229F918DB1F1800DDBA11 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D9B22A0118DB1F1800DDBA11 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D9B22A0F18DB1F1800DDBA11 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D9B229DE18DB1F1800DDBA11 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D9B229FC18DB1F1800DDBA11 /* MainMenuViewController.m in Sources */,
+				D9B229F618DB1F1800DDBA11 /* AppDelegate.m in Sources */,
+				D9B229F218DB1F1800DDBA11 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D9B229FF18DB1F1800DDBA11 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D9B22A1118DB1F1800DDBA11 /* RacerGameTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		D9B22A0918DB1F1800DDBA11 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D9B229E118DB1F1800DDBA11 /* RacerGame */;
+			targetProxy = D9B22A0818DB1F1800DDBA11 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		D9B229EE18DB1F1800DDBA11 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D9B229EF18DB1F1800DDBA11 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		D9B229F718DB1F1800DDBA11 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D9B229F818DB1F1800DDBA11 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		D9B22A0D18DB1F1800DDBA11 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D9B22A0E18DB1F1800DDBA11 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		D9B22A1218DB1F1800DDBA11 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 2;
+			};
+			name = Debug;
+		};
+		D9B22A1318DB1F1800DDBA11 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 2;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		D9B22A1518DB1F1800DDBA11 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "RacerGame/RacerGame-Prefix.pch";
+				INFOPLIST_FILE = "RacerGame/RacerGame-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 2;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		D9B22A1618DB1F1800DDBA11 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "RacerGame/RacerGame-Prefix.pch";
+				INFOPLIST_FILE = "RacerGame/RacerGame-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 2;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		D9B22A1818DB1F1800DDBA11 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/RacerGame.app/RacerGame";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "RacerGame/RacerGame-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "RacerGameTests/RacerGameTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		D9B22A1918DB1F1800DDBA11 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/RacerGame.app/RacerGame";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "RacerGame/RacerGame-Prefix.pch";
+				INFOPLIST_FILE = "RacerGameTests/RacerGameTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D9B229DD18DB1F1800DDBA11 /* Build configuration list for PBXProject "RacerGame" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D9B22A1218DB1F1800DDBA11 /* Debug */,
+				D9B22A1318DB1F1800DDBA11 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D9B22A1418DB1F1800DDBA11 /* Build configuration list for PBXNativeTarget "RacerGame" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D9B22A1518DB1F1800DDBA11 /* Debug */,
+				D9B22A1618DB1F1800DDBA11 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D9B22A1718DB1F1800DDBA11 /* Build configuration list for PBXNativeTarget "RacerGameTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D9B22A1818DB1F1800DDBA11 /* Debug */,
+				D9B22A1918DB1F1800DDBA11 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D9B229DA18DB1F1800DDBA11 /* Project object */;
+}
