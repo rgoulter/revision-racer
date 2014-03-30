@@ -8,6 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
+@protocol QuizletLoginDelegate <NSObject>
+
+@required
+
+-(void)successfullyLoggedInForUserID;
+
+@end
+
 @interface QuizletAPI : NSObject<NSURLConnectionDataDelegate>
 
 +(void)initiateLogin;
