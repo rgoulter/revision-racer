@@ -12,6 +12,9 @@
 		D96BA47618E8764000D29E82 /* QuizletAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = D96BA47518E8764000D29E82 /* QuizletAPI.m */; };
 		D96BA47B18E876A300D29E82 /* URLHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = D96BA47A18E876A300D29E82 /* URLHelper.m */; };
 		D96BA47E18E8965B00D29E82 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D96BA47C18E8965B00D29E82 /* Model.xcdatamodeld */; };
+		D96BA50C18E8A73100D29E82 /* FlashSetItem.m in Sources */ = {isa = PBXBuildFile; fileRef = D96BA50B18E8A73100D29E82 /* FlashSetItem.m */; };
+		D96BA50F18E8A73200D29E82 /* FlashSetInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = D96BA50E18E8A73200D29E82 /* FlashSetInfo.m */; };
+		D96BA51218E8A73200D29E82 /* UserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = D96BA51118E8A73200D29E82 /* UserInfo.m */; };
 		D9B229E618DB1F1800DDBA11 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9B229E518DB1F1800DDBA11 /* Foundation.framework */; };
 		D9B229E818DB1F1800DDBA11 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9B229E718DB1F1800DDBA11 /* CoreGraphics.framework */; };
 		D9B229EA18DB1F1800DDBA11 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9B229E918DB1F1800DDBA11 /* UIKit.framework */; };
@@ -47,6 +50,12 @@
 		D96BA47918E876A300D29E82 /* URLHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = URLHelper.h; sourceTree = "<group>"; };
 		D96BA47A18E876A300D29E82 /* URLHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = URLHelper.m; sourceTree = "<group>"; };
 		D96BA47D18E8965B00D29E82 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		D96BA50A18E8A73100D29E82 /* FlashSetItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlashSetItem.h; sourceTree = "<group>"; };
+		D96BA50B18E8A73100D29E82 /* FlashSetItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlashSetItem.m; sourceTree = "<group>"; };
+		D96BA50D18E8A73200D29E82 /* FlashSetInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FlashSetInfo.h; path = RacerGame/FlashSetInfo.h; sourceTree = "<group>"; };
+		D96BA50E18E8A73200D29E82 /* FlashSetInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FlashSetInfo.m; path = RacerGame/FlashSetInfo.m; sourceTree = "<group>"; };
+		D96BA51018E8A73200D29E82 /* UserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserInfo.h; path = RacerGame/UserInfo.h; sourceTree = "<group>"; };
+		D96BA51118E8A73200D29E82 /* UserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserInfo.m; path = RacerGame/UserInfo.m; sourceTree = "<group>"; };
 		D9B229E218DB1F1800DDBA11 /* RacerGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RacerGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9B229E518DB1F1800DDBA11 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D9B229E718DB1F1800DDBA11 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -110,6 +119,12 @@
 				D96BA47C18E8965B00D29E82 /* Model.xcdatamodeld */,
 				D96BA47418E8764000D29E82 /* QuizletAPI.h */,
 				D96BA47518E8764000D29E82 /* QuizletAPI.m */,
+				D96BA51018E8A73200D29E82 /* UserInfo.h */,
+				D96BA51118E8A73200D29E82 /* UserInfo.m */,
+				D96BA50D18E8A73200D29E82 /* FlashSetInfo.h */,
+				D96BA50E18E8A73200D29E82 /* FlashSetInfo.m */,
+				D96BA50A18E8A73100D29E82 /* FlashSetItem.h */,
+				D96BA50B18E8A73100D29E82 /* FlashSetItem.m */,
 			);
 			name = Models;
 			path = ..;
@@ -301,8 +316,11 @@
 				D96BA47618E8764000D29E82 /* QuizletAPI.m in Sources */,
 				D96BA47E18E8965B00D29E82 /* Model.xcdatamodeld in Sources */,
 				D96BA47318E86BB900D29E82 /* SetSelectorViewController.m in Sources */,
+				D96BA50C18E8A73100D29E82 /* FlashSetItem.m in Sources */,
 				D96BA47B18E876A300D29E82 /* URLHelper.m in Sources */,
 				D9B229F218DB1F1800DDBA11 /* main.m in Sources */,
+				D96BA51218E8A73200D29E82 /* UserInfo.m in Sources */,
+				D96BA50F18E8A73200D29E82 /* FlashSetInfo.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
