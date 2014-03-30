@@ -7,6 +7,7 @@
 //
 
 #import "MainMenuViewController.h"
+#import "SetSelectorViewController.h"
 
 @interface MainMenuViewController ()
 
@@ -30,6 +31,10 @@
     NSLog(@"New game button pressed..");
     
     //Launch segue to level/set selector
+    UIStoryboard *storyboard = self.storyboard;
+    SetSelectorViewController *setSelector = [storyboard instantiateViewControllerWithIdentifier:@"SetSelectorViewController"];
+    
+    [self.navigationController pushViewController:setSelector animated:YES];
 }
 
 @end
