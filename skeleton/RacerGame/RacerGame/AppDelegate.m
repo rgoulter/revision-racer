@@ -27,7 +27,7 @@
 
 -(BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
-    [QuizletAPI requestTokenFromAuthServerForUrl:url];
+    [[QuizletAPI quizletApi] requestTokenFromAuthServerForUrl:url];
     return YES;
 }
 							

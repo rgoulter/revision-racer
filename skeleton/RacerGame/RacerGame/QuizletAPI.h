@@ -7,19 +7,24 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "UserInfoAttributes.h"
 
 @protocol QuizletLoginDelegate <NSObject>
 
 @required
 
--(void)successfullyLoggedInForUserID;
+-(void)successfullyLoggedInForUserID:(UserInfoAttributes*)userInfo;
 
 @end
 
 @interface QuizletAPI : NSObject<NSURLConnectionDataDelegate>
 
-+(void)initiateLogin;
+@property(weak,nonatomic)id<QuizletLoginDelegate> delegate;
 
-+(void)requestTokenFromAuthServerForUrl:(NSURL*)url;
++(id)quizletApi;
+
+-(void)initiateLogin;
+
+-(void)requestTokenFromAuthServerForUrl:(NSURL*)url;
 
 @end

@@ -44,7 +44,9 @@
     //Check if user is signed in
     //TODO: Read Quizlet API for expiring tokens/codes to initiate sign-ins
     
-    [QuizletAPI initiateLogin];
+    QuizletAPI* quizletApi = [QuizletAPI quizletApi];
+    quizletApi.delegate = self;
+    [quizletApi initiateLogin];
 }
 
 /*
@@ -58,4 +60,10 @@
 }
 */
 
+#pragma mark - QuizletLoginDelegate methods
+-(void)successfullyLoggedInForUserID:(UserInfoAttributes *)userInfo
+{
+    NSLog(@"Actually reached the delegate at destination");
+    NSLog(@"Expiry date : %@", userInfo.expiryTimestamp);
+}
 @end

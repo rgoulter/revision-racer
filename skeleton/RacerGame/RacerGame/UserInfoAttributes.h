@@ -1,5 +1,5 @@
 //
-//  UserInfo.h
+//  UserInfoAttributes.h
 //  RacerGame
 //
 //  Created by Hunar Khanna on 31/3/14.
@@ -7,12 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <CoreData/CoreData.h>
 
+@interface UserInfoAttributes : NSObject
 
-@interface UserInfo : NSManagedObject
-
-@property (nonatomic, strong) NSNumber * expiryTimestamp;
+@property (nonatomic, strong) NSDate * expiryTimestamp;
 @property (nonatomic, strong) NSString * accessToken;
 @property (nonatomic, strong) NSString * userId;
 

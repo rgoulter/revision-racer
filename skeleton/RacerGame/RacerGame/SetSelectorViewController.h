@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "QuizletAPI.h"
 
-@interface SetSelectorViewController : UIViewController
+@interface SetSelectorViewController : UIViewController<QuizletLoginDelegate>
 
 @end

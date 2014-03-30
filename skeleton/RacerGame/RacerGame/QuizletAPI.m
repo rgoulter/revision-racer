@@ -11,14 +11,24 @@
 
 @implementation QuizletAPI
 
-+(void)initiateLogin
++(id)quizletApi
+{
+    static QuizletAPI *sharedObj = nil;
+    @synchronized(self) {
+        if (sharedObj == nil)
+            sharedObj = [[self alloc] init];
+    }
+    return sharedObj;
+}
+
+-(void)initiateLogin
 {
     NSURL *authURL = [URLHelper getLoginUrl];
     
     [[UIApplication sharedApplication] openURL:authURL];
 }
 
-+(void)requestTokenFromAuthServerForUrl:(NSURL *)url
+-(void)requestTokenFromAuthServerForUrl:(NSURL *)url
 {
     NSDictionary* parameterMap = [URLHelper getParameterDictionaryForURL:url];
     
@@ -34,7 +44,7 @@
     }
 }
 
-+(void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
+-(void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
     //TODO: Indicate successfully receive of data
     NSDictionary* jsonData = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
@@ -42,9 +52,19 @@
     NSLog(@"Access token : %@",[jsonData objectForKey:@"access_token"]);
     NSLog(@"User_id : %@",[jsonData objectForKey:@"user_id"]);
     NSLog(@"Expires in : %@",[jsonData objectForKey:@"expires_in"]);
+    
+    NSString* expiryInterval = [jsonData objectForKey:@"expires_in"];
+    UserInfoAttributes* loggedInUser = [[UserInfoAttributes alloc] init];
+    
+    NSDate* current = [NSDate date];
+    loggedInUser.expiryTimestamp = [current dateByAddingTimeInterval:[expiryInterval longLongValue]];
+    loggedInUser.accessToken = [jsonData objectForKey:@"access_token"];
+    loggedInUser.userId = [jsonData objectForKey:@"user_id"];
+    
+    [self.delegate successfullyLoggedInForUserID:loggedInUser];
 }
 
-+(void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
+-(void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
     //TODO: Indicate error on UI side
     NSLog(@"Error while getting access token : %@",[error localizedDescription]);
