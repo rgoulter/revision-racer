@@ -26,4 +26,10 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (IBAction)newGameButtonPressed:(id)sender {
+    NSLog(@"New game button pressed..");
+    
+    //Launch segue to level/set selector
+}
+
 @end
