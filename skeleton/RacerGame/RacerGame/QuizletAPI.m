@@ -57,7 +57,8 @@
     UserInfoAttributes* loggedInUser = [[UserInfoAttributes alloc] init];
     
     NSDate* current = [NSDate date];
-    loggedInUser.expiryTimestamp = [current dateByAddingTimeInterval:[expiryInterval longLongValue]];
+    long long expiryVal = [expiryInterval longLongValue] / 1000;
+    loggedInUser.expiryTimestamp = [current dateByAddingTimeInterval:expiryVal];
     loggedInUser.accessToken = [jsonData objectForKey:@"access_token"];
     loggedInUser.userId = [jsonData objectForKey:@"user_id"];
     
