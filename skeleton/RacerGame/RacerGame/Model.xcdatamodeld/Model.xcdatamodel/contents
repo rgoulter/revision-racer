@@ -6,6 +6,7 @@
         <attribute name="modifiedDate" attributeType="Date" syncable="YES"/>
         <attribute name="title" attributeType="String" syncable="YES"/>
         <relationship name="hasCards" toMany="YES" deletionRule="Cascade" destinationEntity="FlashSetItem" syncable="YES"/>
+        <relationship name="isVisibleTo" toMany="YES" deletionRule="No Action" destinationEntity="UserInfo" inverseName="canSee" inverseEntity="UserInfo" syncable="YES"/>
     </entity>
     <entity name="FlashSetItem" representedClassName="FlashSetItem" syncable="YES">
         <attribute name="definition" attributeType="String" syncable="YES"/>
@@ -16,9 +17,10 @@
         <attribute name="accessToken" attributeType="String" syncable="YES"/>
         <attribute name="expiryTimestamp" attributeType="Date" syncable="YES"/>
         <attribute name="userId" attributeType="String" syncable="YES"/>
+        <relationship name="canSee" toMany="YES" deletionRule="Cascade" destinationEntity="FlashSetInfo" inverseName="isVisibleTo" inverseEntity="FlashSetInfo" syncable="YES"/>
     </entity>
     <elements>
-        <element name="FlashSetInfo" positionX="-9018" positionY="-2494" width="171" height="28"/>
+        <element name="FlashSetInfo" positionX="-9018" positionY="-2494" width="171" height="133"/>
         <element name="FlashSetItem" positionX="-8732" positionY="-2374" width="128" height="88"/>
         <element name="UserInfo" positionX="-9137" positionY="-2664" width="128" height="88"/>
     </elements>

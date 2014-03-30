@@ -8,6 +8,7 @@
 
 #import "FlashSetInfo.h"
 #import "FlashSetItem.h"
+#import "UserInfo.h"
 
 
 @implementation FlashSetInfo
@@ -17,5 +18,6 @@
 @dynamic createdDate;
 @dynamic modifiedDate;
 @dynamic hasCards;
+@dynamic isVisibleTo;
 
 @end

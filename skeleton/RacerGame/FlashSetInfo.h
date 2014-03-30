@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class FlashSetItem;
+@class FlashSetItem, UserInfo;
 
 @interface FlashSetInfo : NSManagedObject
 
@@ -18,6 +18,7 @@
 @property (nonatomic, retain) NSDate * createdDate;
 @property (nonatomic, retain) NSDate * modifiedDate;
 @property (nonatomic, retain) NSSet *hasCards;
+@property (nonatomic, retain) NSSet *isVisibleTo;
 @end
 
 @interface FlashSetInfo (CoreDataGeneratedAccessors)
@@ -26,5 +27,10 @@
 - (void)removeHasCardsObject:(FlashSetItem *)value;
 - (void)addHasCards:(NSSet *)values;
 - (void)removeHasCards:(NSSet *)values;
+
+- (void)addIsVisibleToObject:(UserInfo *)value;
+- (void)removeIsVisibleToObject:(UserInfo *)value;
+- (void)addIsVisibleTo:(NSSet *)values;
+- (void)removeIsVisibleTo:(NSSet *)values;
 
 @end

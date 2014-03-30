@@ -7,6 +7,7 @@
 //
 
 #import "UserInfo.h"
+#import "FlashSetInfo.h"
 
 
 @implementation UserInfo
@@ -14,5 +15,6 @@
 @dynamic expiryTimestamp;
 @dynamic accessToken;
 @dynamic userId;
+@dynamic canSee;
 
 @end
