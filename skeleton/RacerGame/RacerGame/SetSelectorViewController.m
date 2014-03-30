@@ -8,6 +8,8 @@
 
 #import "SetSelectorViewController.h"
 #import "QuizletAPI.h"
+#import "AppDelegate.h"
+#import "UserInfo.h"
 
 @interface SetSelectorViewController ()
 
@@ -65,5 +67,36 @@
 {
     NSLog(@"Actually reached the delegate at destination");
     NSLog(@"Expiry date : %@", userInfo.expiryTimestamp);
+    
+    //Load previously persisted data
+    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+    NSManagedObjectContext* context = appDelegate.managedObjectContext;
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"UserInfo"
+                                              inManagedObjectContext:context];
+    [fetchRequest setEntity:entity];
+    NSError *error;
+    NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
+    for (UserInfo* info in fetchedObjects) {
+        NSLog(@"UserId: %@", info.userId);
+        NSLog(@"Access Code: %@", info.accessToken);
+    }
+    
+    //Persist all of this data
+    /*
+    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+    NSManagedObjectContext* context = appDelegate.managedObjectContext;
+    
+    UserInfo* persistableAttribs = [NSEntityDescription insertNewObjectForEntityForName:@"UserInfo" inManagedObjectContext:context];
+    
+    persistableAttribs.expiryTimestamp = userInfo.expiryTimestamp;
+    persistableAttribs.accessToken = userInfo.accessToken;
+    persistableAttribs.userId = userInfo.userId;
+    
+    NSError *error;
+    if (![context save:&error]) {
+        NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+    }
+    */
 }
 @end
