@@ -8,8 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
-@interface URLFactory : NSObject
+@interface URLHelper : NSObject
 
 +(NSURL*)getLoginUrl;
 
++(NSDictionary*)getParameterDictionaryForURL:(NSURL*)url;
+
++(NSURLRequest*)getAuthRequestForCode:(NSString*)code;
 @end

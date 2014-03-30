@@ -8,8 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
-@interface QuizletAPI : NSObject
+@interface QuizletAPI : NSObject<NSURLConnectionDataDelegate>
 
 +(void)initiateLogin;
+
++(void)requestTokenFromAuthServerForUrl:(NSURL*)url;
 
 @end
