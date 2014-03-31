@@ -275,6 +275,7 @@ vertexdata* calculateVertexData(GLfloat vertices[], int indices[])
     
     // malloc the vertex data.
     // Each point has {x, y, z, nx, ny, nz}
+    NSLog(@"Shape malloc");
     GLfloat *vertexData = (GLfloat*) malloc(totalNumPoints * VBO_NUMCOLS * sizeof(GLfloat));
     
     
@@ -380,6 +381,7 @@ void setVertexDataColor(GLfloat *data, int ptIdx, GLfloat r, GLfloat g, GLfloat 
 
 - (void)setVertexData:(GLfloat *)data withNumPoints:(unsigned int)n
 {
+    NSLog(@"set vertex data");
     _vertexData = data;
     _numPoints = n;
     
@@ -387,6 +389,7 @@ void setVertexDataColor(GLfloat *data, int ptIdx, GLfloat r, GLfloat g, GLfloat 
 }
 
 - (void)setUp {
+    NSLog(@"setup shape");
     glGenBuffers(1, &vertexBuffer);
     glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
     glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * VBO_NUMCOLS * _numPoints, _vertexData, GL_STATIC_DRAW);
@@ -412,6 +415,8 @@ void setVertexDataColor(GLfloat *data, int ptIdx, GLfloat r, GLfloat g, GLfloat 
     
     glColor4f(0, 1, 1, 1);
     glDrawArrays(GL_TRIANGLES, 0, _numPoints);
+    
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
 @end

@@ -16,7 +16,7 @@
 # pragma mark - Starfield Star stuff.
 
 @interface StarfieldStar : NSObject
-@property (nonatomic) BOShape *shape;
+@property (nonatomic, weak) BOShape *shape;
 @property float duration;
 
 - (void)setUp;
@@ -345,23 +345,30 @@
         float scale = 0.25;
         modelMatrix = GLKMatrix4Scale(modelMatrix, scale, scale, scale);
         
-        
+        //*
+        self.effect.transform.modelviewMatrix = modelMatrix;
+        [self.effect prepareToDraw];
+        [star.shape draw];
+        // */
+
         // "Cheap-o-rama" technique for getting an asteroid outline.
         // http://stackoverflow.com/questions/13692282/draw-outline-using-with-shader-program-in-opengl-es-2-0-on-android
         
+        /*
         glDisable(GL_DEPTH_TEST);
         
         // We can scale the object down by applying the scale matrix here.
         self.effect.transform.modelviewMatrix = GLKMatrix4Scale(modelMatrix, 1.05, 1.05, 1.05);
-        self.effect.colorMaterialEnabled = GL_FALSE;
-        self.effect.light0.enabled = GL_FALSE;
+        //self.effect.colorMaterialEnabled = GL_FALSE;
+        //self.effect.light0.enabled = GL_FALSE;
         
         [self.effect prepareToDraw];
         [star.shape draw];
         
         self.effect.transform.modelviewMatrix = modelMatrix;
-        self.effect.colorMaterialEnabled = GL_TRUE;
-        self.effect.light0.enabled = GL_TRUE;
+        //self.effect.colorMaterialEnabled = GL_TRUE;
+        //self.effect.light0.enabled = GL_TRUE;
+        glEnable(GL_LIGHTING);
         
         glEnable(GL_DEPTH_TEST);
         
@@ -369,6 +376,7 @@
         [star.shape draw];
         
         self.effect.transform.modelviewMatrix = modelMatrix;
+        // */
     }
 }
 
