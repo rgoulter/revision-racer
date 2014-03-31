@@ -17,6 +17,7 @@
 
 @property (strong, nonatomic) IBOutlet UITableView *setTable;
 @property (strong, nonatomic) NSArray* listOfUserSets;
+@property (strong, nonatomic) FlashSetInfo* selectedSetForGame;
 @end
 
 @implementation SetSelectorViewController
@@ -36,6 +37,7 @@
     
     [self.setTable setDataSource:self];
     [self.setTable registerClass:[UITableViewCell class] forCellReuseIdentifier:@"SimpleCell"];
+    [self.setTable setDelegate:self];
     // Do any additional setup after loading the view.
 }
 
@@ -71,6 +73,7 @@
     if ([segue.identifier isEqualToString:@"setSelectionToGame"]) {
         GameViewController *gameVC = (GameViewController*)segue.destinationViewController;
         
+        gameVC.flashSet = self.selectedSetForGame;
         // Set the Selected Set information for the game VC.
         // TODO
         // gameVC.flashSet = ...;
@@ -129,6 +132,12 @@
     // (Only perform the segue if there's a set to revise).
     
     [self performSegueWithIdentifier:@"setSelectionToGame" sender:self];
+}
+
+#pragma mark UITableViewDelegate methods
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    self.selectedSetForGame = self.listOfUserSets[[indexPath item]];
 }
 
 #pragma mark UITableViewDataSource delegate methods
