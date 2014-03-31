@@ -12,6 +12,7 @@
 #define REDIRECT_URI @"RacerGame:/"
 
 #define LOGIN_URL @"https://quizlet.com/authorize"
+#define CREATED_SETS_URL @"https://api.quizlet.com/2.0/users/%@/sets"
 #define TOKEN_URL @"https://api.quizlet.com/oauth/token"
 
 @implementation URLHelper
@@ -54,6 +55,18 @@
     NSData *postBody = [postBodyString dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
     [request setValue:[NSString stringWithFormat:@"%lu",(unsigned long)[postBody length]] forHTTPHeaderField:@"Content-Length"];
     [request setHTTPBody:postBody];
+    
+    return request;
+}
+
++(NSURLRequest*)getCreatedSetsRequestForUser:(NSString*)userId AccessToken:(NSString*)token;
+{
+    NSString* requiredURL = [NSString stringWithFormat:CREATED_SETS_URL, userId];
+    NSMutableURLRequest *request = [NSMutableURLRequest
+                                    requestWithURL:[NSURL URLWithString:requiredURL]];
+    
+    [request setHTTPMethod:@"GET"];
+    [request setValue:[NSString stringWithFormat:@"Bearer %@", token] forHTTPHeaderField:@"Authorization"];
     
     return request;
 }

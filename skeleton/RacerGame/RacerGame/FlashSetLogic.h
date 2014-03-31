@@ -7,11 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "UserInfoAttributes.h"
 
 @interface FlashSetLogic : NSObject
 
--(id)init;
+-(id)initWithManagedObjectContect:(NSManagedObjectContext*)context;
 
--(void)downloadSetsForUserId:(NSString*)userId;
+-(void)downloadSetsForUserId:(UserInfoAttributes*)user;
 
 @end

@@ -122,19 +122,13 @@
 		D96BA47718E8764A00D29E82 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				D96BA51918E8B87B00D29E82 /* FlashSetInfo.h */,
-				D96BA51A18E8B87B00D29E82 /* FlashSetInfo.m */,
-				D96BA51618E8B87A00D29E82 /* UserInfo.h */,
-				D96BA51718E8B87A00D29E82 /* UserInfo.m */,
+				D96BA52018E8D7DB00D29E82 /* CoreData */,
+				D96BA51F18E8D7C300D29E82 /* Logic */,
 				D96BA47C18E8965B00D29E82 /* Model.xcdatamodeld */,
 				D96BA47418E8764000D29E82 /* QuizletAPI.h */,
 				D96BA47518E8764000D29E82 /* QuizletAPI.m */,
-				D96BA50A18E8A73100D29E82 /* FlashSetItem.h */,
-				D96BA50B18E8A73100D29E82 /* FlashSetItem.m */,
 				D96BA51318E8A9A900D29E82 /* UserInfoAttributes.h */,
 				D96BA51418E8A9A900D29E82 /* UserInfoAttributes.m */,
-				D96BA51C18E8BBC800D29E82 /* FlashSetLogic.h */,
-				D96BA51D18E8BBC800D29E82 /* FlashSetLogic.m */,
 			);
 			name = Models;
 			path = ..;
@@ -147,6 +141,28 @@
 				D96BA47A18E876A300D29E82 /* URLHelper.m */,
 			);
 			name = Utilties;
+			sourceTree = "<group>";
+		};
+		D96BA51F18E8D7C300D29E82 /* Logic */ = {
+			isa = PBXGroup;
+			children = (
+				D96BA51C18E8BBC800D29E82 /* FlashSetLogic.h */,
+				D96BA51D18E8BBC800D29E82 /* FlashSetLogic.m */,
+			);
+			name = Logic;
+			sourceTree = "<group>";
+		};
+		D96BA52018E8D7DB00D29E82 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				D96BA51918E8B87B00D29E82 /* FlashSetInfo.h */,
+				D96BA51A18E8B87B00D29E82 /* FlashSetInfo.m */,
+				D96BA51618E8B87A00D29E82 /* UserInfo.h */,
+				D96BA51718E8B87A00D29E82 /* UserInfo.m */,
+				D96BA50A18E8A73100D29E82 /* FlashSetItem.h */,
+				D96BA50B18E8A73100D29E82 /* FlashSetItem.m */,
+			);
+			name = CoreData;
 			sourceTree = "<group>";
 		};
 		D9B229D918DB1F1800DDBA11 = {

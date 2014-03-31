@@ -15,4 +15,6 @@
 +(NSDictionary*)getParameterDictionaryForURL:(NSURL*)url;
 
 +(NSURLRequest*)getAuthRequestForCode:(NSString*)code;
+
++(NSURLRequest*)getCreatedSetsRequestForUser:(NSString*)userId AccessToken:(NSString*)token;
 @end
