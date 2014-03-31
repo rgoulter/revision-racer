@@ -241,6 +241,14 @@
     [self setQuestionTo:qn.questionText withAnswers:qn.answers];
 }
 
+- (IBAction)answerButtonPressed:(UIButton *)sender {
+    NSLog(@"Pressed answer: ", sender.titleLabel.text);
+    
+    // Next question
+    _currentQn = [GameQuestion generateFromFlashSet:_flashSet];
+    [self setQuestionTo:_currentQn];
+}
+
 - (IBAction)finishGameBtnPressed:(id)sender {
     // Go to results screen.
     [self performSegueWithIdentifier:@"gameToResults" sender:self];
@@ -361,7 +369,6 @@
         self.effect.transform.modelviewMatrix = modelMatrix;
         //self.effect.colorMaterialEnabled = GL_TRUE;
         //self.effect.light0.enabled = GL_TRUE;
-        glEnable(GL_LIGHTING);
         
         glEnable(GL_DEPTH_TEST);
         
