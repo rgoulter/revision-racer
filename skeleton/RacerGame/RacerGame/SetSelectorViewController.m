@@ -33,6 +33,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [self.setTable setDataSource:self];
     // Do any additional setup after loading the view.
 }
 
@@ -125,4 +127,17 @@
     
     [self performSegueWithIdentifier:@"setSelectionToGame" sender:self];
 }
+
+#pragma mark UITableViewDataSource delegate methods
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return [self.listOfUserSets count];
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    //UITableViewCell* defaultCell = [tableView deq]
+    return nil;
+}
+
 @end
