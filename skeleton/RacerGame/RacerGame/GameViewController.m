@@ -9,6 +9,7 @@
 #import "GameViewController.h"
 #import "Shapes.h"
 
+#import "AppDelegate.h"
 
 
 
@@ -135,6 +136,8 @@
     NSMutableArray *_stars;
     NSArray *_starShapes;
     float _timeTillNextAster;
+    
+    GameQuestion *_currentQn;
 }
 
 @synthesize context;
@@ -147,8 +150,15 @@
     if(!self.flashSet) {
         // need to create a flashset, if we don't have one.
         NSLog(@"GameVC wasn't given a flashSet. generating dummy...");
-        self.flashSet = [[FlashSetInfo alloc] init];
-    
+        
+        AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+        NSManagedObjectContext* context = appDelegate.managedObjectContext;
+        
+        self.flashSet = [NSEntityDescription insertNewObjectForEntityForName:@"FlashSetInfo"
+                                                      inManagedObjectContext:context];
+        
+        NSMutableSet *itemsSet = [NSMutableSet set];
+        
         NSDictionary *dummyValues = @{@"dmyQuestion1": @"dmyAnswer1",
                                       @"dmyQuestion2": @"dmyAnswer2",
                                       @"dmyQuestion3": @"dmyAnswer3",
@@ -157,15 +167,30 @@
                                       @"dmyQuestion6": @"dmyAnswer6",
                                       @"dmyQuestion7": @"dmyAnswer7",
                                       @"dmyQuestion8": @"dmyAnswer8"};
-        for (NSString *key in dummyValues.keyEnumerator) {
-            FlashSetItem *fsi = [FlashSetItem new];
-            fsi.id = @-1;
-            fsi.term = key;
-            fsi.definition = [dummyValues objectForKey:key];
+        for (NSString *key in dummyValues.keyEnumerator.allObjects) {
             
-            [self.flashSet addHasCardsObject:fsi];
+            // Holy hell, Core data.
+            
+            FlashSetItem* fsItem = [NSEntityDescription insertNewObjectForEntityForName:@"FlashSetItem" inManagedObjectContext:context];
+            
+            fsItem.id = @-1;
+            fsItem.term = key;
+            fsItem.definition = [dummyValues objectForKey:key];
+            
+            [itemsSet addObject:fsItem];
         }
+        
+        self.flashSet.id = @-1;
+        self.flashSet.title = @"Dummy FlashSet";
+        self.flashSet.createdDate = [NSDate date];
+        self.flashSet.modifiedDate = [NSDate date];
+        self.flashSet.hasCards = itemsSet;
+        self.flashSet.isVisibleTo = [NSMutableSet set];
     }
+    
+    // Set current question..
+    _currentQn = [GameQuestion generateFromFlashSet:_flashSet];
+    [self setQuestionTo:_currentQn];
     
     _stars = [[NSMutableArray alloc] init];
     
@@ -211,11 +236,16 @@
 {
     self.questionLabel.text = qn;
     
-    self.answerBtn0 = [answers objectAtIndex:0];
-    self.answerBtn1 = [answers objectAtIndex:1];
-    self.answerBtn2 = [answers objectAtIndex:2];
-    self.answerBtn3 = [answers objectAtIndex:3];
-    self.answerBtn4 = [answers objectAtIndex:4];
+    [self.answerBtn0 setTitle:[answers objectAtIndex:0] forState:UIControlStateNormal];
+    [self.answerBtn1 setTitle:[answers objectAtIndex:1] forState:UIControlStateNormal];
+    [self.answerBtn2 setTitle:[answers objectAtIndex:2] forState:UIControlStateNormal];
+    [self.answerBtn3 setTitle:[answers objectAtIndex:3] forState:UIControlStateNormal];
+    [self.answerBtn4 setTitle:[answers objectAtIndex:4] forState:UIControlStateNormal];
+}
+
+- (void)setQuestionTo:(GameQuestion*)qn
+{
+    [self setQuestionTo:qn.questionText withAnswers:qn.answers];
 }
 
 

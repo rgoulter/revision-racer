@@ -12,6 +12,7 @@
 
 #import "FlashSetItem.h"
 #import "FlashSetInfo.h"
+#import "GameQuestion.h"
 
 @interface GameViewController : GLKViewController
 
