@@ -35,6 +35,7 @@
     [super viewDidLoad];
     
     [self.setTable setDataSource:self];
+    [self.setTable registerClass:[UITableViewCell class] forCellReuseIdentifier:@"SimpleCell"];
     // Do any additional setup after loading the view.
 }
 
@@ -119,6 +120,8 @@
     NSManagedObjectContext* context = appDelegate.managedObjectContext;
     FlashSetLogic* flashSetLogic = [[FlashSetLogic alloc] initWithManagedObjectContect:context];
     self.listOfUserSets = [flashSetLogic downloadSetsForUserId:userInfo];
+    
+    [self.setTable reloadData];
 }
 
 - (IBAction)beginGameBtnPressed:(UIButton *)sender {
@@ -136,8 +139,10 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //UITableViewCell* defaultCell = [tableView deq]
-    return nil;
+    UITableViewCell* defaultCell = [tableView dequeueReusableCellWithIdentifier:@"SimpleCell"];
+    FlashSetInfo* requiredSet = self.listOfUserSets[[indexPath item]];
+    defaultCell.text =  requiredSet.title;
+    return defaultCell;
 }
 
 @end
