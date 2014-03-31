@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0262757718E90E6C00CDAA24 /* GameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0262757618E90E6C00CDAA24 /* GameViewController.m */; };
+		0262757B18E90F4400CDAA24 /* Shapes.m in Sources */ = {isa = PBXBuildFile; fileRef = 0262757A18E90F4400CDAA24 /* Shapes.m */; };
+		0262757E18E90F9400CDAA24 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0262757C18E90F9400CDAA24 /* GLKit.framework */; };
+		0262757F18E90F9400CDAA24 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0262757D18E90F9400CDAA24 /* OpenGLES.framework */; };
 		D96BA46F18E8675100D29E82 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D96BA46E18E8675100D29E82 /* CoreData.framework */; };
 		D96BA47318E86BB900D29E82 /* SetSelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D96BA47218E86BB900D29E82 /* SetSelectorViewController.m */; };
 		D96BA47618E8764000D29E82 /* QuizletAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = D96BA47518E8764000D29E82 /* QuizletAPI.m */; };
@@ -44,6 +48,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0262757518E90E6C00CDAA24 /* GameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameViewController.h; sourceTree = "<group>"; };
+		0262757618E90E6C00CDAA24 /* GameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameViewController.m; sourceTree = "<group>"; };
+		0262757918E90F4400CDAA24 /* Shapes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Shapes.h; path = RacerGame/Game/Shapes.h; sourceTree = "<group>"; };
+		0262757A18E90F4400CDAA24 /* Shapes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Shapes.m; path = RacerGame/Game/Shapes.m; sourceTree = "<group>"; };
+		0262757C18E90F9400CDAA24 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
+		0262757D18E90F9400CDAA24 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		D96BA46E18E8675100D29E82 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		D96BA47118E86BB900D29E82 /* SetSelectorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetSelectorViewController.h; sourceTree = "<group>"; };
 		D96BA47218E86BB900D29E82 /* SetSelectorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetSelectorViewController.m; sourceTree = "<group>"; };
@@ -88,6 +98,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0262757E18E90F9400CDAA24 /* GLKit.framework in Frameworks */,
+				0262757F18E90F9400CDAA24 /* OpenGLES.framework in Frameworks */,
 				D96BA46F18E8675100D29E82 /* CoreData.framework in Frameworks */,
 				D9B229E818DB1F1800DDBA11 /* CoreGraphics.framework in Frameworks */,
 				D9B229EA18DB1F1800DDBA11 /* UIKit.framework in Frameworks */,
@@ -108,6 +120,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0262757818E90EE500CDAA24 /* Game Logic */ = {
+			isa = PBXGroup;
+			children = (
+				0262757918E90F4400CDAA24 /* Shapes.h */,
+				0262757A18E90F4400CDAA24 /* Shapes.m */,
+			);
+			name = "Game Logic";
+			sourceTree = "<group>";
+		};
 		D96BA47018E867AC00D29E82 /* VControllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -115,6 +136,8 @@
 				D9B229FB18DB1F1800DDBA11 /* MainMenuViewController.m */,
 				D96BA47118E86BB900D29E82 /* SetSelectorViewController.h */,
 				D96BA47218E86BB900D29E82 /* SetSelectorViewController.m */,
+				0262757518E90E6C00CDAA24 /* GameViewController.h */,
+				0262757618E90E6C00CDAA24 /* GameViewController.m */,
 			);
 			name = VControllers;
 			sourceTree = "<group>";
@@ -168,6 +191,7 @@
 		D9B229D918DB1F1800DDBA11 = {
 			isa = PBXGroup;
 			children = (
+				0262757818E90EE500CDAA24 /* Game Logic */,
 				D9B229EB18DB1F1800DDBA11 /* RacerGame */,
 				D9B22A0A18DB1F1800DDBA11 /* RacerGameTests */,
 				D9B229E418DB1F1800DDBA11 /* Frameworks */,
@@ -187,6 +211,8 @@
 		D9B229E418DB1F1800DDBA11 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0262757C18E90F9400CDAA24 /* GLKit.framework */,
+				0262757D18E90F9400CDAA24 /* OpenGLES.framework */,
 				D96BA46E18E8675100D29E82 /* CoreData.framework */,
 				D9B229E518DB1F1800DDBA11 /* Foundation.framework */,
 				D9B229E718DB1F1800DDBA11 /* CoreGraphics.framework */,
@@ -342,11 +368,13 @@
 				D96BA51E18E8BBC800D29E82 /* FlashSetLogic.m in Sources */,
 				D96BA47618E8764000D29E82 /* QuizletAPI.m in Sources */,
 				D96BA47E18E8965B00D29E82 /* Model.xcdatamodeld in Sources */,
+				0262757718E90E6C00CDAA24 /* GameViewController.m in Sources */,
 				D96BA51B18E8B87B00D29E82 /* FlashSetInfo.m in Sources */,
 				D96BA47318E86BB900D29E82 /* SetSelectorViewController.m in Sources */,
 				D96BA50C18E8A73100D29E82 /* FlashSetItem.m in Sources */,
 				D96BA47B18E876A300D29E82 /* URLHelper.m in Sources */,
 				D9B229F218DB1F1800DDBA11 /* main.m in Sources */,
+				0262757B18E90F4400CDAA24 /* Shapes.m in Sources */,
 				D96BA51818E8B87A00D29E82 /* UserInfo.m in Sources */,
 				D96BA51518E8A9A900D29E82 /* UserInfoAttributes.m in Sources */,
 			);

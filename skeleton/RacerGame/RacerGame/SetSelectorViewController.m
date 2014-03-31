@@ -10,6 +10,7 @@
 #import "QuizletAPI.h"
 #import "AppDelegate.h"
 #import "UserInfo.h"
+#import "GameViewController.h"
 
 @interface SetSelectorViewController ()
 
@@ -51,7 +52,7 @@
     [quizletApi initiateLogin];
 }
 
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -59,8 +60,15 @@
 {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    
+    // Setup the transition for set selection to game
+    if ([segue.identifier isEqualToString:@"setSelectionToGame"]) {
+        GameViewController *gameVC = (GameViewController*)segue.destinationViewController;
+        
+        // Set the Selected Set information for the game VC.
+        // TODO
+    }
 }
-*/
 
 #pragma mark - QuizletLoginDelegate methods
 -(void)successfullyLoggedInForUserID:(UserInfoAttributes *)userInfo
@@ -98,5 +106,12 @@
         NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
     }
     */
+}
+
+- (IBAction)beginGameBtnPressed:(UIButton *)sender {
+    // TODO: Check whether a Revision FlashSet has been selected or not.
+    // (Only perform the segue if there's a set to revise).
+    
+    [self performSegueWithIdentifier:@"setSelectionToGame" sender:self];
 }
 @end
