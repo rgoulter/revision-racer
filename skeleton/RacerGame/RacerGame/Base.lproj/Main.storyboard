@@ -99,6 +99,49 @@
             </objects>
             <point key="canvasLocation" x="1416" y="-18"/>
         </scene>
+        <!--Game Results View Controller-->
+        <scene sceneID="f8o-f9-CcR">
+            <objects>
+                <viewController id="hFx-kF-305" customClass="GameResultsViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="tNj-8k-WY9"/>
+                        <viewControllerLayoutGuide type="bottom" id="xdo-ph-DHL"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="eAN-gI-Qt8">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3xT-Ab-jm2">
+                                <rect key="frame" x="20" y="20" width="77" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Main Menu">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="mainMenuBtnPressed:" destination="hFx-kF-305" eventType="touchUpInside" id="jP1-Gn-HF7"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="You got # out of # correct!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="941" translatesAutoresizingMaskIntoConstraints="NO" id="X9s-It-2kV">
+                                <rect key="frame" x="63" y="275" width="941" height="215"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="90"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="hTF-sZ-Ar0"/>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                    <connections>
+                        <outlet property="resultsLabel" destination="X9s-It-2kV" id="fUf-9z-A0J"/>
+                        <segue destination="BYZ-38-t0r" kind="push" identifier="resultsToMainMenu" id="2vD-dy-5R2"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bGv-S4-i1H" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1378" y="1124"/>
+        </scene>
         <!--GLKit View Controller-->
         <scene sceneID="dVN-sd-7sq">
             <objects>
@@ -111,6 +154,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W5q-bZ-CtJ">
+                                <rect key="frame" x="20" y="20" width="46" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Finish">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="finishGameBtnPressed:" destination="T0N-km-FSq" eventType="touchUpInside" id="aem-s9-49F"/>
+                                </connections>
+                            </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Question Word" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BMP-jN-bm9">
                                 <rect key="frame" x="20" y="279" width="984" height="211"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -184,6 +237,7 @@
                         <outlet property="answerBtn3" destination="CVe-Ae-ZXn" id="ThR-kM-hOn"/>
                         <outlet property="answerBtn4" destination="YwW-cf-lmV" id="gdj-ny-8Pk"/>
                         <outlet property="questionLabel" destination="BMP-jN-bm9" id="Sae-GU-ECN"/>
+                        <segue destination="hFx-kF-305" kind="push" identifier="gameToResults" id="j9l-vs-oYR"/>
                     </connections>
                 </glkViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8V4-zb-aPa" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -212,4 +266,7 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="2vD-dy-5R2"/>
+    </inferredMetricsTieBreakers>
 </document>

@@ -248,6 +248,26 @@
     [self setQuestionTo:qn.questionText withAnswers:qn.answers];
 }
 
+- (IBAction)finishGameBtnPressed:(id)sender {
+    // Go to results screen.
+    [self performSegueWithIdentifier:@"gameToResults" sender:self];
+}
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+    
+    // Setup the transition for set selection to game
+    if ([segue.identifier isEqualToString:@"gameToResults"]) {
+        GameViewController *gameVC = (GameViewController*)segue.destinationViewController;
+        
+        // Set the Selected Set information for the game VC.
+        // TODO
+        // gameVC.flashSet = ...;
+    }
+}
 
 
 
