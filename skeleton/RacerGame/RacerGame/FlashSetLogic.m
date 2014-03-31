@@ -47,8 +47,12 @@
                                                                           inManagedObjectContext:self.context];
         persistableFlashSet.id = [rawSetData objectForKey:@"id"];
         persistableFlashSet.title= [rawSetData objectForKey:@"title"];
-        persistableFlashSet.createdDate = [NSDate dateWithTimeIntervalSince1970:[rawSetData objectForKey:@"created_date"]];
-        persistableFlashSet.modifiedDate = [rawSetData objectForKey:@"modified_date"];
+
+        NSTimeInterval timeInterval = [[rawSetData objectForKey:@"created_date"] doubleValue];
+        persistableFlashSet.createdDate = [NSDate dateWithTimeIntervalSince1970:timeInterval];
+        
+        timeInterval = [[rawSetData objectForKey:@"modified_date"] doubleValue];
+        persistableFlashSet.modifiedDate = [NSDate dateWithTimeIntervalSince1970:timeInterval];
         
         //Fetch all the terms in the set
         
