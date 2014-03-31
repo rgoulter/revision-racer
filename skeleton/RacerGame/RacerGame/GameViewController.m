@@ -12,6 +12,8 @@
 
 
 
+# pragma mark - Starfield Star stuff.
+
 @interface StarfieldStar : NSObject
 @property (nonatomic) BOShape *shape;
 @property float duration;
@@ -127,6 +129,8 @@
 
 
 
+# pragma mark - Initialisation
+
 @implementation GameViewController {
     NSMutableArray *_stars;
     NSArray *_starShapes;
@@ -139,6 +143,29 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    if(!self.flashSet) {
+        // need to create a flashset, if we don't have one.
+        NSLog(@"GameVC wasn't given a flashSet. generating dummy...");
+        self.flashSet = [[FlashSetInfo alloc] init];
+    
+        NSDictionary *dummyValues = @{@"dmyQuestion1": @"dmyAnswer1",
+                                      @"dmyQuestion2": @"dmyAnswer2",
+                                      @"dmyQuestion3": @"dmyAnswer3",
+                                      @"dmyQuestion4": @"dmyAnswer4",
+                                      @"dmyQuestion5": @"dmyAnswer5",
+                                      @"dmyQuestion6": @"dmyAnswer6",
+                                      @"dmyQuestion7": @"dmyAnswer7",
+                                      @"dmyQuestion8": @"dmyAnswer8"};
+        for (NSString *key in dummyValues.keyEnumerator) {
+            FlashSetItem *fsi = [FlashSetItem new];
+            fsi.id = @-1;
+            fsi.term = key;
+            fsi.definition = [dummyValues objectForKey:key];
+            
+            [self.flashSet addHasCardsObject:fsi];
+        }
+    }
     
     _stars = [[NSMutableArray alloc] init];
     
@@ -175,6 +202,26 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+
+
+# pragma mark - QuestionSide logic
+
+- (void)setQuestionTo:(NSString *)qn withAnswers:(NSArray*)answers
+{
+    self.questionLabel.text = qn;
+    
+    self.answerBtn0 = [answers objectAtIndex:0];
+    self.answerBtn1 = [answers objectAtIndex:1];
+    self.answerBtn2 = [answers objectAtIndex:2];
+    self.answerBtn3 = [answers objectAtIndex:3];
+    self.answerBtn4 = [answers objectAtIndex:4];
+}
+
+
+
+
+# pragma mark - OpenGL & GLKit stuff.
 
 - (void)setUpGL
 {

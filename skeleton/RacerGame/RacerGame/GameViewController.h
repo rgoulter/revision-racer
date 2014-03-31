@@ -10,6 +10,9 @@
 #import <UIKit/UIKit.h>
 #import <GLKit/GLKit.h>
 
+#import "FlashSetItem.h"
+#import "FlashSetInfo.h"
+
 @interface GameViewController : GLKViewController
 
 @property (strong, nonatomic) EAGLContext *context;
@@ -22,6 +25,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *answerBtn3;
 @property (weak, nonatomic) IBOutlet UIButton *answerBtn4;
 
+@property FlashSetInfo *flashSet;
 
 - (void)setUpGL;
 - (void)tearDownGL;

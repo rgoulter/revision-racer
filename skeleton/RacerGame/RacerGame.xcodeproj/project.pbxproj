@@ -11,6 +11,7 @@
 		0262757B18E90F4400CDAA24 /* Shapes.m in Sources */ = {isa = PBXBuildFile; fileRef = 0262757A18E90F4400CDAA24 /* Shapes.m */; };
 		0262757E18E90F9400CDAA24 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0262757C18E90F9400CDAA24 /* GLKit.framework */; };
 		0262757F18E90F9400CDAA24 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0262757D18E90F9400CDAA24 /* OpenGLES.framework */; };
+		0262758218E91F4F00CDAA24 /* GameQuestion.m in Sources */ = {isa = PBXBuildFile; fileRef = 0262758118E91F4F00CDAA24 /* GameQuestion.m */; };
 		D96BA46F18E8675100D29E82 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D96BA46E18E8675100D29E82 /* CoreData.framework */; };
 		D96BA47318E86BB900D29E82 /* SetSelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D96BA47218E86BB900D29E82 /* SetSelectorViewController.m */; };
 		D96BA47618E8764000D29E82 /* QuizletAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = D96BA47518E8764000D29E82 /* QuizletAPI.m */; };
@@ -54,6 +55,8 @@
 		0262757A18E90F4400CDAA24 /* Shapes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Shapes.m; path = RacerGame/Game/Shapes.m; sourceTree = "<group>"; };
 		0262757C18E90F9400CDAA24 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		0262757D18E90F9400CDAA24 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		0262758018E91F4F00CDAA24 /* GameQuestion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameQuestion.h; path = RacerGame/Game/GameQuestion.h; sourceTree = "<group>"; };
+		0262758118E91F4F00CDAA24 /* GameQuestion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameQuestion.m; path = RacerGame/Game/GameQuestion.m; sourceTree = "<group>"; };
 		D96BA46E18E8675100D29E82 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		D96BA47118E86BB900D29E82 /* SetSelectorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetSelectorViewController.h; sourceTree = "<group>"; };
 		D96BA47218E86BB900D29E82 /* SetSelectorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetSelectorViewController.m; sourceTree = "<group>"; };
@@ -125,6 +128,8 @@
 			children = (
 				0262757918E90F4400CDAA24 /* Shapes.h */,
 				0262757A18E90F4400CDAA24 /* Shapes.m */,
+				0262758018E91F4F00CDAA24 /* GameQuestion.h */,
+				0262758118E91F4F00CDAA24 /* GameQuestion.m */,
 			);
 			name = "Game Logic";
 			sourceTree = "<group>";
@@ -372,6 +377,7 @@
 				D96BA51B18E8B87B00D29E82 /* FlashSetInfo.m in Sources */,
 				D96BA47318E86BB900D29E82 /* SetSelectorViewController.m in Sources */,
 				D96BA50C18E8A73100D29E82 /* FlashSetItem.m in Sources */,
+				0262758218E91F4F00CDAA24 /* GameQuestion.m in Sources */,
 				D96BA47B18E876A300D29E82 /* URLHelper.m in Sources */,
 				D9B229F218DB1F1800DDBA11 /* main.m in Sources */,
 				0262757B18E90F4400CDAA24 /* Shapes.m in Sources */,

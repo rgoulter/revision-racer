@@ -67,6 +67,7 @@
         
         // Set the Selected Set information for the game VC.
         // TODO
+        // gameVC.flashSet = ...;
     }
 }
 
