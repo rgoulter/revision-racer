@@ -37,14 +37,20 @@
         [chosenCards addObject:it];
     }
     
-    NSMutableArray *val = [NSMutableArray arrayWithArray:chosenCards.allObjects];
+    NSMutableArray *cardsArray = [NSMutableArray arrayWithArray:chosenCards.allObjects];
     
     // shuffle.
     
+    
     // chose arbitrary qn.
+    NSUInteger answerIdx = arc4random() % cardsArray.count;
     
+    GameQuestion *gameQn = [[GameQuestion alloc] init];
+    gameQn.flashSet = flashSet;
+    gameQn.correctIdx = answerIdx;
+    gameQn.flashCards = cardsArray;
     
-    return nil;
+    return gameQn;
 }
 
 // We only support TEXT answers at the moment.
