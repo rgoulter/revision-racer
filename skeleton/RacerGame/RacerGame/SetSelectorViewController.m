@@ -11,9 +11,12 @@
 #import "AppDelegate.h"
 #import "UserInfo.h"
 #import "GameViewController.h"
+#import "FlashSetLogic.h"
 
 @interface SetSelectorViewController ()
 
+@property (strong, nonatomic) IBOutlet UITableView *setTable;
+@property (strong, nonatomic) NSArray* listOfUserSets;
 @end
 
 @implementation SetSelectorViewController
@@ -74,10 +77,12 @@
 #pragma mark - QuizletLoginDelegate methods
 -(void)successfullyLoggedInForUserID:(UserInfoAttributes *)userInfo
 {
+    
     NSLog(@"Actually reached the delegate at destination");
     NSLog(@"Expiry date : %@", userInfo.expiryTimestamp);
     
     //Load previously persisted data
+    /*
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
     NSManagedObjectContext* context = appDelegate.managedObjectContext;
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
@@ -107,6 +112,11 @@
         NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
     }
     */
+    
+    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+    NSManagedObjectContext* context = appDelegate.managedObjectContext;
+    FlashSetLogic* flashSetLogic = [[FlashSetLogic alloc] initWithManagedObjectContect:context];
+    self.listOfUserSets = [flashSetLogic downloadSetsForUserId:userInfo];
 }
 
 - (IBAction)beginGameBtnPressed:(UIButton *)sender {

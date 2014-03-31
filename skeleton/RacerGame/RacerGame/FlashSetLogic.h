@@ -13,6 +13,6 @@
 
 -(id)initWithManagedObjectContect:(NSManagedObjectContext*)context;
 
--(void)downloadSetsForUserId:(UserInfoAttributes*)user;
+-(NSArray*)downloadSetsForUserId:(UserInfoAttributes *)user;
 
 @end

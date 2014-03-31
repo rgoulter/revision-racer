@@ -35,7 +35,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-205" y="14"/>
+            <point key="canvasLocation" x="267" y="-34"/>
         </scene>
         <!--Set Selector View Controller-->
         <scene sceneID="qMu-rj-8VQ">
@@ -80,18 +80,24 @@
                                     <action selector="beginGameBtnPressed:" destination="RXd-Aj-ZkL" eventType="touchUpInside" id="ExH-Rs-gHe"/>
                                 </connections>
                             </button>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="wiV-CM-e9Y">
+                                <rect key="frame" x="-13" y="78" width="1037" height="599"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <connections>
+                        <outlet property="setTable" destination="wiV-CM-e9Y" id="I7N-lW-0DW"/>
                         <segue destination="T0N-km-FSq" kind="push" identifier="setSelectionToGame" id="EKm-Ff-sN7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ceb-rr-9Pe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="644" y="14"/>
+            <point key="canvasLocation" x="1416" y="-18"/>
         </scene>
         <!--GLKit View Controller-->
         <scene sceneID="dVN-sd-7sq">
@@ -182,7 +188,7 @@
                 </glkViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8V4-zb-aPa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="816" y="1220"/>
+            <point key="canvasLocation" x="2840" y="1124"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="hjP-bj-Uuc">
