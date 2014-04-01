@@ -13,6 +13,7 @@
 #import "GameViewController.h"
 #import "FlashSetLogic.h"
 #import "SetSelectionTableItem.h"
+#import "ActivityModal.h"
 
 @interface SetSelectorViewController ()
 
@@ -42,7 +43,11 @@
     [self.setTable setDelegate:self];
     UINib* customCellNib = [UINib nibWithNibName:@"SetSelectionTableItem" bundle:[NSBundle mainBundle]];
     [self.setTable registerNib:customCellNib forCellReuseIdentifier:@"CustomCell"];
-    [self.setTable setRowHeight:100];
+    
+    SetSelectionTableItem* item = [[[NSBundle mainBundle] loadNibNamed:@"SetSelectionTableItem" owner:nil options:nil] lastObject];
+    
+    
+    [self.setTable setRowHeight:item.bounds.size.height];
     // Do any additional setup after loading the view.
 }
 
@@ -143,6 +148,10 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     self.selectedSetForGame = self.listOfUserSets[[indexPath item]];
+    ActivityModal* modal = [[ActivityModal alloc] initWithFrame:self.view.frame];
+    
+    [modal setText:@"Loading some shit"];
+    [self.view addSubview:modal];
 }
 
 #pragma mark UITableViewDataSource delegate methods
