@@ -34,6 +34,7 @@
 
 - (void)viewDidLoad
 {
+    NSLog(@"Set selection view loaded. Yey....");
     [super viewDidLoad];
     
     [self.setTable setDataSource:self];

@@ -10,10 +10,19 @@
 #import "SetSelectorViewController.h"
 
 @interface MainMenuViewController ()
-
+@property (strong, nonatomic) SetSelectorViewController* setSelectionViewController;
 @end
 
 @implementation MainMenuViewController
+
+-(SetSelectorViewController *)setSelectionViewController
+{
+    if (!_setSelectionViewController) {
+        UIStoryboard *storyboard = self.storyboard;
+        _setSelectionViewController = [storyboard instantiateViewControllerWithIdentifier:@"SetSelectorViewController"];
+    }
+    return _setSelectionViewController;
+}
 
 - (void)viewDidLoad
 {
@@ -31,10 +40,7 @@
     NSLog(@"New game button pressed..");
     
     //Launch segue to level/set selector
-    UIStoryboard *storyboard = self.storyboard;
-    SetSelectorViewController *setSelector = [storyboard instantiateViewControllerWithIdentifier:@"SetSelectorViewController"];
-    
-    [self.navigationController pushViewController:setSelector animated:YES];
+    [self.navigationController pushViewController:self.setSelectionViewController animated:YES];
 }
 
 @end
