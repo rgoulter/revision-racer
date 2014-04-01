@@ -24,6 +24,8 @@
 		D96BA51B18E8B87B00D29E82 /* FlashSetInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = D96BA51A18E8B87B00D29E82 /* FlashSetInfo.m */; };
 		D96BA51E18E8BBC800D29E82 /* FlashSetLogic.m in Sources */ = {isa = PBXBuildFile; fileRef = D96BA51D18E8BBC800D29E82 /* FlashSetLogic.m */; };
 		D96BA52318E92F1700D29E82 /* FlashSetInfoAttributes.m in Sources */ = {isa = PBXBuildFile; fileRef = D96BA52218E92F1700D29E82 /* FlashSetInfoAttributes.m */; };
+		D96BA52618EAFEB300D29E82 /* SetSelectionTableItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = D96BA52518EAFEB300D29E82 /* SetSelectionTableItem.xib */; };
+		D96BA52918EB038100D29E82 /* SetSelectionTableItem.m in Sources */ = {isa = PBXBuildFile; fileRef = D96BA52818EB038100D29E82 /* SetSelectionTableItem.m */; };
 		D9B229E618DB1F1800DDBA11 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9B229E518DB1F1800DDBA11 /* Foundation.framework */; };
 		D9B229E818DB1F1800DDBA11 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9B229E718DB1F1800DDBA11 /* CoreGraphics.framework */; };
 		D9B229EA18DB1F1800DDBA11 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9B229E918DB1F1800DDBA11 /* UIKit.framework */; };
@@ -81,6 +83,9 @@
 		D96BA51D18E8BBC800D29E82 /* FlashSetLogic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FlashSetLogic.m; path = RacerGame/FlashSetLogic.m; sourceTree = "<group>"; };
 		D96BA52118E92F1700D29E82 /* FlashSetInfoAttributes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlashSetInfoAttributes.h; sourceTree = "<group>"; };
 		D96BA52218E92F1700D29E82 /* FlashSetInfoAttributes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlashSetInfoAttributes.m; sourceTree = "<group>"; };
+		D96BA52518EAFEB300D29E82 /* SetSelectionTableItem.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SetSelectionTableItem.xib; sourceTree = "<group>"; };
+		D96BA52718EB038100D29E82 /* SetSelectionTableItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetSelectionTableItem.h; sourceTree = "<group>"; };
+		D96BA52818EB038100D29E82 /* SetSelectionTableItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetSelectionTableItem.m; sourceTree = "<group>"; };
 		D9B229E218DB1F1800DDBA11 /* RacerGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RacerGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9B229E518DB1F1800DDBA11 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D9B229E718DB1F1800DDBA11 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -203,6 +208,16 @@
 			name = CoreData;
 			sourceTree = "<group>";
 		};
+		D96BA52418EAFE2400D29E82 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				D96BA52518EAFEB300D29E82 /* SetSelectionTableItem.xib */,
+				D96BA52718EB038100D29E82 /* SetSelectionTableItem.h */,
+				D96BA52818EB038100D29E82 /* SetSelectionTableItem.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
 		D9B229D918DB1F1800DDBA11 = {
 			isa = PBXGroup;
 			children = (
@@ -243,6 +258,7 @@
 				D9B229F418DB1F1800DDBA11 /* AppDelegate.h */,
 				D9B229F518DB1F1800DDBA11 /* AppDelegate.m */,
 				D9B229F718DB1F1800DDBA11 /* Main.storyboard */,
+				D96BA52418EAFE2400D29E82 /* Views */,
 				D96BA47818E8768B00D29E82 /* Utilties */,
 				D96BA47718E8764A00D29E82 /* Models */,
 				D96BA47018E867AC00D29E82 /* VControllers */,
@@ -360,6 +376,7 @@
 				D9B229FE18DB1F1800DDBA11 /* Images.xcassets in Resources */,
 				D9B229F018DB1F1800DDBA11 /* InfoPlist.strings in Resources */,
 				D9B229F918DB1F1800DDBA11 /* Main.storyboard in Resources */,
+				D96BA52618EAFEB300D29E82 /* SetSelectionTableItem.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -391,6 +408,7 @@
 				D96BA50C18E8A73100D29E82 /* FlashSetItem.m in Sources */,
 				0262758218E91F4F00CDAA24 /* GameQuestion.m in Sources */,
 				D96BA47B18E876A300D29E82 /* URLHelper.m in Sources */,
+				D96BA52918EB038100D29E82 /* SetSelectionTableItem.m in Sources */,
 				D9B229F218DB1F1800DDBA11 /* main.m in Sources */,
 				0262757B18E90F4400CDAA24 /* Shapes.m in Sources */,
 				D96BA51818E8B87A00D29E82 /* UserInfo.m in Sources */,

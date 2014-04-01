@@ -12,6 +12,7 @@
 #import "UserInfo.h"
 #import "GameViewController.h"
 #import "FlashSetLogic.h"
+#import "SetSelectionTableItem.h"
 
 @interface SetSelectorViewController ()
 
@@ -38,6 +39,9 @@
     [self.setTable setDataSource:self];
     [self.setTable registerClass:[UITableViewCell class] forCellReuseIdentifier:@"SimpleCell"];
     [self.setTable setDelegate:self];
+    UINib* customCellNib = [UINib nibWithNibName:@"SetSelectionTableItem" bundle:[NSBundle mainBundle]];
+    [self.setTable registerNib:customCellNib forCellReuseIdentifier:@"CustomCell"];
+    [self.setTable setRowHeight:100];
     // Do any additional setup after loading the view.
 }
 
@@ -148,10 +152,20 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell* defaultCell = [tableView dequeueReusableCellWithIdentifier:@"SimpleCell"];
+    UITableViewCell* defaultCell = [tableView dequeueReusableCellWithIdentifier:@"CustomCell"];
+    //UITableViewCell* defaultCell = [tableView dequeueReusableCellWithIdentifier:<#(NSString *)#>]
     FlashSetInfo* requiredSet = self.listOfUserSets[[indexPath item]];
-    defaultCell.text =  requiredSet.title;
-    return defaultCell;
+    
+    FlashSetInfoAttributes* attribs = [[FlashSetInfoAttributes alloc] init];
+    attribs.title = requiredSet.title;
+    attribs.createdDate = requiredSet.createdDate;
+    attribs.modifiedDate = requiredSet.modifiedDate;
+    attribs.id = requiredSet.id;
+    
+    SetSelectionTableItem* myCell = (SetSelectionTableItem*)defaultCell;
+    [myCell setDataSource:attribs];
+    
+    return myCell;
 }
 
 @end

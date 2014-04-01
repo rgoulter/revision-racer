@@ -10,4 +10,9 @@
 
 @interface FlashSetInfoAttributes : NSObject
 
+@property (nonatomic, strong) NSNumber * id;
+@property (nonatomic, strong) NSString * title;
+@property (nonatomic, strong) NSDate * createdDate;
+@property (nonatomic, strong) NSDate * modifiedDate;
+
 @end
