@@ -8,121 +8,10 @@
 
 #import "GameViewController.h"
 #import "Shapes.h"
-#import "Resources.h"
+#import "StarfieldStar.h"
 #import "AppDelegate.h"
 
 
-
-# pragma mark - Starfield Star stuff.
-
-@interface StarfieldStar : NSObject
-@property (nonatomic, weak) BOShape *shape;
-@property float duration;
-
-- (void)setUp;
-- (void)tearDown;
-- (void)draw;
-- (void)tick:(NSTimeInterval)timeSinceLastUpdate;
-- (GLKMatrix4)transformation:(GLKMatrix4)mat;
-- (BOOL)isExpired;
-@end
-
-@implementation StarfieldStar {
-    float _sx, _sy, _sz;
-    float _tx, _ty, _tz;
-    float _age;
-    
-    float _rotX, _rotDX, _rotY, _rotDY;
-    
-    float _r, _g, _b;
-}
-
-- (id)init
-{
-    self = [super init];
-    
-    if (self) {
-        _age = 0;
-        
-        _rotX = (float)(arc4random() % 100) / 100;
-        _rotDX = (float)(arc4random() % 10) / 100;
-        _rotY = (float)(arc4random() % 100) / 100;
-        _rotDY = (float)(arc4random() % 10) / 100;
-    }
-    
-    return self;
-}
-
-- (void)setStartPositionX:(GLfloat)x Y:(GLfloat)y Z:(GLfloat)z
-{
-    _sx = x;
-    _sy = y;
-    _sz = z;
-}
-
-- (void)setEndPositionX:(GLfloat)x Y:(GLfloat)y Z:(GLfloat)z
-{
-    _tx = x;
-    _ty = y;
-    _tz = z;
-}
-
-- (void)setUp
-{
-    //[_shape setUp];
-}
-
-- (void)tearDown
-{
-    //[_shape tearDown];
-}
-
-- (void)draw
-{
-    // transform?
-    // atm, transformation w/ GLKit is handled in the
-    // GLKViewController whatever, since that's where the
-    // .modelViewMatrix can be accessed. :/
-    
-    [_shape draw];
-}
-
-- (void)tick:(NSTimeInterval)timeSinceLastUpdate
-{
-    _age += timeSinceLastUpdate;
-    
-    _rotX += _rotDX;
-    _rotY += _rotDY;
-}
-
-- (GLKMatrix4)transformation:(GLKMatrix4)mat
-{
-    // Returns a matrix, M' = translationMat * M
-    
-    float t = _age / _duration;
-    
-    if (t > 1) { t = 1; }
-    
-    // calculate position; P = (1 - t) * A + t * B
-    float x = (1 - t) * _sx + t * _tx;
-    float y = (1 - t) * _sy + t * _ty;
-    float z = (1 - t) * _sz + t * _tz;
-    
-    mat = GLKMatrix4Translate(mat, x, y, z);
-    
-    // We could rotate here if we wanted to.
-    mat = GLKMatrix4Rotate(mat, _rotX * M_2_PI, 1, 0, 0);
-    mat = GLKMatrix4Rotate(mat, _rotY * M_2_PI, 0, 1, 0);
-    
-    return mat;
-}
-
-- (BOOL)isExpired
-{
-    return _age > _duration;
-}
-
-@end
 
 # pragma mark - Initialisation
 
@@ -145,10 +34,11 @@
         // need to create a flashset, if we don't have one.
         NSLog(@"GameVC wasn't given a flashSet. generating dummy...");
         
-        NSManagedObjectContext* context = [Resources singleton].managedObjectContext;
+        AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+        NSManagedObjectContext* cdCtx = appDelegate.managedObjectContext;
         
         self.flashSet = [NSEntityDescription insertNewObjectForEntityForName:@"FlashSetInfo"
-                                                      inManagedObjectContext:context];
+                                                      inManagedObjectContext:cdCtx];
         
         NSMutableSet *itemsSet = [NSMutableSet set];
         
@@ -164,7 +54,7 @@
             
             // Holy hell, Core data.
             
-            FlashSetItem* fsItem = [NSEntityDescription insertNewObjectForEntityForName:@"FlashSetItem" inManagedObjectContext:context];
+            FlashSetItem* fsItem = [NSEntityDescription insertNewObjectForEntityForName:@"FlashSetItem" inManagedObjectContext:cdCtx];
             
             fsItem.id = @-1;
             fsItem.term = key;
@@ -242,7 +132,7 @@
 }
 
 - (IBAction)answerButtonPressed:(UIButton *)sender {
-    NSLog(@"Pressed answer: ", sender.titleLabel.text);
+    NSLog(@"Pressed answer: %@", sender.titleLabel.text);
     
     // Next question
     _currentQn = [GameQuestion generateFromFlashSet:_flashSet];
@@ -262,7 +152,7 @@
     
     // Setup the transition for set selection to game
     if ([segue.identifier isEqualToString:@"gameToResults"]) {
-        GameViewController *gameVC = (GameViewController*)segue.destinationViewController;
+        //GameViewController *gameVC = (GameViewController*)segue.destinationViewController;
         
         // Set the Selected Set information for the game VC.
         // TODO
@@ -346,37 +236,9 @@
         float scale = 0.25;
         modelMatrix = GLKMatrix4Scale(modelMatrix, scale, scale, scale);
         
-        //*
         self.effect.transform.modelviewMatrix = modelMatrix;
         [self.effect prepareToDraw];
         [star.shape draw];
-        // */
-
-        // "Cheap-o-rama" technique for getting an asteroid outline.
-        // http://stackoverflow.com/questions/13692282/draw-outline-using-with-shader-program-in-opengl-es-2-0-on-android
-        
-        /*
-        glDisable(GL_DEPTH_TEST);
-        
-        // We can scale the object down by applying the scale matrix here.
-        self.effect.transform.modelviewMatrix = GLKMatrix4Scale(modelMatrix, 1.05, 1.05, 1.05);
-        //self.effect.colorMaterialEnabled = GL_FALSE;
-        //self.effect.light0.enabled = GL_FALSE;
-        
-        [self.effect prepareToDraw];
-        [star.shape draw];
-        
-        self.effect.transform.modelviewMatrix = modelMatrix;
-        //self.effect.colorMaterialEnabled = GL_TRUE;
-        //self.effect.light0.enabled = GL_TRUE;
-        
-        glEnable(GL_DEPTH_TEST);
-        
-        [self.effect prepareToDraw];
-        [star.shape draw];
-        
-        self.effect.transform.modelviewMatrix = modelMatrix;
-        // */
     }
 }
 
