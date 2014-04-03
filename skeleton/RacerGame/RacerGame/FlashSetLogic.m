@@ -98,16 +98,13 @@
     for (FlashSetItemAttributes* eachCard in setOfCards) {
         FlashSetItem* persistableFlashSetItem = [self getPersistentSetItemForId:eachCard.id];
         
-        if (persistentFlashSet) {
-            persistableFlashSetItem.term = eachCard.term;
-            persistableFlashSetItem.definition = eachCard.definition;
-        } else {
+        if (!persistentFlashSet) {
             persistableFlashSetItem = [NSEntityDescription insertNewObjectForEntityForName:@"FlashSetItem"
                                                                     inManagedObjectContext:self.context];
             persistableFlashSetItem.id = eachCard.id;
-            persistableFlashSetItem.term = eachCard.term;
-            persistableFlashSetItem.definition = eachCard.definition;
         }
+        persistableFlashSetItem.term = eachCard.term;
+        persistableFlashSetItem.definition = eachCard.definition;
         [persistentFlashSet addHasCardsObject:persistableFlashSetItem];
     }
     

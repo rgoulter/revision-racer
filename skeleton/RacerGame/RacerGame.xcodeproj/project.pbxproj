@@ -27,7 +27,6 @@
 		D96BA47E18E8965B00D29E82 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D96BA47C18E8965B00D29E82 /* Model.xcdatamodeld */; };
 		D96BA50C18E8A73100D29E82 /* FlashSetItem.m in Sources */ = {isa = PBXBuildFile; fileRef = D96BA50B18E8A73100D29E82 /* FlashSetItem.m */; };
 		D96BA51518E8A9A900D29E82 /* UserInfoAttributes.m in Sources */ = {isa = PBXBuildFile; fileRef = D96BA51418E8A9A900D29E82 /* UserInfoAttributes.m */; };
-		D96BA51818E8B87A00D29E82 /* UserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = D96BA51718E8B87A00D29E82 /* UserInfo.m */; };
 		D96BA51B18E8B87B00D29E82 /* FlashSetInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = D96BA51A18E8B87B00D29E82 /* FlashSetInfo.m */; };
 		D96BA51E18E8BBC800D29E82 /* FlashSetLogic.m in Sources */ = {isa = PBXBuildFile; fileRef = D96BA51D18E8BBC800D29E82 /* FlashSetLogic.m */; };
 		D96BA52318E92F1700D29E82 /* FlashSetInfoAttributes.m in Sources */ = {isa = PBXBuildFile; fileRef = D96BA52218E92F1700D29E82 /* FlashSetInfoAttributes.m */; };
@@ -37,6 +36,8 @@
 		D96BA52F18EB365C00D29E82 /* ActivityModal.m in Sources */ = {isa = PBXBuildFile; fileRef = D96BA52E18EB365C00D29E82 /* ActivityModal.m */; };
 		D991E55D18ED4A32003A4801 /* Resources.m in Sources */ = {isa = PBXBuildFile; fileRef = D991E55C18ED4A32003A4801 /* Resources.m */; };
 		D991E56018ED5E69003A4801 /* FlashSetItemAttributes.m in Sources */ = {isa = PBXBuildFile; fileRef = D991E55F18ED5E69003A4801 /* FlashSetItemAttributes.m */; };
+		D991E56318EDB129003A4801 /* UserInfoLogic.m in Sources */ = {isa = PBXBuildFile; fileRef = D991E56218EDB129003A4801 /* UserInfoLogic.m */; };
+		D991E56618EDB7D1003A4801 /* UserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = D991E56518EDB7D1003A4801 /* UserInfo.m */; };
 		D9B229E618DB1F1800DDBA11 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9B229E518DB1F1800DDBA11 /* Foundation.framework */; };
 		D9B229E818DB1F1800DDBA11 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9B229E718DB1F1800DDBA11 /* CoreGraphics.framework */; };
 		D9B229EA18DB1F1800DDBA11 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9B229E918DB1F1800DDBA11 /* UIKit.framework */; };
@@ -100,8 +101,6 @@
 		D96BA50B18E8A73100D29E82 /* FlashSetItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlashSetItem.m; sourceTree = "<group>"; };
 		D96BA51318E8A9A900D29E82 /* UserInfoAttributes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserInfoAttributes.h; path = RacerGame/UserInfoAttributes.h; sourceTree = "<group>"; };
 		D96BA51418E8A9A900D29E82 /* UserInfoAttributes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserInfoAttributes.m; path = RacerGame/UserInfoAttributes.m; sourceTree = "<group>"; };
-		D96BA51618E8B87A00D29E82 /* UserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfo.h; sourceTree = "<group>"; };
-		D96BA51718E8B87A00D29E82 /* UserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfo.m; sourceTree = "<group>"; };
 		D96BA51918E8B87B00D29E82 /* FlashSetInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlashSetInfo.h; sourceTree = "<group>"; };
 		D96BA51A18E8B87B00D29E82 /* FlashSetInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlashSetInfo.m; sourceTree = "<group>"; };
 		D96BA51C18E8BBC800D29E82 /* FlashSetLogic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FlashSetLogic.h; path = RacerGame/FlashSetLogic.h; sourceTree = "<group>"; };
@@ -118,6 +117,10 @@
 		D991E55C18ED4A32003A4801 /* Resources.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Resources.m; sourceTree = "<group>"; };
 		D991E55E18ED5E69003A4801 /* FlashSetItemAttributes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlashSetItemAttributes.h; sourceTree = "<group>"; };
 		D991E55F18ED5E69003A4801 /* FlashSetItemAttributes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlashSetItemAttributes.m; sourceTree = "<group>"; };
+		D991E56118EDB129003A4801 /* UserInfoLogic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfoLogic.h; sourceTree = "<group>"; };
+		D991E56218EDB129003A4801 /* UserInfoLogic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfoLogic.m; sourceTree = "<group>"; };
+		D991E56418EDB7D1003A4801 /* UserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfo.h; sourceTree = "<group>"; };
+		D991E56518EDB7D1003A4801 /* UserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfo.m; sourceTree = "<group>"; };
 		D9B229E218DB1F1800DDBA11 /* RacerGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RacerGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9B229E518DB1F1800DDBA11 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D9B229E718DB1F1800DDBA11 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -236,6 +239,8 @@
 			children = (
 				D96BA51C18E8BBC800D29E82 /* FlashSetLogic.h */,
 				D96BA51D18E8BBC800D29E82 /* FlashSetLogic.m */,
+				D991E56118EDB129003A4801 /* UserInfoLogic.h */,
+				D991E56218EDB129003A4801 /* UserInfoLogic.m */,
 			);
 			name = Logic;
 			sourceTree = "<group>";
@@ -245,8 +250,8 @@
 			children = (
 				D96BA51918E8B87B00D29E82 /* FlashSetInfo.h */,
 				D96BA51A18E8B87B00D29E82 /* FlashSetInfo.m */,
-				D96BA51618E8B87A00D29E82 /* UserInfo.h */,
-				D96BA51718E8B87A00D29E82 /* UserInfo.m */,
+				D991E56418EDB7D1003A4801 /* UserInfo.h */,
+				D991E56518EDB7D1003A4801 /* UserInfo.m */,
 				D96BA50A18E8A73100D29E82 /* FlashSetItem.h */,
 				D96BA50B18E8A73100D29E82 /* FlashSetItem.m */,
 			);
@@ -471,10 +476,12 @@
 				0262758518E9387900CDAA24 /* GameResultsViewController.m in Sources */,
 				D96BA51E18E8BBC800D29E82 /* FlashSetLogic.m in Sources */,
 				D96BA47618E8764000D29E82 /* QuizletAPI.m in Sources */,
+				D991E56618EDB7D1003A4801 /* UserInfo.m in Sources */,
 				D96BA47E18E8965B00D29E82 /* Model.xcdatamodeld in Sources */,
 				0262757718E90E6C00CDAA24 /* GameViewController.m in Sources */,
 				D96BA51B18E8B87B00D29E82 /* FlashSetInfo.m in Sources */,
 				029E580918EC6507007EB6E8 /* UIQuestionLabel.m in Sources */,
+				D991E56318EDB129003A4801 /* UserInfoLogic.m in Sources */,
 				D96BA47318E86BB900D29E82 /* SetSelectorViewController.m in Sources */,
 				029E57F118EC1723007EB6E8 /* GameAnimationState.m in Sources */,
 				D96BA50C18E8A73100D29E82 /* FlashSetItem.m in Sources */,
@@ -491,7 +498,6 @@
 				D991E56018ED5E69003A4801 /* FlashSetItemAttributes.m in Sources */,
 				02A30C8B18ECF9A6005F7ED7 /* QuestionState.m in Sources */,
 				029E57F718EC17B2007EB6E8 /* AnswerState.m in Sources */,
-				D96BA51818E8B87A00D29E82 /* UserInfo.m in Sources */,
 				D96BA51518E8A9A900D29E82 /* UserInfoAttributes.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
