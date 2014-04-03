@@ -8,11 +8,13 @@
 
 #import <Foundation/Foundation.h>
 #import "UserInfoAttributes.h"
+#import "FlashSetInfoAttributes.h"
 
 @interface FlashSetLogic : NSObject
 
--(id)initWithManagedObjectContect:(NSManagedObjectContext*)context;
-
 -(NSArray*)downloadSetsForUserId:(UserInfoAttributes *)user;
 
+-(FlashSetInfoAttributes*)getSetForId:(NSNumber*)setId;
+
+-(NSSet*)getAllItemsInSet:(NSNumber*)setId;
 @end

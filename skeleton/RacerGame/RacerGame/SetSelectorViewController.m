@@ -129,8 +129,7 @@
         NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
     }
     */
-    NSManagedObjectContext* context = [Resources singleton].managedObjectContext;
-    FlashSetLogic* flashSetLogic = [[FlashSetLogic alloc] initWithManagedObjectContect:context];
+    FlashSetLogic* flashSetLogic = [[FlashSetLogic alloc] init];
     self.listOfUserSets = [flashSetLogic downloadSetsForUserId:userInfo];
     
     [self.setTable reloadData];
