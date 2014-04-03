@@ -219,4 +219,17 @@
     return [returnSet allObjects];
 }
 
+-(NSArray*)getSetsOfActiveUser
+{
+    UserInfo* activeUser = [[UserInfoLogic singleton] getPersistentActiveUser];
+    
+    NSSet* activeUsersSets = [activeUser canSee];
+    NSMutableArray* returnList = [NSMutableArray array];
+    
+    for (FlashSetInfo* eachSet in activeUsersSets) {
+        FlashSetInfoAttributes* attribObject = [[FlashSetInfoAttributes alloc] initWithFlashSetInfo:eachSet];
+        [returnList addObject:attribObject];
+    }
+    return returnList;
+}
 @end

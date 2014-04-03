@@ -40,6 +40,8 @@
     NSLog(@"Active user : %@",[[UserInfoLogic singleton] getActiveUser].userId);
     [super viewDidLoad];
     
+    self.listOfUserSets = [[FlashSetLogic singleton] getSetsOfActiveUser];
+    
     [self.setTable setDataSource:self];
     [self.setTable registerClass:[UITableViewCell class] forCellReuseIdentifier:@"SimpleCell"];
     [self.setTable setDelegate:self];

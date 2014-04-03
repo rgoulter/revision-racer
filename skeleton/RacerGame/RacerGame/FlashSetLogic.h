@@ -19,4 +19,6 @@
 -(FlashSetInfoAttributes*)getSetForId:(NSNumber*)setId;
 
 -(NSSet*)getAllItemsInSet:(NSNumber*)setId;
+
+-(NSArray*)getSetsOfActiveUser;
 @end
