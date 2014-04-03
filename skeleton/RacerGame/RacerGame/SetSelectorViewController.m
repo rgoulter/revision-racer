@@ -14,6 +14,7 @@
 #import "FlashSetLogic.h"
 #import "SetSelectionTableItem.h"
 #import "ActivityModal.h"
+#import "Resources.h"
 
 @interface SetSelectorViewController ()
 
@@ -128,9 +129,7 @@
         NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
     }
     */
-    
-    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
-    NSManagedObjectContext* context = appDelegate.managedObjectContext;
+    NSManagedObjectContext* context = [Resources singleton].managedObjectContext;
     FlashSetLogic* flashSetLogic = [[FlashSetLogic alloc] initWithManagedObjectContect:context];
     self.listOfUserSets = [flashSetLogic downloadSetsForUserId:userInfo];
     

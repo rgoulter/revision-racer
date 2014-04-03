@@ -17,5 +17,5 @@
 - (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;
 
-+ (id)singleton;
++ (Resources*)singleton;
 @end

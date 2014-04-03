@@ -8,7 +8,7 @@
 
 #import "GameViewController.h"
 #import "Shapes.h"
-
+#import "Resources.h"
 #import "AppDelegate.h"
 
 
@@ -124,12 +124,6 @@
 
 @end
 
-
-
-
-
-
-
 # pragma mark - Initialisation
 
 @implementation GameViewController {
@@ -151,8 +145,7 @@
         // need to create a flashset, if we don't have one.
         NSLog(@"GameVC wasn't given a flashSet. generating dummy...");
         
-        AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
-        NSManagedObjectContext* context = appDelegate.managedObjectContext;
+        NSManagedObjectContext* context = [Resources singleton].managedObjectContext;
         
         self.flashSet = [NSEntityDescription insertNewObjectForEntityForName:@"FlashSetInfo"
                                                       inManagedObjectContext:context];

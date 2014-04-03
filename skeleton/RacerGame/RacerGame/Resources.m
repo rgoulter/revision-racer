@@ -18,7 +18,7 @@
 
 @implementation Resources
 
-+(id)singleton
++(Resources*)singleton
 {
     static Resources* sharedObj = nil;
     @synchronized(self) {

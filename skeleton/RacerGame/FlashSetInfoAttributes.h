@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "FlashSetInfo.h"
 
 @interface FlashSetInfoAttributes : NSObject
 
@@ -14,5 +15,7 @@
 @property (nonatomic, strong) NSString * title;
 @property (nonatomic, strong) NSDate * createdDate;
 @property (nonatomic, strong) NSDate * modifiedDate;
+@property (nonatomic, strong) NSSet * cards;
 
+-(id)initForFlashSetInfo:(FlashSetInfo*)flashSet;
 @end

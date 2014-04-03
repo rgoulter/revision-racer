@@ -10,4 +10,15 @@
 
 @implementation FlashSetInfoAttributes
 
+-(id)initForFlashSetInfo:(FlashSetInfo*)flashSet
+{
+    if (self = [super init]) {
+        self.id = flashSet.id;
+        self.title = flashSet.title;
+        self.createdDate = flashSet.createdDate;
+        self.modifiedDate = flashSet.modifiedDate;
+        self.cards = flashSet.hasCards;
+    }
+    return self;
+}
 @end
