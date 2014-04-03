@@ -9,10 +9,13 @@
 #import <Foundation/Foundation.h>
 #import <GLKit/GLKit.h>
 #import "Shapes.h"
+#import "BOCurve.h"
 
 @interface StarfieldStar : NSObject
-@property (nonatomic, weak) BOShape *shape;
+
+@property (nonatomic) BOShape *shape;
 @property float duration;
+@property (nonatomic, readonly) BOCurve *pathCurve;
 
 - (void)setUp;
 - (void)tearDown;
@@ -23,4 +26,5 @@
 
 - (void)setStartPositionX:(GLfloat)x Y:(GLfloat)y Z:(GLfloat)z;
 - (void)setEndPositionX:(GLfloat)x Y:(GLfloat)y Z:(GLfloat)z;
+
 @end

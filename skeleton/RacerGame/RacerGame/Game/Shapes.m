@@ -8,17 +8,7 @@
 
 #import "Shapes.h"
 
-#define BUFFER_OFFSET(i) ((char *)NULL + (i))
-
 #define PHI 1.618
-
-#define VBO_NUMCOLS 9
-
-typedef struct
-{
-    GLfloat *data;
-    unsigned int numPoints;
-} vertexdata;
 
 static GLfloat gCubeVertexData[VBO_NUMCOLS * 3 * 2 * 6] =
 {
@@ -413,7 +403,6 @@ void setVertexDataColor(GLfloat *data, int ptIdx, GLfloat r, GLfloat g, GLfloat 
     glVertexAttribPointer(GLKVertexAttribNormal, 3, GL_FLOAT, GL_FALSE, VBO_NUMCOLS * sizeof(GLfloat), BUFFER_OFFSET(12));
     glVertexAttribPointer(GLKVertexAttribColor, 3, GL_FLOAT, GL_FALSE, VBO_NUMCOLS * sizeof(GLfloat), BUFFER_OFFSET(24));
     
-    glColor4f(0, 1, 1, 1);
     glDrawArrays(GL_TRIANGLES, 0, _numPoints);
     
     glBindBuffer(GL_ARRAY_BUFFER, 0);

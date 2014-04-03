@@ -20,6 +20,7 @@
 		029E580918EC6507007EB6E8 /* UIQuestionLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 029E580818EC6507007EB6E8 /* UIQuestionLabel.m */; };
 		02A30C8B18ECF9A6005F7ED7 /* QuestionState.m in Sources */ = {isa = PBXBuildFile; fileRef = 02A30C8A18ECF9A6005F7ED7 /* QuestionState.m */; };
 		02FB32D818ED627E00991ABA /* SpaceShip.m in Sources */ = {isa = PBXBuildFile; fileRef = 02FB32D718ED627E00991ABA /* SpaceShip.m */; };
+		02FB32DC18EDA9FF00991ABA /* BOCurve.m in Sources */ = {isa = PBXBuildFile; fileRef = 02FB32DB18EDA9FF00991ABA /* BOCurve.m */; };
 		D96BA46F18E8675100D29E82 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D96BA46E18E8675100D29E82 /* CoreData.framework */; };
 		D96BA47318E86BB900D29E82 /* SetSelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D96BA47218E86BB900D29E82 /* SetSelectorViewController.m */; };
 		D96BA47618E8764000D29E82 /* QuizletAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = D96BA47518E8764000D29E82 /* QuizletAPI.m */; };
@@ -89,6 +90,8 @@
 		02A30C8A18ECF9A6005F7ED7 /* QuestionState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QuestionState.m; path = RacerGame/Game/QuestionState.m; sourceTree = "<group>"; };
 		02FB32D618ED627E00991ABA /* SpaceShip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SpaceShip.h; path = RacerGame/Game/SpaceShip.h; sourceTree = "<group>"; };
 		02FB32D718ED627E00991ABA /* SpaceShip.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SpaceShip.m; path = RacerGame/Game/SpaceShip.m; sourceTree = "<group>"; };
+		02FB32DA18EDA9FF00991ABA /* BOCurve.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BOCurve.h; path = RacerGame/Game/BOCurve.h; sourceTree = "<group>"; };
+		02FB32DB18EDA9FF00991ABA /* BOCurve.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BOCurve.m; path = RacerGame/Game/BOCurve.m; sourceTree = "<group>"; };
 		D96BA46E18E8675100D29E82 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		D96BA47118E86BB900D29E82 /* SetSelectorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetSelectorViewController.h; sourceTree = "<group>"; };
 		D96BA47218E86BB900D29E82 /* SetSelectorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetSelectorViewController.m; sourceTree = "<group>"; };
@@ -172,26 +175,36 @@
 		0262757818E90EE500CDAA24 /* Game Logic */ = {
 			isa = PBXGroup;
 			children = (
+				02FB32D918EDA9C400991ABA /* 3D */,
 				02A30C8918ECF9A6005F7ED7 /* QuestionState.h */,
 				02A30C8A18ECF9A6005F7ED7 /* QuestionState.m */,
-				0262757918E90F4400CDAA24 /* Shapes.h */,
-				0262757A18E90F4400CDAA24 /* Shapes.m */,
 				0262758018E91F4F00CDAA24 /* GameQuestion.h */,
 				0262758118E91F4F00CDAA24 /* GameQuestion.m */,
 				029E57EF18EC1723007EB6E8 /* GameAnimationState.h */,
 				029E57F018EC1723007EB6E8 /* GameAnimationState.m */,
 				029E57F518EC17B2007EB6E8 /* AnswerState.h */,
 				029E57F618EC17B2007EB6E8 /* AnswerState.m */,
-				029E57F818EC1AEF007EB6E8 /* StarfieldStar.h */,
-				029E57F918EC1AEF007EB6E8 /* StarfieldStar.m */,
 				029E580418EC64AF007EB6E8 /* UIAnswerButton.h */,
 				029E580518EC64AF007EB6E8 /* UIAnswerButton.m */,
 				029E580718EC6507007EB6E8 /* UIQuestionLabel.h */,
 				029E580818EC6507007EB6E8 /* UIQuestionLabel.m */,
-				02FB32D618ED627E00991ABA /* SpaceShip.h */,
-				02FB32D718ED627E00991ABA /* SpaceShip.m */,
 			);
 			name = "Game Logic";
+			sourceTree = "<group>";
+		};
+		02FB32D918EDA9C400991ABA /* 3D */ = {
+			isa = PBXGroup;
+			children = (
+				0262757918E90F4400CDAA24 /* Shapes.h */,
+				0262757A18E90F4400CDAA24 /* Shapes.m */,
+				029E57F818EC1AEF007EB6E8 /* StarfieldStar.h */,
+				029E57F918EC1AEF007EB6E8 /* StarfieldStar.m */,
+				02FB32D618ED627E00991ABA /* SpaceShip.h */,
+				02FB32D718ED627E00991ABA /* SpaceShip.m */,
+				02FB32DA18EDA9FF00991ABA /* BOCurve.h */,
+				02FB32DB18EDA9FF00991ABA /* BOCurve.m */,
+			);
+			name = 3D;
 			sourceTree = "<group>";
 		};
 		D96BA47018E867AC00D29E82 /* VControllers */ = {
@@ -473,6 +486,7 @@
 				D96BA52318E92F1700D29E82 /* FlashSetInfoAttributes.m in Sources */,
 				D9B229FC18DB1F1800DDBA11 /* MainMenuViewController.m in Sources */,
 				D9B229F618DB1F1800DDBA11 /* AppDelegate.m in Sources */,
+				02FB32DC18EDA9FF00991ABA /* BOCurve.m in Sources */,
 				0262758518E9387900CDAA24 /* GameResultsViewController.m in Sources */,
 				D96BA51E18E8BBC800D29E82 /* FlashSetLogic.m in Sources */,
 				D96BA47618E8764000D29E82 /* QuizletAPI.m in Sources */,

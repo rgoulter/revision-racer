@@ -9,6 +9,19 @@
 #import <Foundation/Foundation.h>
 #import <GLKit/GLKit.h>
 
+#define BUFFER_OFFSET(i) ((char *)NULL + (i))
+
+#define VBO_NUMCOLS 9
+
+typedef struct
+{
+    GLfloat *data;
+    unsigned int numPoints;
+} vertexdata;
+
+// Utility methods
+void setVertexDataColor(GLfloat *data, int ptIdx, GLfloat r, GLfloat g, GLfloat b);
+
 @interface BOShape : NSObject
 
 - (void)setUp;
