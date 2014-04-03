@@ -218,8 +218,43 @@
     // So we need to:
     // Check whether correct or not.
     
-    // TODO
+    // **MAGIC** Colors
+    UIColor *correctColor = [UIColor colorWithRed:0.1 green:0.8 blue:0.1 alpha:1];
+    UIColor *wrongColor = [UIColor colorWithRed:0.8 green:0.1 blue:0.1 alpha:1];
     
+    // This should be abstracted out.
+    // Also assumes only GameQuestion type is text.
+    NSString *selectedAnswerDefnString = _selectedAnswer.question.questionText;
+    NSString *questionDefnString = _questionLabel.associatedQuestionState.question.questionText;
+    
+    if ([selectedAnswerDefnString isEqualToString:questionDefnString]) {
+        [_questionLabel setTextColor:correctColor];
+        [[_selectedAnswer answerUI] setTextColor:correctColor];
+    } else {
+        [_questionLabel setTextColor:wrongColor];
+        [[_selectedAnswer answerUI] setTextColor:wrongColor];
+        
+        // find the correct answer..
+        for (id<AnswerUI> ansUI in _answerUIs) {
+            if ([[ansUI associatedAnswerState].question.questionText
+                 isEqualToString:questionDefnString]) {
+                [ansUI setTextColor:correctColor];
+            }
+        }
+    }
+    
+    // Introduce Delay for the following:
+    [NSTimer scheduledTimerWithTimeInterval:2.0
+                                     target:self
+                                   selector:@selector(updateUIWithNextQuestion)
+                                   userInfo:nil
+                                    repeats:NO];
+}
+
+
+
+- (void)updateUIWithNextQuestion
+{
     // Update the UI appropriately.
     // If we are "synchronising" all answers, (atm maybe; later, no),
     // Then: set all answer UIs..
@@ -245,6 +280,17 @@
     // Now set a new qn.
     QuestionState *nextQnState = [_questionUI associatedQuestionState];
     nextQnState = [nextQnState nextQuestionState:[self currentAnswerStates]];
+    
+    
+    
+    // Set colors
+    UIColor *ansColor = [UIColor colorWithRed:(float)52/256 green:(float)94/256 blue:(float)242/256 alpha:1];
+    UIColor *qnColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:1];
+    
+    [_questionUI setTextColor:qnColor];
+    for (id<AnswerUI> ansUI in _answerUIs) {
+        [ansUI setTextColor:ansColor];
+    }
 }
 
 
@@ -404,8 +450,6 @@
             if (CGRectContainsPoint(ansRect, _playerShip.pointOnScreen)) {
                 [self selectAnswerUI:uiAnsBtn];
                 
-                // Eventually, we want to have some "delay" animation between,
-                // or sime indication that the answer is correct/incorrect.
                 
                 // I forget what to do here.
                 QuestionState *currentQuestionState = [_questionUI associatedQuestionState];

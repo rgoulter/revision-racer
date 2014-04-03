@@ -55,4 +55,6 @@
 
 - (void)setGameQuestion:(GameQuestion*)qn;
 
+- (void)setTextColor:(UIColor*)c;
+
 @end

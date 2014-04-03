@@ -46,4 +46,11 @@
 }
 
 
+
+- (void)setTextColor:(UIColor*)c
+{
+    [self setTitleColor:c forState:UIControlStateNormal];
+}
+
+
 @end
