@@ -28,6 +28,7 @@
 		D96BA52918EB038100D29E82 /* SetSelectionTableItem.m in Sources */ = {isa = PBXBuildFile; fileRef = D96BA52818EB038100D29E82 /* SetSelectionTableItem.m */; };
 		D96BA52C18EB32AE00D29E82 /* ActivityModal.xib in Resources */ = {isa = PBXBuildFile; fileRef = D96BA52B18EB32AE00D29E82 /* ActivityModal.xib */; };
 		D96BA52F18EB365C00D29E82 /* ActivityModal.m in Sources */ = {isa = PBXBuildFile; fileRef = D96BA52E18EB365C00D29E82 /* ActivityModal.m */; };
+		D991E55D18ED4A32003A4801 /* Resources.m in Sources */ = {isa = PBXBuildFile; fileRef = D991E55C18ED4A32003A4801 /* Resources.m */; };
 		D9B229E618DB1F1800DDBA11 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9B229E518DB1F1800DDBA11 /* Foundation.framework */; };
 		D9B229E818DB1F1800DDBA11 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9B229E718DB1F1800DDBA11 /* CoreGraphics.framework */; };
 		D9B229EA18DB1F1800DDBA11 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9B229E918DB1F1800DDBA11 /* UIKit.framework */; };
@@ -91,6 +92,8 @@
 		D96BA52B18EB32AE00D29E82 /* ActivityModal.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ActivityModal.xib; sourceTree = "<group>"; };
 		D96BA52D18EB365C00D29E82 /* ActivityModal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityModal.h; sourceTree = "<group>"; };
 		D96BA52E18EB365C00D29E82 /* ActivityModal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityModal.m; sourceTree = "<group>"; };
+		D991E55B18ED4A32003A4801 /* Resources.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Resources.h; sourceTree = "<group>"; };
+		D991E55C18ED4A32003A4801 /* Resources.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Resources.m; sourceTree = "<group>"; };
 		D9B229E218DB1F1800DDBA11 /* RacerGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RacerGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9B229E518DB1F1800DDBA11 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D9B229E718DB1F1800DDBA11 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -168,15 +171,12 @@
 		D96BA47718E8764A00D29E82 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				D991E55A18ED49DB003A4801 /* Attributes */,
 				D96BA52018E8D7DB00D29E82 /* CoreData */,
 				D96BA51F18E8D7C300D29E82 /* Logic */,
 				D96BA47C18E8965B00D29E82 /* Model.xcdatamodeld */,
 				D96BA47418E8764000D29E82 /* QuizletAPI.h */,
 				D96BA47518E8764000D29E82 /* QuizletAPI.m */,
-				D96BA51318E8A9A900D29E82 /* UserInfoAttributes.h */,
-				D96BA51418E8A9A900D29E82 /* UserInfoAttributes.m */,
-				D96BA52118E92F1700D29E82 /* FlashSetInfoAttributes.h */,
-				D96BA52218E92F1700D29E82 /* FlashSetInfoAttributes.m */,
 			);
 			name = Models;
 			path = ..;
@@ -187,6 +187,8 @@
 			children = (
 				D96BA47918E876A300D29E82 /* URLHelper.h */,
 				D96BA47A18E876A300D29E82 /* URLHelper.m */,
+				D991E55B18ED4A32003A4801 /* Resources.h */,
+				D991E55C18ED4A32003A4801 /* Resources.m */,
 			);
 			name = Utilties;
 			sourceTree = "<group>";
@@ -232,6 +234,17 @@
 				D96BA52E18EB365C00D29E82 /* ActivityModal.m */,
 			);
 			name = ActivityModal;
+			sourceTree = "<group>";
+		};
+		D991E55A18ED49DB003A4801 /* Attributes */ = {
+			isa = PBXGroup;
+			children = (
+				D96BA51318E8A9A900D29E82 /* UserInfoAttributes.h */,
+				D96BA51418E8A9A900D29E82 /* UserInfoAttributes.m */,
+				D96BA52118E92F1700D29E82 /* FlashSetInfoAttributes.h */,
+				D96BA52218E92F1700D29E82 /* FlashSetInfoAttributes.m */,
+			);
+			name = Attributes;
 			sourceTree = "<group>";
 		};
 		D9B229D918DB1F1800DDBA11 = {
@@ -429,6 +442,7 @@
 				D96BA52918EB038100D29E82 /* SetSelectionTableItem.m in Sources */,
 				D9B229F218DB1F1800DDBA11 /* main.m in Sources */,
 				0262757B18E90F4400CDAA24 /* Shapes.m in Sources */,
+				D991E55D18ED4A32003A4801 /* Resources.m in Sources */,
 				D96BA51818E8B87A00D29E82 /* UserInfo.m in Sources */,
 				D96BA51518E8A9A900D29E82 /* UserInfoAttributes.m in Sources */,
 			);
