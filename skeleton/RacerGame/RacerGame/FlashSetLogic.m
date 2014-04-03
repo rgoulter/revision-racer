@@ -98,7 +98,7 @@
     for (FlashSetItemAttributes* eachCard in setOfCards) {
         FlashSetItem* persistableFlashSetItem = [self getPersistentSetItemForId:eachCard.id];
         
-        if (!persistentFlashSet) {
+        if (!persistableFlashSetItem) {
             persistableFlashSetItem = [NSEntityDescription insertNewObjectForEntityForName:@"FlashSetItem"
                                                                     inManagedObjectContext:self.context];
             persistableFlashSetItem.id = eachCard.id;
@@ -209,7 +209,7 @@
     
     NSSet* returnSet = [self downloadSetsForRequest:request];
     
-    request = [URLHelper getCreatedSetsRequestForUser:user.userId AccessToken:user.accessToken];
+    request = [URLHelper getFavoriteSetsRequestForUser:user.userId AccessToken:user.accessToken];
     
     returnSet = [returnSet setByAddingObjectsFromSet:[self downloadSetsForRequest:request]];
     

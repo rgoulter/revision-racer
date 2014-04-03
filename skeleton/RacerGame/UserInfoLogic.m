@@ -15,6 +15,7 @@
 
 -(UserInfo*)getPersistentActiveUser;
 -(UserInfo*)getUserInfoForId:(NSString*)userId;
+-(BOOL)hasSessionExpired:(UserInfo*)userInfo;
 
 @end
 
@@ -30,12 +31,23 @@
 }
 
 #pragma mark Public methods
++(UserInfoLogic*)singleton
+{
+    static UserInfoLogic* sharedObj = nil;
+    @synchronized(self) {
+        if (sharedObj == nil) {
+            sharedObj = [[self alloc] init];
+        }
+    }
+    return sharedObj;
+}
+
 -(UserInfoAttributes *)getActiveUser
 {
     //TODO: If session has expired, consider as inactive
     UserInfo* persistentObject = [self getPersistentActiveUser];
     
-    if (!persistentObject) {
+    if (!persistentObject || [self hasSessionExpired:persistentObject]) {
         return nil;
     }
     
@@ -80,6 +92,17 @@
 }
 
 #pragma mark Private methods
+-(BOOL)hasSessionExpired:(UserInfo *)userInfo
+{
+    //TODO: What if session expires while playing..
+    NSDate* currentDate = [NSDate date];
+    if ([currentDate compare:userInfo.expiryTimestamp] == NSOrderedAscending) {
+        return NO;
+    } else {
+        return YES;
+    }
+}
+
 -(UserInfo*)getUserInfoForId:(NSString*)userId
 {
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];

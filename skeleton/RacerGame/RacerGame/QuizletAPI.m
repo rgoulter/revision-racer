@@ -8,6 +8,7 @@
 
 #import "QuizletAPI.h"
 #import "URLHelper.h"
+#import "UserInfoLogic.h"
 
 @implementation QuizletAPI
 
@@ -62,6 +63,7 @@
     loggedInUser.accessToken = [jsonData objectForKey:@"access_token"];
     loggedInUser.userId = [jsonData objectForKey:@"user_id"];
     
+    [[UserInfoLogic singleton] setActiveUser:loggedInUser];
     [self.delegate successfullyLoggedInForUserID:loggedInUser];
 }
 

@@ -10,6 +10,7 @@
 #import "UserInfoAttributes.h"
 
 @interface UserInfoLogic : NSObject
++(UserInfoLogic*)singleton;
 
 -(UserInfoAttributes*)getActiveUser;
 

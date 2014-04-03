@@ -66,6 +66,7 @@
     //Check if user is signed in
     //TODO: Read Quizlet API for expiring tokens/codes to initiate sign-ins
     
+    
     QuizletAPI* quizletApi = [QuizletAPI quizletApi];
     quizletApi.delegate = self;
     [quizletApi initiateLogin];
@@ -98,39 +99,7 @@
     NSLog(@"Actually reached the delegate at destination");
     NSLog(@"Expiry date : %@", userInfo.expiryTimestamp);
     
-    //Load previously persisted data
-    /*
-    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
-    NSManagedObjectContext* context = appDelegate.managedObjectContext;
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"UserInfo"
-                                              inManagedObjectContext:context];
-    [fetchRequest setEntity:entity];
-    NSError *error;
-    NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
-    for (UserInfo* info in fetchedObjects) {
-        NSLog(@"UserId: %@", info.userId);
-        NSLog(@"Access Code: %@", info.accessToken);
-    }
-    
-    //Persist all of this data
-    /*
-    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
-    NSManagedObjectContext* context = appDelegate.managedObjectContext;
-    
-    UserInfo* persistableAttribs = [NSEntityDescription insertNewObjectForEntityForName:@"UserInfo" inManagedObjectContext:context];
-    
-    persistableAttribs.expiryTimestamp = userInfo.expiryTimestamp;
-    persistableAttribs.accessToken = userInfo.accessToken;
-    persistableAttribs.userId = userInfo.userId;
-    
-    NSError *error;
-    if (![context save:&error]) {
-        NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
-    }
-    */
-    FlashSetLogic* flashSetLogic = [[FlashSetLogic alloc] init];
-    self.listOfUserSets = [flashSetLogic downloadSetsForUserId:userInfo];
+    self.listOfUserSets = [[FlashSetLogic singleton] downloadAllSetsForUserId:userInfo];
     
     [self.setTable reloadData];
 }
@@ -162,16 +131,10 @@
 {
     UITableViewCell* defaultCell = [tableView dequeueReusableCellWithIdentifier:@"CustomCell"];
     //UITableViewCell* defaultCell = [tableView dequeueReusableCellWithIdentifier:<#(NSString *)#>]
-    FlashSetInfo* requiredSet = self.listOfUserSets[[indexPath item]];
-    
-    FlashSetInfoAttributes* attribs = [[FlashSetInfoAttributes alloc] init];
-    attribs.title = requiredSet.title;
-    attribs.createdDate = requiredSet.createdDate;
-    attribs.modifiedDate = requiredSet.modifiedDate;
-    attribs.id = requiredSet.id;
+    FlashSetInfoAttributes* requiredSet = self.listOfUserSets[[indexPath item]];
     
     SetSelectionTableItem* myCell = (SetSelectionTableItem*)defaultCell;
-    [myCell setDataSource:attribs];
+    [myCell setDataSource:requiredSet];
     
     return myCell;
 }
