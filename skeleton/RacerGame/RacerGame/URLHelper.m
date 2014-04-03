@@ -13,10 +13,29 @@
 
 #define LOGIN_URL @"https://quizlet.com/authorize"
 #define CREATED_SETS_URL @"https://api.quizlet.com/2.0/users/%@/sets"
+#define FAVORITE_SETS_URL @"https://api.quizlet.com/2.0/users/%@/favorites"
 #define TOKEN_URL @"https://api.quizlet.com/oauth/token"
 
 @implementation URLHelper
 
+#pragma mark -
+#pragma mark private methods
+
++(NSURLRequest*)createDownloadRequestForURLString:(NSString*)urlString
+                                  withAccessToken:(NSString*)token
+{
+    NSMutableURLRequest *request = [NSMutableURLRequest
+                                    requestWithURL:[NSURL URLWithString:urlString]];
+    
+    [request setHTTPMethod:@"GET"];
+    [request setValue:[NSString stringWithFormat:@"Bearer %@", token] forHTTPHeaderField:@"Authorization"];
+    
+    return request;
+}
+
+
+#pragma mark -
+#pragma mark Interface/public methods
 +(NSURL*)getLoginUrl
 {
     NSString *authorizeUrl = [NSString
@@ -59,16 +78,16 @@
     return request;
 }
 
-+(NSURLRequest*)getCreatedSetsRequestForUser:(NSString*)userId AccessToken:(NSString*)token;
++(NSURLRequest*)getCreatedSetsRequestForUser:(NSString*)userId AccessToken:(NSString*)token
 {
     NSString* requiredURL = [NSString stringWithFormat:CREATED_SETS_URL, userId];
-    NSMutableURLRequest *request = [NSMutableURLRequest
-                                    requestWithURL:[NSURL URLWithString:requiredURL]];
-    
-    [request setHTTPMethod:@"GET"];
-    [request setValue:[NSString stringWithFormat:@"Bearer %@", token] forHTTPHeaderField:@"Authorization"];
-    
-    return request;
+    return [self createDownloadRequestForURLString:requiredURL withAccessToken:token];
+}
+
++(NSURLRequest*)getFavoriteSetsRequestForUser:(NSString*)userId AccessToken:(NSString*)token
+{
+    NSString* requiredURL = [NSString stringWithFormat:FAVORITE_SETS_URL, userId];
+    return [self createDownloadRequestForURLString:requiredURL withAccessToken:token];
 }
 
 @end

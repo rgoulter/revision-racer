@@ -47,7 +47,121 @@
     NSArray *fetchedObjects = [self.context executeFetchRequest:fetchRequest
                                                           error:&error];
     //TODO: Assert size of fetchedObjects is 1
-    return [fetchedObjects lastObject];
+    if (!error) {
+        if ([fetchedObjects count] > 0) {
+            return [fetchedObjects lastObject];
+        }
+    }
+    return nil;
+}
+
+-(FlashSetItem*)getPersistentSetItemForId:(NSNumber*)setItemId
+{
+    //TODO: Add assertNotNull code
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"FlashSetItem"
+                                              inManagedObjectContext:self.context];
+    [fetchRequest setEntity:entity];
+    
+    NSPredicate* matchCondition = [NSPredicate predicateWithFormat:@"id = %@",setItemId];
+    [fetchRequest setPredicate:matchCondition];
+    
+    NSError *error;
+    NSArray *fetchedObjects = [self.context executeFetchRequest:fetchRequest
+                                                          error:&error];
+    //TODO: Assert size of fetchedObjects is 1
+    if (!error) {
+        if ([fetchedObjects count] > 0) {
+            return [fetchedObjects lastObject];
+        }
+    }
+    return nil;
+}
+
+-(void)updateFlashSet:(FlashSetInfoAttributes*)flashSet withItems:(NSSet*)setOfCards
+{
+    FlashSetInfo* persistentFlashSet = [self getPersistentSetForId:flashSet.id];
+    
+    if(persistentFlashSet) {
+        persistentFlashSet.modifiedDate = flashSet.modifiedDate;
+        persistentFlashSet.createdDate = flashSet.createdDate;
+        persistentFlashSet.title = flashSet.title;
+    } else {
+        persistentFlashSet = [NSEntityDescription insertNewObjectForEntityForName:@"FlashSetInfo"
+                                                            inManagedObjectContext:self.context];
+        persistentFlashSet.id = flashSet.id;
+        persistentFlashSet.modifiedDate = flashSet.modifiedDate;
+        persistentFlashSet.createdDate = flashSet.createdDate;
+        persistentFlashSet.title = flashSet.title;
+    }
+    
+    for (FlashSetItemAttributes* eachCard in setOfCards) {
+        FlashSetItem* persistableFlashSetItem = [self getPersistentSetItemForId:eachCard.id];
+        
+        if (persistentFlashSet) {
+            persistableFlashSetItem.term = eachCard.term;
+            persistableFlashSetItem.definition = eachCard.definition;
+        } else {
+            persistableFlashSetItem = [NSEntityDescription insertNewObjectForEntityForName:@"FlashSetItem"
+                                                                    inManagedObjectContext:self.context];
+            persistableFlashSetItem.id = eachCard.id;
+            persistableFlashSetItem.term = eachCard.term;
+            persistableFlashSetItem.definition = eachCard.definition;
+        }
+        [persistentFlashSet addHasCardsObject:persistableFlashSetItem];
+    }
+    
+    NSError *error;
+    if (![self.context save:&error]) {
+        NSLog(@"Problem while persisting Flash set and items: %@", [error localizedDescription]);
+    }
+}
+
+-(NSArray*)downloadSetsForRequest:(NSURLRequest*)request
+{
+    NSMutableArray* returnList = [NSMutableArray array];
+    
+    //TODO: Make async
+    NSData* response = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
+    
+    NSArray* jsonData = [NSJSONSerialization JSONObjectWithData:response
+                                                        options:kNilOptions
+                                                          error:nil];
+    
+    for (NSDictionary* rawSetData in jsonData) {
+        //TODO: See if another object exists for the same id
+        //If it does and equal to current object, do nothing
+        //If it does and unequal(use modified), update
+        //If it does not exist, create
+        
+        FlashSetInfoAttributes* flashSet = [[FlashSetInfoAttributes alloc] init];
+        flashSet.id = [rawSetData objectForKey:@"id"];
+        flashSet.title= [rawSetData objectForKey:@"title"];
+        
+        NSTimeInterval timeInterval = [[rawSetData objectForKey:@"created_date"] doubleValue];
+        flashSet.createdDate = [NSDate dateWithTimeIntervalSince1970:timeInterval];
+        
+        timeInterval = [[rawSetData objectForKey:@"modified_date"] doubleValue];
+        flashSet.modifiedDate = [NSDate dateWithTimeIntervalSince1970:timeInterval];
+        
+        //Fetch all the terms in the set
+        
+        NSArray* termsInSet = [rawSetData objectForKey:@"terms"];
+        NSMutableSet* flashSetItems = [NSMutableSet set];
+        
+        for (NSDictionary* eachTermData in termsInSet) {
+            FlashSetItemAttributes* setItem = [[FlashSetItemAttributes alloc] init];
+            setItem.id = [eachTermData objectForKey:@"id"];
+            setItem.term = [eachTermData objectForKey:@"term"];
+            setItem.definition = [eachTermData objectForKey:@"definition"];
+            
+            [flashSetItems addObject:setItem];
+        }
+        
+        [self updateFlashSet:flashSet withItems:flashSetItems];
+    }
+    
+    return returnList;
 }
 
 #pragma mark - Public methods
@@ -86,57 +200,18 @@
     return returnSet;
 }
 
--(NSArray*)downloadSetsForUserId:(UserInfoAttributes *)user
+-(NSArray*)downloadCreatedSetsForUserId:(UserInfoAttributes *)user
 {
     NSURLRequest* request = [URLHelper getCreatedSetsRequestForUser:user.userId AccessToken:user.accessToken];
-    NSMutableArray* returnList = [NSMutableArray array];
     
-    //TODO: Make async
-    NSData* response = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
-    
-    NSArray* jsonData = [NSJSONSerialization JSONObjectWithData:response
-                                                             options:kNilOptions error:nil];
-    
-    for (NSDictionary* rawSetData in jsonData) {
-        //TODO: See if another object exists for the same id
-        //If it does and equal to current object, do nothing
-        //If it does and uneqaul(use modified), update
-        //If it does not exist, create
-        
-        FlashSetInfo* persistableFlashSet = [NSEntityDescription insertNewObjectForEntityForName:@"FlashSetInfo"
-                                                                          inManagedObjectContext:self.context];
-        persistableFlashSet.id = [rawSetData objectForKey:@"id"];
-        persistableFlashSet.title= [rawSetData objectForKey:@"title"];
-
-        NSTimeInterval timeInterval = [[rawSetData objectForKey:@"created_date"] doubleValue];
-        persistableFlashSet.createdDate = [NSDate dateWithTimeIntervalSince1970:timeInterval];
-        
-        timeInterval = [[rawSetData objectForKey:@"modified_date"] doubleValue];
-        persistableFlashSet.modifiedDate = [NSDate dateWithTimeIntervalSince1970:timeInterval];
-        
-        //Fetch all the terms in the set
-        
-        NSArray* termsInSet = [rawSetData objectForKey:@"terms"];
-        
-        for (NSDictionary* eachTermData in termsInSet) {
-            FlashSetItem* persistableFlashSetItem = [NSEntityDescription insertNewObjectForEntityForName:@"FlashSetItem"
-                                                                          inManagedObjectContext:self.context];
-            persistableFlashSetItem.id = [eachTermData objectForKey:@"id"];
-            persistableFlashSetItem.term = [eachTermData objectForKey:@"term"];
-            persistableFlashSetItem.definition = [eachTermData objectForKey:@"definition"];
-            
-            [persistableFlashSet addHasCardsObject:persistableFlashSetItem];
-        }
-        
-        [returnList addObject:persistableFlashSet];
-        NSError *error;
-        if (![self.context save:&error]) {
-            NSLog(@"For heaven's sake: %@", [error localizedDescription]);
-        }
-    }
-    
-    return returnList;
+    return [self downloadSetsForRequest:request];
 }
 
+-(NSArray*)downloadFavoriteSetsForUserId:(UserInfoAttributes *)user
+{
+    NSURLRequest* request = [URLHelper getCreatedSetsRequestForUser:user.userId AccessToken:user.accessToken];
+    
+    return [self downloadSetsForRequest:request];
+}
 
 @end

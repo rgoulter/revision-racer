@@ -17,4 +17,6 @@
 +(NSURLRequest*)getAuthRequestForCode:(NSString*)code;
 
 +(NSURLRequest*)getCreatedSetsRequestForUser:(NSString*)userId AccessToken:(NSString*)token;
+
++(NSURLRequest*)getFavoriteSetsRequestForUser:(NSString*)userId AccessToken:(NSString*)token;
 @end
