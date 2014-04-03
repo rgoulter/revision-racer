@@ -391,17 +391,8 @@
     self.effect = nil;
 }
 
-- (void)update
+- (void)tickSpaceShip
 {
-    float aspect = fabsf(self.view.bounds.size.width /
-                         self.view.bounds.size.height);
-    GLKMatrix4 projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(50.0f), aspect, 0.1f, 100.0f);
-    self.effect.transform.projectionMatrix = projectionMatrix;
-    
-    
-    
-    // Tick spaceship
-    
     [_playerShip tick:self.timeSinceLastUpdate];
     
     if (_playerShip.speed < 10) {
@@ -422,7 +413,19 @@
     
     [self setCursor:_spaceshipPositionCursor toPoint:_playerShip.pointOnScreen];
     [self setCursor:_spaceshipDestinationCursor toPoint:_playerShip.destinationPointOnScreen];
+}
+
+- (void)update
+{
+    float aspect = fabsf(self.view.bounds.size.width /
+                         self.view.bounds.size.height);
+    GLKMatrix4 projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(50.0f), aspect, 0.1f, 100.0f);
+    self.effect.transform.projectionMatrix = projectionMatrix;
     
+    
+    
+    // Tick spaceship
+    [self tickSpaceShip];
     
     
     // update stars
