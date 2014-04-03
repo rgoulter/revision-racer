@@ -16,4 +16,6 @@
 
 -(void)setActiveUser:(UserInfoAttributes*)newActiveUser;
 
+-(UserInfo*)getPersistentActiveUser;
+
 @end

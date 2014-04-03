@@ -13,6 +13,7 @@
 #import "FlashSetItem.h"
 #import "FlashSetItemAttributes.h"
 #import "Resources.h"
+#import "UserInfoLogic.h"
 
 @interface FlashSetLogic ()
 
@@ -80,6 +81,7 @@
 
 -(void)updateFlashSet:(FlashSetInfoAttributes*)flashSet withItems:(NSSet*)setOfCards
 {
+    UserInfo* activeUser = [[UserInfoLogic singleton] getPersistentActiveUser];
     FlashSetInfo* persistentFlashSet = [self getPersistentSetForId:flashSet.id];
     
     if(persistentFlashSet) {
@@ -108,6 +110,7 @@
         [persistentFlashSet addHasCardsObject:persistableFlashSetItem];
     }
     
+    [activeUser addCanSeeObject:persistentFlashSet];
     NSError *error;
     if (![self.context save:&error]) {
         NSLog(@"Problem while persisting Flash set and items: %@", [error localizedDescription]);

@@ -15,6 +15,7 @@
 #import "SetSelectionTableItem.h"
 #import "ActivityModal.h"
 #import "Resources.h"
+#import "UserInfoLogic.h"
 
 @interface SetSelectorViewController ()
 
@@ -36,7 +37,7 @@
 
 - (void)viewDidLoad
 {
-    NSLog(@"Set selection view loaded. Yey....");
+    NSLog(@"Active user : %@",[[UserInfoLogic singleton] getActiveUser].userId);
     [super viewDidLoad];
     
     [self.setTable setDataSource:self];

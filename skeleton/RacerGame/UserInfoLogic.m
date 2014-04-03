@@ -12,8 +12,6 @@
 @interface UserInfoLogic ()
 
 @property(strong,nonatomic)NSManagedObjectContext* context;
-
--(UserInfo*)getPersistentActiveUser;
 -(UserInfo*)getUserInfoForId:(NSString*)userId;
 -(BOOL)hasSessionExpired:(UserInfo*)userInfo;
 
