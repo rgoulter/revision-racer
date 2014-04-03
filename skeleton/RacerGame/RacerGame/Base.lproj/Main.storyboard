@@ -180,7 +180,7 @@
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="answerButtonPressed:" destination="T0N-km-FSq" eventType="touchUpInside" id="1rB-GU-iAK"/>
+                                            <action selector="answerButtonPressed:" destination="T0N-km-FSq" eventType="touchDown" id="9kj-wH-II2"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4TG-ja-70o" customClass="UIAnswerButton">
@@ -191,7 +191,7 @@
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="answerButtonPressed:" destination="T0N-km-FSq" eventType="touchUpInside" id="0oX-Iu-xnQ"/>
+                                            <action selector="answerButtonPressed:" destination="T0N-km-FSq" eventType="touchDown" id="8r0-oy-Tvq"/>
                                         </connections>
                                     </button>
                                     <view opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YXh-ot-1NV">
@@ -225,7 +225,7 @@
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="answerButtonPressed:" destination="T0N-km-FSq" eventType="touchUpInside" id="pov-bU-1kG"/>
+                                            <action selector="answerButtonPressed:" destination="T0N-km-FSq" eventType="touchDown" id="Ywa-9H-nd6"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YwW-cf-lmV" customClass="UIAnswerButton">
@@ -236,7 +236,7 @@
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="answerButtonPressed:" destination="T0N-km-FSq" eventType="touchUpInside" id="lKL-cB-jAS"/>
+                                            <action selector="answerButtonPressed:" destination="T0N-km-FSq" eventType="touchDown" id="Qhe-u0-r9c"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CVe-Ae-ZXn" customClass="UIAnswerButton">
@@ -247,7 +247,7 @@
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="answerButtonPressed:" destination="T0N-km-FSq" eventType="touchUpInside" id="x8f-EL-NYw"/>
+                                            <action selector="answerButtonPressed:" destination="T0N-km-FSq" eventType="touchDown" id="WAK-0n-Wrc"/>
                                         </connections>
                                     </button>
                                 </subviews>
