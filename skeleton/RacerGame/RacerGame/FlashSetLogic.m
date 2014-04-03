@@ -117,9 +117,9 @@
     }
 }
 
--(NSArray*)downloadSetsForRequest:(NSURLRequest*)request
+-(NSSet*)downloadSetsForRequest:(NSURLRequest*)request
 {
-    NSMutableArray* returnList = [NSMutableArray array];
+    NSMutableSet* returnSet = [NSMutableSet set];
     
     //TODO: Make async
     NSData* response = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
@@ -159,12 +159,24 @@
         }
         
         [self updateFlashSet:flashSet withItems:flashSetItems];
+        [returnSet addObject:flashSet];
     }
     
-    return returnList;
+    return returnSet;
 }
 
 #pragma mark - Public methods
++(FlashSetLogic*)singleton
+{
+    static FlashSetLogic* sharedObj = nil;
+    @synchronized(self) {
+        if (sharedObj == nil) {
+            sharedObj = [[self alloc] init];
+        }
+    }
+    return sharedObj;
+}
+
 -(FlashSetInfoAttributes*)getSetForId:(NSNumber*)setId
 {
     FlashSetInfo* persistentObject = [self getPersistentSetForId:setId];
@@ -176,15 +188,8 @@
 
 -(NSSet *)getAllItemsInSet:(NSNumber*)setId
 {
-    //Get FlashSetInfo for the setId
-    //Using this object, fethc all its "cards"
-    //  for each FlashSetItem in "cards"
-    //      convert it to its *Attributes object while
-    //      adding it to its return set
-    
     FlashSetInfo* requiredSet = [self getPersistentSetForId:setId];
     
-    //TODO: Can come up with a better strategy
     if (!requiredSet) {
         return nil;
     }
@@ -200,18 +205,18 @@
     return returnSet;
 }
 
--(NSArray*)downloadCreatedSetsForUserId:(UserInfoAttributes *)user
+-(NSArray*)downloadAllSetsForUserId:(UserInfoAttributes *)user;
 {
+    //TODO: Have to map them to the user
     NSURLRequest* request = [URLHelper getCreatedSetsRequestForUser:user.userId AccessToken:user.accessToken];
     
-    return [self downloadSetsForRequest:request];
-}
-
--(NSArray*)downloadFavoriteSetsForUserId:(UserInfoAttributes *)user
-{
-    NSURLRequest* request = [URLHelper getCreatedSetsRequestForUser:user.userId AccessToken:user.accessToken];
+    NSSet* returnSet = [self downloadSetsForRequest:request];
     
-    return [self downloadSetsForRequest:request];
+    request = [URLHelper getCreatedSetsRequestForUser:user.userId AccessToken:user.accessToken];
+    
+    returnSet = [returnSet setByAddingObjectsFromSet:[self downloadSetsForRequest:request]];
+    
+    return [returnSet allObjects];
 }
 
 @end

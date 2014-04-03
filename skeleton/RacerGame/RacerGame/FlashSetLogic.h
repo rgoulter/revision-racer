@@ -12,9 +12,9 @@
 
 @interface FlashSetLogic : NSObject
 
--(NSArray*)downloadCreatedSetsForUserId:(UserInfoAttributes *)user;
++(FlashSetLogic*)singleton;
 
--(NSArray*)downloadFavoriteSetsForUserId:(UserInfoAttributes *)user;
+-(NSArray*)downloadAllSetsForUserId:(UserInfoAttributes *)user;
 
 -(FlashSetInfoAttributes*)getSetForId:(NSNumber*)setId;
 
