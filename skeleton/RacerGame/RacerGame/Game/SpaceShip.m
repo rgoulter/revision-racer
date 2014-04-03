@@ -34,6 +34,10 @@
         _pointOnScreen = CGPointMake(0, 0);
         _destinationPointOnScreen = CGPointMake(0, 0);
         _deltaPositionVector = CGPointMake(0, 0);
+        
+        // GLKit Logic.
+        // For shape, let's use our own cube.
+        _shape = [[BOCube alloc] init];
     }
     
     return self;
@@ -45,6 +49,21 @@
     CGFloat dx = d.x, dy = d.y;
     
     return sqrtf(dx*dx + dy*dy);
+}
+
+- (void)setUp
+{
+    [_shape setUp];
+}
+
+- (void)tearDown
+{
+    [_shape tearDown];
+}
+
+- (void)draw
+{
+    [_shape draw];
 }
 
 - (void)tick:(NSTimeInterval)timeSinceLastUpdate
@@ -68,6 +87,17 @@
                                      _pointOnScreen.y + _deltaPositionVector.y);
     }
 }
+
+- (GLKMatrix4)transformation:(GLKMatrix4)mat
+{
+    // SpaceShip will translate by the positionOnScreen,
+    // so scaling will have to be done outside of SpaceShip
+    
+    // REQUIRES that the coord system has +x to the right, +y down.
+    return GLKMatrix4Translate(mat, _pointOnScreen.x, _pointOnScreen.y, 0);
+}
+
+
 
 - (void)respondToPanGesture:(UIPanGestureRecognizer*)recog
 {

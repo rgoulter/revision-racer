@@ -371,6 +371,8 @@
     
     glEnable(GL_DEPTH_TEST);
     
+    [_playerShip setUp];
+    
     for (BOShape *shape in _starShapes) {
         [shape setUp];
     }
@@ -383,6 +385,8 @@
     for (BOShape *shape in _starShapes) {
         [shape tearDown];
     }
+    
+    [_playerShip tearDown];
     
     self.effect = nil;
 }
@@ -444,6 +448,43 @@
     }
 }
 
+- (void)drawSpaceShip
+{
+    // Draws the SpaceShip object (of _playerShip),
+    // using coordinates from self.view.
+    
+    GLKMatrix4 modelMatrix = GLKMatrix4Identity;
+    CGRect viewFrame = self.view.frame;
+    
+    // Move the spaceship "forward" from the screen/camera.
+    modelMatrix = GLKMatrix4Translate(modelMatrix, 0, 0, -5);
+    
+    
+    // Translate the spaceship, corresponding to the point on the screen.
+    // Magic #'s: I think it's that there's approx a 4:3 ratio with the iPad or so?
+    //
+    // Since SpaceShip understands its coordinates in terms of TopLeft:(0,0),
+    //  BottomRight:(width,height), we need to scale to map the coordinates about.
+    
+    // Scale to ScreenSize <- WorldSize
+    GLfloat s = 1 / viewFrame.size.height;
+    modelMatrix = GLKMatrix4Scale(modelMatrix, 4 * s, -(3 * s), 1);
+    
+    // Translate, since worldcoord's origin is in center of screen.
+    modelMatrix = GLKMatrix4Translate(modelMatrix, -viewFrame.size.width / 2, -viewFrame.size.height / 2, 0);
+    modelMatrix = [_playerShip transformation:modelMatrix];
+    
+    // Scale to WorldSize <- ScreenSize (inverse of above).
+    modelMatrix = GLKMatrix4Scale(modelMatrix, 1 / (4 * s), -1 / (3 * s), 1);
+    
+    
+    // Now draw the spaceship, since the modelviewMatrix has the right position.
+    modelMatrix = GLKMatrix4Scale(modelMatrix, 0.25, 0.25, 0.25); // Scale model down.
+    self.effect.transform.modelviewMatrix = modelMatrix;
+    [self.effect prepareToDraw];
+    [_playerShip draw];
+}
+
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect
 {
     glClearColor(0.6f, 0.6f, 0.65f, 1.0f);
@@ -463,6 +504,9 @@
         [self.effect prepareToDraw];
         [star.shape draw];
     }
+    
+    // draw spaceship
+    [self drawSpaceShip];
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -482,6 +526,7 @@
     float rndX = (float)(arc4random() % 8) - 4;
     float rndY = (float)(arc4random() % 6) - 3;
     [star setStartPositionX:0 Y:0 Z:-10];
+    [star setStartPositionX:rndX Y:rndY Z:-10];
     [star setEndPositionX:rndX Y:rndY Z:0];
     
     star.duration = 3;
