@@ -14,9 +14,11 @@
 		0262758218E91F4F00CDAA24 /* GameQuestion.m in Sources */ = {isa = PBXBuildFile; fileRef = 0262758118E91F4F00CDAA24 /* GameQuestion.m */; };
 		0262758518E9387900CDAA24 /* GameResultsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0262758418E9387900CDAA24 /* GameResultsViewController.m */; };
 		029E57F118EC1723007EB6E8 /* GameAnimationState.m in Sources */ = {isa = PBXBuildFile; fileRef = 029E57F018EC1723007EB6E8 /* GameAnimationState.m */; };
-		029E57F418EC1763007EB6E8 /* QuestionState.m in Sources */ = {isa = PBXBuildFile; fileRef = 029E57F318EC1763007EB6E8 /* QuestionState.m */; };
 		029E57F718EC17B2007EB6E8 /* AnswerState.m in Sources */ = {isa = PBXBuildFile; fileRef = 029E57F618EC17B2007EB6E8 /* AnswerState.m */; };
 		029E57FA18EC1AEF007EB6E8 /* StarfieldStar.m in Sources */ = {isa = PBXBuildFile; fileRef = 029E57F918EC1AEF007EB6E8 /* StarfieldStar.m */; };
+		029E580618EC64AF007EB6E8 /* UIAnswerButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 029E580518EC64AF007EB6E8 /* UIAnswerButton.m */; };
+		029E580918EC6507007EB6E8 /* UIQuestionLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 029E580818EC6507007EB6E8 /* UIQuestionLabel.m */; };
+		02A30C8B18ECF9A6005F7ED7 /* QuestionState.m in Sources */ = {isa = PBXBuildFile; fileRef = 02A30C8A18ECF9A6005F7ED7 /* QuestionState.m */; };
 		D96BA46F18E8675100D29E82 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D96BA46E18E8675100D29E82 /* CoreData.framework */; };
 		D96BA47318E86BB900D29E82 /* SetSelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D96BA47218E86BB900D29E82 /* SetSelectorViewController.m */; };
 		D96BA47618E8764000D29E82 /* QuizletAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = D96BA47518E8764000D29E82 /* QuizletAPI.m */; };
@@ -72,12 +74,16 @@
 		0262758418E9387900CDAA24 /* GameResultsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameResultsViewController.m; sourceTree = "<group>"; };
 		029E57EF18EC1723007EB6E8 /* GameAnimationState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameAnimationState.h; path = RacerGame/Game/GameAnimationState.h; sourceTree = "<group>"; };
 		029E57F018EC1723007EB6E8 /* GameAnimationState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameAnimationState.m; path = RacerGame/Game/GameAnimationState.m; sourceTree = "<group>"; };
-		029E57F218EC1763007EB6E8 /* QuestionState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestionState.h; sourceTree = "<group>"; };
-		029E57F318EC1763007EB6E8 /* QuestionState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuestionState.m; sourceTree = "<group>"; };
 		029E57F518EC17B2007EB6E8 /* AnswerState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnswerState.h; path = RacerGame/Game/AnswerState.h; sourceTree = "<group>"; };
 		029E57F618EC17B2007EB6E8 /* AnswerState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AnswerState.m; path = RacerGame/Game/AnswerState.m; sourceTree = "<group>"; };
 		029E57F818EC1AEF007EB6E8 /* StarfieldStar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StarfieldStar.h; path = RacerGame/Game/StarfieldStar.h; sourceTree = "<group>"; };
 		029E57F918EC1AEF007EB6E8 /* StarfieldStar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StarfieldStar.m; path = RacerGame/Game/StarfieldStar.m; sourceTree = "<group>"; };
+		029E580418EC64AF007EB6E8 /* UIAnswerButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIAnswerButton.h; path = RacerGame/Game/UIAnswerButton.h; sourceTree = "<group>"; };
+		029E580518EC64AF007EB6E8 /* UIAnswerButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIAnswerButton.m; path = RacerGame/Game/UIAnswerButton.m; sourceTree = "<group>"; };
+		029E580718EC6507007EB6E8 /* UIQuestionLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIQuestionLabel.h; path = RacerGame/Game/UIQuestionLabel.h; sourceTree = "<group>"; };
+		029E580818EC6507007EB6E8 /* UIQuestionLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIQuestionLabel.m; path = RacerGame/Game/UIQuestionLabel.m; sourceTree = "<group>"; };
+		02A30C8918ECF9A6005F7ED7 /* QuestionState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QuestionState.h; path = RacerGame/Game/QuestionState.h; sourceTree = "<group>"; };
+		02A30C8A18ECF9A6005F7ED7 /* QuestionState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QuestionState.m; path = RacerGame/Game/QuestionState.m; sourceTree = "<group>"; };
 		D96BA46E18E8675100D29E82 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		D96BA47118E86BB900D29E82 /* SetSelectorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetSelectorViewController.h; sourceTree = "<group>"; };
 		D96BA47218E86BB900D29E82 /* SetSelectorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetSelectorViewController.m; sourceTree = "<group>"; };
@@ -157,18 +163,22 @@
 		0262757818E90EE500CDAA24 /* Game Logic */ = {
 			isa = PBXGroup;
 			children = (
+				02A30C8918ECF9A6005F7ED7 /* QuestionState.h */,
+				02A30C8A18ECF9A6005F7ED7 /* QuestionState.m */,
 				0262757918E90F4400CDAA24 /* Shapes.h */,
 				0262757A18E90F4400CDAA24 /* Shapes.m */,
 				0262758018E91F4F00CDAA24 /* GameQuestion.h */,
 				0262758118E91F4F00CDAA24 /* GameQuestion.m */,
 				029E57EF18EC1723007EB6E8 /* GameAnimationState.h */,
 				029E57F018EC1723007EB6E8 /* GameAnimationState.m */,
-				029E57F218EC1763007EB6E8 /* QuestionState.h */,
-				029E57F318EC1763007EB6E8 /* QuestionState.m */,
 				029E57F518EC17B2007EB6E8 /* AnswerState.h */,
 				029E57F618EC17B2007EB6E8 /* AnswerState.m */,
 				029E57F818EC1AEF007EB6E8 /* StarfieldStar.h */,
 				029E57F918EC1AEF007EB6E8 /* StarfieldStar.m */,
+				029E580418EC64AF007EB6E8 /* UIAnswerButton.h */,
+				029E580518EC64AF007EB6E8 /* UIAnswerButton.m */,
+				029E580718EC6507007EB6E8 /* UIQuestionLabel.h */,
+				029E580818EC6507007EB6E8 /* UIQuestionLabel.m */,
 			);
 			name = "Game Logic";
 			sourceTree = "<group>";
@@ -454,17 +464,20 @@
 				D96BA47E18E8965B00D29E82 /* Model.xcdatamodeld in Sources */,
 				0262757718E90E6C00CDAA24 /* GameViewController.m in Sources */,
 				D96BA51B18E8B87B00D29E82 /* FlashSetInfo.m in Sources */,
+				029E580918EC6507007EB6E8 /* UIQuestionLabel.m in Sources */,
 				D96BA47318E86BB900D29E82 /* SetSelectorViewController.m in Sources */,
-				029E57F418EC1763007EB6E8 /* QuestionState.m in Sources */,
 				029E57F118EC1723007EB6E8 /* GameAnimationState.m in Sources */,
 				D96BA50C18E8A73100D29E82 /* FlashSetItem.m in Sources */,
 				D96BA52F18EB365C00D29E82 /* ActivityModal.m in Sources */,
 				0262758218E91F4F00CDAA24 /* GameQuestion.m in Sources */,
+				029E580618EC64AF007EB6E8 /* UIAnswerButton.m in Sources */,
 				029E57FA18EC1AEF007EB6E8 /* StarfieldStar.m in Sources */,
 				D96BA47B18E876A300D29E82 /* URLHelper.m in Sources */,
 				D96BA52918EB038100D29E82 /* SetSelectionTableItem.m in Sources */,
 				D9B229F218DB1F1800DDBA11 /* main.m in Sources */,
 				0262757B18E90F4400CDAA24 /* Shapes.m in Sources */,
+				D991E55D18ED4A32003A4801 /* Resources.m in Sources */,
+				02A30C8B18ECF9A6005F7ED7 /* QuestionState.m in Sources */,
 				029E57F718EC17B2007EB6E8 /* AnswerState.m in Sources */,
 				D96BA51818E8B87A00D29E82 /* UserInfo.m in Sources */,
 				D96BA51518E8A9A900D29E82 /* UserInfoAttributes.m in Sources */,

@@ -53,6 +53,21 @@
     return gameQn;
 }
 
+- (id)initFromFlashSetItem:(FlashSetItem*)item
+{
+    self = [super init];
+    
+    if (self) {
+        // This is slightly awkward, as the initial design was that this
+        // would be Q+5xA, but now this is used as Q+A.
+        
+        _correctIdx = 0;
+        _flashCards = @[item];
+    }
+    
+    return self;
+}
+
 // We only support TEXT answers at the moment.
 // Best to subclass(?) for Image and Sound?? -- how to access image/sound?
 

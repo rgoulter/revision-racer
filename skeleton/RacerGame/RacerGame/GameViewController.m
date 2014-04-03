@@ -8,19 +8,31 @@
 
 #import "GameViewController.h"
 #import "Shapes.h"
+#import "Resources.h"
 #import "StarfieldStar.h"
 #import "AppDelegate.h"
 
 
-
 # pragma mark - Initialisation
+
+@interface GameViewController ()
+
+// These would be good for QuestionSessionManager
+@property id<QuestionUI> questionUI;
+@property NSArray *answerUIs; // type: id<AnswerUI>
+
+// and these, too.
+//@property QuestionState *currentQuestionState;
+
+// **DESIGN** variable type used here??
+@property AnswerState *selectedAnswer;
+
+@end
 
 @implementation GameViewController {
     NSMutableArray *_stars;
     NSArray *_starShapes;
     float _timeTillNextAster;
-    
-    GameQuestion *_currentQn;
 }
 
 @synthesize context;
@@ -34,8 +46,7 @@
         // need to create a flashset, if we don't have one.
         NSLog(@"GameVC wasn't given a flashSet. generating dummy...");
         
-        AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
-        NSManagedObjectContext* cdCtx = appDelegate.managedObjectContext;
+        NSManagedObjectContext* cdCtx = [Resources singleton].managedObjectContext;
         
         self.flashSet = [NSEntityDescription insertNewObjectForEntityForName:@"FlashSetInfo"
                                                       inManagedObjectContext:cdCtx];
@@ -71,9 +82,37 @@
         self.flashSet.isVisibleTo = [NSMutableSet set];
     }
     
-    // Set current question..
-    _currentQn = [GameQuestion generateFromFlashSet:_flashSet];
-    [self setQuestionTo:_currentQn];
+    
+    
+    // TODO: Initialisation for QuestionSessionManager & other Question Based things.
+    // UI variables
+    _questionUI = _questionLabel;
+    _answerUIs = @[_answerBtn0,
+                   _answerBtn1,
+                   _answerBtn2,
+                   _answerBtn3,
+                   _answerBtn4];
+    
+    // Bootstap Answer states
+    // (Not sure the best way to initially set these up).
+    for (id<AnswerUI> ansUI in _answerUIs) {
+        // This relies on AnswerState not needing GameQn to generate next
+        // AnswerState.
+        AnswerState *ansSt = [[AnswerState alloc] initWithGameQuestion:nil];
+        ansSt.answerUI = ansUI;
+        
+        ansSt = [ansSt nextAnswerState:self.flashSet];
+    }
+    
+    [self ensureAnswersUnique];
+    
+    // Bootstrap QuestionState.
+    QuestionState *qnSt = [[QuestionState alloc] initWithGameQuestion:nil];
+    qnSt.questionUI = _questionUI;
+    qnSt.questionManager = self;
+    qnSt = [qnSt nextQuestionState:[self currentAnswerStates]];
+    
+    
     
     _stars = [[NSMutableArray alloc] init];
     
@@ -113,30 +152,100 @@
 
 
 
-# pragma mark - QuestionSide logic
+# pragma mark - QuestionSessionManager logic
 
-- (void)setQuestionTo:(NSString *)qn withAnswers:(NSArray*)answers
+- (void)questionAnswered:(QuestionState*)qnState
 {
-    self.questionLabel.text = qn;
+    // This is called when the question has been 'invoked'
+    // (by timeout, or because user selected an answer).
     
-    [self.answerBtn0 setTitle:[answers objectAtIndex:0] forState:UIControlStateNormal];
-    [self.answerBtn1 setTitle:[answers objectAtIndex:1] forState:UIControlStateNormal];
-    [self.answerBtn2 setTitle:[answers objectAtIndex:2] forState:UIControlStateNormal];
-    [self.answerBtn3 setTitle:[answers objectAtIndex:3] forState:UIControlStateNormal];
-    [self.answerBtn4 setTitle:[answers objectAtIndex:4] forState:UIControlStateNormal];
+    NSLog(@"QUESTION ANSWERED");
+    
+    // So we need to:
+    // Check whether correct or not.
+    
+    // TODO
+    
+    // Update the UI appropriately.
+    // If we are "synchronising" all answers, (atm maybe; later, no),
+    // Then: set all answer UIs..
+    
+    NSMutableSet *currentAnswerStates = [NSMutableSet set];
+    
+    for (id<AnswerUI> ansUI in _answerUIs) {
+        AnswerState *ansSt = [ansUI associatedAnswerState];
+        
+        assert(ansSt != nil);
+        
+        do {
+            ansSt = [ansSt nextAnswerState:self.flashSet];
+        } while ([currentAnswerStates containsObject:ansSt]);
+        
+        [currentAnswerStates addObject:ansSt];
+    }
+    
+    // If we are "staggering" answers,
+    // Then: Change the AnswerUI associated with this Qn *if* we got it correct..
+    //       then new Qn ui.
+    
+    // Now set a new qn.
+    QuestionState *nextQnState = [_questionUI associatedQuestionState];
+    nextQnState = [nextQnState nextQuestionState:[self currentAnswerStates]];
 }
 
-- (void)setQuestionTo:(GameQuestion*)qn
-{
-    [self setQuestionTo:qn.questionText withAnswers:qn.answers];
+
+
+- (NSArray*)currentAnswerStates {
+    NSMutableArray *result = [NSMutableArray array];
+    
+    for (id<AnswerUI> ansUI in _answerUIs) {
+        [result addObject:[ansUI associatedAnswerState]];
+    }
+    
+    return result;
 }
+
+
+
+- (void)ensureAnswersUnique {
+    // Call this to ensure the AnswerUIs all have different Answers displayed.
+    
+    assert(self.flashSet != nil);
+    
+    NSMutableSet *currentAnswerStates = [NSMutableSet set];
+    
+    for (id<AnswerUI> ansUI in _answerUIs) {
+        AnswerState *ansSt = [ansUI associatedAnswerState];
+        
+        assert(ansSt != nil);
+        
+        while ([currentAnswerStates containsObject:ansSt]) {
+            ansSt = [ansSt nextAnswerState:self.flashSet];
+        }
+        
+        [currentAnswerStates addObject:ansSt];
+    }
+}
+
+
+
+# pragma mark - QuestionSide logic
 
 - (IBAction)answerButtonPressed:(UIButton *)sender {
     NSLog(@"Pressed answer: %@", sender.titleLabel.text);
     
-    // Next question
-    _currentQn = [GameQuestion generateFromFlashSet:_flashSet];
-    [self setQuestionTo:_currentQn];
+    // Select the answer associated with this UI.
+    id<AnswerUI> answerUI = (id<AnswerUI>)sender;
+    AnswerState *selectedAnswerState = [answerUI associatedAnswerState];
+
+    _selectedAnswer = selectedAnswerState;
+    
+    // Eventually, we want to have some "delay" animation between,
+    // or sime indication that the answer is correct/incorrect.
+    
+    // I forget what to do here.
+    QuestionState *currentQuestionState = [_questionUI associatedQuestionState];
+    [currentQuestionState endState]; // invoke.
 }
 
 - (IBAction)finishGameBtnPressed:(id)sender {

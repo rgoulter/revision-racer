@@ -13,18 +13,23 @@
 #import "FlashSetItem.h"
 #import "FlashSetInfo.h"
 #import "GameQuestion.h"
+#import "QuestionState.h"
+#import "AnswerState.h"
 
-@interface GameViewController : GLKViewController
+#import "UIQuestionLabel.h"
+#import "UIAnswerButton.h"
+
+@interface GameViewController : GLKViewController <QuestionSessionManager>
 
 @property (strong, nonatomic) EAGLContext *context;
 @property (strong, nonatomic) GLKBaseEffect *effect;
 
-@property (weak, nonatomic) IBOutlet UILabel *questionLabel;
-@property (weak, nonatomic) IBOutlet UIButton *answerBtn0;
-@property (weak, nonatomic) IBOutlet UIButton *answerBtn1;
-@property (weak, nonatomic) IBOutlet UIButton *answerBtn2;
-@property (weak, nonatomic) IBOutlet UIButton *answerBtn3;
-@property (weak, nonatomic) IBOutlet UIButton *answerBtn4;
+@property (weak, nonatomic) IBOutlet UIQuestionLabel *questionLabel;
+@property (weak, nonatomic) IBOutlet UIAnswerButton *answerBtn0;
+@property (weak, nonatomic) IBOutlet UIAnswerButton *answerBtn1;
+@property (weak, nonatomic) IBOutlet UIAnswerButton *answerBtn2;
+@property (weak, nonatomic) IBOutlet UIAnswerButton *answerBtn3;
+@property (weak, nonatomic) IBOutlet UIAnswerButton *answerBtn4;
 
 @property FlashSetInfo *flashSet;
 

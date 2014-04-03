@@ -4,6 +4,14 @@
 //
 //  Facilitates the link between FlashSetInfo and the GameViewController.
 //
+//  This assumes MCQ context wherein answers are presented "synchronously"
+//  (all at the same time) alongside the questions.
+//  -- This isn't necessarily how the questions & answers will work,
+//  depending on how the game mechanics will play out.
+//
+//  Regardless, it feels like it will be easier to keep the coupling all within
+//  one file like this.
+//
 //  Created by Richard Goulter on 31/3/14.
 //  Copyright (c) 2014 Hunar Khanna. All rights reserved.
 //
@@ -21,6 +29,10 @@ typedef enum {kFlashSetText, kFlashSetImage, kFlashSetSound} FlashSetInputType;
 @interface GameQuestion : NSObject
 
 + (GameQuestion*)generateFromFlashSet:(FlashSetInfo*)flashSet;
+
+// This constructor is for the Q+A abstraction.
+// (as opposed to Q+4A). **DESIGN**
+- (id)initFromFlashSetItem:(FlashSetItem*)item;
 
 @property FlashSetInfo *flashSet;
 
