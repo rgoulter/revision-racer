@@ -35,6 +35,7 @@
 		D96BA52C18EB32AE00D29E82 /* ActivityModal.xib in Resources */ = {isa = PBXBuildFile; fileRef = D96BA52B18EB32AE00D29E82 /* ActivityModal.xib */; };
 		D96BA52F18EB365C00D29E82 /* ActivityModal.m in Sources */ = {isa = PBXBuildFile; fileRef = D96BA52E18EB365C00D29E82 /* ActivityModal.m */; };
 		D991E55D18ED4A32003A4801 /* Resources.m in Sources */ = {isa = PBXBuildFile; fileRef = D991E55C18ED4A32003A4801 /* Resources.m */; };
+		D991E56018ED5E69003A4801 /* FlashSetItemAttributes.m in Sources */ = {isa = PBXBuildFile; fileRef = D991E55F18ED5E69003A4801 /* FlashSetItemAttributes.m */; };
 		D9B229E618DB1F1800DDBA11 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9B229E518DB1F1800DDBA11 /* Foundation.framework */; };
 		D9B229E818DB1F1800DDBA11 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9B229E718DB1F1800DDBA11 /* CoreGraphics.framework */; };
 		D9B229EA18DB1F1800DDBA11 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9B229E918DB1F1800DDBA11 /* UIKit.framework */; };
@@ -112,6 +113,8 @@
 		D96BA52E18EB365C00D29E82 /* ActivityModal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityModal.m; sourceTree = "<group>"; };
 		D991E55B18ED4A32003A4801 /* Resources.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Resources.h; sourceTree = "<group>"; };
 		D991E55C18ED4A32003A4801 /* Resources.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Resources.m; sourceTree = "<group>"; };
+		D991E55E18ED5E69003A4801 /* FlashSetItemAttributes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlashSetItemAttributes.h; sourceTree = "<group>"; };
+		D991E55F18ED5E69003A4801 /* FlashSetItemAttributes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlashSetItemAttributes.m; sourceTree = "<group>"; };
 		D9B229E218DB1F1800DDBA11 /* RacerGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RacerGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9B229E518DB1F1800DDBA11 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D9B229E718DB1F1800DDBA11 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -273,6 +276,8 @@
 				D96BA51418E8A9A900D29E82 /* UserInfoAttributes.m */,
 				D96BA52118E92F1700D29E82 /* FlashSetInfoAttributes.h */,
 				D96BA52218E92F1700D29E82 /* FlashSetInfoAttributes.m */,
+				D991E55E18ED5E69003A4801 /* FlashSetItemAttributes.h */,
+				D991E55F18ED5E69003A4801 /* FlashSetItemAttributes.m */,
 			);
 			name = Attributes;
 			sourceTree = "<group>";
@@ -477,6 +482,7 @@
 				D9B229F218DB1F1800DDBA11 /* main.m in Sources */,
 				0262757B18E90F4400CDAA24 /* Shapes.m in Sources */,
 				D991E55D18ED4A32003A4801 /* Resources.m in Sources */,
+				D991E56018ED5E69003A4801 /* FlashSetItemAttributes.m in Sources */,
 				02A30C8B18ECF9A6005F7ED7 /* QuestionState.m in Sources */,
 				029E57F718EC17B2007EB6E8 /* AnswerState.m in Sources */,
 				D96BA51818E8B87A00D29E82 /* UserInfo.m in Sources */,
