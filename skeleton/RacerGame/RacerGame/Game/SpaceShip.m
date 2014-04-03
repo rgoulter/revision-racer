@@ -20,6 +20,9 @@
 // The view which this spaceship is the "player avatar" for.
 @property UIView *view;
 
+@property float distTillCanNextAnswer;
+@property BOOL isBeingDragged;
+
 @end
 
 @implementation SpaceShip
@@ -38,9 +41,24 @@
         // GLKit Logic.
         // For shape, let's use our own cube.
         _shape = [[BOCube alloc] init];
+        
+        _distTillCanNextAnswer = -1;
     }
     
     return self;
+}
+
+- (BOOL)canAnswer
+{
+    return _distTillCanNextAnswer <= 0 &&
+           [self speed] < 0.3;
+}
+
+- (void)answeredQuestion
+{
+    // **MAGIC** (particularly since this is 'independent' of screen size).
+    NSLog(@"ANSWERED QN");
+    _distTillCanNextAnswer = 100;
 }
 
 - (CGFloat)speed
@@ -49,6 +67,12 @@
     CGFloat dx = d.x, dy = d.y;
     
     return sqrtf(dx*dx + dy*dy);
+}
+
+- (void)setDestinationPointOnScreen:(CGPoint)pt withSpeedPerSecond:(float)sp
+{
+    self.destinationPointOnScreen = pt;
+    self.speedPerSecond = sp;
 }
 
 - (void)setUp
@@ -68,23 +92,25 @@
 
 - (void)tick:(NSTimeInterval)timeSinceLastUpdate
 {
-    CGFloat speedPerSecond = 2000;
-    
     // Aim for "destination"
     CGPoint relDestination = CGPointMake(_destinationPointOnScreen.x - _pointOnScreen.x,
                                          _destinationPointOnScreen.y - _pointOnScreen.y);
     CGFloat destVecLen = sqrtf(relDestination.x * relDestination.x + relDestination.y * relDestination.y);
     
-    if (destVecLen <= speedPerSecond * timeSinceLastUpdate) {
+    if (destVecLen <= _speedPerSecond * timeSinceLastUpdate) {
         _deltaPositionVector = relDestination;
         _pointOnScreen = _destinationPointOnScreen;
     } else {
-        CGFloat k = timeSinceLastUpdate * speedPerSecond / destVecLen;
+        CGFloat k = timeSinceLastUpdate * _speedPerSecond / destVecLen;
         _deltaPositionVector = CGPointMake(relDestination.x * k,
                                            relDestination.y * k);
         
         _pointOnScreen = CGPointMake(_pointOnScreen.x + _deltaPositionVector.x,
                                      _pointOnScreen.y + _deltaPositionVector.y);
+    }
+    
+    if (_distTillCanNextAnswer >= 0) {
+        _distTillCanNextAnswer -= [self speed];
     }
 }
 
@@ -106,13 +132,18 @@
         
         // TODO: If pt *starts* close-to current spaceship.. HOW TO VETO??
         NSLog(@"Start pan at %f, %f", pt.x, pt.y);
+        _isBeingDragged = YES;
     }
     
     if (recog.state == UIGestureRecognizerStateChanged) {
         CGPoint pt = [recog locationInView:self.view];
         
         _destinationPointOnScreen = pt;
-        //_pointOnScreen = pt;
+        _speedPerSecond = SPACESHIP_HIGH_SPEED;
+    }
+    
+    if (recog.state == UIGestureRecognizerStateEnded) {
+        _isBeingDragged = NO;
     }
 }
 
@@ -122,6 +153,7 @@
         CGPoint pt = [recog locationInView:self.view];
         
         _destinationPointOnScreen = pt;
+        _speedPerSecond = SPACESHIP_HIGH_SPEED;
     }
 }
 

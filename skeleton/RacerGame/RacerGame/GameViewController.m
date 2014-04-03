@@ -296,7 +296,7 @@
 
 - (void)setSpaceshipDestinationTo:(CGPoint)pt
 {
-    [_playerShip setDestinationPointOnScreen:pt];
+    [_playerShip setDestinationPointOnScreen:pt withSpeedPerSecond:SPACESHIP_HIGH_SPEED];
 }
 
 - (void)selectAnswerUI:(id<AnswerUI>)answerUI
@@ -325,14 +325,6 @@
     // Set destination to the selected question.
     CGPoint pt = [self.view convertPoint:sender.center fromView:sender.superview];
     [self setSpaceshipDestinationTo:pt];
-    
-    
-    // Eventually, we want to have some "delay" animation between,
-    // or sime indication that the answer is correct/incorrect.
-    
-    // I forget what to do here.
-    QuestionState *currentQuestionState = [_questionUI associatedQuestionState];
-    [currentQuestionState endState]; // invoke.
 }
 
 - (IBAction)finishGameBtnPressed:(id)sender {
@@ -395,7 +387,11 @@
 {
     [_playerShip tick:self.timeSinceLastUpdate];
     
-    if (_playerShip.speed < 10) {
+    // _playerShip.answerHasBeenGiven is used to ensure that the player keeping a
+    // pan-gesture about an answer won't repeatedly keep firing of "answered" events.
+    
+    if (_playerShip.canAnswer &&
+        _playerShip.speed < 10 * self.timeSinceLastUpdate) {
         // Check whether we're close to any answer UIs,
         // Set selected answer if so.
         
@@ -407,6 +403,18 @@
             
             if (CGRectContainsPoint(ansRect, _playerShip.pointOnScreen)) {
                 [self selectAnswerUI:uiAnsBtn];
+                
+                // Eventually, we want to have some "delay" animation between,
+                // or sime indication that the answer is correct/incorrect.
+                
+                // I forget what to do here.
+                QuestionState *currentQuestionState = [_questionUI associatedQuestionState];
+                [currentQuestionState endState]; // invoke.
+                
+                
+                // Deal with SpaceShip so it doesn't trigger "answers" too frequently.
+                // Consider **DESIGN** here, as it feels hackish.
+                [_playerShip answeredQuestion];
             }
         }
     }
