@@ -11,6 +11,7 @@
 #import "Resources.h"
 #import "StarfieldStar.h"
 #import "AppDelegate.h"
+#import "SpaceShip.h"
 
 
 # pragma mark - Initialisation
@@ -26,6 +27,14 @@
 
 // **DESIGN** variable type used here??
 @property AnswerState *selectedAnswer;
+
+// Game Entities
+@property SpaceShip *playerShip;
+
+// Cursors for Debugging & such.
+@property UIView *spaceshipPositionCursor;
+@property UIView *spaceshipDestinationCursor;
+@property UIView *selectedAnswerCursor;
 
 @end
 
@@ -111,6 +120,51 @@
     qnSt.questionUI = _questionUI;
     qnSt.questionManager = self;
     qnSt = [qnSt nextQuestionState:[self currentAnswerStates]];
+    
+    
+    
+    
+    // Setup Game Entities
+    _playerShip = [[SpaceShip alloc] initInView:self.view];
+    
+    
+    
+    // Setup cursors
+    _spaceshipPositionCursor = [[UIView alloc] initWithFrame:CGRectMake(50, 50, 50, 50)];
+    _spaceshipPositionCursor.layer.cornerRadius = 25;
+    _spaceshipPositionCursor.layer.backgroundColor =
+        [UIColor colorWithRed:1 green:1 blue:0 alpha:0.8].CGColor;
+    [self.view addSubview:_spaceshipPositionCursor];
+    
+    _spaceshipDestinationCursor = [[UIView alloc] initWithFrame:CGRectMake(150, 150, 10, 10)];
+    _spaceshipDestinationCursor.layer.cornerRadius = 5;
+    _spaceshipDestinationCursor.layer.backgroundColor =
+        [UIColor colorWithRed:1 green:0 blue:1 alpha:0.5].CGColor;
+    [self.view addSubview:_spaceshipDestinationCursor];
+    
+    _selectedAnswerCursor = [[UIView alloc] initWithFrame:CGRectMake(250, 250, 20, 20)];
+    _selectedAnswerCursor.layer.cornerRadius = 10;
+    _selectedAnswerCursor.layer.backgroundColor =
+        [UIColor colorWithRed:0 green:1 blue:1 alpha:0.3].CGColor;
+    [self.view addSubview:_selectedAnswerCursor];
+    
+    
+    
+    // Setup Gesture Handlers
+    
+    // Create and initialize a tap gesture
+    UIPanGestureRecognizer *panRecognizer =
+        [[UIPanGestureRecognizer alloc]
+         initWithTarget:_playerShip action:@selector(respondToPanGesture:)];
+    
+    // Add the tap gesture recognizer to the view
+    [self.view addGestureRecognizer:panRecognizer];
+    
+    UITapGestureRecognizer *tapRecognizer =
+        [[UITapGestureRecognizer alloc] initWithTarget:_playerShip action:@selector(respondToTapGesture:)];
+    
+    tapRecognizer.numberOfTapsRequired = 1;
+    [self.view addGestureRecognizer:tapRecognizer];
     
     
     
@@ -231,14 +285,47 @@
 
 # pragma mark - QuestionSide logic
 
+- (void)setCursor:(UIView*)cursor toPoint:(CGPoint)pt
+{
+    CGRect cursorFrame = cursor.frame;
+    CGFloat w = cursorFrame.size.width;
+    CGFloat r = w / 2;
+    
+    cursor.frame = CGRectMake(pt.x - r, pt.y - r, w, w);
+}
+
+- (void)setSpaceshipDestinationTo:(CGPoint)pt
+{
+    [_playerShip setDestinationPointOnScreen:pt];
+}
+
+- (void)selectAnswerUI:(id<AnswerUI>)answerUI
+{
+    // Assume the spaceship has its destination here,
+    // by its own means.
+    
+    AnswerState *selectedAnswerState = [answerUI associatedAnswerState];
+    _selectedAnswer = selectedAnswerState;
+
+    // update cursor position to center of Answer Button UI.
+    UIAnswerButton *ansBtn = (UIAnswerButton*) answerUI;
+    CGPoint pt = [self.view convertPoint:ansBtn.center fromView:ansBtn.superview];
+    
+    [self setCursor:_selectedAnswerCursor toPoint:pt];
+}
+
 - (IBAction)answerButtonPressed:(UIButton *)sender {
     NSLog(@"Pressed answer: %@", sender.titleLabel.text);
     
     // Select the answer associated with this UI.
-    id<AnswerUI> answerUI = (id<AnswerUI>)sender;
-    AnswerState *selectedAnswerState = [answerUI associatedAnswerState];
-
-    _selectedAnswer = selectedAnswerState;
+    // id<AnswerUI> answerUI = (id<AnswerUI>)sender;
+    // [self selectAnswerUI:answerUI];
+    
+    
+    // Set destination to the selected question.
+    CGPoint pt = [self.view convertPoint:sender.center fromView:sender.superview];
+    [self setSpaceshipDestinationTo:pt];
+    
     
     // Eventually, we want to have some "delay" animation between,
     // or sime indication that the answer is correct/incorrect.
@@ -307,6 +394,33 @@
     GLKMatrix4 projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(50.0f), aspect, 0.1f, 100.0f);
     self.effect.transform.projectionMatrix = projectionMatrix;
     
+    
+    
+    // Tick spaceship
+    
+    [_playerShip tick:self.timeSinceLastUpdate];
+    
+    if (_playerShip.speed < 10) {
+        // Check whether we're close to any answer UIs,
+        // Set selected answer if so.
+        
+        for (UIAnswerButton *uiAnsBtn in _answerUIs) {
+            // "close enough" = spaceship point in rect of answer
+            
+            CGRect ansRect = [self.view convertRect:uiAnsBtn.frame
+                                           fromView:uiAnsBtn.superview];
+            
+            if (CGRectContainsPoint(ansRect, _playerShip.pointOnScreen)) {
+                [self selectAnswerUI:uiAnsBtn];
+            }
+        }
+    }
+    
+    [self setCursor:_spaceshipPositionCursor toPoint:_playerShip.pointOnScreen];
+    [self setCursor:_spaceshipDestinationCursor toPoint:_playerShip.destinationPointOnScreen];
+    
+    
+    
     // update stars
     for (StarfieldStar *star in _stars) {
         [star tick:self.timeSinceLastUpdate];
@@ -352,7 +466,9 @@
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    self.paused = !self.paused;
+    // Disable pausing for now, since we have other gestures
+    // going on.
+    //self.paused = !self.paused;
 }
 
 - (void)addARandomStar
