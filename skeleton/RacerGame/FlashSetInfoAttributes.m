@@ -10,7 +10,7 @@
 
 @implementation FlashSetInfoAttributes
 
--(id)initForFlashSetInfo:(FlashSetInfo*)flashSet
+-(id)initWithFlashSetInfo:(FlashSetInfo*)flashSet
 {
     if (self = [super init]) {
         self.id = flashSet.id;

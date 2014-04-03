@@ -17,5 +17,5 @@
 @property (nonatomic, strong) NSDate * modifiedDate;
 @property (nonatomic, strong) NSSet * cards;
 
--(id)initForFlashSetInfo:(FlashSetInfo*)flashSet;
+-(id)initWithFlashSetInfo:(FlashSetInfo*)flashSet;
 @end
