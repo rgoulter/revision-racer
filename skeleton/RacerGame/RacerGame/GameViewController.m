@@ -455,7 +455,8 @@
     if (_timeTillNextAster < 0) {
         _timeTillNextAster = 4 / 3 + (arc4random() % 300) / 300;
         
-        [self addARandomStar];
+        //[self addARandomStar];
+        [self addARandomLaneAsteroid];
     }
 }
 
@@ -472,21 +473,22 @@
     
     
     // Translate the spaceship, corresponding to the point on the screen.
-    // Magic #'s: I think it's that there's approx a 4:3 ratio with the iPad or so?
+    // Magic #'s: I have no idea why 6 and 5 work? (4:3 ratio?).
     //
     // Since SpaceShip understands its coordinates in terms of TopLeft:(0,0),
     //  BottomRight:(width,height), we need to scale to map the coordinates about.
     
     // Scale to ScreenSize <- WorldSize
-    GLfloat s = 1 / viewFrame.size.height;
-    modelMatrix = GLKMatrix4Scale(modelMatrix, 4 * s, -(3 * s), 1);
+    GLfloat sw = 6 / viewFrame.size.width;
+    GLfloat sh = 5 / viewFrame.size.height;
+    modelMatrix = GLKMatrix4Scale(modelMatrix, sw, -(sh), 1);
     
     // Translate, since worldcoord's origin is in center of screen.
     modelMatrix = GLKMatrix4Translate(modelMatrix, -viewFrame.size.width / 2, -viewFrame.size.height / 2, 0);
     modelMatrix = [_playerShip transformation:modelMatrix];
     
     // Scale to WorldSize <- ScreenSize (inverse of above).
-    modelMatrix = GLKMatrix4Scale(modelMatrix, 1 / (4 * s), -1 / (3 * s), 1);
+    modelMatrix = GLKMatrix4Scale(modelMatrix, 1 / (sw), -1 / (sh), 1);
     
     
     // Now draw the spaceship, since the modelviewMatrix has the right position.
@@ -530,6 +532,39 @@
     //self.paused = !self.paused;
 }
 
+- (void)addLaneAsteroid:(NSUInteger)idx
+{
+    StarfieldStar *star = [[StarfieldStar alloc] init];
+    
+    int rndShapeIdx = arc4random() % 3;
+    star.shape = [_starShapes objectAtIndex:rndShapeIdx];
+    
+    // This depends on the coords
+    float xArr[5] = {-1.5, +1.5, -1.75,  0, +1.75};
+    float yArr[5] = {  +1,   +1,    -1, -1,    -1};
+    float x = xArr[idx];
+    float y = yArr[idx];
+    
+    [star setStartPositionX:x Y:y Z:-30];
+    [star setEndPositionX:x Y:y Z:-5];
+    
+    star.duration = 3;
+    
+    
+    // setUp??
+    // TODO: Not sure how it reacts to IF it's called multiple times.
+    [star setUp];
+    
+    [_stars addObject:star];
+}
+
+- (void)addARandomLaneAsteroid
+{
+    // Rnd of 5 lanes
+    NSUInteger rndIdx = arc4random() % 5;
+    [self addLaneAsteroid:rndIdx];
+}
+
 - (void)addARandomStar
 {
     StarfieldStar *star = [[StarfieldStar alloc] init];
@@ -540,9 +575,13 @@
     // This depends on the coords
     float rndX = (float)(arc4random() % 8) - 4;
     float rndY = (float)(arc4random() % 6) - 3;
+    
+    rndX = 0;
+    rndY = -1;
+    
     [star setStartPositionX:0 Y:0 Z:-10];
-    [star setStartPositionX:rndX Y:rndY Z:-10];
-    [star setEndPositionX:rndX Y:rndY Z:0];
+    [star setStartPositionX:rndX Y:rndY Z:-30];
+    [star setEndPositionX:rndX Y:rndY Z:-5];
     
     star.duration = 3;
     
