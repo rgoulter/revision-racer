@@ -12,6 +12,7 @@
 #import "StarfieldStar.h"
 #import "AppDelegate.h"
 #import "SpaceShip.h"
+#import "GLProgram.h"
 
 
 # pragma mark - Initialisation
@@ -35,6 +36,8 @@
 @property UIView *spaceshipPositionCursor;
 @property UIView *spaceshipDestinationCursor;
 @property UIView *selectedAnswerCursor;
+
+@property GLProgram *program;
 
 @end
 
@@ -270,6 +273,10 @@
         [self addLaneAsteroid:i];
     }
     // */
+    
+    if (!_playerShip.isBeingDragged) {
+        [_playerShip setDestinationPointOnScreen:self.view.center withSpeedPerSecond:SPACESHIP_LOW_SPEED];
+    }
 }
 
 
@@ -377,6 +384,34 @@
 
 # pragma mark - OpenGL & GLKit stuff.
 
+- (void)setupGLShader
+{
+    // From: http://iphonedevelopment.blogspot.sg/2010/11/opengl-es-20-for-ios-chapter-4.html
+    
+    // Shader filenames assumed by GLProgram to be in form of "<name>.vsh" and "<name>.fsh"
+    // for vertex and fragment shaders respectively.
+    
+    _program = [[GLProgram alloc] initWithVertexShaderFilename:@"shader"
+                                                     fragmentShaderFilename:@"shader"];
+    
+    //[program addAttribute:@"position"];
+    //[program addAttribute:@"color"];
+    
+    if (![_program link]) {
+        NSLog(@"Link failed");
+        NSString *progLog = [_program programLog];
+        NSLog(@"Program Log: %@", progLog);
+        NSString *fragLog = [_program fragmentShaderLog];
+        NSLog(@"Frag Log: %@", fragLog);
+        NSString *vertLog = [_program vertexShaderLog];
+        NSLog(@"Vert Log: %@", vertLog);
+        
+        _program = nil;
+    }
+    
+    
+}
+
 - (void)setUpGL
 {
     [EAGLContext setCurrentContext:self.context];
@@ -393,6 +428,8 @@
     for (BOShape *shape in _starShapes) {
         [shape setUp];
     }
+    
+    //[self setupGLShader];
 }
 
 - (void)tearDownGL
@@ -438,7 +475,7 @@
                 // Deal with SpaceShip so it doesn't trigger "answers" too frequently.
                 // Consider **DESIGN** here, as it feels hackish.
                 [_playerShip answeredQuestion];
-                if (!_playerShip.isBeingDragged) {
+                if (!_playerShip.isBeingDragged && NO) {
                     [_playerShip setDestinationPointOnScreen:self.view.center withSpeedPerSecond:SPACESHIP_LOW_SPEED];
                 }
             }
@@ -519,6 +556,7 @@
     // Scale to WorldSize <- ScreenSize (inverse of above).
     modelMatrix = GLKMatrix4Scale(modelMatrix, 1 / (sw), -1 / (sh), 1);
     
+    [_program use];
     
     // Now draw the spaceship, since the modelviewMatrix has the right position.
     modelMatrix = GLKMatrix4Scale(modelMatrix, 0.25, 0.25, 0.25); // Scale model down.
