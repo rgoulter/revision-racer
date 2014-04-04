@@ -14,6 +14,7 @@
 //
 
 #import "SpaceShip.h"
+#import "SpaceShipShape.h"
 
 @interface SpaceShip ()
 
@@ -40,7 +41,7 @@
         
         // GLKit Logic.
         // For shape, let's use our own cube.
-        _shape = [[BOCube alloc] init];
+        _shape = [[BOSpaceShipShape alloc] init];
         
         _distTillCanNextAnswer = -1;
     }

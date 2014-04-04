@@ -559,7 +559,8 @@
     [_program use];
     
     // Now draw the spaceship, since the modelviewMatrix has the right position.
-    modelMatrix = GLKMatrix4Scale(modelMatrix, 0.25, 0.25, 0.25); // Scale model down.
+    // **HACK** Awkward hack, check to make sure SpaceShip is drawn the right way. (-z).
+    modelMatrix = GLKMatrix4Scale(modelMatrix, 0.4, 0.4, -0.4); // Scale model down.
     self.effect.transform.modelviewMatrix = modelMatrix;
     [self.effect prepareToDraw];
     [_playerShip draw];

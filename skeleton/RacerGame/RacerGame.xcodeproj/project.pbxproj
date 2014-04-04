@@ -16,6 +16,7 @@
 		0280A1E718EEE4B0006B50B4 /* GLProgram.m in Sources */ = {isa = PBXBuildFile; fileRef = 0280A1E618EEE4B0006B50B4 /* GLProgram.m */; };
 		0280A1E918EEE6FF006B50B4 /* shader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 0280A1E818EEE6FF006B50B4 /* shader.vsh */; };
 		0280A1EB18EEE70E006B50B4 /* shader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 0280A1EA18EEE70E006B50B4 /* shader.fsh */; };
+		0280A1EE18EF1087006B50B4 /* SpaceShipShape.m in Sources */ = {isa = PBXBuildFile; fileRef = 0280A1ED18EF1087006B50B4 /* SpaceShipShape.m */; };
 		029E57F118EC1723007EB6E8 /* GameAnimationState.m in Sources */ = {isa = PBXBuildFile; fileRef = 029E57F018EC1723007EB6E8 /* GameAnimationState.m */; };
 		029E57F718EC17B2007EB6E8 /* AnswerState.m in Sources */ = {isa = PBXBuildFile; fileRef = 029E57F618EC17B2007EB6E8 /* AnswerState.m */; };
 		029E57FA18EC1AEF007EB6E8 /* StarfieldStar.m in Sources */ = {isa = PBXBuildFile; fileRef = 029E57F918EC1AEF007EB6E8 /* StarfieldStar.m */; };
@@ -83,6 +84,8 @@
 		0280A1E618EEE4B0006B50B4 /* GLProgram.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GLProgram.m; path = RacerGame/Game/GLProgram.m; sourceTree = "<group>"; };
 		0280A1E818EEE6FF006B50B4 /* shader.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shader.vsh; sourceTree = "<group>"; };
 		0280A1EA18EEE70E006B50B4 /* shader.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shader.fsh; sourceTree = "<group>"; };
+		0280A1EC18EF1087006B50B4 /* SpaceShipShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SpaceShipShape.h; path = RacerGame/Game/SpaceShipShape.h; sourceTree = "<group>"; };
+		0280A1ED18EF1087006B50B4 /* SpaceShipShape.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SpaceShipShape.m; path = RacerGame/Game/SpaceShipShape.m; sourceTree = "<group>"; };
 		029E57EF18EC1723007EB6E8 /* GameAnimationState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameAnimationState.h; path = RacerGame/Game/GameAnimationState.h; sourceTree = "<group>"; };
 		029E57F018EC1723007EB6E8 /* GameAnimationState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameAnimationState.m; path = RacerGame/Game/GameAnimationState.m; sourceTree = "<group>"; };
 		029E57F518EC17B2007EB6E8 /* AnswerState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnswerState.h; path = RacerGame/Game/AnswerState.h; sourceTree = "<group>"; };
@@ -214,6 +217,8 @@
 				02FB32DB18EDA9FF00991ABA /* BOCurve.m */,
 				0280A1E818EEE6FF006B50B4 /* shader.vsh */,
 				0280A1EA18EEE70E006B50B4 /* shader.fsh */,
+				0280A1EC18EF1087006B50B4 /* SpaceShipShape.h */,
+				0280A1ED18EF1087006B50B4 /* SpaceShipShape.m */,
 			);
 			name = 3D;
 			sourceTree = "<group>";
@@ -524,6 +529,7 @@
 				D991E55D18ED4A32003A4801 /* Resources.m in Sources */,
 				0280A1E718EEE4B0006B50B4 /* GLProgram.m in Sources */,
 				D991E56018ED5E69003A4801 /* FlashSetItemAttributes.m in Sources */,
+				0280A1EE18EF1087006B50B4 /* SpaceShipShape.m in Sources */,
 				02A30C8B18ECF9A6005F7ED7 /* QuestionState.m in Sources */,
 				029E57F718EC17B2007EB6E8 /* AnswerState.m in Sources */,
 				D96BA51518E8A9A900D29E82 /* UserInfoAttributes.m in Sources */,
