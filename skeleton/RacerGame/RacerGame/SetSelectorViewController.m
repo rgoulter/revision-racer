@@ -21,7 +21,7 @@
 
 @property (strong, nonatomic) IBOutlet UITableView *setTable;
 @property (strong, nonatomic) NSArray* listOfUserSets;
-@property (strong, nonatomic) FlashSetInfo* selectedSetForGame;
+@property (strong, nonatomic) FlashSetInfoAttributes* selectedSetForGame;
 @end
 
 @implementation SetSelectorViewController

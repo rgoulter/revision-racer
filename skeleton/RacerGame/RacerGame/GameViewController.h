@@ -31,7 +31,7 @@
 @property (weak, nonatomic) IBOutlet UIAnswerButton *answerBtn3;
 @property (weak, nonatomic) IBOutlet UIAnswerButton *answerBtn4;
 
-@property FlashSetInfo *flashSet;
+@property FlashSetInfoAttributes *flashSet;
 
 - (void)setUpGL;
 - (void)tearDownGL;
