@@ -87,9 +87,9 @@
     
     
     
-    
     // Setup Game Entities
     _playerShip = [[SpaceShip alloc] initInView:self.view];
+    [_playerShip setPointOnScreen:self.view.center];
     
     
     
@@ -149,6 +149,13 @@
     [self setUpGL];
     
     _timeTillNextAster = 0;
+    
+    //*
+    // add 5x lane asteroids. **HACK**
+    for (int i = 0; i < 5; i++) {
+        [self addLaneAsteroid:i];
+    }
+    // */
 }
 
 - (void)viewDidUnload
@@ -255,6 +262,14 @@
     for (id<AnswerUI> ansUI in _answerUIs) {
         [ansUI setTextColor:ansColor];
     }
+    
+    
+    //*
+    // add 5x lane asteroids. **HACK**
+    for (int i = 0; i < 5; i++) {
+        [self addLaneAsteroid:i];
+    }
+    // */
 }
 
 
@@ -423,6 +438,9 @@
                 // Deal with SpaceShip so it doesn't trigger "answers" too frequently.
                 // Consider **DESIGN** here, as it feels hackish.
                 [_playerShip answeredQuestion];
+                if (!_playerShip.isBeingDragged) {
+                    [_playerShip setDestinationPointOnScreen:self.view.center withSpeedPerSecond:SPACESHIP_LOW_SPEED];
+                }
             }
         }
     }
@@ -459,6 +477,8 @@
     }
     
     // Create a new asteroid every now and then.
+    /*
+    // Ignore random asteroids for now.
     _timeTillNextAster -= self.timeSinceLastUpdate;
     if (_timeTillNextAster < 0) {
         _timeTillNextAster = 4 / 3 + (arc4random() % 300) / 300;
@@ -466,6 +486,7 @@
         //[self addARandomStar];
         [self addARandomLaneAsteroid];
     }
+    // */
 }
 
 - (void)drawSpaceShip
@@ -542,6 +563,7 @@
 
 - (void)addLaneAsteroid:(NSUInteger)idx
 {
+    NSLog(@"Generate lane %d aster", (int)idx);
     StarfieldStar *star = [[StarfieldStar alloc] init];
     
     int rndShapeIdx = arc4random() % 3;
@@ -553,7 +575,9 @@
     float x = xArr[idx];
     float y = yArr[idx];
     
-    [star setStartPositionX:x Y:y Z:-30];
+    float dz = 0;//(arc4random() % 100 - 50) / 20;
+    
+    [star setStartPositionX:x Y:y Z:-30 + dz];
     [star setEndPositionX:x Y:y Z:-5];
     
     star.duration = 3;
