@@ -13,6 +13,7 @@
 
 #import "GameAnimationState.h"
 #import "GameQuestion.h"
+#import "FlashSetInfoAttributes.h"
 
 // I wish there was a more intermediate representation of
 // FlashSets than the Core Data one..
@@ -40,7 +41,7 @@
 //
 // We shall generate an answer-state from some FlashSetInfo,
 // at the moment just arbitrarily.
-- (AnswerState*)nextAnswerState:(FlashSetInfo*)flashSet;
+- (AnswerState*)nextAnswerState:(FlashSetInfoAttributes*)flashSet;
 
 @end
 

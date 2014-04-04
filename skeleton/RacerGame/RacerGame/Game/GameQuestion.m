@@ -7,6 +7,7 @@
 //
 
 #import "GameQuestion.h"
+#import "FlashSetLogic.h"
 
 @interface GameQuestion ()
 
@@ -17,9 +18,9 @@
 
 @implementation GameQuestion
 
-+ (GameQuestion*)generateFromFlashSet:(FlashSetInfo*)flashSet
++ (GameQuestion*)generateFromFlashSet:(FlashSetInfoAttributes*)flashSet
 {
-    NSSet *allCards = flashSet.hasCards;
+    NSSet *allCards = [[FlashSetLogic singleton] getAllItemsInSet:flashSet.id];;
     NSArray *allCardsArray = allCards.allObjects;
     
     assert(allCards.count >= 5);
@@ -53,7 +54,7 @@
     return gameQn;
 }
 
-- (id)initFromFlashSetItem:(FlashSetItem*)item
+- (id)initFromFlashSetItem:(FlashSetItemAttributes*)item
 {
     self = [super init];
     
@@ -73,7 +74,7 @@
 
 - (NSString*)questionText
 {
-    FlashSetItem *item = [_flashCards objectAtIndex:_correctIdx];
+    FlashSetItemAttributes *item = [_flashCards objectAtIndex:_correctIdx];
     
     return item.term;
 }
@@ -83,7 +84,7 @@
 {
     NSMutableArray *val = [NSMutableArray array];
     
-    for (FlashSetItem *it in _flashCards) {
+    for (FlashSetItemAttributes *it in _flashCards) {
         [val addObject:it.definition];
     }
     
@@ -92,7 +93,7 @@
 
 - (NSString*)correctAnswer
 {
-    FlashSetItem *item = [_flashCards objectAtIndex:_correctIdx];
+    FlashSetItemAttributes *item = [_flashCards objectAtIndex:_correctIdx];
     
     return item.definition;
 }

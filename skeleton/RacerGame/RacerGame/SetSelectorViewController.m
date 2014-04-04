@@ -118,10 +118,10 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     self.selectedSetForGame = self.listOfUserSets[[indexPath item]];
-    ActivityModal* modal = [[ActivityModal alloc] initWithFrame:self.view.frame];
+    /*ActivityModal* modal = [[ActivityModal alloc] initWithFrame:self.view.frame];
     
     [modal setText:@"Loading some shit"];
-    [self.view addSubview:modal];
+    [self.view addSubview:modal];*/
 }
 
 #pragma mark UITableViewDataSource delegate methods

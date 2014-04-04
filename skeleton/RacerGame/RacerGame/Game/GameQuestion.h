@@ -17,8 +17,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "FlashSetInfo.h"
-#import "FlashSetItem.h"
+#import "FlashSetInfoAttributes.h"
+#import "FlashSetItemAttributes.h"
 
 // Is this at all useful for future refactoring of
 // image/sound into GameQn?
@@ -28,13 +28,13 @@ typedef enum {kFlashSetText, kFlashSetImage, kFlashSetSound} FlashSetInputType;
 
 @interface GameQuestion : NSObject
 
-+ (GameQuestion*)generateFromFlashSet:(FlashSetInfo*)flashSet;
++ (GameQuestion*)generateFromFlashSet:(FlashSetInfoAttributes*)flashSet;
 
 // This constructor is for the Q+A abstraction.
 // (as opposed to Q+4A). **DESIGN**
-- (id)initFromFlashSetItem:(FlashSetItem*)item;
+- (id)initFromFlashSetItem:(FlashSetItemAttributes*)item;
 
-@property FlashSetInfo *flashSet;
+@property FlashSetInfoAttributes *flashSet;
 
 // We only support TEXT answers at the moment.
 // Best to subclass(?) for Image and Sound?? -- how to access image/sound?

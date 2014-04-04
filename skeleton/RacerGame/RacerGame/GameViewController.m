@@ -52,43 +52,7 @@
     [super viewDidLoad];
     
     if(!self.flashSet) {
-        // need to create a flashset, if we don't have one.
-        NSLog(@"GameVC wasn't given a flashSet. generating dummy...");
-        
-        NSManagedObjectContext* cdCtx = [Resources singleton].managedObjectContext;
-        
-        self.flashSet = [NSEntityDescription insertNewObjectForEntityForName:@"FlashSetInfo"
-                                                      inManagedObjectContext:cdCtx];
-        
-        NSMutableSet *itemsSet = [NSMutableSet set];
-        
-        NSDictionary *dummyValues = @{@"dmyQuestion1": @"dmyAnswer1",
-                                      @"dmyQuestion2": @"dmyAnswer2",
-                                      @"dmyQuestion3": @"dmyAnswer3",
-                                      @"dmyQuestion4": @"dmyAnswer4",
-                                      @"dmyQuestion5": @"dmyAnswer5",
-                                      @"dmyQuestion6": @"dmyAnswer6",
-                                      @"dmyQuestion7": @"dmyAnswer7",
-                                      @"dmyQuestion8": @"dmyAnswer8"};
-        for (NSString *key in dummyValues.keyEnumerator.allObjects) {
-            
-            // Holy hell, Core data.
-            
-            FlashSetItem* fsItem = [NSEntityDescription insertNewObjectForEntityForName:@"FlashSetItem" inManagedObjectContext:cdCtx];
-            
-            fsItem.id = @-1;
-            fsItem.term = key;
-            fsItem.definition = [dummyValues objectForKey:key];
-            
-            [itemsSet addObject:fsItem];
-        }
-        
-        self.flashSet.id = @-1;
-        self.flashSet.title = @"Dummy FlashSet";
-        self.flashSet.createdDate = [NSDate date];
-        self.flashSet.modifiedDate = [NSDate date];
-        self.flashSet.hasCards = itemsSet;
-        self.flashSet.isVisibleTo = [NSMutableSet set];
+        assert(false);
     }
     
     

@@ -17,6 +17,7 @@
 //
 
 #import "AnswerState.h"
+#import "FlashSetLogic.h"
 
 @implementation AnswerState
 
@@ -30,7 +31,7 @@
                            // **DESIGN**: I'm not sure this is good design,
                            // (GameQuestion.flashSet). Seems an inappropriate binding.
                            // AnswerState -> GameQuestion -> FlashSetInfo.
-                           FlashSetInfo *fsInfo = _question.flashSet;
+                           FlashSetInfoAttributes *fsInfo = _question.flashSet;
                            
                            // Update the AnswerUI in the self.nextAnswerState method.
                            [self nextAnswerState:fsInfo];
@@ -74,7 +75,7 @@
 //
 // We shall generate an answer-state from some FlashSetInfo,
 // at the moment just arbitrarily.
-- (AnswerState*)nextAnswerState:(FlashSetInfo*)flashSet
+- (AnswerState*)nextAnswerState:(FlashSetInfoAttributes*)flashSet
 {
     assert(flashSet != nil);
     
@@ -95,7 +96,7 @@
     
     AnswerState *nextAS = nil;
     
-    NSSet *allCards = flashSet.hasCards;
+    NSSet *allCards = [[FlashSetLogic singleton] getAllItemsInSet:flashSet.id];
     NSArray *allCardsArray = allCards.allObjects;
     
     // Assertion copypasted from GameQuestion.generate.
@@ -103,7 +104,7 @@
     assert(allCards.count >= 5);
     
     NSUInteger rndIdx = arc4random() % allCardsArray.count;
-    FlashSetItem *chosenFSItem = [allCardsArray objectAtIndex:rndIdx];
+    FlashSetItemAttributes *chosenFSItem = [allCardsArray objectAtIndex:rndIdx];
     
     // Awkwardly poor GameQuestion constructor.
     // **DESIGN** GameQn
