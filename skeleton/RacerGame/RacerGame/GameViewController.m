@@ -193,6 +193,29 @@
 
 # pragma mark - QuestionSessionManager logic
 
+- (void)checkQnAnsStateRep
+{
+    // Because you can never be too sure.
+    
+    QuestionState *currQnState = [_questionUI associatedQuestionState];
+    
+    NSLog(@"CHECK REP:");
+    NSString *currQStr = currQnState.question.questionText;
+    NSString *currQAns = [currQnState.question.answers objectAtIndex:0];
+    NSLog(@"Current Qn: %@ = %@", currQStr, currQAns);
+    NSLog(@"Qn UI lbl: %@", ((UIQuestionLabel*)_questionUI).text);
+    
+    for (AnswerState *ansSt in self.currentAnswerStates) {
+        NSString *ansStr = [ansSt.question.answers objectAtIndex:0];
+        NSLog(@"Answer: %@", ansStr);
+    }
+    
+    NSLog(@"and Ans UIs");
+    for (id<AnswerUI> ansUI in _answerUIs) {
+        NSLog(@"Ans UI: %@", ((UIAnswerButton*)ansUI).titleLabel.text);
+    }
+}
+
 - (void)questionAnswered:(QuestionState*)qnState
 {
     // This is called when the question has been 'invoked'
@@ -227,6 +250,8 @@
             }
         }
     }
+    
+    [self checkQnAnsStateRep];
     
     // Introduce Delay for the following:
     [NSTimer scheduledTimerWithTimeInterval:2.0
@@ -283,6 +308,23 @@
     for (id<AnswerUI> ansUI in _answerUIs) {
         [ansUI setTextColor:ansColor];
     }
+    
+    
+    // ASTEROID OUTRO EFFECT
+    /* This is TOO ungracious...
+    // At the moment, the visual effect is weird, since this involves just removing the asteroid.
+    for (StarfieldStar *star in _stars) {
+        [star tick:INFINITY];
+    }
+    // */
+    /*
+    // n.b. this probably fails due to unsafe threading.
+    while (_stars > 0) {
+        StarfieldStar *aster = _stars.lastObject;
+        [_stars removeLastObject];
+        [aster tearDown];
+    }
+    // */
     
     
     //*
@@ -497,15 +539,21 @@
                 // Deal with SpaceShip so it doesn't trigger "answers" too frequently.
                 // Consider **DESIGN** here, as it feels hackish.
                 [_playerShip answeredQuestion];
-                if (!_playerShip.isBeingDragged && NO) {
-                    [_playerShip setDestinationPointOnScreen:self.view.center withSpeedPerSecond:SPACESHIP_LOW_SPEED];
-                }
             }
         }
     }
     
     [self setCursor:_spaceshipPositionCursor toPoint:_playerShip.pointOnScreen];
     [self setCursor:_spaceshipDestinationCursor toPoint:_playerShip.destinationPointOnScreen];
+}
+
+- (void)tickGameAnimationStates
+{
+    [[_questionUI associatedQuestionState] tick:self.timeSinceLastUpdate];
+    
+    for (AnswerState *ansSt in self.currentAnswerStates) {
+        [ansSt tick:self.timeSinceLastUpdate];
+    }
 }
 
 - (void)update
@@ -519,6 +567,10 @@
     
     // Tick spaceship
     [self tickSpaceShip];
+    
+    
+    // Tick Qn & Answers, etc.
+    [self tickGameAnimationStates];
     
     
     // update stars

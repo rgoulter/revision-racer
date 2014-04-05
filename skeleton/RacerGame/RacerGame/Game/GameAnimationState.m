@@ -33,15 +33,20 @@
     _timeToLive -= timeSinceLastUpdate;
     
     // "End" this state, if we've run out of time.
-    if (_timeToLive < 0) {
+    if (_timeToLive <= 0) {
         [self endState];
     }
+}
+
+- (void)cancel
+{
+    _animationOverCallback = nil;
 }
 
 // If we 'tick', then do we need an isExpired?
 - (BOOL)isExpired
 {
-    return _timeToLive < 0;
+    return _timeToLive <= 0;
 }
 
 // This method is called when the state times out,
@@ -50,7 +55,13 @@
 // e.g. the game may call this when the user pushes some button.
 - (void)endState
 {
-    _animationOverCallback();
+    if(_animationOverCallback) {
+        _animationOverCallback();
+    }
+    
+    // Remomve the callback function,
+    // so we don't get into an infinite loop.
+    _animationOverCallback = nil;
 }
 
 @end

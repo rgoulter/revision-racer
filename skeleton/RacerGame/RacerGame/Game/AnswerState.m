@@ -58,7 +58,7 @@
                            assert(_genCtx != nil);
                            
                            // Update the AnswerUI in the self.nextAnswerState method.
-                           [self nextAnswerStateFromContext:_genCtx];
+                           //[self nextAnswerStateFromContext:_genCtx];
                        }];
     
     if (self) {

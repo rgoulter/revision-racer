@@ -22,6 +22,8 @@
 // So that GAState can act as an abstration for Timer activities.
 - (void)tick:(NSTimeInterval)timeSinceLastUpdate;
 
+- (void)cancel;
+
 // If we 'tick', then do we need an isExpired?
 - (BOOL)isExpired;
 
