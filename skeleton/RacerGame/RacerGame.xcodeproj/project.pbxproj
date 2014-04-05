@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0255045F18F05E3500A984D0 /* GameRules.m in Sources */ = {isa = PBXBuildFile; fileRef = 0255045E18F05E3500A984D0 /* GameRules.m */; };
 		0262757718E90E6C00CDAA24 /* GameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0262757618E90E6C00CDAA24 /* GameViewController.m */; };
 		0262757B18E90F4400CDAA24 /* Shapes.m in Sources */ = {isa = PBXBuildFile; fileRef = 0262757A18E90F4400CDAA24 /* Shapes.m */; };
 		0262757E18E90F9400CDAA24 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0262757C18E90F9400CDAA24 /* GLKit.framework */; };
@@ -70,6 +71,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0255045D18F05E3500A984D0 /* GameRules.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameRules.h; path = RacerGame/Game/GameRules.h; sourceTree = "<group>"; };
+		0255045E18F05E3500A984D0 /* GameRules.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameRules.m; path = RacerGame/Game/GameRules.m; sourceTree = "<group>"; };
 		0262757518E90E6C00CDAA24 /* GameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameViewController.h; sourceTree = "<group>"; };
 		0262757618E90E6C00CDAA24 /* GameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameViewController.m; sourceTree = "<group>"; };
 		0262757918E90F4400CDAA24 /* Shapes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Shapes.h; path = RacerGame/Game/Shapes.h; sourceTree = "<group>"; };
@@ -198,6 +201,8 @@
 				029E580518EC64AF007EB6E8 /* UIAnswerButton.m */,
 				029E580718EC6507007EB6E8 /* UIQuestionLabel.h */,
 				029E580818EC6507007EB6E8 /* UIQuestionLabel.m */,
+				0255045D18F05E3500A984D0 /* GameRules.h */,
+				0255045E18F05E3500A984D0 /* GameRules.m */,
 			);
 			name = "Game Logic";
 			sourceTree = "<group>";
@@ -511,6 +516,7 @@
 				D991E56618EDB7D1003A4801 /* UserInfo.m in Sources */,
 				D96BA47E18E8965B00D29E82 /* Model.xcdatamodeld in Sources */,
 				0262757718E90E6C00CDAA24 /* GameViewController.m in Sources */,
+				0255045F18F05E3500A984D0 /* GameRules.m in Sources */,
 				D96BA51B18E8B87B00D29E82 /* FlashSetInfo.m in Sources */,
 				029E580918EC6507007EB6E8 /* UIQuestionLabel.m in Sources */,
 				D991E56318EDB129003A4801 /* UserInfoLogic.m in Sources */,

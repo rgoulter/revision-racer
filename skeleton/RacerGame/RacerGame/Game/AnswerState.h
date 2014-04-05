@@ -19,14 +19,28 @@
 // FlashSets than the Core Data one..
 #import "FlashSetInfo.h"
 
-// Time to answer Qns is 10seconds
-// **CODEDUPL**
-#define DEFAULT_QUESTION_TIMEOUT 10
-
 
 
 // forward-declare.
 @protocol AnswerUI;
+
+
+
+// QuestionGenerationContext is used to carry information to
+// QuestionState for generating from GameViewController,
+// so we don't have to change the method signature so often.
+// **DESIGN** implications??
+@interface AnswerGenerationContext : NSObject
+
+- (id)initWithFlashSet:(FlashSetInfoAttributes*)flashSet andDuration:(float)t;
+
+@property (readonly) FlashSetInfoAttributes *flashSet;
+
+// Duration of the next question.
+@property (readonly) float questionDuration;
+
+@end
+
 
 
 
@@ -35,13 +49,13 @@
 @property (nonatomic, readonly) GameQuestion *question;
 @property (weak) id<AnswerUI> answerUI;
 
-- (id)initWithGameQuestion:(GameQuestion*)qn;
+- (id)initWithGameQuestion:(GameQuestion*)qn andDuration:(float)t;
 
 // We generate the next question state once this one has expired.
 //
 // We shall generate an answer-state from some FlashSetInfo,
 // at the moment just arbitrarily.
-- (AnswerState*)nextAnswerState:(FlashSetInfoAttributes*)flashSet;
+- (AnswerState*)nextAnswerStateFromContext:(AnswerGenerationContext*)genCtx;
 
 @end
 

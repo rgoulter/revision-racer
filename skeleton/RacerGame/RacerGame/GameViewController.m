@@ -13,6 +13,7 @@
 #import "AppDelegate.h"
 #import "SpaceShip.h"
 #import "GLProgram.h"
+#import "GameRules.h"
 
 
 # pragma mark - Initialisation
@@ -28,6 +29,8 @@
 
 // **DESIGN** variable type used here??
 @property AnswerState *selectedAnswer;
+
+@property GameRules *gameRules;
 
 // Game Entities
 @property SpaceShip *playerShip;
@@ -55,8 +58,17 @@
     [super viewDidLoad];
     
     if(!self.flashSet) {
+        // **TODO** This should really be an exception, and/or handled by other VCs also.
         assert(false);
     }
+    
+    
+    
+    // Setup Game Entities
+    _gameRules = [[GameRules alloc] init];
+    
+    _playerShip = [[SpaceShip alloc] initInView:self.view];
+    [_playerShip setPointOnScreen:self.view.center];
     
     
     
@@ -71,28 +83,27 @@
     
     // Bootstap Answer states
     // (Not sure the best way to initially set these up).
+    AnswerGenerationContext *tmpAnsGenCtx = [[AnswerGenerationContext alloc]
+                                             initWithFlashSet:self.flashSet
+                                             andDuration:_gameRules.questionDuration];
+    
     for (id<AnswerUI> ansUI in _answerUIs) {
         // This relies on AnswerState not needing GameQn to generate next
         // AnswerState.
-        AnswerState *ansSt = [[AnswerState alloc] initWithGameQuestion:nil];
+        AnswerState *ansSt = [[AnswerState alloc] initWithGameQuestion:nil andDuration:_gameRules.questionDuration];
         ansSt.answerUI = ansUI;
-        
-        ansSt = [ansSt nextAnswerState:self.flashSet];
+        ansSt = [ansSt nextAnswerStateFromContext:tmpAnsGenCtx];
     }
     
     [self ensureAnswersUnique];
     
     // Bootstrap QuestionState.
-    QuestionState *qnSt = [[QuestionState alloc] initWithGameQuestion:nil];
+    QuestionState *qnSt = [[QuestionState alloc] initWithGameQuestion:nil andDuration:_gameRules.questionDuration];
     qnSt.questionUI = _questionUI;
     qnSt.questionManager = self;
-    qnSt = [qnSt nextQuestionState:[self currentAnswerStates]];
-    
-    
-    
-    // Setup Game Entities
-    _playerShip = [[SpaceShip alloc] initInView:self.view];
-    [_playerShip setPointOnScreen:self.view.center];
+    qnSt = [qnSt nextQuestionStateFromContext:[[QuestionGenerationContext alloc]
+                                               initWithAnswers:self.currentAnswerStates
+                                               andDuration:_gameRules.questionDuration]];
     
     
     
@@ -240,8 +251,12 @@
         
         assert(ansSt != nil);
         
+        AnswerGenerationContext *ansGenCtx = [[AnswerGenerationContext alloc]
+                                              initWithFlashSet:self.flashSet
+                                              andDuration:_gameRules.questionDuration];
+        
         do {
-            ansSt = [ansSt nextAnswerState:self.flashSet];
+            ansSt = [ansSt nextAnswerStateFromContext:ansGenCtx];
         } while ([currentAnswerStates containsObject:ansSt]);
         
         [currentAnswerStates addObject:ansSt];
@@ -253,7 +268,10 @@
     
     // Now set a new qn.
     QuestionState *nextQnState = [_questionUI associatedQuestionState];
-    nextQnState = [nextQnState nextQuestionState:[self currentAnswerStates]];
+    QuestionGenerationContext *qnGenCtx = [[QuestionGenerationContext alloc]
+                                           initWithAnswers:[self currentAnswerStates]
+                                           andDuration:_gameRules.questionDuration];
+    nextQnState = [nextQnState nextQuestionStateFromContext:qnGenCtx];
     
     
     
@@ -305,8 +323,12 @@
         
         assert(ansSt != nil);
         
+        AnswerGenerationContext *ansGenCtx = [[AnswerGenerationContext alloc]
+                                              initWithFlashSet:self.flashSet
+                                              andDuration:_gameRules.questionDuration];
+        
         while ([currentAnswerStates containsObject:ansSt]) {
-            ansSt = [ansSt nextAnswerState:self.flashSet];
+            ansSt = [ansSt nextAnswerStateFromContext:ansGenCtx];
         }
         
         [currentAnswerStates addObject:ansSt];
@@ -619,7 +641,7 @@
     [star setStartPositionX:x Y:y Z:-30 + dz];
     [star setEndPositionX:x Y:y Z:-5];
     
-    star.duration = 3;
+    star.duration = _gameRules.questionDuration;
     
     
     // setUp??

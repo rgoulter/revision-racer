@@ -19,22 +19,46 @@
 #import "AnswerState.h"
 #import "FlashSetLogic.h"
 
+
+
+@implementation AnswerGenerationContext
+
+- (id)initWithFlashSet:(FlashSetInfoAttributes *)flashSet andDuration:(float)t
+{
+    self = [super init];
+    
+    if (self) {
+        _flashSet = flashSet;
+        _questionDuration = t;
+    }
+    
+    return self;
+}
+
+@end
+
+
+
+@interface AnswerState ()
+
+// **HACK** so that when we invoke callback, we can create another AnswerState
+@property AnswerGenerationContext *genCtx;
+
+@end
+
 @implementation AnswerState
 
-- (id)initWithGameQuestion:(GameQuestion*)qn
+- (id)initWithGameQuestion:(GameQuestion*)qn andDuration:(float)t
 {
-    self = [super initWithDuration:DEFAULT_QUESTION_TIMEOUT
+    self = [super initWithDuration:t
                     andDescription:@""
                        andCallback:^(){
                            // This is called when AnswerState times out.
                            
-                           // **DESIGN**: I'm not sure this is good design,
-                           // (GameQuestion.flashSet). Seems an inappropriate binding.
-                           // AnswerState -> GameQuestion -> FlashSetInfo.
-                           FlashSetInfoAttributes *fsInfo = _question.flashSet;
+                           assert(_genCtx != nil);
                            
                            // Update the AnswerUI in the self.nextAnswerState method.
-                           [self nextAnswerState:fsInfo];
+                           [self nextAnswerStateFromContext:_genCtx];
                        }];
     
     if (self) {
@@ -75,8 +99,13 @@
 //
 // We shall generate an answer-state from some FlashSetInfo,
 // at the moment just arbitrarily.
-- (AnswerState*)nextAnswerState:(FlashSetInfoAttributes*)flashSet
+- (AnswerState*)nextAnswerStateFromContext:(AnswerGenerationContext *)genCtx
 {
+    // Dependencies from Generation context
+    FlashSetInfoAttributes *flashSet = genCtx.flashSet;
+    float questionDuration = genCtx.questionDuration;
+    
+    
     assert(flashSet != nil);
     
     // **DESIGN** So, at the moment AnswerState is generating which 'answers'
@@ -96,6 +125,7 @@
     
     AnswerState *nextAS = nil;
     
+    
     NSSet *allCards = [[FlashSetLogic singleton] getAllItemsInSet:flashSet.id];
     NSArray *allCardsArray = allCards.allObjects;
     
@@ -111,7 +141,11 @@
     GameQuestion *gameQn = [[GameQuestion alloc] initFromFlashSetItem:chosenFSItem];
     gameQn.flashSet = flashSet;
     
-    nextAS = [[AnswerState alloc] initWithGameQuestion:gameQn];
+    
+    nextAS = [[AnswerState alloc] initWithGameQuestion:gameQn andDuration:questionDuration];
+    
+    // Pass the gen context to the answer. (See AnswerState extension).
+    nextAS.genCtx = genCtx;
     
     
     // Set binding for next question. (Here? Or in the callback?).

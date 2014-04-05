@@ -20,14 +20,30 @@
 #import "GameAnimationState.h"
 #import "GameQuestion.h"
 
-// Time to answer Qns is 10seconds
-#define DEFAULT_QUESTION_TIMEOUT 10
-
 
 
 // forward-declare.
 @protocol QuestionUI;
 @protocol QuestionSessionManager;
+
+
+
+// QuestionGenerationContext is used to carry information to
+// QuestionState for generating from GameViewController,
+// so we don't have to change the method signature so often.
+// **DESIGN** implications??
+@interface QuestionGenerationContext : NSObject
+
+- (id)initWithAnswers:(NSArray*)answers andDuration:(float)t;
+
+// AnswersList type is left to some other contractor.
+// Currently assumed to be AnswerStates.
+@property (readonly) NSArray *answersList;
+
+// Duration of the next question.
+@property (readonly) float questionDuration;
+
+@end
 
 
 
@@ -40,14 +56,10 @@
 @property (weak) id<QuestionSessionManager> questionManager;
 @property (weak) id<QuestionUI> questionUI;
 
-- (id)initWithGameQuestion:(GameQuestion*)qn;
+- (id)initWithGameQuestion:(GameQuestion*)qn andDuration:(float)t;
 
 // We generate the next question state once this one has expired.
-//
-// currentAnswerList is expected to be an NSArray of the Answers currently
-// on display.
-// (TODO: Do we need to have an abstraction for that?).
-- (QuestionState*)nextQuestionState:(NSArray*)currentAnswerList;
+- (QuestionState*)nextQuestionStateFromContext:(QuestionGenerationContext*)genCtx;
 
 @end
 
