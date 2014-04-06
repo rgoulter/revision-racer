@@ -436,6 +436,15 @@ vertexdata* generateAsteroidVertexData(GLfloat vertices[], int indices[])
             numPoints += 1;
         }
         
+        // Asteroid-ness, jitter the centrepoint.
+        float r1 = (float)(arc4random() % 200 - 100) / 100;
+        float r2 = (float)(arc4random() % 200 - 100) / 100;
+        float r3 = (float)(arc4random() % 200 - 100) / 100;
+        float k = 0.000000009;
+        cenX += r1 * k;
+        cenY += r2 * k;
+        cenZ += r1 * k;
+        
         float cenPt[3] = {cenX, cenY, cenZ};
         
         // For a regular polygon with n points,
@@ -644,9 +653,19 @@ void setVertexDataColor(GLfloat *data, int ptIdx, GLfloat r, GLfloat g, GLfloat 
         calculateDodecahedronData();
         
         // e.g. generate with Dodecaheron
-        vertexdata *data = generateAsteroidVertexData(gDodecahedronVertices, gDodecahedronFaceIndices);
+        vertexdata *data;
+       
+        float rnd = arc4random() % 3;
+        
+        if (rnd < 0.5) {
+            data = generateAsteroidVertexData(gIcosahedronVertices, gIcosahedronFaceIndices);
+        } else {
+            data = generateAsteroidVertexData(gDodecahedronVertices, gDodecahedronFaceIndices);
+        }
         
         [self setVertexData:data->data withNumPoints:data->numPoints];
+        
+        // **MEMORYLEAK** data is never freed on clientside.
     }
     
     return self;
