@@ -422,6 +422,9 @@ enum
                 [ansUI setTextColor:correctColor];
             }
         }
+        
+        // Effect for incorrect answer
+        [_playerShip incorrectWobble];
     }
     
     //[self checkQnAnsStateRep];

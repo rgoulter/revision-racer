@@ -28,6 +28,10 @@
 @property float hovery;
 @property float t;
 
+// wobble effect
+@property float rotZ;
+@property float rotDZ;
+
 @end
 
 @implementation SpaceShip
@@ -123,10 +127,32 @@
     _hovery = 5 * sinf((_t / 12) * 2 * M_PI);
     
     
+    // Wobble effect
+    float minRotDZ = M_PI / 60;
+    float maxRotZ = M_PI / 9;
+    float decayPerSecond = 0.9;
+    _rotZ += _rotDZ * timeSinceLastUpdate;
+    if (_rotZ > maxRotZ) { _rotZ = maxRotZ; _rotDZ *= -1; }
+    if (_rotZ < -maxRotZ) { _rotZ = -maxRotZ; _rotDZ *= -1; }
+    if (abs(_rotDZ) < minRotDZ) { _rotDZ = 0; _rotZ = 0; }
+    _rotDZ *= (1 - decayPerSecond * timeSinceLastUpdate);
+    
+    
     if (_distTillCanNextAnswer >= 0) {
         _distTillCanNextAnswer -= [self speed];
     }
 }
+
+
+
+- (void)incorrectWobble
+{
+    NSLog(@"Spaceship wobble");
+    int sign = (arc4random() % 10 < 5) ? +1 : -1;
+    _rotDZ = sign * 2 * M_PI;
+}
+
+
 
 - (GLKMatrix4)transformation:(GLKMatrix4)mat
 {
@@ -134,7 +160,8 @@
     // so scaling will have to be done outside of SpaceShip
     
     // REQUIRES that the coord system has +x to the right, +y down.
-    return GLKMatrix4Translate(mat, _pointOnScreen.x + _hoverx, _pointOnScreen.y + _hovery, 0);
+    mat = GLKMatrix4Translate(mat, _pointOnScreen.x + _hoverx, _pointOnScreen.y + _hovery, 0);
+    return GLKMatrix4Rotate(mat, _rotZ, 0, 0, 1);
 }
 
 

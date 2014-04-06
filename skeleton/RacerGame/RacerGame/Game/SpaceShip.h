@@ -44,6 +44,9 @@
 //  but GameVC can't access our private check state for this).
 - (void)answeredQuestion;
 
+// Start a wobble effect for an incorrect answer
+- (void)incorrectWobble;
+
 - (void)setUp;
 - (void)tearDown;
 - (void)draw;
