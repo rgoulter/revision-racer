@@ -19,17 +19,16 @@
 #import "UIQuestionLabel.h"
 #import "UIAnswerButton.h"
 
-@interface GameViewController : GLKViewController <QuestionSessionManager>
+@interface GameViewController : GLKViewController <QuestionSessionManager,
+                                                   UICollectionViewDataSource,
+                                                   UICollectionViewDelegateFlowLayout>
+
+@property (weak, nonatomic) IBOutlet UICollectionView *answersCollectionView;
 
 @property (strong, nonatomic) EAGLContext *context;
 @property (strong, nonatomic) GLKBaseEffect *effect;
 
 @property (weak, nonatomic) IBOutlet UIQuestionLabel *questionLabel;
-@property (weak, nonatomic) IBOutlet UIAnswerButton *answerBtn0;
-@property (weak, nonatomic) IBOutlet UIAnswerButton *answerBtn1;
-@property (weak, nonatomic) IBOutlet UIAnswerButton *answerBtn2;
-@property (weak, nonatomic) IBOutlet UIAnswerButton *answerBtn3;
-@property (weak, nonatomic) IBOutlet UIAnswerButton *answerBtn4;
 
 @property FlashSetInfoAttributes *flashSet;
 

@@ -15,6 +15,7 @@
 #import "GLProgram.h"
 #import "GameRules.h"
 
+#define NUM_QUESTIONS 5
 
 # pragma mark - Initialisation
 
@@ -22,7 +23,7 @@
 
 // These would be good for QuestionSessionManager
 @property id<QuestionUI> questionUI;
-@property NSArray *answerUIs; // type: id<AnswerUI>
+@property NSMutableArray *answerUIs; // type: id<AnswerUI>
 
 // and these, too.
 //@property QuestionState *currentQuestionState;
@@ -75,11 +76,19 @@
     // TODO: Initialisation for QuestionSessionManager & other Question Based things.
     // UI variables
     _questionUI = _questionLabel;
-    _answerUIs = @[_answerBtn0,
-                   _answerBtn1,
-                   _answerBtn2,
-                   _answerBtn3,
-                   _answerBtn4];
+    _answerUIs = [NSMutableArray array];
+    
+    // Create AnswerUIs using UICollectionView.
+    self.answersCollectionView.backgroundColor = [UIColor clearColor];
+    self.answersCollectionView.backgroundView = [[UIView alloc] initWithFrame:CGRectZero];
+    // [self.answersCollectionView reloadData]; // UICollectionView is BUGGY, so we need the below, not this.
+    [self.answersCollectionView reloadItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:0 inSection:0],
+                                                          [NSIndexPath indexPathForItem:1 inSection:0],
+                                                          [NSIndexPath indexPathForItem:0 inSection:1],
+                                                          [NSIndexPath indexPathForItem:1 inSection:1],
+                                                          [NSIndexPath indexPathForItem:2 inSection:1]]];
+    
+    assert(_answerUIs.count > 0);
     
     // Bootstap Answer states
     // (Not sure the best way to initially set these up).
@@ -166,7 +175,7 @@
     
     //*
     // add 5x lane asteroids. **HACK**
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < NUM_QUESTIONS; i++) {
         [self addLaneAsteroid:i];
     }
     // */
@@ -187,6 +196,86 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+
+
+# pragma mark - CollectionView Logic
+
+
+
+- (UICollectionViewCell *) collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    UICollectionViewCell * newCell = [self.answersCollectionView
+                                      dequeueReusableCellWithReuseIdentifier:@"collViewAnswerCell"
+                                      forIndexPath:indexPath];
+    
+    // Take care of the answers label
+    
+    // This seems a bit **HACK** ish, but
+    UIView *v = newCell.subviews.firstObject;
+    UIAnswerButton *ansButton = (UIAnswerButton*) v.subviews.firstObject;
+    
+    assert([ansButton conformsToProtocol:@protocol(AnswerUI)] && ansButton != nil);
+    
+    [ansButton addTarget:self action:@selector(answerButtonPressed:) forControlEvents:UIControlEventTouchDown];
+    [_answerUIs addObject:ansButton];
+    
+    return newCell;
+}
+
+- (NSInteger) numberOfSectionsInCollectionView:(UICollectionView *)collectionView
+{
+    // NUM ROWS
+    return 2;
+}
+
+- (NSInteger) collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+    // NUM COLS
+    if (section % 2 == 0) {
+        return 2;
+    } else {
+        return 3;
+    }
+}
+
+
+
+// UICollectiovViewDelegateFlowLayout stuff.
+
+- (CGSize)collViewCellSize
+{
+    // We should calculate this from CollectionView's size.
+    CGRect collViewRect = self.answersCollectionView.frame;
+    
+    float w = self.answersCollectionView.frame.size.width / 3; //collViewRect.size.width / 5;
+    float h = collViewRect.size.height / 2; // Assuming answers all together.
+    
+    return CGSizeMake(w, h);   
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView
+                  layout:(UICollectionViewLayout *)collectionViewLayout
+  sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    return [self collViewCellSize];
+}
+
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView
+                        layout:(UICollectionViewLayout *)collectionViewLayout
+        insetForSectionAtIndex:(NSInteger)section
+{
+    // To be fancy??
+    if (section == 0) {
+        float width = self.answersCollectionView.frame.size.width;
+        int n = [self collectionView:collectionView numberOfItemsInSection:section]; // 2;
+        float margin = (width - n * [self collViewCellSize].width) / (n - 1 + 2);
+        return UIEdgeInsetsMake(0, margin, 0, margin);
+    } else {
+        // top, left, bottom, right
+        return UIEdgeInsetsMake(0, 0, 0, 0);
+    }
 }
 
 
@@ -329,7 +418,7 @@
     
     //*
     // add 5x lane asteroids. **HACK**
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < NUM_QUESTIONS; i++) {
         [self addLaneAsteroid:i];
     }
     // */
@@ -706,7 +795,7 @@
 - (void)addARandomLaneAsteroid
 {
     // Rnd of 5 lanes
-    NSUInteger rndIdx = arc4random() % 5;
+    NSUInteger rndIdx = arc4random() % NUM_QUESTIONS;
     [self addLaneAsteroid:rndIdx];
 }
 
