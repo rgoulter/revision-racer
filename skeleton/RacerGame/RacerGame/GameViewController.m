@@ -83,7 +83,8 @@ enum
 
 @implementation GameViewController {
     NSMutableArray *_stars;
-    NSMutableArray *_debrisPieces; // **HACK**
+    NSMutableArray *_deadAsteroids; // **HACK**
+    NSMutableArray *_laneAsteroids; // **HACK**
     NSArray *_starShapes;
     float _timeTillNextAster;
     
@@ -202,7 +203,8 @@ enum
     
     
     _stars = [[NSMutableArray alloc] init];
-    _debrisPieces = [[NSMutableArray alloc] init];
+    _deadAsteroids = [[NSMutableArray alloc] init];
+    _laneAsteroids = [[NSMutableArray alloc] init];
     
     self.context = [[EAGLContext alloc]
                     initWithAPI:kEAGLRenderingAPIOpenGLES2];
@@ -368,7 +370,7 @@ enum
     [aster tick:INFINITY];
     
     for (Asteroid *debrisAster in debris) {
-        [_debrisPieces addObject:debrisAster];
+        [_deadAsteroids addObject:debrisAster];
     }
 }
 
@@ -399,12 +401,12 @@ enum
         // Explode correct asteroid.
         // **DESIGN** We could do this cheaper if we associated UIAnswerButton w/ Asteroid..
         NSLog(@"Explode aster for idx:%d", i);
-        if (_stars.count >= i) {
+        if (_laneAsteroids.count >= i) {
             // TODO: We need to do this with THREADS in mind;
             // particularly, creating exploded pieces in a background thread, as well as
             // selecting the correct asteroid.
             // (e.g. Race condition, Asteroids in _stars may have been removed already).
-            Asteroid *correctAster = [_stars objectAtIndex:i]; // **HACK**, probably correct.
+            Asteroid *correctAster = [_laneAsteroids objectAtIndex:i]; // **HACK**, probably correct.
             [self explodeAsteroid:correctAster]; // EXPENSIVE
         }
     } else {
@@ -423,6 +425,14 @@ enum
     }
     
     //[self checkQnAnsStateRep];
+    
+    
+    // Transfer asteroids from _laneAsteroids to _deadAsteroids
+    for (Asteroid *aster in _laneAsteroids) {
+        [_deadAsteroids addObject:aster];
+    }
+    [_laneAsteroids removeAllObjects];
+    
     
     // Introduce Delay for the following:
     [NSTimer scheduledTimerWithTimeInterval:2.0
@@ -479,29 +489,12 @@ enum
     }
     
     
-    // ASTEROID OUTRO EFFECT
-    /* This is TOO ungracious...
-    // At the moment, the visual effect is weird, since this involves just removing the asteroid.
-    for (StarfieldStar *star in _stars) {
-        [star tick:INFINITY];
-    }
-    // */
-    /*
-    // n.b. this probably fails due to unsafe threading.
-    while (_stars > 0) {
-        StarfieldStar *aster = _stars.lastObject;
-        [_stars removeLastObject];
-        [aster tearDown];
-    }
-    // */
-    
-    
-    //*
     // add 5x lane asteroids. **HACK**
+    assert(_laneAsteroids.count == 0);
     for (int i = 0; i < NUM_QUESTIONS; i++) {
         [self addLaneAsteroid:i];
     }
-    // */
+    
     
     if (!_playerShip.isBeingDragged) {
         [_playerShip setDestinationPointOnScreen:self.view.center withSpeedPerSecond:SPACESHIP_LOW_SPEED];
@@ -874,7 +867,10 @@ enum
     for (StarfieldStar *star in _stars) {
         [star tick:self.timeSinceLastUpdate];
     }
-    for (Asteroid *aster in _debrisPieces) {
+    for (Asteroid *aster in _deadAsteroids) {
+        [aster tick:self.timeSinceLastUpdate];
+    }
+    for (Asteroid *aster in _laneAsteroids) {
         [aster tick:self.timeSinceLastUpdate];
     }
     
@@ -886,12 +882,22 @@ enum
             [_stars removeObjectAtIndex:i];
         }
     }
-    for (int i = [_debrisPieces count] - 1; i >= 0; i--) {
-        Asteroid *aster = [_debrisPieces objectAtIndex:i];
+    for (int i = [_laneAsteroids count] - 1; i >= 0; i--) {
+        Asteroid *aster = [_laneAsteroids objectAtIndex:i];
         
         if ([aster isExpired]) {
             [aster tearDown];
-            [_debrisPieces removeObjectAtIndex:i];
+            [_laneAsteroids removeObjectAtIndex:i];
+            
+            //TODO: Create another asteroid which "keeps going" from this one.
+        }
+    }
+    for (int i = [_deadAsteroids count] - 1; i >= 0; i--) {
+        Asteroid *aster = [_deadAsteroids objectAtIndex:i];
+        
+        if ([aster isExpired]) {
+            [aster tearDown];
+            [_deadAsteroids removeObjectAtIndex:i];
         }
     }
     
@@ -1009,9 +1015,9 @@ enum
     glClearColor(SPACEBG_R, SPACEBG_G, SPACEBG_B, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
-    // draw stars
-    for (StarfieldStar *star in _stars) {
-        [self drawAsteroid:star];
+    // TODO: draw stars
+    for (Asteroid *aster in _laneAsteroids) {
+        [self drawAsteroid:aster];
         
         // Draw Star  Path
         if (SHOW_DEBUG_ASTEROID_LANES) {
@@ -1020,10 +1026,10 @@ enum
             [self prepareToDrawWithModelViewMatrix:self.effect.transform.modelviewMatrix
                                andProjectionMatrix:self.effect.transform.projectionMatrix];
             glUniform1i(uniforms[UNIFORM_ISOUTLINE_BOOL], 0);
-            [star.pathCurve draw];
+            [aster.pathCurve draw];
         }
     }
-    for (Asteroid *aster in _debrisPieces) { // **HACK** **CODEDUPL**
+    for (Asteroid *aster in _deadAsteroids) { // **HACK** **CODEDUPL**
         [self drawAsteroid:aster];
     }
     
@@ -1086,7 +1092,7 @@ enum
     // TODO: Not sure how it reacts to IF it's called multiple times.
     [asteroid setUp];
     
-    [_stars addObject:asteroid];
+    [_laneAsteroids addObject:asteroid];
 }
 
 - (void)addARandomLaneAsteroid
