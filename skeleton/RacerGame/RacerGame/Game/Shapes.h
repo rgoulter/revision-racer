@@ -44,4 +44,10 @@ void setVertexDataColor(GLfloat *data, int ptIdx, GLfloat r, GLfloat g, GLfloat 
 
 @interface BOAsteroidShape : BOShape
 
+@property (readonly) GLfloat centerX;
+@property (readonly) GLfloat centerY;
+@property (readonly) GLfloat centerZ;
+
+@property (readonly) NSArray *derivativeAsteroidShapes;
+
 @end

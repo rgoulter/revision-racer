@@ -73,6 +73,7 @@ enum
 
 @implementation GameViewController {
     NSMutableArray *_stars;
+    NSMutableArray *_debrisPieces; // **HACK**
     NSArray *_starShapes;
     float _timeTillNextAster;
     
@@ -182,6 +183,7 @@ enum
     
     
     _stars = [[NSMutableArray alloc] init];
+    _debrisPieces = [[NSMutableArray alloc] init];
     
     self.context = [[EAGLContext alloc]
                     initWithAPI:kEAGLRenderingAPIOpenGLES2];
@@ -341,6 +343,16 @@ enum
             andDuration:_gameRules.questionDuration];
 }
 
+- (void)explodeAsteroid:(Asteroid*)aster
+{
+    NSArray *debris = [aster debrisPieces];
+    [aster tick:INFINITY];
+    
+    for (Asteroid *debrisAster in debris) {
+        [_debrisPieces addObject:debrisAster];
+    }
+}
+
 - (void)questionAnswered:(QuestionState*)qnState
 {
     // This is called when the question has been 'invoked'
@@ -363,12 +375,27 @@ enum
     if ([selectedAnswerDefnString isEqualToString:questionDefnString]) {
         [_questionLabel setTextColor:correctColor];
         [[_selectedAnswer answerUI] setTextColor:correctColor];
+        
+        int i = [_answerUIs indexOfObject:[_selectedAnswer answerUI]];
+        // Explode correct asteroid.
+        // **DESIGN** We could do this cheaper if we associated UIAnswerButton w/ Asteroid..
+        NSLog(@"Explode aster for idx:%d", i);
+        if (_stars.count >= i) {
+            // TODO: We need to do this with THREADS in mind;
+            // particularly, creating exploded pieces in a background thread, as well as
+            // selecting the correct asteroid.
+            // (e.g. Race condition, Asteroids in _stars may have been removed already).
+            Asteroid *correctAster = [_stars objectAtIndex:i]; // **HACK**, probably correct.
+            [self explodeAsteroid:correctAster]; // EXPENSIVE
+        }
     } else {
         [_questionLabel setTextColor:wrongColor];
         [[_selectedAnswer answerUI] setTextColor:wrongColor];
         
-        // find the correct answer..
-        for (id<AnswerUI> ansUI in _answerUIs) {
+        // find the correct answer & asteroid.
+        for (int i = 0; i < _answerUIs.count; i++) {
+            id<AnswerUI> ansUI = [_answerUIs objectAtIndex:i];
+            
             if ([[ansUI associatedAnswerState].question.questionText
                  isEqualToString:questionDefnString]) {
                 [ansUI setTextColor:correctColor];
@@ -376,7 +403,7 @@ enum
         }
     }
     
-    [self checkQnAnsStateRep];
+    //[self checkQnAnsStateRep];
     
     // Introduce Delay for the following:
     [NSTimer scheduledTimerWithTimeInterval:2.0
@@ -824,8 +851,12 @@ enum
     
     
     // update stars
+    // **CODEDUPL** **HACK** Forgive me..
     for (StarfieldStar *star in _stars) {
         [star tick:self.timeSinceLastUpdate];
+    }
+    for (Asteroid *aster in _debrisPieces) {
+        [aster tick:self.timeSinceLastUpdate];
     }
     
     for (int i = [_stars count] - 1; i >= 0; i--) {
@@ -834,6 +865,14 @@ enum
         if ([star isExpired]) {
             [star tearDown];
             [_stars removeObjectAtIndex:i];
+        }
+    }
+    for (int i = [_debrisPieces count] - 1; i >= 0; i--) {
+        Asteroid *aster = [_debrisPieces objectAtIndex:i];
+        
+        if ([aster isExpired]) {
+            [aster tearDown];
+            [_debrisPieces removeObjectAtIndex:i];
         }
     }
     
@@ -905,9 +944,45 @@ enum
     [_playerShip draw];
 }
 
-- (void)drawAsteroid:(Asteroid*)aster
+- (void)drawAsteroid:(StarfieldStar*)star
 {
     // Draw an asteroid with an outline effect
+    // Calculate model view matrix.
+    GLKMatrix4 modelMatrix;
+    GLfloat scale = 0.25;
+    
+    // Draw "Shadow"
+    glDisable(GL_DEPTH_TEST);
+    
+    modelMatrix = GLKMatrix4Identity; //GLKMatrix4Scale(GLKMatrix4Identity, scale, scale, scale);
+    modelMatrix = [star transformation:modelMatrix];
+    
+    // We can scale the object down by applying the scale matrix here.
+    modelMatrix = GLKMatrix4Scale(modelMatrix, scale, scale, scale);
+    
+    modelMatrix = GLKMatrix4Scale(modelMatrix, 1.1, 1.1, 1.1);
+    
+    self.effect.transform.modelviewMatrix = modelMatrix;
+    [self prepareToDrawWithModelViewMatrix:self.effect.transform.modelviewMatrix
+                       andProjectionMatrix:self.effect.transform.projectionMatrix];
+    glUniform1i(uniforms[UNIFORM_ISOUTLINE_BOOL], 1);
+    [star.shape draw];
+    
+    
+    // Draw "Actual"
+    glEnable(GL_DEPTH_TEST);
+    
+    // We can scale the object down by applying the scale matrix here.
+    modelMatrix = GLKMatrix4Identity; //GLKMatrix4Scale(GLKMatrix4Identity, scale, scale, scale);
+    modelMatrix = [star transformation:modelMatrix];
+    modelMatrix = GLKMatrix4Scale(modelMatrix, scale, scale, scale);
+    
+    self.effect.transform.modelviewMatrix = modelMatrix;
+    
+    [self prepareToDrawWithModelViewMatrix:self.effect.transform.modelviewMatrix
+                       andProjectionMatrix:self.effect.transform.projectionMatrix];
+    glUniform1i(uniforms[UNIFORM_ISOUTLINE_BOOL], 0);
+    [star.shape draw];
 }
 
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect
@@ -917,44 +992,7 @@ enum
     
     // draw stars
     for (StarfieldStar *star in _stars) {
-        // Calculate model view matrix.
-        GLKMatrix4 modelMatrix;
-        GLfloat scale = 0.25;
-        
-        // Draw "Shadow"
-        glDisable(GL_DEPTH_TEST);
-        
-        modelMatrix = GLKMatrix4Identity; //GLKMatrix4Scale(GLKMatrix4Identity, scale, scale, scale);
-        modelMatrix = [star transformation:modelMatrix];
-        
-        // We can scale the object down by applying the scale matrix here.
-        modelMatrix = GLKMatrix4Scale(modelMatrix, scale, scale, scale);
-        
-        modelMatrix = GLKMatrix4Scale(modelMatrix, 1.1, 1.1, 1.1);
-        
-        self.effect.transform.modelviewMatrix = modelMatrix;
-        [self prepareToDrawWithModelViewMatrix:self.effect.transform.modelviewMatrix
-                           andProjectionMatrix:self.effect.transform.projectionMatrix];
-        glUniform1i(uniforms[UNIFORM_ISOUTLINE_BOOL], 1);
-        [star.shape draw];
-        
-        
-        // Draw "Actual"
-        glEnable(GL_DEPTH_TEST);
-        
-        // We can scale the object down by applying the scale matrix here.
-        modelMatrix = GLKMatrix4Identity; //GLKMatrix4Scale(GLKMatrix4Identity, scale, scale, scale);
-        modelMatrix = [star transformation:modelMatrix];
-        modelMatrix = GLKMatrix4Scale(modelMatrix, scale, scale, scale);
-        
-        self.effect.transform.modelviewMatrix = modelMatrix;
-        
-        [self prepareToDrawWithModelViewMatrix:self.effect.transform.modelviewMatrix
-                           andProjectionMatrix:self.effect.transform.projectionMatrix];
-        glUniform1i(uniforms[UNIFORM_ISOUTLINE_BOOL], 0);
-        [star.shape draw];
-        
-        
+        [self drawAsteroid:star];
         
         // Draw Star  Path
         self.effect.transform.modelviewMatrix = GLKMatrix4Identity;
@@ -963,6 +1001,9 @@ enum
                            andProjectionMatrix:self.effect.transform.projectionMatrix];
         glUniform1i(uniforms[UNIFORM_ISOUTLINE_BOOL], 0);
         [star.pathCurve draw];
+    }
+    for (Asteroid *aster in _debrisPieces) { // **HACK** **CODEDUPL**
+        [self drawAsteroid:aster];
     }
     
     // draw spaceship

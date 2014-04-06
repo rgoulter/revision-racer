@@ -496,6 +496,51 @@ vertexdata* generateAsteroidVertexData(GLfloat vertices[], int indices[])
 
 
 
+vertexdata* createTetrahedronFromTriangle(GLfloat *data)
+{
+    // each row is assumed to be in form of {x, y, z, nx, ny, nz, r, g, b}
+    // expected to have at least 3 rows.
+    
+    int totalNumPoints = 4 * 3; // it's a tetrahedron.
+    
+    GLfloat *vertexData = (GLfloat*) malloc(totalNumPoints * VBO_NUMCOLS * sizeof(GLfloat));
+    
+    GLfloat newPt[VBO_NUMCOLS] = {0, 0, 0, -1, -1, -1, data[6], data[7], data[8]};
+    
+    // Tri 0, ABC
+    memcpy(vertexData + 0 * VBO_NUMCOLS, data + 0 * VBO_NUMCOLS, VBO_NUMCOLS * sizeof(GLfloat));
+    memcpy(vertexData + 1 * VBO_NUMCOLS, data + 1 * VBO_NUMCOLS, VBO_NUMCOLS * sizeof(GLfloat));
+    memcpy(vertexData + 2 * VBO_NUMCOLS, data + 2 * VBO_NUMCOLS, VBO_NUMCOLS * sizeof(GLfloat));
+    // (normal already calculated).
+    
+    // Tri 1, ABD
+    memcpy(vertexData + 3 * VBO_NUMCOLS, data + 0 * VBO_NUMCOLS, VBO_NUMCOLS * sizeof(GLfloat));
+    memcpy(vertexData + 4 * VBO_NUMCOLS, data + 1 * VBO_NUMCOLS, VBO_NUMCOLS * sizeof(GLfloat));
+    memcpy(vertexData + 5 * VBO_NUMCOLS, newPt, VBO_NUMCOLS * sizeof(GLfloat));
+    calcNormalForRowOfVertexData(vertexData + 1 * 3 * VBO_NUMCOLS);
+    
+    // Tri 2, BCD
+    memcpy(vertexData + 6 * VBO_NUMCOLS, data + 1 * VBO_NUMCOLS, VBO_NUMCOLS * sizeof(GLfloat));
+    memcpy(vertexData + 7 * VBO_NUMCOLS, data + 2 * VBO_NUMCOLS, VBO_NUMCOLS * sizeof(GLfloat));
+    memcpy(vertexData + 8 * VBO_NUMCOLS, newPt, VBO_NUMCOLS * sizeof(GLfloat));
+    calcNormalForRowOfVertexData(vertexData + 2 * 3 * VBO_NUMCOLS);
+    
+    // Tri 3, CAD
+    memcpy(vertexData + 9 * VBO_NUMCOLS, data + 2 * VBO_NUMCOLS, VBO_NUMCOLS * sizeof(GLfloat));
+    memcpy(vertexData +10 * VBO_NUMCOLS, data + 0 * VBO_NUMCOLS, VBO_NUMCOLS * sizeof(GLfloat));
+    memcpy(vertexData +11 * VBO_NUMCOLS, newPt, VBO_NUMCOLS * sizeof(GLfloat));
+    calcNormalForRowOfVertexData(vertexData + 3 * 3 * VBO_NUMCOLS);
+    
+    
+    vertexdata *vd = (vertexdata*) malloc(sizeof(vertexdata));
+    vd->data = vertexData;
+    vd->numPoints = totalNumPoints;
+    
+    return vd;
+}
+
+
+
 void calculateIcosahedonData()
 {
     if (gIcosahedronVertexData != NULL) {
@@ -663,6 +708,22 @@ void setVertexDataColor(GLfloat *data, int ptIdx, GLfloat r, GLfloat g, GLfloat 
         }
         
         [self setVertexData:data->data withNumPoints:data->numPoints];
+        [self computeCenterPoint];
+    }
+    
+    return self;
+}
+
+//
+- (id)initWithData:(vertexdata*)vdata
+{
+    self = [super init];
+    
+    if (self) {
+        data = vdata;
+        
+        [self setVertexData:data->data withNumPoints:data->numPoints];
+        [self computeCenterPoint];
     }
     
     return self;
@@ -672,6 +733,50 @@ void setVertexDataColor(GLfloat *data, int ptIdx, GLfloat r, GLfloat g, GLfloat 
 {
     [super tearDown];
     free(data);
+}
+
+- (void)computeCenterPoint
+{
+    // Compute average x, y, z
+    float *d = data->data;
+    _centerX = _centerY = _centerZ = 0;
+    for (int i = 0; i < data->numPoints; i++) {
+        // Use d to point to a row, which is {x, y, z, ...} of length VBO_NUMCOLS
+        // Using iterative average method.
+        _centerX = (d[0] + i * _centerX) / (i + 1);
+        _centerY = (d[1] + i * _centerY) / (i + 1);
+        _centerZ = (d[2] + i * _centerZ) / (i + 1);
+        d += VBO_NUMCOLS;
+    }
+}
+
+- (NSArray*)derivativeAsteroidShapes
+{
+    // REQUIRES before tearDown, otherwise will probably segfault.
+    
+    NSMutableArray *result = [NSMutableArray array];
+    
+    float *d = data->data;
+    
+    // Make a tetrahedron from every triangle;
+    // Therefore, from every 3 points.
+    for (int i = 0; i < data->numPoints; i += 3) {
+        // **HACK** b/c creating these shapes is expensive,
+        // we should do the creation of *all* the pieces in a different thread.
+        // It's cheaper, however, to just only create some proportion of them.
+        float rnd = (float)(arc4random() % 100) / 100;
+        
+        if (rnd < 0.3) {
+            vertexdata *tetData = createTetrahedronFromTriangle(d);
+            BOAsteroidShape *tetShape = [[BOAsteroidShape alloc] initWithData:tetData];
+            [result addObject:tetShape];
+        }
+        
+        // point to next triangle
+        d += 3 * VBO_NUMCOLS;
+    }
+    
+    return [NSArray arrayWithArray:result];
 }
 
 @end

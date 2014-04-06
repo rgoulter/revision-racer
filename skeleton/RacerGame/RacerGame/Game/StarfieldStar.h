@@ -17,6 +17,12 @@
 @property float duration;
 @property (nonatomic, readonly) BOCurve *pathCurve;
 
+@property (readonly) float x;
+@property (readonly) float y;
+@property (readonly) float z;
+@property (readonly) float rotationX;
+@property (readonly) float rotationY;
+
 - (void)setUp;
 - (void)tearDown;
 - (void)draw;

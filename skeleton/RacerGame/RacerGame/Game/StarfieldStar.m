@@ -99,6 +99,38 @@
     glPopMatrix();
 }
 
+- (float)x
+{
+    float t = _age / _duration;
+    if (t > 1) { t = 1; }
+    return (1 - t) * _sx + t * _tx;
+}
+
+- (float)y
+{
+    float t = _age / _duration;
+    if (t > 1) { t = 1; }
+    return (1 - t) * _sy + t * _ty;
+}
+
+- (float)z
+{
+    float t = _age / _duration;
+    if (t > 1) { t = 1; }
+    return (1 - t) * _sz + t * _tz;
+}
+
+- (float)rotationX
+{
+    return _rotX;
+}
+
+- (float)rotationY
+{
+    return _rotY;
+}
+
+
 - (void)tick:(NSTimeInterval)timeSinceLastUpdate
 {
     _age += timeSinceLastUpdate;
