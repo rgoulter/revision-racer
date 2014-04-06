@@ -33,6 +33,7 @@ enum
 {
     ATTRIB_VERTEX,
     ATTRIB_NORMAL,
+    ATTRIB_COLOR,
     NUM_ATTRIBUTES
 };
 
@@ -74,9 +75,6 @@ enum
     float _timeTillNextAster;
     
     GLuint _program;
-    
-    GLKMatrix4 _modelViewProjectionMatrix;
-    GLKMatrix3 _normalMatrix;
 }
 
 @synthesize context;
@@ -601,6 +599,7 @@ enum
     // This needs to be done prior to linking.
     glBindAttribLocation(_program, GLKVertexAttribPosition, "position");
     glBindAttribLocation(_program, GLKVertexAttribNormal, "normal");
+    glBindAttribLocation(_program, GLKVertexAttribColor, "color");
     
     // Link program.
     if (![self linkProgram:_program]) {
@@ -887,12 +886,12 @@ enum
     //[_program use];
     glUseProgram(_program);
     
-    _modelViewProjectionMatrix = GLKMatrix4Multiply(self.effect.transform.projectionMatrix,
-                                                    self.effect.transform.modelviewMatrix);
-    _normalMatrix = GLKMatrix3InvertAndTranspose(GLKMatrix4GetMatrix3(self.effect.transform.modelviewMatrix), NULL);
+    GLKMatrix4 mvProjMatrix = GLKMatrix4Multiply(self.effect.transform.projectionMatrix,
+                                                 self.effect.transform.modelviewMatrix);
+    GLKMatrix3 normalMatrix = GLKMatrix3InvertAndTranspose(GLKMatrix4GetMatrix3(self.effect.transform.modelviewMatrix), NULL);
     
-    glUniformMatrix4fv(uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX], 1, 0, _modelViewProjectionMatrix.m);
-    glUniformMatrix3fv(uniforms[UNIFORM_NORMAL_MATRIX], 1, 0, _normalMatrix.m);
+    glUniformMatrix4fv(uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX], 1, 0, mvProjMatrix.m);
+    glUniformMatrix3fv(uniforms[UNIFORM_NORMAL_MATRIX], 1, 0, normalMatrix.m);
     
     //[self.effect prepareToDraw];
     [_playerShip draw];
@@ -914,11 +913,31 @@ enum
         modelMatrix = GLKMatrix4Scale(modelMatrix, scale, scale, scale);
         
         self.effect.transform.modelviewMatrix = modelMatrix;
-        [self.effect prepareToDraw];
+        
+        glUseProgram(_program);
+        
+        // **CODEDUPL** can we move away from using self.effect?
+        GLKMatrix4 mvProjMatrix;
+        GLKMatrix3 normalMatrix;
+        mvProjMatrix = GLKMatrix4Multiply(self.effect.transform.projectionMatrix,
+                                          self.effect.transform.modelviewMatrix);
+        normalMatrix = GLKMatrix3InvertAndTranspose(GLKMatrix4GetMatrix3(self.effect.transform.modelviewMatrix), NULL);
+        
+        glUniformMatrix4fv(uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX], 1, 0, mvProjMatrix.m);
+        glUniformMatrix3fv(uniforms[UNIFORM_NORMAL_MATRIX], 1, 0, normalMatrix.m);
+        
         [star.shape draw];
         
         self.effect.transform.modelviewMatrix = GLKMatrix4Identity;
-        [self.effect prepareToDraw];
+        glUseProgram(_program);
+        
+        mvProjMatrix = GLKMatrix4Multiply(self.effect.transform.projectionMatrix,
+                                          self.effect.transform.modelviewMatrix);
+        normalMatrix = GLKMatrix3InvertAndTranspose(GLKMatrix4GetMatrix3(self.effect.transform.modelviewMatrix), NULL);
+        
+        glUniformMatrix4fv(uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX], 1, 0, mvProjMatrix.m);
+        glUniformMatrix3fv(uniforms[UNIFORM_NORMAL_MATRIX], 1, 0, normalMatrix.m);
+        
         [star.pathCurve draw];
     }
     
