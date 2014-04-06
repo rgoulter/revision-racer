@@ -1094,7 +1094,7 @@ enum
     float x = destWorldPt.x;
     float y = destWorldPt.y;
     
-    float dz = 0;//(arc4random() % 100 - 50) / 20;
+    float dz = (float)(arc4random() % 100) / 10;
     
     [asteroid setStartPositionX:x Y:y Z:-60 + dz];
     [asteroid setEndPositionX:x Y:y Z:-5];
