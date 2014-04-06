@@ -18,6 +18,8 @@
 
 #define NUM_QUESTIONS 5
 
+#define SHOW_DEBUG_CURSORS NO
+#define SHOW_DEBUG_ASTEROID_LANES NO
 
 
 // Uniform index.
@@ -149,18 +151,21 @@ enum
     _spaceshipPositionCursor.layer.backgroundColor =
         [UIColor colorWithRed:1 green:1 blue:0 alpha:0.8].CGColor;
     [self.view addSubview:_spaceshipPositionCursor];
+    _spaceshipPositionCursor.hidden = !SHOW_DEBUG_CURSORS;
     
     _spaceshipDestinationCursor = [[UIView alloc] initWithFrame:CGRectMake(150, 150, 10, 10)];
     _spaceshipDestinationCursor.layer.cornerRadius = 5;
     _spaceshipDestinationCursor.layer.backgroundColor =
         [UIColor colorWithRed:1 green:0 blue:1 alpha:0.5].CGColor;
     [self.view addSubview:_spaceshipDestinationCursor];
+    _spaceshipDestinationCursor.hidden = !SHOW_DEBUG_CURSORS;
     
     _selectedAnswerCursor = [[UIView alloc] initWithFrame:CGRectMake(250, 250, 20, 20)];
     _selectedAnswerCursor.layer.cornerRadius = 10;
     _selectedAnswerCursor.layer.backgroundColor =
         [UIColor colorWithRed:0 green:1 blue:1 alpha:0.3].CGColor;
     [self.view addSubview:_selectedAnswerCursor];
+    _selectedAnswerCursor.hidden = !SHOW_DEBUG_CURSORS;
     
     
     
@@ -995,12 +1000,14 @@ enum
         [self drawAsteroid:star];
         
         // Draw Star  Path
-        self.effect.transform.modelviewMatrix = GLKMatrix4Identity;
-        
-        [self prepareToDrawWithModelViewMatrix:self.effect.transform.modelviewMatrix
-                           andProjectionMatrix:self.effect.transform.projectionMatrix];
-        glUniform1i(uniforms[UNIFORM_ISOUTLINE_BOOL], 0);
-        [star.pathCurve draw];
+        if (SHOW_DEBUG_ASTEROID_LANES) {
+            self.effect.transform.modelviewMatrix = GLKMatrix4Identity;
+            
+            [self prepareToDrawWithModelViewMatrix:self.effect.transform.modelviewMatrix
+                               andProjectionMatrix:self.effect.transform.projectionMatrix];
+            glUniform1i(uniforms[UNIFORM_ISOUTLINE_BOOL], 0);
+            [star.pathCurve draw];
+        }
     }
     for (Asteroid *aster in _debrisPieces) { // **HACK** **CODEDUPL**
         [self drawAsteroid:aster];
