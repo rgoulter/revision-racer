@@ -24,6 +24,10 @@
 @property float distTillCanNextAnswer;
 @property BOOL isBeingDragged;
 
+@property float hoverx;
+@property float hovery;
+@property float t;
+
 @end
 
 @implementation SpaceShip
@@ -110,6 +114,15 @@
                                      _pointOnScreen.y + _deltaPositionVector.y);
     }
     
+    // Hover
+    _t += timeSinceLastUpdate;
+    while (_t > 12) { _t = _t - 12; }
+    
+    // ProTip: M_2_PI is *NOT* 2 * M_PI.
+    _hoverx = 8 * cosf((_t / 4) * 2 * M_PI);
+    _hovery = 5 * sinf((_t / 12) * 2 * M_PI);
+    
+    
     if (_distTillCanNextAnswer >= 0) {
         _distTillCanNextAnswer -= [self speed];
     }
@@ -121,7 +134,7 @@
     // so scaling will have to be done outside of SpaceShip
     
     // REQUIRES that the coord system has +x to the right, +y down.
-    return GLKMatrix4Translate(mat, _pointOnScreen.x, _pointOnScreen.y, 0);
+    return GLKMatrix4Translate(mat, _pointOnScreen.x + _hoverx, _pointOnScreen.y + _hovery, 0);
 }
 
 
