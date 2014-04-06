@@ -10,6 +10,7 @@
 #import "Shapes.h"
 #import "Resources.h"
 #import "StarfieldStar.h"
+#import "Asteroid.h"
 #import "AppDelegate.h"
 #import "SpaceShip.h"
 #import "GLProgram.h"
@@ -954,10 +955,10 @@ enum
 - (void)addLaneAsteroid:(NSUInteger)idx
 {
     NSLog(@"Generate lane %d aster", (int)idx);
-    StarfieldStar *star = [[StarfieldStar alloc] init];
+    Asteroid *asteroid = [[Asteroid alloc] init];
     
     int rndShapeIdx = arc4random() % 3;
-    star.shape = [_starShapes objectAtIndex:rndShapeIdx];
+    asteroid.shape = [[BOAsteroidShape alloc] init];//[_starShapes objectAtIndex:rndShapeIdx];
     
     // This depends on the coords
     float xArr[5] = {-1.5, +1.5, -1.75,  0, +1.75};
@@ -967,17 +968,17 @@ enum
     
     float dz = 0;//(arc4random() % 100 - 50) / 20;
     
-    [star setStartPositionX:x Y:y Z:-30 + dz];
-    [star setEndPositionX:x Y:y Z:-5];
+    [asteroid setStartPositionX:x Y:y Z:-30 + dz];
+    [asteroid setEndPositionX:x Y:y Z:-5];
     
-    star.duration = _gameRules.questionDuration;
+    asteroid.duration = _gameRules.questionDuration;
     
     
     // setUp??
     // TODO: Not sure how it reacts to IF it's called multiple times.
-    [star setUp];
+    [asteroid setUp];
     
-    [_stars addObject:star];
+    [_stars addObject:asteroid];
 }
 
 - (void)addARandomLaneAsteroid

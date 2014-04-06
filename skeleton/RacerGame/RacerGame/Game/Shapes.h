@@ -41,3 +41,7 @@ void setVertexDataColor(GLfloat *data, int ptIdx, GLfloat r, GLfloat g, GLfloat 
 @interface BODodecahedron : BOShape
 
 @end
+
+@interface BOAsteroidShape : BOShape
+
+@end

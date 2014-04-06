@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0255045F18F05E3500A984D0 /* GameRules.m in Sources */ = {isa = PBXBuildFile; fileRef = 0255045E18F05E3500A984D0 /* GameRules.m */; };
+		025504AE18F15F4C00A984D0 /* Asteroid.m in Sources */ = {isa = PBXBuildFile; fileRef = 025504AD18F15F4C00A984D0 /* Asteroid.m */; };
 		0262757718E90E6C00CDAA24 /* GameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0262757618E90E6C00CDAA24 /* GameViewController.m */; };
 		0262757B18E90F4400CDAA24 /* Shapes.m in Sources */ = {isa = PBXBuildFile; fileRef = 0262757A18E90F4400CDAA24 /* Shapes.m */; };
 		0262757E18E90F9400CDAA24 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0262757C18E90F9400CDAA24 /* GLKit.framework */; };
@@ -73,6 +74,8 @@
 /* Begin PBXFileReference section */
 		0255045D18F05E3500A984D0 /* GameRules.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameRules.h; path = RacerGame/Game/GameRules.h; sourceTree = "<group>"; };
 		0255045E18F05E3500A984D0 /* GameRules.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameRules.m; path = RacerGame/Game/GameRules.m; sourceTree = "<group>"; };
+		025504AC18F15F4C00A984D0 /* Asteroid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Asteroid.h; path = RacerGame/Game/Asteroid.h; sourceTree = "<group>"; };
+		025504AD18F15F4C00A984D0 /* Asteroid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Asteroid.m; path = RacerGame/Game/Asteroid.m; sourceTree = "<group>"; };
 		0262757518E90E6C00CDAA24 /* GameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameViewController.h; sourceTree = "<group>"; };
 		0262757618E90E6C00CDAA24 /* GameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameViewController.m; sourceTree = "<group>"; };
 		0262757918E90F4400CDAA24 /* Shapes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Shapes.h; path = RacerGame/Game/Shapes.h; sourceTree = "<group>"; };
@@ -224,6 +227,8 @@
 				0280A1EA18EEE70E006B50B4 /* shader.fsh */,
 				0280A1EC18EF1087006B50B4 /* SpaceShipShape.h */,
 				0280A1ED18EF1087006B50B4 /* SpaceShipShape.m */,
+				025504AC18F15F4C00A984D0 /* Asteroid.h */,
+				025504AD18F15F4C00A984D0 /* Asteroid.m */,
 			);
 			name = 3D;
 			sourceTree = "<group>";
@@ -516,6 +521,7 @@
 				D991E56618EDB7D1003A4801 /* UserInfo.m in Sources */,
 				D96BA47E18E8965B00D29E82 /* Model.xcdatamodeld in Sources */,
 				0262757718E90E6C00CDAA24 /* GameViewController.m in Sources */,
+				025504AE18F15F4C00A984D0 /* Asteroid.m in Sources */,
 				0255045F18F05E3500A984D0 /* GameRules.m in Sources */,
 				D96BA51B18E8B87B00D29E82 /* FlashSetInfo.m in Sources */,
 				029E580918EC6507007EB6E8 /* UIQuestionLabel.m in Sources */,

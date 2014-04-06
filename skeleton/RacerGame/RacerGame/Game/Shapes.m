@@ -204,17 +204,20 @@ void cpyPoint(GLfloat vertexArray[], unsigned int idx, GLfloat output[])
 
 // let pt1, 2, 3 be 3 pts of a triangle or polygon...
 // normal is cp of 1->2 X 2->3
-void calcNormal(GLfloat data[], unsigned int ptIdx1, unsigned int ptIdx2,  unsigned int ptIdx3, GLfloat output[])
+void calcNormal(GLfloat x1, GLfloat y1, GLfloat z1,
+                GLfloat x2, GLfloat y2, GLfloat z2,
+                GLfloat x3, GLfloat y3, GLfloat z3,
+                GLfloat output[])
 {
     // u = 1->2
-    GLfloat u1 = data[ptIdx2 * 3 + 0] - data[ptIdx1 * 3 + 0];
-    GLfloat u2 = data[ptIdx2 * 3 + 1] - data[ptIdx1 * 3 + 1];
-    GLfloat u3 = data[ptIdx2 * 3 + 2] - data[ptIdx1 * 3 + 2];
+    GLfloat u1 = x2 - x1;
+    GLfloat u2 = y2 - y1;
+    GLfloat u3 = z2 - z1;
     
     // v = 2->3
-    GLfloat v1 = data[ptIdx3 * 3 + 0] - data[ptIdx2 * 3 + 0];
-    GLfloat v2 = data[ptIdx3 * 3 + 1] - data[ptIdx2 * 3 + 1];
-    GLfloat v3 = data[ptIdx3 * 3 + 2] - data[ptIdx2 * 3 + 2];
+    GLfloat v1 = x3 - x2;
+    GLfloat v2 = y3 - y2;
+    GLfloat v3 = z3 - z2;
     
     // Cross-Product
     // cf. Wikipedia
@@ -229,6 +232,22 @@ void calcNormal(GLfloat data[], unsigned int ptIdx1, unsigned int ptIdx2,  unsig
     output[0] = nx / len;
     output[1] = ny / len;
     output[2] = nz / len;
+}
+
+
+
+// let pt1, 2, 3 be 3 pts of a triangle or polygon...
+// normal is cp of 1->2 X 2->3
+void calcNormalv(GLfloat data[], unsigned int ptIdx1, unsigned int ptIdx2,  unsigned int ptIdx3, GLfloat output[])
+{
+    GLfloat x1 = data[ptIdx1 * 3 + 0], y1 = data[ptIdx1 * 3 + 1], z1 = data[ptIdx1 * 3 + 2];
+    GLfloat x2 = data[ptIdx2 * 3 + 0], y2 = data[ptIdx2 * 3 + 1], z2 = data[ptIdx2 * 3 + 2];
+    GLfloat x3 = data[ptIdx3 * 3 + 0], y3 = data[ptIdx3 * 3 + 1], z3 = data[ptIdx3 * 3 + 2];
+    
+    return calcNormal(x1, y1, z1,
+                      x2, y2, z2,
+                      x3, y3, z3,
+                      output);
 }
 
 
@@ -296,12 +315,156 @@ vertexdata* calculateVertexData(GLfloat vertices[], int indices[])
 
             // calculate normals for triangle
             GLfloat nml[3];
-            calcNormal(vertices, idx1, idx2, idx3, nml);
+            calcNormalv(vertices, idx1, idx2, idx3, nml);
             
             // copy normal data to triangle
             memcpy(currentTriData + 0 * VBO_NUMCOLS + 3, nml, 3 * sizeof(GLfloat));
             memcpy(currentTriData + 1 * VBO_NUMCOLS + 3, nml, 3 * sizeof(GLfloat));
             memcpy(currentTriData + 2 * VBO_NUMCOLS + 3, nml, 3 * sizeof(GLfloat));
+            
+            // advance tri data pointer
+            currentTriData += 3 * VBO_NUMCOLS;
+        }
+        
+        
+        // Advance pointers.
+        currentVertexData = currentTriData; // Next output is where the last output finished.
+        currentFaceIndex += numPoints + 1;  // each point idx + the -1
+    }
+    
+    
+    vertexdata *vd = (vertexdata*) malloc(sizeof(vertexdata));
+    vd->data = vertexData;
+    vd->numPoints = totalNumPoints;
+    
+    return vd;
+}
+
+
+
+// TODO: Refactor the other function above to use this.
+void calcNormalForRowOfVertexData(GLfloat *vertexDataTri)
+{
+    // vertexDataRow is {x, y, z, nx, ny, nz, r, g, b}
+    // vertexDataTri is expected to be 3x of these rows.
+    // This function outputs the data of nx, ny, nz for these three rows.
+   
+    GLfloat x1 = vertexDataTri[0 * VBO_NUMCOLS + 0];
+    GLfloat y1 = vertexDataTri[0 * VBO_NUMCOLS + 1];
+    GLfloat z1 = vertexDataTri[0 * VBO_NUMCOLS + 2];
+   
+    GLfloat x2 = vertexDataTri[1 * VBO_NUMCOLS + 0];
+    GLfloat y2 = vertexDataTri[1 * VBO_NUMCOLS + 1];
+    GLfloat z2 = vertexDataTri[1 * VBO_NUMCOLS + 2];
+   
+    GLfloat x3 = vertexDataTri[2 * VBO_NUMCOLS + 0];
+    GLfloat y3 = vertexDataTri[2 * VBO_NUMCOLS + 1];
+    GLfloat z3 = vertexDataTri[2 * VBO_NUMCOLS + 2];
+    
+    // calculate normals for triangle
+    GLfloat nml[3];
+    calcNormal(x1, y1, z1, x2, y2, z2, x3, y3, z3, nml);
+    
+    // copy normal data to triangle
+    memcpy(vertexDataTri + 0 * VBO_NUMCOLS + 3, nml, 3 * sizeof(GLfloat));
+    memcpy(vertexDataTri + 1 * VBO_NUMCOLS + 3, nml, 3 * sizeof(GLfloat));
+    memcpy(vertexDataTri + 2 * VBO_NUMCOLS + 3, nml, 3 * sizeof(GLfloat));
+}
+
+
+
+vertexdata* generateAsteroidVertexData(GLfloat vertices[], int indices[])
+{
+    // Indices array:
+    // Each "polygon" is delimited by -1s.
+    // Terminate when -1 followed by -1.
+    
+    // Construct vertex data into vertexData array by
+    // mapping indices array to vertcies array,
+    // and calculating the normal for each "face".
+    
+    
+    // Seek how many points exist in the structure.
+    int totalNumPoints = 5;
+    int *currentFaceIndex = indices;
+    
+    while (currentFaceIndex[0] != -1) {
+        // Seek how many points there are for this face.
+        int numPoints = 0;
+        while (currentFaceIndex[numPoints] != -1) {
+            numPoints += 1;
+        }
+        
+        // For a regular polygon with n points,
+        // it can be triangulated with n - 2 triangles.
+        // BUT, since we generate a triangle for every two points,
+        // with the third point as the central .. numTri = numPoints.
+        int numTri = numPoints;
+        totalNumPoints += 3 * numTri;
+        
+        currentFaceIndex += numPoints + 1; // each point idx + the -1
+    }
+    
+    // malloc the vertex data.
+    // Each point has {x, y, z, nx, ny, nz}
+    NSLog(@"Shape malloc for Asteroid");
+    GLfloat *vertexData = (GLfloat*) malloc(totalNumPoints * VBO_NUMCOLS * sizeof(GLfloat));
+    
+    
+    currentFaceIndex = indices;
+    GLfloat *currentVertexData = vertexData;
+    
+    while (currentFaceIndex[0] != -1) {
+        // Seek how many points there are for this face.
+        int numPoints = 0;
+        float cenX = 0;
+        float cenY = 0;
+        float cenZ = 0;
+        
+        while (currentFaceIndex[numPoints] != -1) {
+            // Iterative formula to find average.
+            // avg_i = x_i / i + (i - 1) * avg_(i-1) / i
+            float xi = vertices[currentFaceIndex[numPoints] * 3 + 0];
+            float yi = vertices[currentFaceIndex[numPoints] * 3 + 1];
+            float zi = vertices[currentFaceIndex[numPoints] * 3 + 2];
+            
+            int i = numPoints;
+            cenX = (xi + i * cenX) / (i + 1);
+            cenY = (yi + i * cenY) / (i + 1);
+            cenZ = (zi + i * cenZ) / (i + 1);
+            
+            numPoints += 1;
+        }
+        
+        float cenPt[3] = {cenX, cenY, cenZ};
+        
+        // For a regular polygon with n points,
+        // it can be triangulated with n - 2 triangles.
+        // BUT, since we generate a triangle for every two points,
+        // with the third point as the central .. numTri = numPoints.
+        int numTri = numPoints;
+        
+        // Color the face of the asteroid.
+        float faceR = 1.0;
+        float faceG = 0.5;
+        float faceB = 0.2;
+        float color[3] = {faceR, faceG, faceB};
+        
+        GLfloat *currentTriData = currentVertexData;
+        for (int i = 0; i < numTri; i++) {
+            // copy vertices 0, a, b
+            int idx1 = currentFaceIndex[(i) % numPoints];
+            int idx2 = currentFaceIndex[(i + 1) % numPoints];
+            
+            cpyPoint(vertices, idx1, currentTriData + 0 * VBO_NUMCOLS);
+            cpyPoint(vertices, idx2, currentTriData + 1 * VBO_NUMCOLS);
+            memcpy(currentTriData + 2 * VBO_NUMCOLS, cenPt, 3 * sizeof(GLfloat));
+            
+            calcNormalForRowOfVertexData(currentTriData);
+            
+            memcpy(currentTriData + 0 * VBO_NUMCOLS + 6, color, 3 * sizeof(GLfloat));
+            memcpy(currentTriData + 1 * VBO_NUMCOLS + 6, color, 3 * sizeof(GLfloat));
+            memcpy(currentTriData + 2 * VBO_NUMCOLS + 6, color, 3 * sizeof(GLfloat));
             
             // advance tri data pointer
             currentTriData += 3 * VBO_NUMCOLS;
@@ -374,8 +537,6 @@ void setVertexDataColor(GLfloat *data, int ptIdx, GLfloat r, GLfloat g, GLfloat 
     NSLog(@"set vertex data");
     _vertexData = data;
     _numPoints = n;
-    
-    [self setColorAllToR:0 G:0 B:1];
 }
 
 - (void)setUp {
@@ -418,6 +579,7 @@ void setVertexDataColor(GLfloat *data, int ptIdx, GLfloat r, GLfloat g, GLfloat 
     
     if (self) {
         [self setVertexData:gCubeVertexData withNumPoints:36];
+        [self setColorAllToR:0 G:0 B:1];
     }
     
     return self;
@@ -438,6 +600,7 @@ void setVertexDataColor(GLfloat *data, int ptIdx, GLfloat r, GLfloat g, GLfloat 
         calculateIcosahedonData();
         
         [self setVertexData:gIcosahedronVertexData->data withNumPoints:gIcosahedronVertexData->numPoints];
+        [self setColorAllToR:0 G:0 B:1];
     }
     
     return self;
@@ -459,6 +622,30 @@ void setVertexDataColor(GLfloat *data, int ptIdx, GLfloat r, GLfloat g, GLfloat 
         calculateDodecahedronData();
         
         [self setVertexData:gDodecahedronVertexData->data withNumPoints:gDodecahedronVertexData->numPoints];
+        [self setColorAllToR:0 G:0 B:1];
+    }
+    
+    return self;
+}
+
+@end
+
+
+
+@implementation BOAsteroidShape
+
+- (instancetype)init
+{
+    self = [super init];
+    
+    if (self) {
+        calculateIcosahedonData();
+        calculateDodecahedronData();
+        
+        // e.g. generate with Dodecaheron
+        vertexdata *data = generateAsteroidVertexData(gDodecahedronVertices, gDodecahedronFaceIndices);
+        
+        [self setVertexData:data->data withNumPoints:data->numPoints];
     }
     
     return self;
