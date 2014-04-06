@@ -1,17 +1,22 @@
+// Adapted from OpenGL Example
 
+attribute vec4 position;
+attribute vec3 normal;
 
-void main( void )
+varying lowp vec4 colorVarying;
+
+uniform mat4 modelViewProjectionMatrix;
+uniform mat3 normalMatrix;
+
+void main()
 {
-	// Adapted from Phong Shader example
-//	ecNormal         = normalize( gl_NormalMatrix * gl_Normal );
-//	vec4 ecPosition4 = gl_ModelViewMatrix * gl_Vertex;
-//	ecPosition       = vec3( ecPosition4 ) / ecPosition4.w;
-	
-	// Convert Trangent from Model Space to Eye Space.
-//	vec4 ecTangent4  = gl_ModelViewMatrix * vec4( Tangent, 1 );
-//	ecTangent        = vec3( ecTangent4 ) / ecTangent4.w;
-	
-	// Adapted from Lec 4 notes, slide 20
-//	gl_TexCoord[0] = gl_MultiTexCoord0;
-	gl_Position = ftransform();
+    vec3 eyeNormal = normalize(normalMatrix * normal);
+    vec3 lightPosition = vec3(0.0, 0.0, 1.0);
+    vec4 diffuseColor = vec4(0.4, 0.4, 1.0, 1.0);
+    
+    float nDotVP = max(0.0, dot(eyeNormal, normalize(lightPosition)));
+    
+    colorVarying = diffuseColor * nDotVP;
+    
+    gl_Position = modelViewProjectionMatrix * position;
 }

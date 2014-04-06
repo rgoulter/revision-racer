@@ -1,7 +1,8 @@
+// Adapted from iOS OpenGL Sample
 
+varying lowp vec4 colorVarying;
 
 void main()
 {
-    
-    gl_FragColor = vec4(1);
+    gl_FragColor = colorVarying;
 }

@@ -17,6 +17,27 @@
 
 #define NUM_QUESTIONS 5
 
+
+
+// Uniform index.
+enum
+{
+    UNIFORM_MODELVIEWPROJECTION_MATRIX,
+    UNIFORM_NORMAL_MATRIX,
+    NUM_UNIFORMS
+};
+GLint uniforms[NUM_UNIFORMS];
+
+// Attribute index.
+enum
+{
+    ATTRIB_VERTEX,
+    ATTRIB_NORMAL,
+    NUM_ATTRIBUTES
+};
+
+
+
 # pragma mark - Initialisation
 
 @interface GameViewController ()
@@ -43,7 +64,7 @@
 @property UIView *spaceshipDestinationCursor;
 @property UIView *selectedAnswerCursor;
 
-@property GLProgram *program;
+//@property GLProgram *program;
 
 @end
 
@@ -51,6 +72,11 @@
     NSMutableArray *_stars;
     NSArray *_starShapes;
     float _timeTillNextAster;
+    
+    GLuint _program;
+    
+    GLKMatrix4 _modelViewProjectionMatrix;
+    GLKMatrix3 _normalMatrix;
 }
 
 @synthesize context;
@@ -543,32 +569,159 @@
 
 # pragma mark - OpenGL & GLKit stuff.
 
-- (void)setupGLShader
+- (BOOL)loadShaders
 {
-    // From: http://iphonedevelopment.blogspot.sg/2010/11/opengl-es-20-for-ios-chapter-4.html
+    GLuint vertShader, fragShader;
+    NSString *vertShaderPathname, *fragShaderPathname;
     
-    // Shader filenames assumed by GLProgram to be in form of "<name>.vsh" and "<name>.fsh"
-    // for vertex and fragment shaders respectively.
+    // Create shader program.
+    _program = glCreateProgram();
     
-    _program = [[GLProgram alloc] initWithVertexShaderFilename:@"shader"
-                                                     fragmentShaderFilename:@"shader"];
-    
-    //[program addAttribute:@"position"];
-    //[program addAttribute:@"color"];
-    
-    if (![_program link]) {
-        NSLog(@"Link failed");
-        NSString *progLog = [_program programLog];
-        NSLog(@"Program Log: %@", progLog);
-        NSString *fragLog = [_program fragmentShaderLog];
-        NSLog(@"Frag Log: %@", fragLog);
-        NSString *vertLog = [_program vertexShaderLog];
-        NSLog(@"Vert Log: %@", vertLog);
-        
-        _program = nil;
+    // Create and compile vertex shader.
+    vertShaderPathname = [[NSBundle mainBundle] pathForResource:@"shader" ofType:@"vsh"];
+    if (![self compileShader:&vertShader type:GL_VERTEX_SHADER file:vertShaderPathname]) {
+        NSLog(@"Failed to compile vertex shader");
+        return NO;
     }
     
+    // Create and compile fragment shader.
+    fragShaderPathname = [[NSBundle mainBundle] pathForResource:@"shader" ofType:@"fsh"];
+    if (![self compileShader:&fragShader type:GL_FRAGMENT_SHADER file:fragShaderPathname]) {
+        NSLog(@"Failed to compile fragment shader");
+        return NO;
+    }
     
+    // Attach vertex shader to program.
+    glAttachShader(_program, vertShader);
+    
+    // Attach fragment shader to program.
+    glAttachShader(_program, fragShader);
+    
+    // Bind attribute locations.
+    // This needs to be done prior to linking.
+    glBindAttribLocation(_program, GLKVertexAttribPosition, "position");
+    glBindAttribLocation(_program, GLKVertexAttribNormal, "normal");
+    
+    // Link program.
+    if (![self linkProgram:_program]) {
+        NSLog(@"Failed to link program: %d", _program);
+        
+        if (vertShader) {
+            glDeleteShader(vertShader);
+            vertShader = 0;
+        }
+        if (fragShader) {
+            glDeleteShader(fragShader);
+            fragShader = 0;
+        }
+        if (_program) {
+            glDeleteProgram(_program);
+            _program = 0;
+        }
+        
+        return NO;
+    }
+    
+    // Get uniform locations.
+    uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX] = glGetUniformLocation(_program, "modelViewProjectionMatrix");
+    uniforms[UNIFORM_NORMAL_MATRIX] = glGetUniformLocation(_program, "normalMatrix");
+    
+    // Release vertex and fragment shaders.
+    if (vertShader) {
+        glDetachShader(_program, vertShader);
+        glDeleteShader(vertShader);
+    }
+    if (fragShader) {
+        glDetachShader(_program, fragShader);
+        glDeleteShader(fragShader);
+    }
+    
+    return YES;
+}
+
+- (BOOL)compileShader:(GLuint *)shader type:(GLenum)type file:(NSString *)file
+{
+    GLint status;
+    const GLchar *source;
+    
+    source = (GLchar *)[[NSString stringWithContentsOfFile:file encoding:NSUTF8StringEncoding error:nil] UTF8String];
+    if (!source) {
+        NSLog(@"Failed to load vertex shader");
+        return NO;
+    }
+    
+    *shader = glCreateShader(type);
+    glShaderSource(*shader, 1, &source, NULL);
+    glCompileShader(*shader);
+    
+#if defined(DEBUG)
+    GLint logLength;
+    glGetShaderiv(*shader, GL_INFO_LOG_LENGTH, &logLength);
+    if (logLength > 0) {
+        GLchar *log = (GLchar *)malloc(logLength);
+        glGetShaderInfoLog(*shader, logLength, &logLength, log);
+        NSLog(@"Shader compile log:\n%s", log);
+        free(log);
+    }
+#endif
+    
+    glGetShaderiv(*shader, GL_COMPILE_STATUS, &status);
+    if (status == 0) {
+        glDeleteShader(*shader);
+        return NO;
+    }
+    
+    return YES;
+}
+
+- (BOOL)linkProgram:(GLuint)prog
+{
+    GLint status;
+    glLinkProgram(prog);
+    
+#if defined(DEBUG)
+    GLint logLength;
+    glGetProgramiv(prog, GL_INFO_LOG_LENGTH, &logLength);
+    if (logLength > 0) {
+        GLchar *log = (GLchar *)malloc(logLength);
+        glGetProgramInfoLog(prog, logLength, &logLength, log);
+        NSLog(@"Program link log:\n%s", log);
+        free(log);
+    }
+#endif
+    
+    glGetProgramiv(prog, GL_LINK_STATUS, &status);
+    if (status == 0) {
+        return NO;
+    }
+    
+    return YES;
+}
+
+- (BOOL)validateProgram:(GLuint)prog
+{
+    GLint logLength, status;
+    
+    glValidateProgram(prog);
+    glGetProgramiv(prog, GL_INFO_LOG_LENGTH, &logLength);
+    if (logLength > 0) {
+        GLchar *log = (GLchar *)malloc(logLength);
+        glGetProgramInfoLog(prog, logLength, &logLength, log);
+        NSLog(@"Program validate log:\n%s", log);
+        free(log);
+    }
+    
+    glGetProgramiv(prog, GL_VALIDATE_STATUS, &status);
+    if (status == 0) {
+        return NO;
+    }
+    
+    return YES;
+}
+
+- (void)setupGLShader
+{
+    [self loadShaders];
 }
 
 - (void)setUpGL
@@ -588,7 +741,7 @@
         [shape setUp];
     }
     
-    //[self setupGLShader];
+    [self setupGLShader];
 }
 
 - (void)tearDownGL
@@ -725,13 +878,23 @@
     // Scale to WorldSize <- ScreenSize (inverse of above).
     modelMatrix = GLKMatrix4Scale(modelMatrix, 1 / (sw), -1 / (sh), 1);
     
-    [_program use];
     
     // Now draw the spaceship, since the modelviewMatrix has the right position.
     // **HACK** Awkward hack, check to make sure SpaceShip is drawn the right way. (-z).
     modelMatrix = GLKMatrix4Scale(modelMatrix, 0.4, 0.4, -0.4); // Scale model down.
     self.effect.transform.modelviewMatrix = modelMatrix;
-    [self.effect prepareToDraw];
+    
+    //[_program use];
+    glUseProgram(_program);
+    
+    _modelViewProjectionMatrix = GLKMatrix4Multiply(self.effect.transform.projectionMatrix,
+                                                    self.effect.transform.modelviewMatrix);
+    _normalMatrix = GLKMatrix3InvertAndTranspose(GLKMatrix4GetMatrix3(self.effect.transform.modelviewMatrix), NULL);
+    
+    glUniformMatrix4fv(uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX], 1, 0, _modelViewProjectionMatrix.m);
+    glUniformMatrix3fv(uniforms[UNIFORM_NORMAL_MATRIX], 1, 0, _normalMatrix.m);
+    
+    //[self.effect prepareToDraw];
     [_playerShip draw];
 }
 
