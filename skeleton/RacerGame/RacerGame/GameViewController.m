@@ -1016,19 +1016,42 @@ enum
     //self.paused = !self.paused;
 }
 
+- (CGPoint)worldPointFromPointOnUI:(CGPoint)uiPt
+{
+    // uiPt in terms of self.view
+    
+    // self.center = (0, 0).
+    CGPoint uiCenter = self.view.center;
+    CGPoint tmpPt = CGPointMake(uiPt.x - uiCenter.x,
+                                uiPt.y - uiCenter.y);
+    
+    // Magic, uiPt(261, 182) - self.center = uiPt (-251, +202) = worldPoint(-1.5, +1)
+    
+    float xConst = -1.5f / -251;
+    float yConst = +1.0f / +202;
+    return CGPointMake(tmpPt.x * xConst, -tmpPt.y * yConst);
+}
+
+- (CGPoint)worldPointForLaneNum:(int)idx
+{
+    // for Z = -5.
+    UIAnswerButton *uiAnsBtn = [_answerUIs objectAtIndex:idx];
+    CGPoint uiPt = [self.view convertPoint:uiAnsBtn.center fromView:uiAnsBtn.superview];
+    
+    return [self worldPointFromPointOnUI:uiPt];
+}
+
 - (void)addLaneAsteroid:(NSUInteger)idx
 {
     NSLog(@"Generate lane %d aster", (int)idx);
     Asteroid *asteroid = [[Asteroid alloc] init];
     
-    int rndShapeIdx = arc4random() % 3;
     asteroid.shape = [[BOAsteroidShape alloc] init];//[_starShapes objectAtIndex:rndShapeIdx];
     
-    // This depends on the coords
-    float xArr[5] = {-1.5, +1.5, -1.75,  0, +1.75};
-    float yArr[5] = {  +1,   +1,    -1, -1,    -1};
-    float x = xArr[idx];
-    float y = yArr[idx];
+    // Find destination point, depending on where the corresponding answer UI is.
+    CGPoint destWorldPt = [self worldPointForLaneNum:idx];
+    float x = destWorldPt.x;
+    float y = destWorldPt.y;
     
     float dz = 0;//(arc4random() % 100 - 50) / 20;
     
