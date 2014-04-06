@@ -30,6 +30,8 @@
 - (GLKMatrix4)transformation:(GLKMatrix4)mat;
 - (BOOL)isExpired;
 
+- (void)extendLifeByDuration:(NSTimeInterval)duration;
+
 - (void)setStartPositionX:(GLfloat)x Y:(GLfloat)y Z:(GLfloat)z;
 - (void)setEndPositionX:(GLfloat)x Y:(GLfloat)y Z:(GLfloat)z;
 

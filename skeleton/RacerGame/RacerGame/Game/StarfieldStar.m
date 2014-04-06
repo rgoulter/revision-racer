@@ -166,6 +166,23 @@
     return _age > _duration;
 }
 
+- (void)extendLifeByDuration:(NSTimeInterval)additonalDuration
+{
+    // TODO: For correctness, we should tidy up the PathCurve and re-create it.
+    
+    // Assuming Linear Path,
+    // we need to extrapolate where the endpoint now is.
+    
+    float T = _duration;
+    float U = additonalDuration; // +duration
+    
+    _tx += U * (_tx - _sx) / T;
+    _ty += U * (_ty - _sy) / T;
+    _tz += U * (_tz - _sz) / T;
+    
+    _duration += additonalDuration; // T + U;
+}
+
 - (BOCurve*)generatePathCurve
 {
     int N = 100;

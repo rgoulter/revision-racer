@@ -429,6 +429,7 @@ enum
     
     // Transfer asteroids from _laneAsteroids to _deadAsteroids
     for (Asteroid *aster in _laneAsteroids) {
+        [aster extendLifeByDuration:2];
         [_deadAsteroids addObject:aster];
     }
     [_laneAsteroids removeAllObjects];
@@ -883,13 +884,17 @@ enum
         }
     }
     for (int i = [_laneAsteroids count] - 1; i >= 0; i--) {
+        // Because _laneAsteroids' lifetime is the same as question duration,
+        //  it's likely that the question is answered before this code is.
+        // This is here in case we stagger answers?
         Asteroid *aster = [_laneAsteroids objectAtIndex:i];
         
         if ([aster isExpired]) {
-            [aster tearDown];
+            // Do we remove lane asters here?..
             [_laneAsteroids removeObjectAtIndex:i];
             
-            //TODO: Create another asteroid which "keeps going" from this one.
+            NSLog(@"Lane Aster -> Dead Aster, extend");
+            [_deadAsteroids addObject:aster];
         }
     }
     for (int i = [_deadAsteroids count] - 1; i >= 0; i--) {
