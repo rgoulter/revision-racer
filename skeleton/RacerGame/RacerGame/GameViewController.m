@@ -25,6 +25,7 @@ enum
 {
     UNIFORM_MODELVIEWPROJECTION_MATRIX,
     UNIFORM_NORMAL_MATRIX,
+    UNIFORM_ISOUTLINE_BOOL,
     NUM_UNIFORMS
 };
 GLint uniforms[NUM_UNIFORMS];
@@ -625,6 +626,7 @@ enum
     // Get uniform locations.
     uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX] = glGetUniformLocation(_program, "modelViewProjectionMatrix");
     uniforms[UNIFORM_NORMAL_MATRIX] = glGetUniformLocation(_program, "normalMatrix");
+    uniforms[UNIFORM_ISOUTLINE_BOOL] = glGetUniformLocation(_program, "isOutline");
     
     // Release vertex and fragment shaders.
     if (vertShader) {
@@ -848,6 +850,18 @@ enum
     // */
 }
 
+- (void)prepareToDrawWithModelViewMatrix:(GLKMatrix4)mvMat
+                     andProjectionMatrix:(GLKMatrix4)projMat
+{
+    glUseProgram(_program);
+    
+    GLKMatrix4 mvProjMatrix = GLKMatrix4Multiply(projMat, mvMat);
+    GLKMatrix3 normalMatrix = GLKMatrix3InvertAndTranspose(GLKMatrix4GetMatrix3(mvMat), NULL);
+    
+    glUniformMatrix4fv(uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX], 1, 0, mvProjMatrix.m);
+    glUniformMatrix3fv(uniforms[UNIFORM_NORMAL_MATRIX], 1, 0, normalMatrix.m);
+}
+
 - (void)drawSpaceShip
 {
     // Draws the SpaceShip object (of _playerShip),
@@ -885,17 +899,15 @@ enum
     self.effect.transform.modelviewMatrix = modelMatrix;
     
     //[_program use];
-    glUseProgram(_program);
-    
-    GLKMatrix4 mvProjMatrix = GLKMatrix4Multiply(self.effect.transform.projectionMatrix,
-                                                 self.effect.transform.modelviewMatrix);
-    GLKMatrix3 normalMatrix = GLKMatrix3InvertAndTranspose(GLKMatrix4GetMatrix3(self.effect.transform.modelviewMatrix), NULL);
-    
-    glUniformMatrix4fv(uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX], 1, 0, mvProjMatrix.m);
-    glUniformMatrix3fv(uniforms[UNIFORM_NORMAL_MATRIX], 1, 0, normalMatrix.m);
-    
-    //[self.effect prepareToDraw];
+    [self prepareToDrawWithModelViewMatrix:self.effect.transform.modelviewMatrix
+                       andProjectionMatrix:self.effect.transform.projectionMatrix];
+    glUniform1i(uniforms[UNIFORM_ISOUTLINE_BOOL], 0);
     [_playerShip draw];
+}
+
+- (void)drawAsteroid:(Asteroid*)aster
+{
+    // Draw an asteroid with an outline effect
 }
 
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect
@@ -906,39 +918,50 @@ enum
     // draw stars
     for (StarfieldStar *star in _stars) {
         // Calculate model view matrix.
-        GLKMatrix4 modelMatrix = GLKMatrix4Identity; //GLKMatrix4Scale(GLKMatrix4Identity, scale, scale, scale);
+        GLKMatrix4 modelMatrix;
+        GLfloat scale = 0.25;
+        
+        // Draw "Shadow"
+        glDisable(GL_DEPTH_TEST);
+        
+        modelMatrix = GLKMatrix4Identity; //GLKMatrix4Scale(GLKMatrix4Identity, scale, scale, scale);
         modelMatrix = [star transformation:modelMatrix];
         
         // We can scale the object down by applying the scale matrix here.
-        float scale = 0.25;
+        modelMatrix = GLKMatrix4Scale(modelMatrix, scale, scale, scale);
+        
+        modelMatrix = GLKMatrix4Scale(modelMatrix, 1.1, 1.1, 1.1);
+        
+        self.effect.transform.modelviewMatrix = modelMatrix;
+        [self prepareToDrawWithModelViewMatrix:self.effect.transform.modelviewMatrix
+                           andProjectionMatrix:self.effect.transform.projectionMatrix];
+        glUniform1i(uniforms[UNIFORM_ISOUTLINE_BOOL], 1);
+        [star.shape draw];
+        
+        
+        // Draw "Actual"
+        glEnable(GL_DEPTH_TEST);
+        
+        // We can scale the object down by applying the scale matrix here.
+        modelMatrix = GLKMatrix4Identity; //GLKMatrix4Scale(GLKMatrix4Identity, scale, scale, scale);
+        modelMatrix = [star transformation:modelMatrix];
         modelMatrix = GLKMatrix4Scale(modelMatrix, scale, scale, scale);
         
         self.effect.transform.modelviewMatrix = modelMatrix;
         
-        glUseProgram(_program);
-        
-        // **CODEDUPL** can we move away from using self.effect?
-        GLKMatrix4 mvProjMatrix;
-        GLKMatrix3 normalMatrix;
-        mvProjMatrix = GLKMatrix4Multiply(self.effect.transform.projectionMatrix,
-                                          self.effect.transform.modelviewMatrix);
-        normalMatrix = GLKMatrix3InvertAndTranspose(GLKMatrix4GetMatrix3(self.effect.transform.modelviewMatrix), NULL);
-        
-        glUniformMatrix4fv(uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX], 1, 0, mvProjMatrix.m);
-        glUniformMatrix3fv(uniforms[UNIFORM_NORMAL_MATRIX], 1, 0, normalMatrix.m);
-        
+        [self prepareToDrawWithModelViewMatrix:self.effect.transform.modelviewMatrix
+                           andProjectionMatrix:self.effect.transform.projectionMatrix];
+        glUniform1i(uniforms[UNIFORM_ISOUTLINE_BOOL], 0);
         [star.shape draw];
         
+        
+        
+        // Draw Star  Path
         self.effect.transform.modelviewMatrix = GLKMatrix4Identity;
-        glUseProgram(_program);
         
-        mvProjMatrix = GLKMatrix4Multiply(self.effect.transform.projectionMatrix,
-                                          self.effect.transform.modelviewMatrix);
-        normalMatrix = GLKMatrix3InvertAndTranspose(GLKMatrix4GetMatrix3(self.effect.transform.modelviewMatrix), NULL);
-        
-        glUniformMatrix4fv(uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX], 1, 0, mvProjMatrix.m);
-        glUniformMatrix3fv(uniforms[UNIFORM_NORMAL_MATRIX], 1, 0, normalMatrix.m);
-        
+        [self prepareToDrawWithModelViewMatrix:self.effect.transform.modelviewMatrix
+                           andProjectionMatrix:self.effect.transform.projectionMatrix];
+        glUniform1i(uniforms[UNIFORM_ISOUTLINE_BOOL], 0);
         [star.pathCurve draw];
     }
     

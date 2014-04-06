@@ -642,7 +642,9 @@ void setVertexDataColor(GLfloat *data, int ptIdx, GLfloat r, GLfloat g, GLfloat 
 
 
 
-@implementation BOAsteroidShape
+@implementation BOAsteroidShape {
+    vertexdata *data;
+}
 
 - (instancetype)init
 {
@@ -652,9 +654,6 @@ void setVertexDataColor(GLfloat *data, int ptIdx, GLfloat r, GLfloat g, GLfloat 
         calculateIcosahedonData();
         calculateDodecahedronData();
         
-        // e.g. generate with Dodecaheron
-        vertexdata *data;
-       
         float rnd = arc4random() % 3;
         
         if (rnd < 0.5) {
@@ -664,11 +663,15 @@ void setVertexDataColor(GLfloat *data, int ptIdx, GLfloat r, GLfloat g, GLfloat 
         }
         
         [self setVertexData:data->data withNumPoints:data->numPoints];
-        
-        // **MEMORYLEAK** data is never freed on clientside.
     }
     
     return self;
+}
+
+- (void)tearDown
+{
+    [super tearDown];
+    free(data);
 }
 
 @end
