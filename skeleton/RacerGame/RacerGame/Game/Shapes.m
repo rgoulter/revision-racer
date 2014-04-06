@@ -445,9 +445,10 @@ vertexdata* generateAsteroidVertexData(GLfloat vertices[], int indices[])
         int numTri = numPoints;
         
         // Color the face of the asteroid.
-        float faceR = 1.0;
-        float faceG = 0.5;
-        float faceB = 0.2;
+        // Random "Brown"-ish color.
+        float faceR = (float)(arc4random() % 50 + 150) / 255;
+        float faceG = (float)(arc4random() % 50 + 50) / 255;
+        float faceB = (float)(arc4random() % 50 + 0) / 255;
         float color[3] = {faceR, faceG, faceB};
         
         GLfloat *currentTriData = currentVertexData;
