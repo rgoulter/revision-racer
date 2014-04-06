@@ -21,6 +21,14 @@
 #define SHOW_DEBUG_CURSORS NO
 #define SHOW_DEBUG_ASTEROID_LANES NO
 
+// Not sure what the best way to do color constants is;
+// SPACEBG is for glClearColor(r, g, b, a);
+#define SPACEBG_R 0.0074f
+#define SPACEBG_G 0.0031f
+#define SPACEBG_B 0.1862f
+
+#define ANS_UICOLOR [UIColor colorWithRed:(float)52/256 green:(float)94/256 blue:(float)242/256 alpha:1]
+#define QUESTION_UICOLOR [UIColor colorWithRed:1 green:1 blue:1 alpha:1]
 
 // Uniform index.
 enum
@@ -108,6 +116,12 @@ enum
     // UI variables
     _questionUI = _questionLabel;
     _answerUIs = [NSMutableArray array];
+    
+    // Set Colors
+    [_questionUI setTextColor:QUESTION_UICOLOR];
+    for (id<AnswerUI> ansUI in _answerUIs) {
+        [ansUI setTextColor:ANS_UICOLOR];
+    }
     
     // Create AnswerUIs using UICollectionView.
     self.answersCollectionView.backgroundColor = [UIColor clearColor];
@@ -456,8 +470,8 @@ enum
     
     
     // Set colors
-    UIColor *ansColor = [UIColor colorWithRed:(float)52/256 green:(float)94/256 blue:(float)242/256 alpha:1];
-    UIColor *qnColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:1];
+    UIColor *ansColor = ANS_UICOLOR;
+    UIColor *qnColor = QUESTION_UICOLOR;
     
     [_questionUI setTextColor:qnColor];
     for (id<AnswerUI> ansUI in _answerUIs) {
@@ -992,7 +1006,7 @@ enum
 
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect
 {
-    glClearColor(0.6f, 0.6f, 0.65f, 1.0f);
+    glClearColor(SPACEBG_R, SPACEBG_G, SPACEBG_B, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
     // draw stars
