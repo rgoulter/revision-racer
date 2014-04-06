@@ -31,6 +31,8 @@
 // **DESIGN** variable type used here??
 @property AnswerState *selectedAnswer;
 
+@property (readonly) AnswerGenerationContext *answerGenerationContext;
+
 @property GameRules *gameRules;
 
 // Game Entities
@@ -92,9 +94,7 @@
     
     // Bootstap Answer states
     // (Not sure the best way to initially set these up).
-    AnswerGenerationContext *tmpAnsGenCtx = [[AnswerGenerationContext alloc]
-                                             initWithFlashSet:self.flashSet
-                                             andDuration:_gameRules.questionDuration];
+    AnswerGenerationContext *tmpAnsGenCtx = self.answerGenerationContext;
     
     for (id<AnswerUI> ansUI in _answerUIs) {
         // This relies on AnswerState not needing GameQn to generate next
@@ -305,6 +305,16 @@
     }
 }
 
+- (AnswerGenerationContext*)answerGenerationContext
+{
+    assert(self.flashSet != nil);
+    assert(_gameRules != nil);
+    
+    return [[AnswerGenerationContext alloc]
+            initWithFlashSet:self.flashSet
+            andDuration:_gameRules.questionDuration];
+}
+
 - (void)questionAnswered:(QuestionState*)qnState
 {
     // This is called when the question has been 'invoked'
@@ -365,9 +375,7 @@
         
         assert(ansSt != nil);
         
-        AnswerGenerationContext *ansGenCtx = [[AnswerGenerationContext alloc]
-                                              initWithFlashSet:self.flashSet
-                                              andDuration:_gameRules.questionDuration];
+        AnswerGenerationContext *ansGenCtx = self.answerGenerationContext;
         
         do {
             ansSt = [ansSt nextAnswerStateFromContext:ansGenCtx];
@@ -454,9 +462,7 @@
         
         assert(ansSt != nil);
         
-        AnswerGenerationContext *ansGenCtx = [[AnswerGenerationContext alloc]
-                                              initWithFlashSet:self.flashSet
-                                              andDuration:_gameRules.questionDuration];
+        AnswerGenerationContext *ansGenCtx = self.answerGenerationContext;
         
         while ([currentAnswerStates containsObject:ansSt]) {
             ansSt = [ansSt nextAnswerStateFromContext:ansGenCtx];
