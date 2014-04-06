@@ -178,10 +178,9 @@
                                             <rect key="frame" x="0.0" y="0.0" width="95" height="65"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ktN-Nz-kmU" customClass="UIAnswerButton">
-                                                    <rect key="frame" x="24" y="18" width="46" height="30"/>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ktN-Nz-kmU" customClass="UIAnswerButton">
+                                                    <rect key="frame" x="0.0" y="0.0" width="95" height="65"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <color key="backgroundColor" red="0.5" green="0.0" blue="0.5" alpha="1" colorSpace="calibratedRGB"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="60"/>
                                                     <state key="normal" title="Button">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -191,8 +190,10 @@
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <constraints>
-                                            <constraint firstAttribute="centerY" secondItem="ktN-Nz-kmU" secondAttribute="centerY" id="0z3-Xz-dam"/>
-                                            <constraint firstAttribute="centerX" secondItem="ktN-Nz-kmU" secondAttribute="centerX" id="k0h-H4-Pbq"/>
+                                            <constraint firstAttribute="trailing" secondItem="ktN-Nz-kmU" secondAttribute="trailing" id="NIc-5j-XiK"/>
+                                            <constraint firstItem="ktN-Nz-kmU" firstAttribute="leading" secondItem="PiZ-Bp-Ysr" secondAttribute="leading" id="Tyh-Jc-Y4u"/>
+                                            <constraint firstAttribute="bottom" secondItem="ktN-Nz-kmU" secondAttribute="bottom" id="Uzi-zz-93P"/>
+                                            <constraint firstItem="ktN-Nz-kmU" firstAttribute="top" secondItem="PiZ-Bp-Ysr" secondAttribute="top" id="w7l-iI-yHd"/>
                                         </constraints>
                                     </collectionViewCell>
                                 </cells>
