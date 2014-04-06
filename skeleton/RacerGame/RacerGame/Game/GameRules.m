@@ -18,7 +18,7 @@
 
 - (float)questionDuration
 {
-    return 5; // seconds
+    return 3; // seconds
 }
 
 @end

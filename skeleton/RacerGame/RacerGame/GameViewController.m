@@ -109,7 +109,7 @@ enum
     _gameRules = [[GameRules alloc] init];
     
     _playerShip = [[SpaceShip alloc] initInView:self.view];
-    [_playerShip setPointOnScreen:self.view.center];
+    [_playerShip setPointOnScreen:[self spaceshipRestPosition]];
     
     
     
@@ -498,7 +498,7 @@ enum
     
     
     if (!_playerShip.isBeingDragged) {
-        [_playerShip setDestinationPointOnScreen:self.view.center withSpeedPerSecond:SPACESHIP_LOW_SPEED];
+        [_playerShip setDestinationPointOnScreen:[self spaceshipRestPosition] withSpeedPerSecond:SPACESHIP_LOW_SPEED];
     }
 }
 
@@ -554,6 +554,12 @@ enum
 - (void)setSpaceshipDestinationTo:(CGPoint)pt
 {
     [_playerShip setDestinationPointOnScreen:pt withSpeedPerSecond:SPACESHIP_HIGH_SPEED];
+}
+
+- (CGPoint)spaceshipRestPosition
+{
+    CGPoint centerPt = self.view.center;
+    return CGPointMake(centerPt.x, centerPt.y + 75);
 }
 
 - (void)selectAnswerUI:(id<AnswerUI>)answerUI
@@ -1087,7 +1093,7 @@ enum
     
     float dz = 0;//(arc4random() % 100 - 50) / 20;
     
-    [asteroid setStartPositionX:x Y:y Z:-30 + dz];
+    [asteroid setStartPositionX:x Y:y Z:-60 + dz];
     [asteroid setEndPositionX:x Y:y Z:-5];
     
     asteroid.duration = _gameRules.questionDuration;
