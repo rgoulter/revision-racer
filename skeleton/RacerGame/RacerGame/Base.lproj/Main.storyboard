@@ -161,47 +161,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView autoresizesSubviews="NO" opaque="NO" clearsContextBeforeDrawing="NO" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="n8X-7d-PSa">
+                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2KA-eo-vRu">
                                 <rect key="frame" x="0.0" y="146" width="1024" height="622"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="M6F-nc-D1V">
-                                    <size key="itemSize" width="95" height="65"/>
-                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                </collectionViewFlowLayout>
-                                <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="collViewAnswerCell" id="PiZ-Bp-Ysr">
-                                        <rect key="frame" x="0.0" y="0.0" width="95" height="65"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="95" height="65"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ktN-Nz-kmU" customClass="UIAnswerButton">
-                                                    <rect key="frame" x="0.0" y="0.0" width="95" height="65"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="60"/>
-                                                    <state key="normal" title="Button">
-                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                    </state>
-                                                </button>
-                                            </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        </view>
-                                        <constraints>
-                                            <constraint firstAttribute="trailing" secondItem="ktN-Nz-kmU" secondAttribute="trailing" id="NIc-5j-XiK"/>
-                                            <constraint firstItem="ktN-Nz-kmU" firstAttribute="leading" secondItem="PiZ-Bp-Ysr" secondAttribute="leading" id="Tyh-Jc-Y4u"/>
-                                            <constraint firstAttribute="bottom" secondItem="ktN-Nz-kmU" secondAttribute="bottom" id="Uzi-zz-93P"/>
-                                            <constraint firstItem="ktN-Nz-kmU" firstAttribute="top" secondItem="PiZ-Bp-Ysr" secondAttribute="top" id="w7l-iI-yHd"/>
-                                        </constraints>
-                                    </collectionViewCell>
-                                </cells>
-                                <connections>
-                                    <outlet property="dataSource" destination="T0N-km-FSq" id="xDv-ls-b7o"/>
-                                    <outlet property="delegate" destination="T0N-km-FSq" id="bko-9n-Ph3"/>
-                                </connections>
-                            </collectionView>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </view>
                             <view opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="f5J-1V-7yp">
                                 <rect key="frame" x="0.0" y="20" width="984" height="364"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -233,6 +196,12 @@
                                 </subviews>
                             </view>
                         </subviews>
+                        <constraints>
+                            <constraint firstAttribute="centerX" secondItem="2KA-eo-vRu" secondAttribute="centerX" id="5zI-o2-9g5"/>
+                            <constraint firstItem="p33-VK-NGH" firstAttribute="top" secondItem="2KA-eo-vRu" secondAttribute="bottom" id="VhJ-6o-0He"/>
+                            <constraint firstAttribute="trailing" secondItem="2KA-eo-vRu" secondAttribute="trailing" id="Vsp-f1-7WG"/>
+                            <constraint firstItem="2KA-eo-vRu" firstAttribute="leading" secondItem="YBm-n3-FrL" secondAttribute="leading" id="hWd-6A-aYw"/>
+                        </constraints>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                         <connections>
                             <outlet property="delegate" destination="T0N-km-FSq" id="7yT-oA-Sjn"/>
@@ -240,7 +209,7 @@
                     </glkView>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <connections>
-                        <outlet property="answersCollectionView" destination="n8X-7d-PSa" id="l2Q-Vm-5nC"/>
+                        <outlet property="answersContainerView" destination="2KA-eo-vRu" id="fSB-hZ-hC3"/>
                         <outlet property="questionLabel" destination="BMP-jN-bm9" id="Sae-GU-ECN"/>
                         <segue destination="hFx-kF-305" kind="push" identifier="gameToResults" id="j9l-vs-oYR"/>
                     </connections>

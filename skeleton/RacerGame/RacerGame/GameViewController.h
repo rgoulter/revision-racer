@@ -19,11 +19,9 @@
 #import "UIQuestionLabel.h"
 #import "UIAnswerButton.h"
 
-@interface GameViewController : GLKViewController <QuestionSessionManager,
-                                                   UICollectionViewDataSource,
-                                                   UICollectionViewDelegateFlowLayout>
+@interface GameViewController : GLKViewController <QuestionSessionManager>
 
-@property (weak, nonatomic) IBOutlet UICollectionView *answersCollectionView;
+@property (weak, nonatomic) IBOutlet UIView *answersContainerView;
 
 @property (strong, nonatomic) EAGLContext *context;
 @property (strong, nonatomic) GLKBaseEffect *effect;

@@ -118,21 +118,25 @@ enum
     _questionUI = _questionLabel;
     _answerUIs = [NSMutableArray array];
     
+    
+    // Create AnswerUIs using UICollectionView.
+    for (int i = 0; i < NUM_QUESTIONS; i++) {
+        CGRect ansRect = [self getUIAnswerRectForIdx:i];
+        UIAnswerButton *uiButton = [[UIAnswerButton alloc] initWithFrame:ansRect];
+        
+        //[[uiButton titleLabel] setFont:[UIFont fontWithName:@"Helvitica Neue" size:180]];
+        uiButton.titleLabel.font = [UIFont systemFontOfSize:60];
+        [uiButton addTarget:self action:@selector(answerButtonPressed:) forControlEvents:UIControlEventTouchDown];
+        
+        [self.answersContainerView addSubview:uiButton];
+        [_answerUIs addObject:uiButton];
+    }
+    
     // Set Colors
     [_questionUI setTextColor:QUESTION_UICOLOR];
     for (id<AnswerUI> ansUI in _answerUIs) {
         [ansUI setTextColor:ANS_UICOLOR];
     }
-    
-    // Create AnswerUIs using UICollectionView.
-    self.answersCollectionView.backgroundColor = [UIColor clearColor];
-    self.answersCollectionView.backgroundView = [[UIView alloc] initWithFrame:CGRectZero];
-    // [self.answersCollectionView reloadData]; // UICollectionView is BUGGY, so we need the below, not this.
-    [self.answersCollectionView reloadItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:0 inSection:0],
-                                                          [NSIndexPath indexPathForItem:1 inSection:0],
-                                                          [NSIndexPath indexPathForItem:0 inSection:1],
-                                                          [NSIndexPath indexPathForItem:1 inSection:1],
-                                                          [NSIndexPath indexPathForItem:2 inSection:1]]];
     
     assert(_answerUIs.count > 0);
     
@@ -251,80 +255,92 @@ enum
 
 # pragma mark - CollectionView Logic
 
-
-
-- (UICollectionViewCell *) collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+- (uint)numAnswerRows
 {
-    UICollectionViewCell * newCell = [self.answersCollectionView
-                                      dequeueReusableCellWithReuseIdentifier:@"collViewAnswerCell"
-                                      forIndexPath:indexPath];
-    
-    // Take care of the answers label
-    
-    // This seems a bit **HACK** ish, but
-    UIView *v = newCell.subviews.firstObject;
-    UIAnswerButton *ansButton = (UIAnswerButton*) v.subviews.firstObject;
-    
-    assert([ansButton conformsToProtocol:@protocol(AnswerUI)] && ansButton != nil);
-    
-    [ansButton addTarget:self action:@selector(answerButtonPressed:) forControlEvents:UIControlEventTouchDown];
-    [_answerUIs addObject:ansButton];
-    
-    return newCell;
-}
-
-- (NSInteger) numberOfSectionsInCollectionView:(UICollectionView *)collectionView
-{
-    // NUM ROWS
     return 2;
 }
 
-- (NSInteger) collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+- (uint)numAnswerColumnsForRow:(uint)rowIdx
 {
-    // NUM COLS
-    if (section % 2 == 0) {
+    if (rowIdx == 0) {
         return 2;
     } else {
         return 3;
     }
 }
 
+- (uint)numAnswers
+{
+    int sum = 0;
+    
+    for (int i = 0; i < [self numAnswerRows]; i++) {
+        sum += [self numAnswerColumnsForRow:i];
+    }
+    
+    return sum;
+}
 
-
-// UICollectiovViewDelegateFlowLayout stuff.
-
-- (CGSize)collViewCellSize
+- (CGSize)answerSizeForRow:(uint)row andCol:(uint)col
 {
     // We should calculate this from CollectionView's size.
-    CGRect collViewRect = self.answersCollectionView.frame;
+    CGRect collViewRect = self.answersContainerView.frame;
     
-    float w = self.answersCollectionView.frame.size.width / 3; //collViewRect.size.width / 5;
-    float h = collViewRect.size.height / 2; // Assuming answers all together.
+    float w = collViewRect.size.width / 3;
+    float h = collViewRect.size.height / 2 / 2; // Half height
     
-    return CGSizeMake(w, h);   
+    return CGSizeMake(w, h);  
 }
 
-- (CGSize)collectionView:(UICollectionView *)collectionView
-                  layout:(UICollectionViewLayout *)collectionViewLayout
-  sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+- (uint)rowForAnswerIndex:(uint)idx
 {
-    return [self collViewCellSize];
-}
-
-- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView
-                        layout:(UICollectionViewLayout *)collectionViewLayout
-        insetForSectionAtIndex:(NSInteger)section
-{
-    // To be fancy??
-    if (section == 0) {
-        float width = self.answersCollectionView.frame.size.width;
-        int n = [self collectionView:collectionView numberOfItemsInSection:section]; // 2;
-        float margin = (width - n * [self collViewCellSize].width) / (n - 1 + 2);
-        return UIEdgeInsetsMake(0, margin, 0, margin);
+    int row = 0;
+    
+    if (idx < [self numAnswerColumnsForRow:row]) {
+        return row;
     } else {
-        // top, left, bottom, right
-        return UIEdgeInsetsMake(0, 0, 0, 0);
+        // Could expand this into a loop, but nah.
+        return row + 1;
     }
+}
+
+- (uint)colForAnswerIndex:(uint)idx
+{
+    int row = 0;
+    
+    if (idx < [self numAnswerColumnsForRow:row]) {
+        return idx;
+    } else {
+        // Could expand this into a loop, but nah.
+        idx -= [self numAnswerColumnsForRow:row];
+        return idx;
+    }
+}
+
+- (CGRect)getUIAnswerRectForIdx:(uint)idx
+{
+    int row = [self rowForAnswerIndex:idx];
+    int col = [self colForAnswerIndex:idx];
+    
+    CGSize size = [self answerSizeForRow:row andCol:col];
+    
+    int nRows = [self numAnswerRows];
+    int nCols = [self numAnswerColumnsForRow:row];
+    
+    float x = 0;
+    float y = 0;
+    float xPadding = 0;
+    float yPadding = (self.answersContainerView.frame.size.height - nRows * size.height) / (nRows + 1);
+    
+    if (row == 0) {
+        xPadding = (self.answersContainerView.frame.size.width -
+                    nCols * size.width) /
+                   (nCols + 1);
+    }
+    
+    x = xPadding + (xPadding + size.width) * col;
+    y = yPadding + (yPadding + size.height) * row;
+    
+    return CGRectMake(x, y, size.width, size.height);
 }
 
 
