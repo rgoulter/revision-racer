@@ -690,6 +690,15 @@ void setVertexDataColor(GLfloat *data, int ptIdx, GLfloat r, GLfloat g, GLfloat 
     vertexdata *data;
 }
 
+static dispatch_queue_t asteroidDispatchQueue;
+
+
++ (void)initialize {
+    if (self == [BOAsteroidShape self]) {
+        asteroidDispatchQueue = dispatch_queue_create("nus.cs3217.group06.asteroid", NULL);
+    }
+}
+
 - (instancetype)init
 {
     self = [super init];
@@ -755,25 +764,32 @@ void setVertexDataColor(GLfloat *data, int ptIdx, GLfloat r, GLfloat g, GLfloat 
     
     NSMutableArray *result = [NSMutableArray array];
     
-    float *d = data->data;
+    dispatch_queue_t calculateQueue = dispatch_queue_create("nus.cs3217.group06.asteroidcreate",
+                                                            DISPATCH_QUEUE_CONCURRENT);
     
     // Make a tetrahedron from every triangle;
     // Therefore, from every 3 points.
-    for (int i = 0; i < data->numPoints; i += 3) {
-        // **HACK** b/c creating these shapes is expensive,
-        // we should do the creation of *all* the pieces in a different thread.
-        // It's cheaper, however, to just only create some proportion of them.
+    
+    int n = data->numPoints / 3;
+    vertexdata **resultArr = (vertexdata**) malloc(sizeof(struct vertexdata *) * n);
+    
+    dispatch_apply(n, calculateQueue, ^(size_t i){
+        float *d = data->data + i * 3 * VBO_NUMCOLS;
         float rnd = (float)(arc4random() % 100) / 100;
         
-        if (rnd < 0.3) {
+        if (YES || rnd < 0.3) {
             vertexdata *tetData = createTetrahedronFromTriangle(d);
-            BOAsteroidShape *tetShape = [[BOAsteroidShape alloc] initWithData:tetData];
-            [result addObject:tetShape];
+            //BOAsteroidShape *tetShape = [[BOAsteroidShape alloc] initWithData:tetData];
+            //[result addObject:tetShape];
+            resultArr[i] = tetData;
         }
-        
-        // point to next triangle
-        d += 3 * VBO_NUMCOLS;
+    });
+    
+    for (int i = 0; i < n; i++) {
+        [result addObject:[[BOAsteroidShape alloc] initWithData:resultArr[i]]];
     }
+    
+    free(resultArr);
     
     return [NSArray arrayWithArray:result];
 }
