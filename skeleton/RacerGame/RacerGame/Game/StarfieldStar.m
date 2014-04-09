@@ -42,6 +42,26 @@
     return self;
 }
 
+// **HACK** Heinous, heinous hack.
+- (id)initWithoutRotation
+{
+    self = [super init];
+    
+    if (self) {
+        _age = 0;
+        
+        _rotX = 0;
+        _rotDX = 0;
+        _rotY = 0;
+        _rotDY = 0;
+        
+        _pathCurve = nil;
+        _hasBeenSetUp = NO;
+    }
+    
+    return self;
+}
+
 - (void)setStartPositionX:(GLfloat)x Y:(GLfloat)y Z:(GLfloat)z
 {
     assert(!_hasBeenSetUp);
@@ -62,7 +82,7 @@
 
 - (void)setUp
 {
-    //[_shape setUp];
+    [_shape setUp];
     
     _hasBeenSetUp = YES;
     [self pathCurve]; // generate path curve.
@@ -71,7 +91,7 @@
 
 - (void)tearDown
 {
-    //[_shape tearDown];
+    [_shape tearDown];
     
     [_pathCurve tearDown];
     

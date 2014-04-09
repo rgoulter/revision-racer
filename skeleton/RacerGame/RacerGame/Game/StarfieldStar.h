@@ -23,6 +23,10 @@
 @property (readonly) float rotationX;
 @property (readonly) float rotationY;
 
+- (id)init;
+- (id)initWithoutRotation;
+
+
 - (void)setUp;
 - (void)tearDown;
 - (void)draw;

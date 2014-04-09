@@ -480,14 +480,6 @@
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
     [self drawGameObjects];
-    
-    
-    // draw star cluster
-    [_starShaderProgram use];
-    GLKMatrix4 modelMat = GLKMatrix4Translate(GLKMatrix4Identity, 0, 0, -5);
-    GLKMatrix4 mvProjMatrix = GLKMatrix4Multiply(self.effect.transform.projectionMatrix, modelMat);
-    glUniformMatrix4fv([_starShaderProgram uniformIndex:@"modelViewProjectionMatrix"], 1, 0, mvProjMatrix.m);
-    [_starCluster draw];
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {

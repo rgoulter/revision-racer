@@ -9,6 +9,8 @@
 #import "GameViewController+Game.h"
 #import "GameViewController+MCQ.h"
 
+#import "BOStarCluster.h"
+
 @implementation GameViewController (Game)
 
 
@@ -191,6 +193,15 @@
             [self.deadAsteroids removeObjectAtIndex:i];
         }
     }
+    
+    if (self.stars.count < 1) {
+        [self addStarCluster];
+        StarfieldStar *latestStar = [self.stars lastObject];
+        [latestStar tick:self.gameRules.questionDuration / 2]; // **MAGIC**
+    }
+    if (self.stars.count < 2) {
+        [self addStarCluster];
+    }
 }
 
 
@@ -201,6 +212,8 @@
     [self tickSpaceShip];
     
     [self tickAsteroids];
+    
+    
 }
 
 
@@ -315,6 +328,20 @@
     
     // draw spaceship
     [self drawSpaceShip];
+    
+    
+    // draw stars
+    [self.starShaderProgram use];
+    
+    for (StarfieldStar *star in self.stars) {
+        assert([star.shape isKindOfClass:[BOStarCluster class]]);
+        
+        GLKMatrix4 modelMat = [star transformation:GLKMatrix4Identity];
+        GLKMatrix4 mvProjMatrix = GLKMatrix4Multiply(self.effect.transform.projectionMatrix, modelMat);
+        glUniformMatrix4fv([self.starShaderProgram uniformIndex:@"modelViewProjectionMatrix"], 1, 0, mvProjMatrix.m);
+        
+        [star draw];
+    }
 }
 
 
@@ -345,6 +372,26 @@
     [asteroid setUp];
     
     [self.laneAsteroids addObject:asteroid];
+}
+
+
+
+- (void)addStarCluster
+{
+    StarfieldStar *starfield = [[StarfieldStar alloc] initWithoutRotation];
+    
+    starfield.shape = [[BOStarCluster alloc] initWithNumPoints:100 inWidth:20 Height:20 Length:60];
+    
+    // Find destination point, depending on where the corresponding answer UI is.
+    [starfield setStartPositionX:0 Y:0 Z:-60];
+    [starfield setEndPositionX:0 Y:0 Z:30];
+    
+    starfield.duration = self.gameRules.questionDuration;
+    
+    // setUp
+    [starfield setUp];
+    
+    [self.stars addObject:starfield];
 }
 
 @end

@@ -15,14 +15,12 @@
     assert([self.shape isKindOfClass:[BOAsteroidShape class]]);
     
     [super setUp];
-    [self.shape setUp];
 }
 
 - (void)tearDown
 {
     assert([self.shape isKindOfClass:[BOAsteroidShape class]]);
     
-    [self.shape tearDown];
     [super tearDown];
 }
 

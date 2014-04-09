@@ -47,6 +47,7 @@
 - (CGPoint)worldPointForLaneNum:(NSUInteger)idx;
 - (void)selectAnswerUI:(id<AnswerUI>)answerUI;
 @property (readonly) GLProgram *program;
+@property (readonly) GLProgram *starShaderProgram;
 
 - (void)setUpGL;
 - (void)tearDownGL;

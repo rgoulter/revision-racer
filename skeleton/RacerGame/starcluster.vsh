@@ -7,12 +7,12 @@ attribute vec3 aPosition;
 attribute float aIntensity;
 attribute float aBrightness;
 
-varying vec4 vColor;
+varying lowp vec4 vColor;
 
 void main() {
     vec4 position = modelViewProjectionMatrix * vec4(aPosition.xyz, 1.);
     
-    vColor = vec4(0, 1, 1, aIntensity) * aBrightness;
+    vColor = vec4(aBrightness, aBrightness, 0, aIntensity / abs(aPosition.z));
     
     gl_PointSize = 1.0; //uThickness;
     gl_Position =  position;
