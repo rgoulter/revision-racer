@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		02505AEB18F54AA3008F8563 /* GameViewController+Game.m in Sources */ = {isa = PBXBuildFile; fileRef = 02505AEA18F54AA3008F8563 /* GameViewController+Game.m */; };
+		02505AEE18F571A1008F8563 /* BOStarCluster.m in Sources */ = {isa = PBXBuildFile; fileRef = 02505AED18F571A1008F8563 /* BOStarCluster.m */; };
+		02505AF018F57801008F8563 /* starcluster.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 02505AEF18F57801008F8563 /* starcluster.vsh */; };
+		02505AF218F57819008F8563 /* starcluster.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 02505AF118F57819008F8563 /* starcluster.fsh */; };
 		0255045F18F05E3500A984D0 /* GameRules.m in Sources */ = {isa = PBXBuildFile; fileRef = 0255045E18F05E3500A984D0 /* GameRules.m */; };
 		025504AE18F15F4C00A984D0 /* Asteroid.m in Sources */ = {isa = PBXBuildFile; fileRef = 025504AD18F15F4C00A984D0 /* Asteroid.m */; };
 		0262757718E90E6C00CDAA24 /* GameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0262757618E90E6C00CDAA24 /* GameViewController.m */; };
@@ -76,6 +79,10 @@
 /* Begin PBXFileReference section */
 		02505AE918F54AA3008F8563 /* GameViewController+Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "GameViewController+Game.h"; path = "Game/GameViewController+Game.h"; sourceTree = "<group>"; };
 		02505AEA18F54AA3008F8563 /* GameViewController+Game.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "GameViewController+Game.m"; path = "Game/GameViewController+Game.m"; sourceTree = "<group>"; };
+		02505AEC18F571A1008F8563 /* BOStarCluster.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BOStarCluster.h; path = RacerGame/Game/BOStarCluster.h; sourceTree = "<group>"; };
+		02505AED18F571A1008F8563 /* BOStarCluster.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BOStarCluster.m; path = RacerGame/Game/BOStarCluster.m; sourceTree = "<group>"; };
+		02505AEF18F57801008F8563 /* starcluster.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = starcluster.vsh; sourceTree = "<group>"; };
+		02505AF118F57819008F8563 /* starcluster.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = starcluster.fsh; sourceTree = "<group>"; };
 		0255045D18F05E3500A984D0 /* GameRules.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameRules.h; path = RacerGame/Game/GameRules.h; sourceTree = "<group>"; };
 		0255045E18F05E3500A984D0 /* GameRules.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameRules.m; path = RacerGame/Game/GameRules.m; sourceTree = "<group>"; };
 		025504AC18F15F4C00A984D0 /* Asteroid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Asteroid.h; path = RacerGame/Game/Asteroid.h; sourceTree = "<group>"; };
@@ -223,6 +230,8 @@
 				0280A1E618EEE4B0006B50B4 /* GLProgram.m */,
 				0262757918E90F4400CDAA24 /* Shapes.h */,
 				0262757A18E90F4400CDAA24 /* Shapes.m */,
+				02505AEC18F571A1008F8563 /* BOStarCluster.h */,
+				02505AED18F571A1008F8563 /* BOStarCluster.m */,
 				029E57F818EC1AEF007EB6E8 /* StarfieldStar.h */,
 				029E57F918EC1AEF007EB6E8 /* StarfieldStar.m */,
 				02FB32D618ED627E00991ABA /* SpaceShip.h */,
@@ -235,6 +244,8 @@
 				0280A1ED18EF1087006B50B4 /* SpaceShipShape.m */,
 				025504AC18F15F4C00A984D0 /* Asteroid.h */,
 				025504AD18F15F4C00A984D0 /* Asteroid.m */,
+				02505AEF18F57801008F8563 /* starcluster.vsh */,
+				02505AF118F57819008F8563 /* starcluster.fsh */,
 			);
 			name = 3D;
 			sourceTree = "<group>";
@@ -498,10 +509,12 @@
 			files = (
 				D9B229FE18DB1F1800DDBA11 /* Images.xcassets in Resources */,
 				0280A1EB18EEE70E006B50B4 /* shader.fsh in Resources */,
+				02505AF018F57801008F8563 /* starcluster.vsh in Resources */,
 				D96BA52C18EB32AE00D29E82 /* ActivityModal.xib in Resources */,
 				D9B229F018DB1F1800DDBA11 /* InfoPlist.strings in Resources */,
 				D9B229F918DB1F1800DDBA11 /* Main.storyboard in Resources */,
 				0280A1E918EEE6FF006B50B4 /* shader.vsh in Resources */,
+				02505AF218F57819008F8563 /* starcluster.fsh in Resources */,
 				D96BA52618EAFEB300D29E82 /* SetSelectionTableItem.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -546,6 +559,7 @@
 				029E580618EC64AF007EB6E8 /* UIAnswerButton.m in Sources */,
 				029E57FA18EC1AEF007EB6E8 /* StarfieldStar.m in Sources */,
 				D96BA47B18E876A300D29E82 /* URLHelper.m in Sources */,
+				02505AEE18F571A1008F8563 /* BOStarCluster.m in Sources */,
 				D96BA52918EB038100D29E82 /* SetSelectionTableItem.m in Sources */,
 				D9B229F218DB1F1800DDBA11 /* main.m in Sources */,
 				0262757B18E90F4400CDAA24 /* Shapes.m in Sources */,

@@ -3,6 +3,8 @@
 
 #import "GLProgram.h"
 
+// for the ATTRIB enum.
+#import "BOStarCluster.h"
 
 
 GLint uniforms[NUM_UNIFORMS];
@@ -88,11 +90,8 @@ typedef void (*GLLogFunction) (GLuint program, GLsizei bufsize, GLsizei* length,
     glAttachShader(_program, vertShader);
     glAttachShader(_program, fragShader);
     
-    // Bind attribute locations.
-    // This needs to be done prior to linking.
-    glBindAttribLocation(_program, GLKVertexAttribPosition, "position");
-    glBindAttribLocation(_program, GLKVertexAttribNormal, "normal");
-    glBindAttribLocation(_program, GLKVertexAttribColor, "color");
+    // Override bindAttributes in child classes
+    [self bindAttributes];
     
     // Link program.
     if (![self link]) {
@@ -113,11 +112,6 @@ typedef void (*GLLogFunction) (GLuint program, GLsizei bufsize, GLsizei* length,
         
         return NO;
     }
-    
-    // Get uniform locations.
-    uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX] = glGetUniformLocation(_program, "modelViewProjectionMatrix");
-    uniforms[UNIFORM_NORMAL_MATRIX] = glGetUniformLocation(_program, "normalMatrix");
-    uniforms[UNIFORM_ISOUTLINE_BOOL] = glGetUniformLocation(_program, "isOutline");
     
     // Release vertex and fragment shaders.
     if (vertShader) {
@@ -196,16 +190,14 @@ typedef void (*GLLogFunction) (GLuint program, GLsizei bufsize, GLsizei* length,
 {
     return (GLuint)[attributes indexOfObject:attributeName];
 }
-
+*/
 - (GLuint)uniformIndex:(NSString *)uniformName
 {
     return glGetUniformLocation(_program, [uniformName UTF8String]);
 }
- */
 
-- (GLuint)uniformIndex:(enum uniform)uniformName
+- (void)bindAttributes
 {
-    return uniforms[uniformName];
 }
 
 #pragma mark -
@@ -302,6 +294,52 @@ typedef void (*GLLogFunction) (GLuint program, GLsizei bufsize, GLsizei* length,
     if (_program) {
         glDeleteProgram(_program);
     }
+}
+
+@end
+
+
+
+@implementation MainGLProgram
+
+- (id)init
+{
+    self = [super initWithVertexShaderFilename:@"shader"
+                        fragmentShaderFilename:@"shader"];
+    
+    return self;
+}
+
+- (void)bindAttributes
+{
+    // Bind attribute locations.
+    // This needs to be done prior to linking.
+    glBindAttribLocation(self.program, GLKVertexAttribPosition, "position");
+    glBindAttribLocation(self.program, GLKVertexAttribNormal, "normal");
+    glBindAttribLocation(self.program, GLKVertexAttribColor, "color");
+}
+
+@end
+
+
+
+@implementation StarClusterGLProgram
+
+- (id)init
+{
+    self = [super initWithVertexShaderFilename:@"starcluster"
+                        fragmentShaderFilename:@"starcluster"];
+    
+    return self;
+}
+
+- (void)bindAttributes
+{
+    NSLog(@"StarCluster bindAttributes::A");
+    glBindAttribLocation(self.program, ATTRIB_STAR_VERTEX, "aPosition");
+    glBindAttribLocation(self.program, ATTRIB_STAR_INTENSITY, "aIntensity");
+    glBindAttribLocation(self.program, ATTRIB_STAR_BRIGHTNESS, "aBrightness");
+    NSLog(@"StarCluster bindAttributes::B");
 }
 
 @end

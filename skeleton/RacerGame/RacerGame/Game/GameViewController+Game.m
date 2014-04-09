@@ -244,7 +244,7 @@
     //[_program use];
     [self prepareToDrawWithModelViewMatrix:self.effect.transform.modelviewMatrix
                        andProjectionMatrix:self.effect.transform.projectionMatrix];
-    glUniform1i([self.program uniformIndex:UNIFORM_ISOUTLINE_BOOL], 0);
+    glUniform1i([self.program uniformIndex:@"isOutline"], 0);
     [self.playerShip draw];
 }
 
@@ -271,7 +271,7 @@
     self.effect.transform.modelviewMatrix = modelMatrix;
     [self prepareToDrawWithModelViewMatrix:self.effect.transform.modelviewMatrix
                        andProjectionMatrix:self.effect.transform.projectionMatrix];
-    glUniform1i([self.program uniformIndex:UNIFORM_ISOUTLINE_BOOL], 1);
+    glUniform1i([self.program uniformIndex:@"isOutline"], 1);
     [star.shape draw];
     
     
@@ -287,7 +287,7 @@
     
     [self prepareToDrawWithModelViewMatrix:self.effect.transform.modelviewMatrix
                        andProjectionMatrix:self.effect.transform.projectionMatrix];
-    glUniform1i([self.program uniformIndex:UNIFORM_ISOUTLINE_BOOL], 0);
+    glUniform1i([self.program uniformIndex:@"isOutline"], 0);
     [star.shape draw];
 }
 
@@ -305,7 +305,7 @@
             
             [self prepareToDrawWithModelViewMatrix:self.effect.transform.modelviewMatrix
                                andProjectionMatrix:self.effect.transform.projectionMatrix];
-            glUniform1i([self.program uniformIndex:UNIFORM_ISOUTLINE_BOOL], 0);
+            glUniform1i([self.program uniformIndex:@"isOutline"], 0);
             [aster.pathCurve draw];
         }
     }

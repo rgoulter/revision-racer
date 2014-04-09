@@ -620,6 +620,10 @@ void setVertexDataColor(GLfloat *data, int ptIdx, GLfloat r, GLfloat g, GLfloat 
     
     glDrawArrays(GL_TRIANGLES, 0, _numPoints);
     
+    glDisableVertexAttribArray(GLKVertexAttribPosition);
+    glDisableVertexAttribArray(GLKVertexAttribNormal);
+    glDisableVertexAttribArray(GLKVertexAttribColor);
+    
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 

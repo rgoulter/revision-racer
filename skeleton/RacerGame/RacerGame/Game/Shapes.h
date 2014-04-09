@@ -24,6 +24,9 @@ void setVertexDataColor(GLfloat *data, int ptIdx, GLfloat r, GLfloat g, GLfloat 
 
 @interface BOShape : NSObject
 
+// TODO: Change to initWithVertexData...
+- (void)setVertexData:(GLfloat *)data withNumPoints:(unsigned int)n;
+
 - (void)setUp;
 - (void)tearDown;
 - (void)draw;

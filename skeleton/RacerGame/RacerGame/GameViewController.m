@@ -13,6 +13,8 @@
 #import "Resources.h"
 #import "AppDelegate.h"
 
+#import "BOStarCluster.h"
+
 // Not sure what the best way to do color constants is;
 // SPACEBG is for glClearColor(r, g, b, a);
 #define SPACEBG_R 0.0074f
@@ -43,7 +45,11 @@
 @property UIView *spaceshipDestinationCursor;
 @property UIView *selectedAnswerCursor;
 
+// **TMP**
+@property BOStarCluster *starCluster;
+
 @property GLProgram *program;
+@property GLProgram *starShaderProgram;
 
 @end
 
@@ -95,6 +101,9 @@
     view.drawableDepthFormat = GLKViewDrawableDepthFormat24;
     
     [self setUpGL];
+    
+    _starCluster = [[BOStarCluster alloc] initWithNumPoints:100 inWidth:5 Height:3 Length:10];
+    [_starCluster setUp];
     
     //*
     // add 5x lane asteroids. **HACK**
@@ -397,9 +406,8 @@
 
 - (void)setupGLShader
 {
-    _program = [[GLProgram alloc]
-                initWithVertexShaderFilename:@"shader"
-                      fragmentShaderFilename:@"shader"];
+    _program = [[MainGLProgram alloc] init];
+    _starShaderProgram = [[StarClusterGLProgram alloc] init];
 }
 
 - (void)setUpGL
@@ -459,8 +467,9 @@
     GLKMatrix4 mvProjMatrix = GLKMatrix4Multiply(projMat, mvMat);
     GLKMatrix3 normalMatrix = GLKMatrix3InvertAndTranspose(GLKMatrix4GetMatrix3(mvMat), NULL);
     
-    glUniformMatrix4fv([_program uniformIndex:UNIFORM_MODELVIEWPROJECTION_MATRIX], 1, 0, mvProjMatrix.m);
-    glUniformMatrix3fv([_program uniformIndex:UNIFORM_NORMAL_MATRIX], 1, 0, normalMatrix.m);
+    // **MAGIC**
+    glUniformMatrix4fv([_program uniformIndex:@"modelViewProjectionMatrix"], 1, 0, mvProjMatrix.m);
+    glUniformMatrix3fv([_program uniformIndex:@"normalMatrix"], 1, 0, normalMatrix.m);
 }
 
 
@@ -472,6 +481,13 @@
     
     [self drawGameObjects];
     
+    
+    // draw star cluster
+    [_starShaderProgram use];
+    GLKMatrix4 modelMat = GLKMatrix4Translate(GLKMatrix4Identity, 0, 0, -5);
+    GLKMatrix4 mvProjMatrix = GLKMatrix4Multiply(self.effect.transform.projectionMatrix, modelMat);
+    glUniformMatrix4fv([_starShaderProgram uniformIndex:@"modelViewProjectionMatrix"], 1, 0, mvProjMatrix.m);
+    [_starCluster draw];
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {

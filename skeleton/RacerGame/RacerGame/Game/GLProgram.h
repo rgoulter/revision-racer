@@ -8,6 +8,7 @@
 
 
 
+// Main shader
 // Uniform index.
 enum uniform
 {
@@ -17,6 +18,7 @@ enum uniform
     NUM_UNIFORMS
 };
 
+// Main shader
 // Attribute index.
 enum
 {
@@ -37,8 +39,9 @@ enum
 
 //- (GLuint)attributeIndex:(NSString *)attributeName;
 
-//- (GLuint)uniformIndex:(NSString *)uniformName;
-- (GLuint)uniformIndex:(enum uniform)uniformName;
+- (GLuint)uniformIndex:(NSString *)uniformName;
+
+- (void)bindAttributes;
 
 - (BOOL)link;
 
@@ -46,4 +49,18 @@ enum
 
 - (NSString *)programLog;
 
+@end
+
+
+// **DESIGN**
+// Here we simply sub-class GLProgram as a "simple" way of dealing with
+// different shaders.
+
+
+@interface MainGLProgram : GLProgram
+@end
+
+
+
+@interface StarClusterGLProgram : GLProgram
 @end
