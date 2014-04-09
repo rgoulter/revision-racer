@@ -7,6 +7,7 @@
 //
 
 #import "GameViewController.h"
+#import "GameViewController+MCQ.h"
 #import "Shapes.h"
 #import "Resources.h"
 #import "StarfieldStar.h"
@@ -14,9 +15,6 @@
 #import "AppDelegate.h"
 #import "SpaceShip.h"
 #import "GLProgram.h"
-#import "GameRules.h"
-
-#define NUM_QUESTIONS 5
 
 #define SHOW_DEBUG_CURSORS NO
 #define SHOW_DEBUG_ASTEROID_LANES NO
@@ -27,8 +25,6 @@
 #define SPACEBG_G 0.0031f
 #define SPACEBG_B 0.1862f
 
-#define ANS_UICOLOR [UIColor colorWithRed:(float)52/256 green:(float)94/256 blue:(float)242/256 alpha:1]
-#define QUESTION_UICOLOR [UIColor colorWithRed:1 green:1 blue:1 alpha:1]
 
 
 
@@ -36,19 +32,11 @@
 
 @interface GameViewController ()
 
-// These would be good for QuestionSessionManager
+// MCQ Category properties
 @property id<QuestionUI> questionUI;
 @property NSMutableArray *answerUIs; // type: id<AnswerUI>
-
-// and these, too.
-//@property QuestionState *currentQuestionState;
-
-// **DESIGN** variable type used here??
 @property AnswerState *selectedAnswer;
-
 @property (readonly) AnswerGenerationContext *answerGenerationContext;
-
-@property GameRules *gameRules;
 
 // Game Entities
 @property SpaceShip *playerShip;
@@ -92,54 +80,9 @@
     
     
     
-    // TODO: Initialisation for QuestionSessionManager & other Question Based things.
-    // UI variables
-    _questionUI = _questionLabel;
-    _answerUIs = [NSMutableArray array];
-    
-    
-    // Create AnswerUIs using UICollectionView.
-    for (int i = 0; i < NUM_QUESTIONS; i++) {
-        CGRect ansRect = [self getUIAnswerRectForIdx:i];
-        UIAnswerButton *uiButton = [[UIAnswerButton alloc] initWithFrame:ansRect];
-        
-        //[[uiButton titleLabel] setFont:[UIFont fontWithName:@"Helvitica Neue" size:180]];
-        uiButton.titleLabel.font = [UIFont systemFontOfSize:60];
-        [uiButton addTarget:self action:@selector(answerButtonPressed:) forControlEvents:UIControlEventTouchDown];
-        
-        [self.answersContainerView addSubview:uiButton];
-        [_answerUIs addObject:uiButton];
-    }
-    
-    // Set Colors
-    [_questionUI setTextColor:QUESTION_UICOLOR];
-    for (id<AnswerUI> ansUI in _answerUIs) {
-        [ansUI setTextColor:ANS_UICOLOR];
-    }
-    
-    assert(_answerUIs.count > 0);
-    
-    // Bootstap Answer states
-    // (Not sure the best way to initially set these up).
-    AnswerGenerationContext *tmpAnsGenCtx = self.answerGenerationContext;
-    
-    for (id<AnswerUI> ansUI in _answerUIs) {
-        // This relies on AnswerState not needing GameQn to generate next
-        // AnswerState.
-        AnswerState *ansSt = [[AnswerState alloc] initWithGameQuestion:nil andDuration:_gameRules.questionDuration];
-        ansSt.answerUI = ansUI;
-        ansSt = [ansSt nextAnswerStateFromContext:tmpAnsGenCtx];
-    }
-    
-    [self ensureAnswersUnique];
-    
-    // Bootstrap QuestionState.
-    QuestionState *qnSt = [[QuestionState alloc] initWithGameQuestion:nil andDuration:_gameRules.questionDuration];
-    qnSt.questionUI = _questionUI;
-    qnSt.questionManager = self;
-    qnSt = [qnSt nextQuestionStateFromContext:[[QuestionGenerationContext alloc]
-                                               initWithAnswers:self.currentAnswerStates
-                                               andDuration:_gameRules.questionDuration]];
+    // Setup MCQ logic
+    self.questionUI = _questionLabel;
+    [self setUpMCQ];
     
     
     
@@ -360,15 +303,7 @@
     assert([ansStatesSet containsObject:currQAns]);
 }
 
-- (AnswerGenerationContext*)answerGenerationContext
-{
-    assert(self.flashSet != nil);
-    assert(_gameRules != nil);
-    
-    return [[AnswerGenerationContext alloc]
-            initWithFlashSet:self.flashSet
-            andDuration:_gameRules.questionDuration];
-}
+
 
 - (void)explodeAsteroid:(Asteroid*)aster
 {
@@ -380,170 +315,81 @@
     }
 }
 
-- (void)questionAnswered:(QuestionState*)qnState
+
+
+- (void)explodeAsteroidForSelectedAnswer
 {
-    // This is called when the question has been 'invoked'
-    // (by timeout, or because user selected an answer).
-    
-    NSLog(@"QUESTION ANSWERED");
-    
-    // So we need to:
-    // Check whether correct or not.
-    
-    // **MAGIC** Colors
-    UIColor *correctColor = [UIColor colorWithRed:0.1 green:0.8 blue:0.1 alpha:1];
-    UIColor *wrongColor = [UIColor colorWithRed:0.8 green:0.1 blue:0.1 alpha:1];
-    
-    // This should be abstracted out.
-    // Also assumes only GameQuestion type is text.
-    NSString *selectedAnswerDefnString = _selectedAnswer.question.questionText;
-    NSString *questionDefnString = _questionLabel.associatedQuestionState.question.questionText;
-    
-    if ([selectedAnswerDefnString isEqualToString:questionDefnString]) {
-        [_questionLabel setTextColor:correctColor];
-        [[_selectedAnswer answerUI] setTextColor:correctColor];
-        
-        int i = (int)[_answerUIs indexOfObject:[_selectedAnswer answerUI]];
-        // Explode correct asteroid.
-        // **DESIGN** We could do this cheaper if we associated UIAnswerButton w/ Asteroid..
-        NSLog(@"Explode aster for idx:%d", i);
-        if (_laneAsteroids.count >= i) {
-            // TODO: We need to do this with THREADS in mind;
-            // particularly, creating exploded pieces in a background thread, as well as
-            // selecting the correct asteroid.
-            // (e.g. Race condition, Asteroids in _stars may have been removed already).
-            Asteroid *correctAster = [_laneAsteroids objectAtIndex:i]; // **HACK**, probably correct.
-            [self explodeAsteroid:correctAster]; // EXPENSIVE
-        }
-    } else {
-        [_questionLabel setTextColor:wrongColor];
-        [[_selectedAnswer answerUI] setTextColor:wrongColor];
-        
-        // find the correct answer & asteroid.
-        for (int i = 0; i < _answerUIs.count; i++) {
-            id<AnswerUI> ansUI = [_answerUIs objectAtIndex:i];
-            
-            if ([[ansUI associatedAnswerState].question.questionText
-                 isEqualToString:questionDefnString]) {
-                [ansUI setTextColor:correctColor];
-            }
-        }
-        
-        // Effect for incorrect answer
-        [_playerShip incorrectWobble];
+    int i = (int)[self.answerUIs indexOfObject:[self.selectedAnswer answerUI]];
+    // Explode correct asteroid.
+    // **DESIGN** We could do this cheaper if we associated UIAnswerButton w/ Asteroid..
+    if (_laneAsteroids.count >= i) {
+        // TODO: We need to do this with THREADS in mind;
+        // particularly, creating exploded pieces in a background thread, as well as
+        // selecting the correct asteroid.
+        // (e.g. Race condition, Asteroids in _stars may have been removed already).
+        Asteroid *correctAster = [_laneAsteroids objectAtIndex:i]; // **HACK**, probably correct.
+        [self explodeAsteroid:correctAster]; // EXPENSIVE
     }
-    
-    //[self checkQnAnsStateRep];
-    
-    
-    // Transfer asteroids from _laneAsteroids to _deadAsteroids
-    for (Asteroid *aster in _laneAsteroids) {
-        [aster extendLifeByDuration:2];
-        [_deadAsteroids addObject:aster];
-    }
-    [_laneAsteroids removeAllObjects];
-    
-    
-    // Introduce Delay for the following:
-    [NSTimer scheduledTimerWithTimeInterval:2.0
-                                     target:self
-                                   selector:@selector(updateUIWithNextQuestion)
-                                   userInfo:nil
-                                    repeats:NO];
 }
 
 
 
-- (void)updateUIWithNextQuestion
+- (void)gameQuestionAnsweredEffect
 {
-    // Update the UI appropriately.
-    // If we are "synchronising" all answers, (atm maybe; later, no),
-    // Then: set all answer UIs..
-    
-    NSMutableSet *currentAnswerStates = [NSMutableSet set];
-    
-    for (id<AnswerUI> ansUI in _answerUIs) {
-        AnswerState *ansSt = [ansUI associatedAnswerState];
-        
-        assert(ansSt != nil);
-        
-        AnswerGenerationContext *ansGenCtx = self.answerGenerationContext;
-        
-        do {
-            ansSt = [ansSt nextAnswerStateFromContext:ansGenCtx];
-        } while ([currentAnswerStates containsObject:ansSt]);
-        
-        [currentAnswerStates addObject:ansSt];
+    // Transfer asteroids from self.laneAsteroids to self.deadAsteroids
+    for (Asteroid *aster in _laneAsteroids) {
+        [aster extendLifeByDuration:2];
+        [_deadAsteroids addObject:aster];
     }
     
-    // If we are "staggering" answers,
-    // Then: Change the AnswerUI associated with this Qn *if* we got it correct..
-    //       then new Qn ui.
+    [_laneAsteroids removeAllObjects];
+}
+
+
+
+- (void)gameEffectForCorrectAnswer
+{
+    [self checkQnAnsStateRep];
     
-    // Now set a new qn.
-    QuestionState *nextQnState = [_questionUI associatedQuestionState];
-    QuestionGenerationContext *qnGenCtx = [[QuestionGenerationContext alloc]
-                                           initWithAnswers:[self currentAnswerStates]
-                                           andDuration:_gameRules.questionDuration];
-    nextQnState = [nextQnState nextQuestionStateFromContext:qnGenCtx];
+    [self explodeAsteroidForSelectedAnswer];
     
+    // Tidy up asteroids..
+    // **DEP** The design here is a little strange at this point.
+    // Would prefer more like:
+    //     --> gameQuestionAnsweredEvent(), checkCorrect() -> ..
+    [self gameQuestionAnsweredEffect];
+}
+
+
+- (void)gameEffectForIncorrectAnswer
+{
+    [self checkQnAnsStateRep];
     
+    [self.playerShip incorrectWobble];
     
-    // Set colors
-    UIColor *ansColor = ANS_UICOLOR;
-    UIColor *qnColor = QUESTION_UICOLOR;
-    
-    [_questionUI setTextColor:qnColor];
-    for (id<AnswerUI> ansUI in _answerUIs) {
-        [ansUI setTextColor:ansColor];
-    }
+    // Tidy up asteroids..
+    // **DEP** The design here is a little strange at this point.
+    [self gameQuestionAnsweredEffect];
+}
+
+
+- (void)gameSetUpNewQuestion
+{
+    // We have _laneAsteroids to be only the *current* question's
+    // asteroids.
+    // The previous round of asteroids were changed in |gameEffectFor*Answer|
+    assert(_laneAsteroids.count == 0);
     
     
     // add 5x lane asteroids. **HACK**
-    assert(_laneAsteroids.count == 0);
     for (int i = 0; i < NUM_QUESTIONS; i++) {
         [self addLaneAsteroid:i];
     }
     
     
+    // Move ship back to centre
     if (!_playerShip.isBeingDragged) {
         [_playerShip setDestinationPointOnScreen:[self spaceshipRestPosition] withSpeedPerSecond:SPACESHIP_LOW_SPEED];
-    }
-}
-
-
-
-- (NSArray*)currentAnswerStates {
-    NSMutableArray *result = [NSMutableArray array];
-    
-    for (id<AnswerUI> ansUI in _answerUIs) {
-        [result addObject:[ansUI associatedAnswerState]];
-    }
-    
-    return result;
-}
-
-
-
-- (void)ensureAnswersUnique {
-    // Call this to ensure the AnswerUIs all have different Answers displayed.
-    
-    assert(self.flashSet != nil);
-    
-    NSMutableSet *currentAnswerStates = [NSMutableSet set];
-    
-    for (id<AnswerUI> ansUI in _answerUIs) {
-        AnswerState *ansSt = [ansUI associatedAnswerState];
-        
-        assert(ansSt != nil);
-        
-        AnswerGenerationContext *ansGenCtx = self.answerGenerationContext;
-        
-        while ([currentAnswerStates containsObject:ansSt]) {
-            ansSt = [ansSt nextAnswerStateFromContext:ansGenCtx];
-        }
-        
-        [currentAnswerStates addObject:ansSt];
     }
 }
 
@@ -577,7 +423,7 @@
     // by its own means.
     
     AnswerState *selectedAnswerState = [answerUI associatedAnswerState];
-    _selectedAnswer = selectedAnswerState;
+    self.selectedAnswer = selectedAnswerState;
 
     // update cursor position to center of Answer Button UI.
     UIAnswerButton *ansBtn = (UIAnswerButton*) answerUI;
@@ -678,7 +524,7 @@
         // Check whether we're close to any answer UIs,
         // Set selected answer if so.
         
-        for (UIAnswerButton *uiAnsBtn in _answerUIs) {
+        for (UIAnswerButton *uiAnsBtn in self.answerUIs) {
             // "close enough" = spaceship point in rect of answer
             
             CGRect ansRect = [self.view convertRect:uiAnsBtn.frame
@@ -689,7 +535,7 @@
                 
                 
                 // I forget what to do here.
-                QuestionState *currentQuestionState = [_questionUI associatedQuestionState];
+                QuestionState *currentQuestionState = [self.questionUI associatedQuestionState];
                 [currentQuestionState endState]; // invoke.
                 
                 
@@ -704,14 +550,7 @@
     [self setCursor:_spaceshipDestinationCursor toPoint:_playerShip.destinationPointOnScreen];
 }
 
-- (void)tickGameAnimationStates
-{
-    [[_questionUI associatedQuestionState] tick:self.timeSinceLastUpdate];
-    
-    for (AnswerState *ansSt in self.currentAnswerStates) {
-        [ansSt tick:self.timeSinceLastUpdate];
-    }
-}
+
 
 - (void)update
 {
@@ -934,7 +773,7 @@
 - (CGPoint)worldPointForLaneNum:(NSUInteger)idx
 {
     // for Z = -5.
-    UIAnswerButton *uiAnsBtn = [_answerUIs objectAtIndex:idx];
+    UIAnswerButton *uiAnsBtn = [self.answerUIs objectAtIndex:idx];
     CGPoint uiPt = [self.view convertPoint:uiAnsBtn.center fromView:uiAnsBtn.superview];
     
     return [self worldPointFromPointOnUI:uiPt];

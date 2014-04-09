@@ -15,11 +15,12 @@
 #import "GameQuestion.h"
 #import "QuestionState.h"
 #import "AnswerState.h"
+#import "GameRules.h"
 
 #import "UIQuestionLabel.h"
 #import "UIAnswerButton.h"
 
-@interface GameViewController : GLKViewController <QuestionSessionManager>
+@interface GameViewController : GLKViewController
 
 @property (weak, nonatomic) IBOutlet UIView *answersContainerView;
 
@@ -28,7 +29,17 @@
 
 @property (weak, nonatomic) IBOutlet UIQuestionLabel *questionLabel;
 
+@property (readonly) GameRules *gameRules;
+
 @property FlashSetInfoAttributes *flashSet;
+
+// The following few methods are needed by +MCQ category.
+- (CGRect)getUIAnswerRectForIdx:(uint)idx;
+- (IBAction)answerButtonPressed:(UIButton *)sender;
+- (void)explodeAsteroidForSelectedAnswer;
+- (void)gameEffectForCorrectAnswer;
+- (void)gameEffectForIncorrectAnswer;
+- (void)gameSetUpNewQuestion;
 
 - (void)setUpGL;
 - (void)tearDownGL;
