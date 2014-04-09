@@ -392,7 +392,7 @@
         [_questionLabel setTextColor:correctColor];
         [[_selectedAnswer answerUI] setTextColor:correctColor];
         
-        int i = [_answerUIs indexOfObject:[_selectedAnswer answerUI]];
+        int i = (int)[_answerUIs indexOfObject:[_selectedAnswer answerUI]];
         // Explode correct asteroid.
         // **DESIGN** We could do this cheaper if we associated UIAnswerButton w/ Asteroid..
         NSLog(@"Explode aster for idx:%d", i);
@@ -731,7 +731,7 @@
         [aster tick:self.timeSinceLastUpdate];
     }
     
-    for (int i = [_stars count] - 1; i >= 0; i--) {
+    for (int i = (int)[_stars count] - 1; i >= 0; i--) {
         StarfieldStar *star = [_stars objectAtIndex:i];
         
         if ([star isExpired]) {
@@ -739,7 +739,7 @@
             [_stars removeObjectAtIndex:i];
         }
     }
-    for (int i = [_laneAsteroids count] - 1; i >= 0; i--) {
+    for (int i = (int)[_laneAsteroids count] - 1; i >= 0; i--) {
         // Because _laneAsteroids' lifetime is the same as question duration,
         //  it's likely that the question is answered before this code is.
         // This is here in case we stagger answers?
@@ -753,7 +753,7 @@
             [_deadAsteroids addObject:aster];
         }
     }
-    for (int i = [_deadAsteroids count] - 1; i >= 0; i--) {
+    for (int i = (int)[_deadAsteroids count] - 1; i >= 0; i--) {
         Asteroid *aster = [_deadAsteroids objectAtIndex:i];
         
         if ([aster isExpired]) {
@@ -920,7 +920,7 @@
     return CGPointMake(tmpPt.x * xConst, -tmpPt.y * yConst);
 }
 
-- (CGPoint)worldPointForLaneNum:(int)idx
+- (CGPoint)worldPointForLaneNum:(NSUInteger)idx
 {
     // for Z = -5.
     UIAnswerButton *uiAnsBtn = [_answerUIs objectAtIndex:idx];

@@ -439,7 +439,6 @@ vertexdata* generateAsteroidVertexData(GLfloat vertices[], int indices[])
         // Asteroid-ness, jitter the centrepoint.
         float r1 = (float)(arc4random() % 200 - 100) / 100;
         float r2 = (float)(arc4random() % 200 - 100) / 100;
-        float r3 = (float)(arc4random() % 200 - 100) / 100;
         float k = 0.000000009;
         cenX += r1 * k;
         cenY += r2 * k;
