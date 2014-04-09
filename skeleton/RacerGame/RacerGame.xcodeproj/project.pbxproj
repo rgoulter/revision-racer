@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		02505AEB18F54AA3008F8563 /* GameViewController+Game.m in Sources */ = {isa = PBXBuildFile; fileRef = 02505AEA18F54AA3008F8563 /* GameViewController+Game.m */; };
 		0255045F18F05E3500A984D0 /* GameRules.m in Sources */ = {isa = PBXBuildFile; fileRef = 0255045E18F05E3500A984D0 /* GameRules.m */; };
 		025504AE18F15F4C00A984D0 /* Asteroid.m in Sources */ = {isa = PBXBuildFile; fileRef = 025504AD18F15F4C00A984D0 /* Asteroid.m */; };
 		0262757718E90E6C00CDAA24 /* GameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0262757618E90E6C00CDAA24 /* GameViewController.m */; };
@@ -73,6 +74,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		02505AE918F54AA3008F8563 /* GameViewController+Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "GameViewController+Game.h"; path = "Game/GameViewController+Game.h"; sourceTree = "<group>"; };
+		02505AEA18F54AA3008F8563 /* GameViewController+Game.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "GameViewController+Game.m"; path = "Game/GameViewController+Game.m"; sourceTree = "<group>"; };
 		0255045D18F05E3500A984D0 /* GameRules.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameRules.h; path = RacerGame/Game/GameRules.h; sourceTree = "<group>"; };
 		0255045E18F05E3500A984D0 /* GameRules.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameRules.m; path = RacerGame/Game/GameRules.m; sourceTree = "<group>"; };
 		025504AC18F15F4C00A984D0 /* Asteroid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Asteroid.h; path = RacerGame/Game/Asteroid.h; sourceTree = "<group>"; };
@@ -247,6 +250,8 @@
 				0262757618E90E6C00CDAA24 /* GameViewController.m */,
 				026A8EEF18F502CC0023EC7B /* GameViewController+MCQ.h */,
 				026A8EF018F502CC0023EC7B /* GameViewController+MCQ.m */,
+				02505AE918F54AA3008F8563 /* GameViewController+Game.h */,
+				02505AEA18F54AA3008F8563 /* GameViewController+Game.m */,
 				0262758318E9387900CDAA24 /* GameResultsViewController.h */,
 				0262758418E9387900CDAA24 /* GameResultsViewController.m */,
 			);
@@ -534,6 +539,7 @@
 				D96BA47318E86BB900D29E82 /* SetSelectorViewController.m in Sources */,
 				029E57F118EC1723007EB6E8 /* GameAnimationState.m in Sources */,
 				D96BA50C18E8A73100D29E82 /* FlashSetItem.m in Sources */,
+				02505AEB18F54AA3008F8563 /* GameViewController+Game.m in Sources */,
 				D96BA52F18EB365C00D29E82 /* ActivityModal.m in Sources */,
 				0262758218E91F4F00CDAA24 /* GameQuestion.m in Sources */,
 				02FB32D818ED627E00991ABA /* SpaceShip.m in Sources */,
