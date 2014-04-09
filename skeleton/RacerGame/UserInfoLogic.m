@@ -45,7 +45,7 @@
     //TODO: If session has expired, consider as inactive
     UserInfo* persistentObject = [self getPersistentActiveUser];
     
-    if (!persistentObject || [self hasSessionExpired:persistentObject]) {
+    if (!persistentObject) {
         return nil;
     }
     
@@ -90,16 +90,6 @@
 }
 
 #pragma mark Private methods
--(BOOL)hasSessionExpired:(UserInfo *)userInfo
-{
-    //TODO: What if session expires while playing..
-    NSDate* currentDate = [NSDate date];
-    if ([currentDate compare:userInfo.expiryTimestamp] == NSOrderedAscending) {
-        return NO;
-    } else {
-        return YES;
-    }
-}
 
 -(UserInfo*)getUserInfoForId:(NSString*)userId
 {
@@ -131,7 +121,7 @@
                                               inManagedObjectContext:self.context];
     [fetchRequest setEntity:entity];
     
-    NSPredicate* matchCondition = [NSPredicate predicateWithFormat:@"isActive = %@",@(YES)];
+    NSPredicate* matchCondition = [NSPredicate predicateWithFormat:@"isActive = %@ AND expiryDate > %@",@(YES), [NSDate date]];
     [fetchRequest setPredicate:matchCondition];
     
     NSError *error;
