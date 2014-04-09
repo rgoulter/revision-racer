@@ -27,6 +27,7 @@
 // **DESIGN** variable type used here??
 @property AnswerState *selectedAnswer;
 
+// This gives a linker **WARNING** ?? Look into this.
 @property (readonly) AnswerGenerationContext *answerGenerationContext;
 
 

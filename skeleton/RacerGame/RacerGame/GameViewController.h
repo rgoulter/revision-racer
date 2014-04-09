@@ -17,6 +17,8 @@
 #import "AnswerState.h"
 #import "GameRules.h"
 
+#import "GLProgram.h"
+
 #import "UIQuestionLabel.h"
 #import "UIAnswerButton.h"
 
@@ -37,9 +39,14 @@
 - (CGRect)getUIAnswerRectForIdx:(uint)idx;
 - (IBAction)answerButtonPressed:(UIButton *)sender;
 - (void)explodeAsteroidForSelectedAnswer;
-- (void)gameEffectForCorrectAnswer;
-- (void)gameEffectForIncorrectAnswer;
-- (void)gameSetUpNewQuestion;
+
+// The following few methods are needed by +Game category
+- (void)prepareToDrawWithModelViewMatrix:(GLKMatrix4)mvMat
+                     andProjectionMatrix:(GLKMatrix4)projMat;
+- (CGPoint)spaceshipRestPosition;
+- (CGPoint)worldPointForLaneNum:(NSUInteger)idx;
+- (void)selectAnswerUI:(id<AnswerUI>)answerUI;
+@property (readonly) GLProgram *program;
 
 - (void)setUpGL;
 - (void)tearDownGL;

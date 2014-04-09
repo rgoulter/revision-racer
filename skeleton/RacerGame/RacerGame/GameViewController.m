@@ -8,16 +8,10 @@
 
 #import "GameViewController.h"
 #import "GameViewController+MCQ.h"
+#import "GameViewController+Game.h"
 #import "Shapes.h"
 #import "Resources.h"
-#import "StarfieldStar.h"
-#import "Asteroid.h"
 #import "AppDelegate.h"
-#import "SpaceShip.h"
-#import "GLProgram.h"
-
-#define SHOW_DEBUG_CURSORS NO
-#define SHOW_DEBUG_ASTEROID_LANES NO
 
 // Not sure what the best way to do color constants is;
 // SPACEBG is for glClearColor(r, g, b, a);
@@ -38,8 +32,11 @@
 @property AnswerState *selectedAnswer;
 @property (readonly) AnswerGenerationContext *answerGenerationContext;
 
-// Game Entities
+// Game Category properties
 @property SpaceShip *playerShip;
+@property NSMutableArray *stars;
+@property NSMutableArray *deadAsteroids; // **HACK**
+@property NSMutableArray *laneAsteroids; // **HACK**
 
 // Cursors for Debugging & such.
 @property UIView *spaceshipPositionCursor;
@@ -51,11 +48,6 @@
 @end
 
 @implementation GameViewController {
-    NSMutableArray *_stars;
-    NSMutableArray *_deadAsteroids; // **HACK**
-    NSMutableArray *_laneAsteroids; // **HACK**
-    NSArray *_starShapes;
-    float _timeTillNextAster;
 }
 
 @synthesize context;
@@ -71,12 +63,9 @@
     }
     
     
+    [self setUpGameObjects];
     
-    // Setup Game Entities
     _gameRules = [[GameRules alloc] init];
-    
-    _playerShip = [[SpaceShip alloc] initInView:self.view];
-    [_playerShip setPointOnScreen:[self spaceshipRestPosition]];
     
     
     
@@ -85,52 +74,14 @@
     [self setUpMCQ];
     
     
-    
-    // Setup cursors
-    _spaceshipPositionCursor = [[UIView alloc] initWithFrame:CGRectMake(50, 50, 50, 50)];
-    _spaceshipPositionCursor.layer.cornerRadius = 25;
-    _spaceshipPositionCursor.layer.backgroundColor =
-        [UIColor colorWithRed:1 green:1 blue:0 alpha:0.8].CGColor;
-    [self.view addSubview:_spaceshipPositionCursor];
-    _spaceshipPositionCursor.hidden = !SHOW_DEBUG_CURSORS;
-    
-    _spaceshipDestinationCursor = [[UIView alloc] initWithFrame:CGRectMake(150, 150, 10, 10)];
-    _spaceshipDestinationCursor.layer.cornerRadius = 5;
-    _spaceshipDestinationCursor.layer.backgroundColor =
-        [UIColor colorWithRed:1 green:0 blue:1 alpha:0.5].CGColor;
-    [self.view addSubview:_spaceshipDestinationCursor];
-    _spaceshipDestinationCursor.hidden = !SHOW_DEBUG_CURSORS;
-    
-    _selectedAnswerCursor = [[UIView alloc] initWithFrame:CGRectMake(250, 250, 20, 20)];
-    _selectedAnswerCursor.layer.cornerRadius = 10;
-    _selectedAnswerCursor.layer.backgroundColor =
-        [UIColor colorWithRed:0 green:1 blue:1 alpha:0.3].CGColor;
-    [self.view addSubview:_selectedAnswerCursor];
-    _selectedAnswerCursor.hidden = !SHOW_DEBUG_CURSORS;
-    
+    [self setUpDebugCursors];
     
     
     // Setup Gesture Handlers
-    
-    // Create and initialize a tap gesture
-    UIPanGestureRecognizer *panRecognizer =
-        [[UIPanGestureRecognizer alloc]
-         initWithTarget:_playerShip action:@selector(respondToPanGesture:)];
-    
-    // Add the tap gesture recognizer to the view
-    [self.view addGestureRecognizer:panRecognizer];
-    
-    UITapGestureRecognizer *tapRecognizer =
-        [[UITapGestureRecognizer alloc] initWithTarget:_playerShip action:@selector(respondToTapGesture:)];
-    
-    tapRecognizer.numberOfTapsRequired = 1;
-    [self.view addGestureRecognizer:tapRecognizer];
+    [self setUpGestures];
     
     
     
-    _stars = [[NSMutableArray alloc] init];
-    _deadAsteroids = [[NSMutableArray alloc] init];
-    _laneAsteroids = [[NSMutableArray alloc] init];
     
     self.context = [[EAGLContext alloc]
                     initWithAPI:kEAGLRenderingAPIOpenGLES2];
@@ -143,10 +94,7 @@
     view.context = self.context;
     view.drawableDepthFormat = GLKViewDrawableDepthFormat24;
     
-    _starShapes = @[[[BOCube alloc] init], [[BOIcosahedron alloc] init], [[BODodecahedron alloc] init]];
     [self setUpGL];
-    
-    _timeTillNextAster = 0;
     
     //*
     // add 5x lane asteroids. **HACK**
@@ -171,6 +119,53 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)setUpDebugCursors
+{
+    // Setup cursors
+    _spaceshipPositionCursor = [[UIView alloc] initWithFrame:CGRectMake(50, 50, 50, 50)];
+    _spaceshipPositionCursor.layer.cornerRadius = 25;
+    _spaceshipPositionCursor.layer.backgroundColor =
+        [UIColor colorWithRed:1 green:1 blue:0 alpha:0.8].CGColor;
+    [self.view addSubview:_spaceshipPositionCursor];
+    _spaceshipPositionCursor.hidden = !SHOW_DEBUG_CURSORS;
+    
+    _spaceshipDestinationCursor = [[UIView alloc] initWithFrame:CGRectMake(150, 150, 10, 10)];
+    _spaceshipDestinationCursor.layer.cornerRadius = 5;
+    _spaceshipDestinationCursor.layer.backgroundColor =
+        [UIColor colorWithRed:1 green:0 blue:1 alpha:0.5].CGColor;
+    [self.view addSubview:_spaceshipDestinationCursor];
+    _spaceshipDestinationCursor.hidden = !SHOW_DEBUG_CURSORS;
+    
+    _selectedAnswerCursor = [[UIView alloc] initWithFrame:CGRectMake(250, 250, 20, 20)];
+    _selectedAnswerCursor.layer.cornerRadius = 10;
+    _selectedAnswerCursor.layer.backgroundColor =
+        [UIColor colorWithRed:0 green:1 blue:1 alpha:0.3].CGColor;
+    [self.view addSubview:_selectedAnswerCursor];
+    _selectedAnswerCursor.hidden = !SHOW_DEBUG_CURSORS;
+}
+
+
+
+- (void)setUpGestures
+{
+    // Presumably playerShip can't be nil by the time we setUpGestures?
+    
+    // Create and initialize a tap gesture
+    UIPanGestureRecognizer *panRecognizer =
+        [[UIPanGestureRecognizer alloc]
+         initWithTarget:_playerShip action:@selector(respondToPanGesture:)];
+    
+    // Add the tap gesture recognizer to the view
+    [self.view addGestureRecognizer:panRecognizer];
+    
+    UITapGestureRecognizer *tapRecognizer =
+        [[UITapGestureRecognizer alloc] initWithTarget:_playerShip action:@selector(respondToTapGesture:)];
+    
+    tapRecognizer.numberOfTapsRequired = 1;
+    [self.view addGestureRecognizer:tapRecognizer];
+    
 }
 
 
@@ -305,91 +300,19 @@
 
 
 
-- (void)explodeAsteroid:(Asteroid*)aster
-{
-    NSArray *debris = [aster debrisPieces];
-    [aster tick:INFINITY];
-    
-    for (Asteroid *debrisAster in debris) {
-        [_deadAsteroids addObject:debrisAster];
-    }
-}
-
-
-
 - (void)explodeAsteroidForSelectedAnswer
 {
     int i = (int)[self.answerUIs indexOfObject:[self.selectedAnswer answerUI]];
+    
     // Explode correct asteroid.
     // **DESIGN** We could do this cheaper if we associated UIAnswerButton w/ Asteroid..
-    if (_laneAsteroids.count >= i) {
+    if (self.laneAsteroids.count >= i) {
         // TODO: We need to do this with THREADS in mind;
         // particularly, creating exploded pieces in a background thread, as well as
         // selecting the correct asteroid.
         // (e.g. Race condition, Asteroids in _stars may have been removed already).
-        Asteroid *correctAster = [_laneAsteroids objectAtIndex:i]; // **HACK**, probably correct.
+        Asteroid *correctAster = [self.laneAsteroids objectAtIndex:i]; // **HACK**, probably correct.
         [self explodeAsteroid:correctAster]; // EXPENSIVE
-    }
-}
-
-
-
-- (void)gameQuestionAnsweredEffect
-{
-    // Transfer asteroids from self.laneAsteroids to self.deadAsteroids
-    for (Asteroid *aster in _laneAsteroids) {
-        [aster extendLifeByDuration:2];
-        [_deadAsteroids addObject:aster];
-    }
-    
-    [_laneAsteroids removeAllObjects];
-}
-
-
-
-- (void)gameEffectForCorrectAnswer
-{
-    [self checkQnAnsStateRep];
-    
-    [self explodeAsteroidForSelectedAnswer];
-    
-    // Tidy up asteroids..
-    // **DEP** The design here is a little strange at this point.
-    // Would prefer more like:
-    //     --> gameQuestionAnsweredEvent(), checkCorrect() -> ..
-    [self gameQuestionAnsweredEffect];
-}
-
-
-- (void)gameEffectForIncorrectAnswer
-{
-    [self checkQnAnsStateRep];
-    
-    [self.playerShip incorrectWobble];
-    
-    // Tidy up asteroids..
-    // **DEP** The design here is a little strange at this point.
-    [self gameQuestionAnsweredEffect];
-}
-
-
-- (void)gameSetUpNewQuestion
-{
-    // We have _laneAsteroids to be only the *current* question's
-    // asteroids.
-    // The previous round of asteroids were changed in |gameEffectFor*Answer|
-    assert(_laneAsteroids.count == 0);
-    
-    
-    // add 5x lane asteroids. **HACK**
-    for (int i = 0; i < NUM_QUESTIONS; i++) {
-        [self addLaneAsteroid:i];
-    }
-    
-    
-    // Move ship back to centre
-    if (!_playerShip.isBeingDragged) {
-        [_playerShip setDestinationPointOnScreen:[self spaceshipRestPosition] withSpeedPerSecond:SPACESHIP_LOW_SPEED];
     }
 }
 
@@ -492,10 +415,6 @@
     
     [_playerShip setUp];
     
-    for (BOShape *shape in _starShapes) {
-        [shape setUp];
-    }
-    
     [self setupGLShader];
 }
 
@@ -503,52 +422,11 @@
 {
     [EAGLContext setCurrentContext:self.context];
     
-    for (BOShape *shape in _starShapes) {
-        [shape tearDown];
-    }
-    
     [_playerShip tearDown];
     
     self.effect = nil;
 }
 
-- (void)tickSpaceShip
-{
-    [_playerShip tick:self.timeSinceLastUpdate];
-    
-    // _playerShip.answerHasBeenGiven is used to ensure that the player keeping a
-    // pan-gesture about an answer won't repeatedly keep firing of "answered" events.
-    
-    if (_playerShip.canAnswer &&
-        _playerShip.speed < 10 * self.timeSinceLastUpdate) {
-        // Check whether we're close to any answer UIs,
-        // Set selected answer if so.
-        
-        for (UIAnswerButton *uiAnsBtn in self.answerUIs) {
-            // "close enough" = spaceship point in rect of answer
-            
-            CGRect ansRect = [self.view convertRect:uiAnsBtn.frame
-                                           fromView:uiAnsBtn.superview];
-            
-            if (CGRectContainsPoint(ansRect, _playerShip.pointOnScreen)) {
-                [self selectAnswerUI:uiAnsBtn];
-                
-                
-                // I forget what to do here.
-                QuestionState *currentQuestionState = [self.questionUI associatedQuestionState];
-                [currentQuestionState endState]; // invoke.
-                
-                
-                // Deal with SpaceShip so it doesn't trigger "answers" too frequently.
-                // Consider **DESIGN** here, as it feels hackish.
-                [_playerShip answeredQuestion];
-            }
-        }
-    }
-    
-    [self setCursor:_spaceshipPositionCursor toPoint:_playerShip.pointOnScreen];
-    [self setCursor:_spaceshipDestinationCursor toPoint:_playerShip.destinationPointOnScreen];
-}
 
 
 
@@ -560,69 +438,17 @@
     self.effect.transform.projectionMatrix = projectionMatrix;
     
     
-    
-    // Tick spaceship
-    [self tickSpaceShip];
-    
-    
+    // MCQ component
     // Tick Qn & Answers, etc.
     [self tickGameAnimationStates];
     
     
-    // update stars
-    // **CODEDUPL** **HACK** Forgive me..
-    for (StarfieldStar *star in _stars) {
-        [star tick:self.timeSinceLastUpdate];
-    }
-    for (Asteroid *aster in _deadAsteroids) {
-        [aster tick:self.timeSinceLastUpdate];
-    }
-    for (Asteroid *aster in _laneAsteroids) {
-        [aster tick:self.timeSinceLastUpdate];
-    }
+    // Game component
+    [self tickGameObjects];
     
-    for (int i = (int)[_stars count] - 1; i >= 0; i--) {
-        StarfieldStar *star = [_stars objectAtIndex:i];
-        
-        if ([star isExpired]) {
-            [star tearDown];
-            [_stars removeObjectAtIndex:i];
-        }
-    }
-    for (int i = (int)[_laneAsteroids count] - 1; i >= 0; i--) {
-        // Because _laneAsteroids' lifetime is the same as question duration,
-        //  it's likely that the question is answered before this code is.
-        // This is here in case we stagger answers?
-        Asteroid *aster = [_laneAsteroids objectAtIndex:i];
-        
-        if ([aster isExpired]) {
-            // Do we remove lane asters here?..
-            [_laneAsteroids removeObjectAtIndex:i];
-            
-            NSLog(@"Lane Aster -> Dead Aster, extend");
-            [_deadAsteroids addObject:aster];
-        }
-    }
-    for (int i = (int)[_deadAsteroids count] - 1; i >= 0; i--) {
-        Asteroid *aster = [_deadAsteroids objectAtIndex:i];
-        
-        if ([aster isExpired]) {
-            [aster tearDown];
-            [_deadAsteroids removeObjectAtIndex:i];
-        }
-    }
-    
-    // Create a new asteroid every now and then.
-    /*
-    // Ignore random asteroids for now.
-    _timeTillNextAster -= self.timeSinceLastUpdate;
-    if (_timeTillNextAster < 0) {
-        _timeTillNextAster = 4 / 3 + (arc4random() % 300) / 300;
-        
-        //[self addARandomStar];
-        [self addARandomLaneAsteroid];
-    }
-    // */
+    // Cursors
+    [self setCursor:_spaceshipPositionCursor toPoint:_playerShip.pointOnScreen];
+    [self setCursor:_spaceshipDestinationCursor toPoint:_playerShip.destinationPointOnScreen];
 }
 
 - (void)prepareToDrawWithModelViewMatrix:(GLKMatrix4)mvMat
@@ -637,115 +463,15 @@
     glUniformMatrix3fv([_program uniformIndex:UNIFORM_NORMAL_MATRIX], 1, 0, normalMatrix.m);
 }
 
-- (void)drawSpaceShip
-{
-    // Draws the SpaceShip object (of _playerShip),
-    // using coordinates from self.view.
-    
-    GLKMatrix4 modelMatrix = GLKMatrix4Identity;
-    CGRect viewFrame = self.view.frame;
-    
-    // Move the spaceship "forward" from the screen/camera.
-    modelMatrix = GLKMatrix4Translate(modelMatrix, 0, 0, -5);
-    
-    
-    // Translate the spaceship, corresponding to the point on the screen.
-    // Magic #'s: I have no idea why 6 and 5 work? (4:3 ratio?).
-    //
-    // Since SpaceShip understands its coordinates in terms of TopLeft:(0,0),
-    //  BottomRight:(width,height), we need to scale to map the coordinates about.
-    
-    // Scale to ScreenSize <- WorldSize
-    GLfloat sw = 6 / viewFrame.size.width;
-    GLfloat sh = 5 / viewFrame.size.height;
-    modelMatrix = GLKMatrix4Scale(modelMatrix, sw, -(sh), 1);
-    
-    // Translate, since worldcoord's origin is in center of screen.
-    modelMatrix = GLKMatrix4Translate(modelMatrix, -viewFrame.size.width / 2, -viewFrame.size.height / 2, 0);
-    modelMatrix = [_playerShip transformation:modelMatrix];
-    
-    // Scale to WorldSize <- ScreenSize (inverse of above).
-    modelMatrix = GLKMatrix4Scale(modelMatrix, 1 / (sw), -1 / (sh), 1);
-    
-    
-    // Now draw the spaceship, since the modelviewMatrix has the right position.
-    // **HACK** Awkward hack, check to make sure SpaceShip is drawn the right way. (-z).
-    modelMatrix = GLKMatrix4Scale(modelMatrix, 0.4, 0.4, -0.4); // Scale model down.
-    self.effect.transform.modelviewMatrix = modelMatrix;
-    
-    //[_program use];
-    [self prepareToDrawWithModelViewMatrix:self.effect.transform.modelviewMatrix
-                       andProjectionMatrix:self.effect.transform.projectionMatrix];
-    glUniform1i([_program uniformIndex:UNIFORM_ISOUTLINE_BOOL], 0);
-    [_playerShip draw];
-}
 
-- (void)drawAsteroid:(StarfieldStar*)star
-{
-    // Draw an asteroid with an outline effect
-    // Calculate model view matrix.
-    GLKMatrix4 modelMatrix;
-    GLfloat scale = 0.25;
-    
-    // Draw "Shadow"
-    glDisable(GL_DEPTH_TEST);
-    
-    modelMatrix = GLKMatrix4Identity; //GLKMatrix4Scale(GLKMatrix4Identity, scale, scale, scale);
-    modelMatrix = [star transformation:modelMatrix];
-    
-    // We can scale the object down by applying the scale matrix here.
-    modelMatrix = GLKMatrix4Scale(modelMatrix, scale, scale, scale);
-    
-    modelMatrix = GLKMatrix4Scale(modelMatrix, 1.1, 1.1, 1.1);
-    
-    self.effect.transform.modelviewMatrix = modelMatrix;
-    [self prepareToDrawWithModelViewMatrix:self.effect.transform.modelviewMatrix
-                       andProjectionMatrix:self.effect.transform.projectionMatrix];
-    glUniform1i([_program uniformIndex:UNIFORM_ISOUTLINE_BOOL], 1);
-    [star.shape draw];
-    
-    
-    // Draw "Actual"
-    glEnable(GL_DEPTH_TEST);
-    
-    // We can scale the object down by applying the scale matrix here.
-    modelMatrix = GLKMatrix4Identity; //GLKMatrix4Scale(GLKMatrix4Identity, scale, scale, scale);
-    modelMatrix = [star transformation:modelMatrix];
-    modelMatrix = GLKMatrix4Scale(modelMatrix, scale, scale, scale);
-    
-    self.effect.transform.modelviewMatrix = modelMatrix;
-    
-    [self prepareToDrawWithModelViewMatrix:self.effect.transform.modelviewMatrix
-                       andProjectionMatrix:self.effect.transform.projectionMatrix];
-    glUniform1i([_program uniformIndex:UNIFORM_ISOUTLINE_BOOL], 0);
-    [star.shape draw];
-}
 
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect
 {
     glClearColor(SPACEBG_R, SPACEBG_G, SPACEBG_B, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
-    // TODO: draw stars
-    for (Asteroid *aster in _laneAsteroids) {
-        [self drawAsteroid:aster];
-        
-        // Draw Star  Path
-        if (SHOW_DEBUG_ASTEROID_LANES) {
-            self.effect.transform.modelviewMatrix = GLKMatrix4Identity;
-            
-            [self prepareToDrawWithModelViewMatrix:self.effect.transform.modelviewMatrix
-                               andProjectionMatrix:self.effect.transform.projectionMatrix];
-            glUniform1i([_program uniformIndex:UNIFORM_ISOUTLINE_BOOL], 0);
-            [aster.pathCurve draw];
-        }
-    }
-    for (Asteroid *aster in _deadAsteroids) { // **HACK** **CODEDUPL**
-        [self drawAsteroid:aster];
-    }
+    [self drawGameObjects];
     
-    // draw spaceship
-    [self drawSpaceShip];
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -779,66 +505,6 @@
     return [self worldPointFromPointOnUI:uiPt];
 }
 
-- (void)addLaneAsteroid:(NSUInteger)idx
-{
-    NSLog(@"Generate lane %d aster", (int)idx);
-    Asteroid *asteroid = [[Asteroid alloc] init];
-    
-    asteroid.shape = [[BOAsteroidShape alloc] init];//[_starShapes objectAtIndex:rndShapeIdx];
-    
-    // Find destination point, depending on where the corresponding answer UI is.
-    CGPoint destWorldPt = [self worldPointForLaneNum:idx];
-    float x = destWorldPt.x;
-    float y = destWorldPt.y;
-    
-    float dz = (float)(arc4random() % 100) / 10;
-    
-    [asteroid setStartPositionX:x Y:y Z:-60 + dz];
-    [asteroid setEndPositionX:x Y:y Z:-5];
-    
-    asteroid.duration = _gameRules.questionDuration;
-    
-    
-    // setUp??
-    // TODO: Not sure how it reacts to IF it's called multiple times.
-    [asteroid setUp];
-    
-    [_laneAsteroids addObject:asteroid];
-}
 
-- (void)addARandomLaneAsteroid
-{
-    // Rnd of 5 lanes
-    NSUInteger rndIdx = arc4random() % NUM_QUESTIONS;
-    [self addLaneAsteroid:rndIdx];
-}
-
-- (void)addARandomStar
-{
-    StarfieldStar *star = [[StarfieldStar alloc] init];
-    
-    int rndShapeIdx = arc4random() % 3;
-    star.shape = [_starShapes objectAtIndex:rndShapeIdx];
-    
-    // This depends on the coords
-    float rndX = (float)(arc4random() % 8) - 4;
-    float rndY = (float)(arc4random() % 6) - 3;
-    
-    rndX = 0;
-    rndY = -1;
-    
-    [star setStartPositionX:0 Y:0 Z:-10];
-    [star setStartPositionX:rndX Y:rndY Z:-30];
-    [star setEndPositionX:rndX Y:rndY Z:-5];
-    
-    star.duration = 3;
-    
-    
-    // setUp??
-    // TODO: Not sure how it reacts to IF it's called multiple times.
-    [star setUp];
-    
-    [_stars addObject:star];
-}
 
 @end

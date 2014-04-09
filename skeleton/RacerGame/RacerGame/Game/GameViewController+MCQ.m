@@ -7,6 +7,7 @@
 //
 
 #import "GameViewController+MCQ.h"
+#import "GameViewController+Game.h"
 
 
 
