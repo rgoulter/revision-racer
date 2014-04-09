@@ -330,23 +330,34 @@
 {
     // Because you can never be too sure.
     
-    QuestionState *currQnState = [_questionUI associatedQuestionState];
+    QuestionState *currQnState = [self.questionUI associatedQuestionState];
     
-    NSLog(@"CHECK REP:");
+    // Current correct question
     NSString *currQStr = currQnState.question.questionText;
     NSString *currQAns = [currQnState.question.answers objectAtIndex:0];
-    NSLog(@"Current Qn: %@ = %@", currQStr, currQAns);
-    NSLog(@"Qn UI lbl: %@", ((UIQuestionLabel*)_questionUI).text);
+    
+    NSString *currQnUILabelStr = ((UIQuestionLabel*) self.questionUI).text;
+    
+    assert([currQStr isEqualToString:currQnUILabelStr]);
+    
+    // Check Answers (AnswerState and AnsUIs).
+    assert([self.currentAnswerStates count] == [self.answerUIs count]);
+    
+    NSMutableSet *ansStatesSet = [NSMutableSet set];
+    NSMutableSet *ansUIsSet = [NSMutableSet set];
     
     for (AnswerState *ansSt in self.currentAnswerStates) {
         NSString *ansStr = [ansSt.question.answers objectAtIndex:0];
-        NSLog(@"Answer: %@", ansStr);
+        [ansStatesSet addObject:ansStr];
     }
     
-    NSLog(@"and Ans UIs");
-    for (id<AnswerUI> ansUI in _answerUIs) {
-        NSLog(@"Ans UI: %@", ((UIAnswerButton*)ansUI).titleLabel.text);
+    for (id<AnswerUI> ansUI in self.answerUIs) {
+        NSString *ansStr = ((UIAnswerButton*)ansUI).titleLabel.text;
+        [ansUIsSet addObject:ansStr];
     }
+    
+    assert([ansStatesSet isEqualToSet:ansUIsSet]);
+    assert([ansStatesSet containsObject:currQAns]);
 }
 
 - (AnswerGenerationContext*)answerGenerationContext
