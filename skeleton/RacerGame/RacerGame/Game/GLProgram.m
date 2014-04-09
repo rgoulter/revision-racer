@@ -5,6 +5,10 @@
 
 
 
+GLint uniforms[NUM_UNIFORMS];
+
+
+
 #pragma mark Function Pointer Definitions
 
 typedef void (*GLInfoFunction)(GLuint program, GLenum pname, GLint* params);
@@ -17,13 +21,15 @@ typedef void (*GLLogFunction) (GLuint program, GLsizei bufsize, GLsizei* length,
 
 
 @interface GLProgram()
-{
+/*{ // OLD
     NSMutableArray  *attributes;
     NSMutableArray  *uniforms;
     GLuint          program,
     vertShader,
     fragShader;
-}
+}*/
+
+@property GLuint program;
 
 - (BOOL)compileShader:(GLuint *)shader
                  type:(GLenum)type
@@ -42,57 +48,104 @@ typedef void (*GLLogFunction) (GLuint program, GLsizei bufsize, GLsizei* length,
 
 @implementation GLProgram
 
-
-
 - (id)initWithVertexShaderFilename:(NSString *)vShaderFilename
             fragmentShaderFilename:(NSString *)fShaderFilename
 {
-    if (self = [super init]) {
-        attributes = [[NSMutableArray alloc] init];
-        uniforms = [[NSMutableArray alloc] init];
-        NSString *vertShaderPathname, *fragShaderPathname;
-        program = glCreateProgram();
-        
-        vertShaderPathname = [[NSBundle mainBundle]
-                              pathForResource:vShaderFilename
-                              ofType:@"vsh"];
-        
-        if (![self compileShader:&vertShader
-                            type:GL_VERTEX_SHADER
-                            file:vertShaderPathname]) {
-            NSLog(@"Failed to compile vertex shader");
-        }
-        
-        // Create and compile fragment shader
-        fragShaderPathname = [[NSBundle mainBundle]
-                              pathForResource:fShaderFilename
-                              ofType:@"fsh"];
-        
-        if (![self compileShader:&fragShader
-                            type:GL_FRAGMENT_SHADER
-                            file:fragShaderPathname]) {
-            NSLog(@"Failed to compile fragment shader");
-        }
-        
-        glAttachShader(program, vertShader);
-        glAttachShader(program, fragShader);
+    self = [super init];
+    
+    if (self) {
+        [self loadShaderWithVertexShaderFilename:vShaderFilename
+                          fragmentShaderFilename:fShaderFilename];
     }
     
     return self;
 }
 
-- (BOOL)compileShader:(GLuint *)shader
-                 type:(GLenum)type
-                 file:(NSString *)file
+- (BOOL)loadShaderWithVertexShaderFilename:(NSString *)vShaderFilename
+                   fragmentShaderFilename:(NSString *)fShaderFilename
+{
+    GLuint vertShader, fragShader;
+    NSString *vertShaderPathname, *fragShaderPathname;
+    
+    // Create shader program.
+    _program = glCreateProgram();
+    
+    // Create and compile vertex shader.
+    vertShaderPathname = [[NSBundle mainBundle] pathForResource:vShaderFilename ofType:@"vsh"];
+    if (![self compileShader:&vertShader type:GL_VERTEX_SHADER file:vertShaderPathname]) {
+        NSLog(@"Failed to compile vertex shader");
+        return NO;
+    }
+    
+    // Create and compile fragment shader.
+    fragShaderPathname = [[NSBundle mainBundle] pathForResource:fShaderFilename ofType:@"fsh"];
+    if (![self compileShader:&fragShader type:GL_FRAGMENT_SHADER file:fragShaderPathname]) {
+        NSLog(@"Failed to compile fragment shader");
+        return NO;
+    }
+    
+    // Attach vertex and fragment shaders to program.
+    glAttachShader(_program, vertShader);
+    glAttachShader(_program, fragShader);
+    
+    // Bind attribute locations.
+    // This needs to be done prior to linking.
+    glBindAttribLocation(_program, GLKVertexAttribPosition, "position");
+    glBindAttribLocation(_program, GLKVertexAttribNormal, "normal");
+    glBindAttribLocation(_program, GLKVertexAttribColor, "color");
+    
+    // Link program.
+    if (![self link]) {
+        NSLog(@"Failed to link program: %d", _program);
+        
+        if (vertShader) {
+            glDeleteShader(vertShader);
+            vertShader = 0;
+        }
+        if (fragShader) {
+            glDeleteShader(fragShader);
+            fragShader = 0;
+        }
+        if (_program) {
+            glDeleteProgram(_program);
+            _program = 0;
+        }
+        
+        return NO;
+    }
+    
+    // Get uniform locations.
+    uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX] = glGetUniformLocation(_program, "modelViewProjectionMatrix");
+    uniforms[UNIFORM_NORMAL_MATRIX] = glGetUniformLocation(_program, "normalMatrix");
+    uniforms[UNIFORM_ISOUTLINE_BOOL] = glGetUniformLocation(_program, "isOutline");
+    
+    // Release vertex and fragment shaders.
+    if (vertShader) {
+        glDetachShader(_program, vertShader);
+        glDeleteShader(vertShader);
+    }
+    if (fragShader) {
+        glDetachShader(_program, fragShader);
+        glDeleteShader(fragShader);
+    }
+    
+    return YES;
+}
+
+
+
+
+
+
+
+
+// NEW
+- (BOOL)compileShader:(GLuint *)shader type:(GLenum)type file:(NSString *)file
 {
     GLint status;
     const GLchar *source;
     
-    source =
-    (GLchar *)[[NSString stringWithContentsOfFile:file
-                                         encoding:NSUTF8StringEncoding
-                                            error:nil] UTF8String];
-    
+    source = (GLchar *)[[NSString stringWithContentsOfFile:file encoding:NSUTF8StringEncoding error:nil] UTF8String];
     if (!source) {
         NSLog(@"Failed to load vertex shader");
         return NO;
@@ -102,12 +155,33 @@ typedef void (*GLLogFunction) (GLuint program, GLsizei bufsize, GLsizei* length,
     glShaderSource(*shader, 1, &source, NULL);
     glCompileShader(*shader);
     
+#if defined(DEBUG)
+    GLint logLength;
+    glGetShaderiv(*shader, GL_INFO_LOG_LENGTH, &logLength);
+    if (logLength > 0) {
+        GLchar *log = (GLchar *)malloc(logLength);
+        glGetShaderInfoLog(*shader, logLength, &logLength, log);
+        NSLog(@"Shader compile log:\n%s", log);
+        free(log);
+    }
+#endif
+    
     glGetShaderiv(*shader, GL_COMPILE_STATUS, &status);
-    return status == GL_TRUE;
+    if (status == 0) {
+        glDeleteShader(*shader);
+        return NO;
+    }
+    
+    return YES;
 }
+
+
+
+
 
 #pragma mark -
 
+/*
 - (void)addAttribute:(NSString *)attributeName
 {
     if (![attributes containsObject:attributeName]) {
@@ -125,7 +199,13 @@ typedef void (*GLLogFunction) (GLuint program, GLsizei bufsize, GLsizei* length,
 
 - (GLuint)uniformIndex:(NSString *)uniformName
 {
-    return glGetUniformLocation(program, [uniformName UTF8String]);
+    return glGetUniformLocation(_program, [uniformName UTF8String]);
+}
+ */
+
+- (GLuint)uniformIndex:(enum uniform)uniformName
+{
+    return uniforms[uniformName];
 }
 
 #pragma mark -
@@ -133,22 +213,44 @@ typedef void (*GLLogFunction) (GLuint program, GLsizei bufsize, GLsizei* length,
 - (BOOL)link
 {
     GLint status;
+    glLinkProgram(_program);
     
-    glLinkProgram(program);
-    glValidateProgram(program);
+#if defined(DEBUG)
+    GLint logLength;
+    glGetProgramiv(_program, GL_INFO_LOG_LENGTH, &logLength);
     
-    glGetProgramiv(program, GL_LINK_STATUS, &status);
+    if (logLength > 0) {
+        GLchar *log = (GLchar *)malloc(logLength);
+        glGetProgramInfoLog(_program, logLength, &logLength, log);
+        NSLog(@"Program link log:\n%s", log);
+        free(log);
+    }
+#endif
     
-    if (status == GL_FALSE) {
+    glGetProgramiv(_program, GL_LINK_STATUS, &status);
+    if (status == 0) {
         return NO;
     }
     
-    if (vertShader) {
-        glDeleteShader(vertShader);
+    return YES;
+}
+
+- (BOOL)validateProgram:(GLuint)prog
+{
+    GLint logLength, status;
+    
+    glValidateProgram(prog);
+    glGetProgramiv(prog, GL_INFO_LOG_LENGTH, &logLength);
+    if (logLength > 0) {
+        GLchar *log = (GLchar *)malloc(logLength);
+        glGetProgramInfoLog(prog, logLength, &logLength, log);
+        NSLog(@"Program validate log:\n%s", log);
+        free(log);
     }
     
-    if (fragShader) {
-        glDeleteShader(fragShader);
+    glGetProgramiv(prog, GL_VALIDATE_STATUS, &status);
+    if (status == 0) {
+        return NO;
     }
     
     return YES;
@@ -156,11 +258,12 @@ typedef void (*GLLogFunction) (GLuint program, GLsizei bufsize, GLsizei* length,
 
 - (void)use
 {
-    glUseProgram(program);
+    glUseProgram(_program);
 }
 
 #pragma mark -
 
+// OLD
 - (NSString *)logForOpenGLObject:(GLuint)object
                     infoCallback:(GLInfoFunction)infoFunc
                          logFunc:(GLLogFunction)logFunc
@@ -185,24 +288,9 @@ typedef void (*GLLogFunction) (GLuint program, GLsizei bufsize, GLsizei* length,
     return log;
 }
 
-- (NSString *)vertexShaderLog
-{
-    return [self logForOpenGLObject:vertShader
-                       infoCallback:(GLInfoFunction)&glGetProgramiv
-                            logFunc:(GLLogFunction)&glGetProgramInfoLog];
-    
-}
-
-- (NSString *)fragmentShaderLog
-{
-    return [self logForOpenGLObject:fragShader
-                       infoCallback:(GLInfoFunction)&glGetProgramiv
-                            logFunc:(GLLogFunction)&glGetProgramInfoLog];
-}
-
 - (NSString *)programLog
 {
-    return [self logForOpenGLObject:program 
+    return [self logForOpenGLObject:_program
                        infoCallback:(GLInfoFunction)&glGetProgramiv 
                             logFunc:(GLLogFunction)&glGetProgramInfoLog];
 }
@@ -211,16 +299,9 @@ typedef void (*GLLogFunction) (GLuint program, GLsizei bufsize, GLsizei* length,
 
 - (void)dealloc
 {
-    if (vertShader) {
-        glDeleteShader(vertShader);
-    }
-    
-    if (fragShader) {
-        glDeleteShader(fragShader);
-    }
-    
-    if (program) {
-        glDeleteProgram(program);
+    if (_program) {
+        glDeleteProgram(_program);
     }
 }
+
 @end

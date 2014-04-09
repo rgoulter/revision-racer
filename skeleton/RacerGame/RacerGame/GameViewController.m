@@ -30,25 +30,6 @@
 #define ANS_UICOLOR [UIColor colorWithRed:(float)52/256 green:(float)94/256 blue:(float)242/256 alpha:1]
 #define QUESTION_UICOLOR [UIColor colorWithRed:1 green:1 blue:1 alpha:1]
 
-// Uniform index.
-enum
-{
-    UNIFORM_MODELVIEWPROJECTION_MATRIX,
-    UNIFORM_NORMAL_MATRIX,
-    UNIFORM_ISOUTLINE_BOOL,
-    NUM_UNIFORMS
-};
-GLint uniforms[NUM_UNIFORMS];
-
-// Attribute index.
-enum
-{
-    ATTRIB_VERTEX,
-    ATTRIB_NORMAL,
-    ATTRIB_COLOR,
-    NUM_ATTRIBUTES
-};
-
 
 
 # pragma mark - Initialisation
@@ -77,7 +58,7 @@ enum
 @property UIView *spaceshipDestinationCursor;
 @property UIView *selectedAnswerCursor;
 
-//@property GLProgram *program;
+@property GLProgram *program;
 
 @end
 
@@ -87,8 +68,6 @@ enum
     NSMutableArray *_laneAsteroids; // **HACK**
     NSArray *_starShapes;
     float _timeTillNextAster;
-    
-    GLuint _program;
 }
 
 @synthesize context;
@@ -634,161 +613,13 @@ enum
 
 # pragma mark - OpenGL & GLKit stuff.
 
-- (BOOL)loadShaders
-{
-    GLuint vertShader, fragShader;
-    NSString *vertShaderPathname, *fragShaderPathname;
-    
-    // Create shader program.
-    _program = glCreateProgram();
-    
-    // Create and compile vertex shader.
-    vertShaderPathname = [[NSBundle mainBundle] pathForResource:@"shader" ofType:@"vsh"];
-    if (![self compileShader:&vertShader type:GL_VERTEX_SHADER file:vertShaderPathname]) {
-        NSLog(@"Failed to compile vertex shader");
-        return NO;
-    }
-    
-    // Create and compile fragment shader.
-    fragShaderPathname = [[NSBundle mainBundle] pathForResource:@"shader" ofType:@"fsh"];
-    if (![self compileShader:&fragShader type:GL_FRAGMENT_SHADER file:fragShaderPathname]) {
-        NSLog(@"Failed to compile fragment shader");
-        return NO;
-    }
-    
-    // Attach vertex shader to program.
-    glAttachShader(_program, vertShader);
-    
-    // Attach fragment shader to program.
-    glAttachShader(_program, fragShader);
-    
-    // Bind attribute locations.
-    // This needs to be done prior to linking.
-    glBindAttribLocation(_program, GLKVertexAttribPosition, "position");
-    glBindAttribLocation(_program, GLKVertexAttribNormal, "normal");
-    glBindAttribLocation(_program, GLKVertexAttribColor, "color");
-    
-    // Link program.
-    if (![self linkProgram:_program]) {
-        NSLog(@"Failed to link program: %d", _program);
-        
-        if (vertShader) {
-            glDeleteShader(vertShader);
-            vertShader = 0;
-        }
-        if (fragShader) {
-            glDeleteShader(fragShader);
-            fragShader = 0;
-        }
-        if (_program) {
-            glDeleteProgram(_program);
-            _program = 0;
-        }
-        
-        return NO;
-    }
-    
-    // Get uniform locations.
-    uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX] = glGetUniformLocation(_program, "modelViewProjectionMatrix");
-    uniforms[UNIFORM_NORMAL_MATRIX] = glGetUniformLocation(_program, "normalMatrix");
-    uniforms[UNIFORM_ISOUTLINE_BOOL] = glGetUniformLocation(_program, "isOutline");
-    
-    // Release vertex and fragment shaders.
-    if (vertShader) {
-        glDetachShader(_program, vertShader);
-        glDeleteShader(vertShader);
-    }
-    if (fragShader) {
-        glDetachShader(_program, fragShader);
-        glDeleteShader(fragShader);
-    }
-    
-    return YES;
-}
 
-- (BOOL)compileShader:(GLuint *)shader type:(GLenum)type file:(NSString *)file
-{
-    GLint status;
-    const GLchar *source;
-    
-    source = (GLchar *)[[NSString stringWithContentsOfFile:file encoding:NSUTF8StringEncoding error:nil] UTF8String];
-    if (!source) {
-        NSLog(@"Failed to load vertex shader");
-        return NO;
-    }
-    
-    *shader = glCreateShader(type);
-    glShaderSource(*shader, 1, &source, NULL);
-    glCompileShader(*shader);
-    
-#if defined(DEBUG)
-    GLint logLength;
-    glGetShaderiv(*shader, GL_INFO_LOG_LENGTH, &logLength);
-    if (logLength > 0) {
-        GLchar *log = (GLchar *)malloc(logLength);
-        glGetShaderInfoLog(*shader, logLength, &logLength, log);
-        NSLog(@"Shader compile log:\n%s", log);
-        free(log);
-    }
-#endif
-    
-    glGetShaderiv(*shader, GL_COMPILE_STATUS, &status);
-    if (status == 0) {
-        glDeleteShader(*shader);
-        return NO;
-    }
-    
-    return YES;
-}
-
-- (BOOL)linkProgram:(GLuint)prog
-{
-    GLint status;
-    glLinkProgram(prog);
-    
-#if defined(DEBUG)
-    GLint logLength;
-    glGetProgramiv(prog, GL_INFO_LOG_LENGTH, &logLength);
-    if (logLength > 0) {
-        GLchar *log = (GLchar *)malloc(logLength);
-        glGetProgramInfoLog(prog, logLength, &logLength, log);
-        NSLog(@"Program link log:\n%s", log);
-        free(log);
-    }
-#endif
-    
-    glGetProgramiv(prog, GL_LINK_STATUS, &status);
-    if (status == 0) {
-        return NO;
-    }
-    
-    return YES;
-}
-
-- (BOOL)validateProgram:(GLuint)prog
-{
-    GLint logLength, status;
-    
-    glValidateProgram(prog);
-    glGetProgramiv(prog, GL_INFO_LOG_LENGTH, &logLength);
-    if (logLength > 0) {
-        GLchar *log = (GLchar *)malloc(logLength);
-        glGetProgramInfoLog(prog, logLength, &logLength, log);
-        NSLog(@"Program validate log:\n%s", log);
-        free(log);
-    }
-    
-    glGetProgramiv(prog, GL_VALIDATE_STATUS, &status);
-    if (status == 0) {
-        return NO;
-    }
-    
-    return YES;
-}
 
 - (void)setupGLShader
 {
-    [self loadShaders];
+    _program = [[GLProgram alloc]
+                initWithVertexShaderFilename:@"shader"
+                      fragmentShaderFilename:@"shader"];
 }
 
 - (void)setUpGL
@@ -947,13 +778,13 @@ enum
 - (void)prepareToDrawWithModelViewMatrix:(GLKMatrix4)mvMat
                      andProjectionMatrix:(GLKMatrix4)projMat
 {
-    glUseProgram(_program);
+    [_program use];
     
     GLKMatrix4 mvProjMatrix = GLKMatrix4Multiply(projMat, mvMat);
     GLKMatrix3 normalMatrix = GLKMatrix3InvertAndTranspose(GLKMatrix4GetMatrix3(mvMat), NULL);
     
-    glUniformMatrix4fv(uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX], 1, 0, mvProjMatrix.m);
-    glUniformMatrix3fv(uniforms[UNIFORM_NORMAL_MATRIX], 1, 0, normalMatrix.m);
+    glUniformMatrix4fv([_program uniformIndex:UNIFORM_MODELVIEWPROJECTION_MATRIX], 1, 0, mvProjMatrix.m);
+    glUniformMatrix3fv([_program uniformIndex:UNIFORM_NORMAL_MATRIX], 1, 0, normalMatrix.m);
 }
 
 - (void)drawSpaceShip
@@ -995,7 +826,7 @@ enum
     //[_program use];
     [self prepareToDrawWithModelViewMatrix:self.effect.transform.modelviewMatrix
                        andProjectionMatrix:self.effect.transform.projectionMatrix];
-    glUniform1i(uniforms[UNIFORM_ISOUTLINE_BOOL], 0);
+    glUniform1i([_program uniformIndex:UNIFORM_ISOUTLINE_BOOL], 0);
     [_playerShip draw];
 }
 
@@ -1020,7 +851,7 @@ enum
     self.effect.transform.modelviewMatrix = modelMatrix;
     [self prepareToDrawWithModelViewMatrix:self.effect.transform.modelviewMatrix
                        andProjectionMatrix:self.effect.transform.projectionMatrix];
-    glUniform1i(uniforms[UNIFORM_ISOUTLINE_BOOL], 1);
+    glUniform1i([_program uniformIndex:UNIFORM_ISOUTLINE_BOOL], 1);
     [star.shape draw];
     
     
@@ -1036,7 +867,7 @@ enum
     
     [self prepareToDrawWithModelViewMatrix:self.effect.transform.modelviewMatrix
                        andProjectionMatrix:self.effect.transform.projectionMatrix];
-    glUniform1i(uniforms[UNIFORM_ISOUTLINE_BOOL], 0);
+    glUniform1i([_program uniformIndex:UNIFORM_ISOUTLINE_BOOL], 0);
     [star.shape draw];
 }
 
@@ -1055,7 +886,7 @@ enum
             
             [self prepareToDrawWithModelViewMatrix:self.effect.transform.modelviewMatrix
                                andProjectionMatrix:self.effect.transform.projectionMatrix];
-            glUniform1i(uniforms[UNIFORM_ISOUTLINE_BOOL], 0);
+            glUniform1i([_program uniformIndex:UNIFORM_ISOUTLINE_BOOL], 0);
             [aster.pathCurve draw];
         }
     }
