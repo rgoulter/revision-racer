@@ -238,6 +238,19 @@
 			name = "BO Shapes";
 			sourceTree = "<group>";
 		};
+		02505B0118F6A042008F8563 /* Shader Logic */ = {
+			isa = PBXGroup;
+			children = (
+				0280A1E518EEE4B0006B50B4 /* GLProgram.h */,
+				0280A1E618EEE4B0006B50B4 /* GLProgram.m */,
+				0280A1E818EEE6FF006B50B4 /* shader.vsh */,
+				0280A1EA18EEE70E006B50B4 /* shader.fsh */,
+				02505AEF18F57801008F8563 /* starcluster.vsh */,
+				02505AF118F57819008F8563 /* starcluster.fsh */,
+			);
+			name = "Shader Logic";
+			sourceTree = "<group>";
+		};
 		0262757818E90EE500CDAA24 /* Game Logic */ = {
 			isa = PBXGroup;
 			children = (
@@ -264,18 +277,13 @@
 			isa = PBXGroup;
 			children = (
 				02505AF318F69515008F8563 /* BO Shapes */,
-				0280A1E518EEE4B0006B50B4 /* GLProgram.h */,
-				0280A1E618EEE4B0006B50B4 /* GLProgram.m */,
+				02505B0118F6A042008F8563 /* Shader Logic */,
 				029E57F818EC1AEF007EB6E8 /* StarfieldStar.h */,
 				029E57F918EC1AEF007EB6E8 /* StarfieldStar.m */,
 				02FB32D618ED627E00991ABA /* SpaceShip.h */,
 				02FB32D718ED627E00991ABA /* SpaceShip.m */,
-				0280A1E818EEE6FF006B50B4 /* shader.vsh */,
-				0280A1EA18EEE70E006B50B4 /* shader.fsh */,
 				025504AC18F15F4C00A984D0 /* Asteroid.h */,
 				025504AD18F15F4C00A984D0 /* Asteroid.m */,
-				02505AEF18F57801008F8563 /* starcluster.vsh */,
-				02505AF118F57819008F8563 /* starcluster.fsh */,
 			);
 			name = 3D;
 			sourceTree = "<group>";
