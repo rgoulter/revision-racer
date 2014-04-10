@@ -257,7 +257,6 @@
     //[_program use];
     [self prepareToDrawWithModelViewMatrix:self.effect.transform.modelviewMatrix
                        andProjectionMatrix:self.effect.transform.projectionMatrix];
-    glUniform1i([self.program uniformIndex:@"isOutline"], 0);
     [self.playerShip draw];
 }
 
@@ -318,7 +317,6 @@
             
             [self prepareToDrawWithModelViewMatrix:self.effect.transform.modelviewMatrix
                                andProjectionMatrix:self.effect.transform.projectionMatrix];
-            glUniform1i([self.program uniformIndex:@"isOutline"], 0);
             [aster.pathCurve draw];
         }
     }

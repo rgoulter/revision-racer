@@ -15,11 +15,11 @@ void main()
 {
     if (!isOutline) {
         vec3 eyeNormal = normalize(normalMatrix * normal);
-        vec3 lightPosition = vec3(0.0, 0.0, 1.0);
+        vec3 lightPosition = vec3(0.0, 0.0, 4.0);
     
         float nDotVP = max(0.0, dot(eyeNormal, normalize(lightPosition)));
     
-        colorVarying = vec4(color, 1) * nDotVP;
+        colorVarying = vec4(color, 1) * nDotVP * 0.5 + vec4(color, 1) * 0.5;
     } else {
         colorVarying = vec4(0, 0, 0, 1);
     }
