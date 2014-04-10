@@ -121,7 +121,7 @@
                                               inManagedObjectContext:self.context];
     [fetchRequest setEntity:entity];
     
-    NSPredicate* matchCondition = [NSPredicate predicateWithFormat:@"isActive = %@ AND expiryDate > %@",@(YES), [NSDate date]];
+    NSPredicate* matchCondition = [NSPredicate predicateWithFormat:@"isActive = %@ AND expiryTimestamp > %@",@(YES), [NSDate date]];
     [fetchRequest setPredicate:matchCondition];
     
     NSError *error;
