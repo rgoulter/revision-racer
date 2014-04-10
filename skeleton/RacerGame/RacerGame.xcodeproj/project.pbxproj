@@ -11,6 +11,10 @@
 		02505AEE18F571A1008F8563 /* BOStarCluster.m in Sources */ = {isa = PBXBuildFile; fileRef = 02505AED18F571A1008F8563 /* BOStarCluster.m */; };
 		02505AF018F57801008F8563 /* starcluster.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 02505AEF18F57801008F8563 /* starcluster.vsh */; };
 		02505AF218F57819008F8563 /* starcluster.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 02505AF118F57819008F8563 /* starcluster.fsh */; };
+		02505AF618F6957F008F8563 /* BOShape.m in Sources */ = {isa = PBXBuildFile; fileRef = 02505AF518F6957F008F8563 /* BOShape.m */; };
+		02505AF918F69624008F8563 /* BOIcosahedron.m in Sources */ = {isa = PBXBuildFile; fileRef = 02505AF818F69624008F8563 /* BOIcosahedron.m */; };
+		02505AFC18F69781008F8563 /* BODodecahedron.m in Sources */ = {isa = PBXBuildFile; fileRef = 02505AFB18F69781008F8563 /* BODodecahedron.m */; };
+		02505B0018F698BB008F8563 /* BOAsteroidShape.m in Sources */ = {isa = PBXBuildFile; fileRef = 02505AFF18F698BB008F8563 /* BOAsteroidShape.m */; };
 		0255045F18F05E3500A984D0 /* GameRules.m in Sources */ = {isa = PBXBuildFile; fileRef = 0255045E18F05E3500A984D0 /* GameRules.m */; };
 		025504AE18F15F4C00A984D0 /* Asteroid.m in Sources */ = {isa = PBXBuildFile; fileRef = 025504AD18F15F4C00A984D0 /* Asteroid.m */; };
 		0262757718E90E6C00CDAA24 /* GameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0262757618E90E6C00CDAA24 /* GameViewController.m */; };
@@ -83,6 +87,15 @@
 		02505AED18F571A1008F8563 /* BOStarCluster.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BOStarCluster.m; path = RacerGame/Game/BOStarCluster.m; sourceTree = "<group>"; };
 		02505AEF18F57801008F8563 /* starcluster.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = starcluster.vsh; sourceTree = "<group>"; };
 		02505AF118F57819008F8563 /* starcluster.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = starcluster.fsh; sourceTree = "<group>"; };
+		02505AF418F6957F008F8563 /* BOShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BOShape.h; path = RacerGame/Game/BOShape.h; sourceTree = "<group>"; };
+		02505AF518F6957F008F8563 /* BOShape.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BOShape.m; path = RacerGame/Game/BOShape.m; sourceTree = "<group>"; };
+		02505AF718F69624008F8563 /* BOIcosahedron.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BOIcosahedron.h; path = RacerGame/Game/BOIcosahedron.h; sourceTree = "<group>"; };
+		02505AF818F69624008F8563 /* BOIcosahedron.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BOIcosahedron.m; path = RacerGame/Game/BOIcosahedron.m; sourceTree = "<group>"; };
+		02505AFA18F69781008F8563 /* BODodecahedron.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BODodecahedron.h; path = RacerGame/Game/BODodecahedron.h; sourceTree = "<group>"; };
+		02505AFB18F69781008F8563 /* BODodecahedron.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BODodecahedron.m; path = RacerGame/Game/BODodecahedron.m; sourceTree = "<group>"; };
+		02505AFD18F69865008F8563 /* BOShape_Color.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BOShape_Color.h; path = RacerGame/Game/BOShape_Color.h; sourceTree = "<group>"; };
+		02505AFE18F698BB008F8563 /* BOAsteroidShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BOAsteroidShape.h; path = RacerGame/Game/BOAsteroidShape.h; sourceTree = "<group>"; };
+		02505AFF18F698BB008F8563 /* BOAsteroidShape.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BOAsteroidShape.m; path = RacerGame/Game/BOAsteroidShape.m; sourceTree = "<group>"; };
 		0255045D18F05E3500A984D0 /* GameRules.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameRules.h; path = RacerGame/Game/GameRules.h; sourceTree = "<group>"; };
 		0255045E18F05E3500A984D0 /* GameRules.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameRules.m; path = RacerGame/Game/GameRules.m; sourceTree = "<group>"; };
 		025504AC18F15F4C00A984D0 /* Asteroid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Asteroid.h; path = RacerGame/Game/Asteroid.h; sourceTree = "<group>"; };
@@ -201,6 +214,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		02505AF318F69515008F8563 /* BO Shapes */ = {
+			isa = PBXGroup;
+			children = (
+				0262757918E90F4400CDAA24 /* Shapes.h */,
+				0262757A18E90F4400CDAA24 /* Shapes.m */,
+				02505AF418F6957F008F8563 /* BOShape.h */,
+				02505AF518F6957F008F8563 /* BOShape.m */,
+				02505AFD18F69865008F8563 /* BOShape_Color.h */,
+				02505AFA18F69781008F8563 /* BODodecahedron.h */,
+				02505AFB18F69781008F8563 /* BODodecahedron.m */,
+				02505AF718F69624008F8563 /* BOIcosahedron.h */,
+				02505AF818F69624008F8563 /* BOIcosahedron.m */,
+				02505AFE18F698BB008F8563 /* BOAsteroidShape.h */,
+				02505AFF18F698BB008F8563 /* BOAsteroidShape.m */,
+				02505AEC18F571A1008F8563 /* BOStarCluster.h */,
+				02505AED18F571A1008F8563 /* BOStarCluster.m */,
+				02FB32DA18EDA9FF00991ABA /* BOCurve.h */,
+				02FB32DB18EDA9FF00991ABA /* BOCurve.m */,
+				0280A1EC18EF1087006B50B4 /* SpaceShipShape.h */,
+				0280A1ED18EF1087006B50B4 /* SpaceShipShape.m */,
+			);
+			name = "BO Shapes";
+			sourceTree = "<group>";
+		};
 		0262757818E90EE500CDAA24 /* Game Logic */ = {
 			isa = PBXGroup;
 			children = (
@@ -226,22 +263,15 @@
 		02FB32D918EDA9C400991ABA /* 3D */ = {
 			isa = PBXGroup;
 			children = (
+				02505AF318F69515008F8563 /* BO Shapes */,
 				0280A1E518EEE4B0006B50B4 /* GLProgram.h */,
 				0280A1E618EEE4B0006B50B4 /* GLProgram.m */,
-				0262757918E90F4400CDAA24 /* Shapes.h */,
-				0262757A18E90F4400CDAA24 /* Shapes.m */,
-				02505AEC18F571A1008F8563 /* BOStarCluster.h */,
-				02505AED18F571A1008F8563 /* BOStarCluster.m */,
 				029E57F818EC1AEF007EB6E8 /* StarfieldStar.h */,
 				029E57F918EC1AEF007EB6E8 /* StarfieldStar.m */,
 				02FB32D618ED627E00991ABA /* SpaceShip.h */,
 				02FB32D718ED627E00991ABA /* SpaceShip.m */,
-				02FB32DA18EDA9FF00991ABA /* BOCurve.h */,
-				02FB32DB18EDA9FF00991ABA /* BOCurve.m */,
 				0280A1E818EEE6FF006B50B4 /* shader.vsh */,
 				0280A1EA18EEE70E006B50B4 /* shader.fsh */,
-				0280A1EC18EF1087006B50B4 /* SpaceShipShape.h */,
-				0280A1ED18EF1087006B50B4 /* SpaceShipShape.m */,
 				025504AC18F15F4C00A984D0 /* Asteroid.h */,
 				025504AD18F15F4C00A984D0 /* Asteroid.m */,
 				02505AEF18F57801008F8563 /* starcluster.vsh */,
@@ -534,6 +564,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				02505AF618F6957F008F8563 /* BOShape.m in Sources */,
 				D96BA52318E92F1700D29E82 /* FlashSetInfoAttributes.m in Sources */,
 				D9B229FC18DB1F1800DDBA11 /* MainMenuViewController.m in Sources */,
 				D9B229F618DB1F1800DDBA11 /* AppDelegate.m in Sources */,
@@ -547,6 +578,7 @@
 				025504AE18F15F4C00A984D0 /* Asteroid.m in Sources */,
 				0255045F18F05E3500A984D0 /* GameRules.m in Sources */,
 				D96BA51B18E8B87B00D29E82 /* FlashSetInfo.m in Sources */,
+				02505AF918F69624008F8563 /* BOIcosahedron.m in Sources */,
 				029E580918EC6507007EB6E8 /* UIQuestionLabel.m in Sources */,
 				D991E56318EDB129003A4801 /* UserInfoLogic.m in Sources */,
 				D96BA47318E86BB900D29E82 /* SetSelectorViewController.m in Sources */,
@@ -567,7 +599,9 @@
 				0280A1E718EEE4B0006B50B4 /* GLProgram.m in Sources */,
 				D991E56018ED5E69003A4801 /* FlashSetItemAttributes.m in Sources */,
 				0280A1EE18EF1087006B50B4 /* SpaceShipShape.m in Sources */,
+				02505B0018F698BB008F8563 /* BOAsteroidShape.m in Sources */,
 				02A30C8B18ECF9A6005F7ED7 /* QuestionState.m in Sources */,
+				02505AFC18F69781008F8563 /* BODodecahedron.m in Sources */,
 				029E57F718EC17B2007EB6E8 /* AnswerState.m in Sources */,
 				026A8EF118F502CC0023EC7B /* GameViewController+MCQ.m in Sources */,
 				D96BA51518E8A9A900D29E82 /* UserInfoAttributes.m in Sources */,
