@@ -253,34 +253,29 @@ static dispatch_queue_t asteroidDispatchQueue;
     
     NSMutableArray *result = [NSMutableArray array];
     
-    dispatch_queue_t calculateQueue = dispatch_queue_create("nus.cs3217.group06.asteroidcreate",
-                                                            DISPATCH_QUEUE_CONCURRENT);
+    float *d = data->data;
     
     // Make a tetrahedron from every triangle;
     // Therefore, from every 3 points.
-    
-    int n = data->numPoints / 3;
-    vertexdata **resultArr = (vertexdata**) malloc(sizeof(struct vertexdata *) * n);
-    
-    dispatch_apply(n, calculateQueue, ^(size_t i){
-        float *d = data->data + i * 3 * VBO_NUMCOLS;
+    for (int i = 0; i < data->numPoints; i += 3) {
+        // **HACK** b/c creating these shapes is expensive,
+        // we should do the creation of *all* the pieces in a different thread.
+        // It's cheaper, however, to just only create some proportion of them.
         float rnd = (float)(arc4random() % 100) / 100;
         
-        if (YES || rnd < 0.3) {
+        if (rnd < 0.3) {
             vertexdata *tetData = createTetrahedronFromTriangle(d);
-            //BOAsteroidShape *tetShape = [[BOAsteroidShape alloc] initWithData:tetData];
-            //[result addObject:tetShape];
-            resultArr[i] = tetData;
+            BOAsteroidShape *tetShape = [[BOAsteroidShape alloc] initWithData:tetData];
+            [result addObject:tetShape];
         }
-    });
-    
-    for (int i = 0; i < n; i++) {
-        [result addObject:[[BOAsteroidShape alloc] initWithData:resultArr[i]]];
+        
+        // point to next triangle
+        d += 3 * VBO_NUMCOLS;
     }
-    
-    free(resultArr);
     
     return [NSArray arrayWithArray:result];
 }
+
+
 
 @end
