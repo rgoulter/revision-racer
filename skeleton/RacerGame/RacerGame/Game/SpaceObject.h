@@ -36,6 +36,8 @@
 - (void)setUp;
 - (void)tearDown;
 
+- (void)addEffect:(AnimatedEffect*)effect;
+
 - (void)tick:(NSTimeInterval)timeSinceLastUpdate;
 
 - (GLKMatrix4)transformation:(GLKMatrix4)mat;

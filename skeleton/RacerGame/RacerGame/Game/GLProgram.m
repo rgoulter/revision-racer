@@ -200,6 +200,10 @@ typedef void (*GLLogFunction) (GLuint program, GLsizei bufsize, GLsizei* length,
 {
 }
 
+- (void)useDefaultUniformValues
+{
+}
+
 #pragma mark -
 
 - (BOOL)link
@@ -317,6 +321,12 @@ typedef void (*GLLogFunction) (GLuint program, GLsizei bufsize, GLsizei* length,
     glBindAttribLocation(self.program, GLKVertexAttribPosition, "position");
     glBindAttribLocation(self.program, GLKVertexAttribNormal, "normal");
     glBindAttribLocation(self.program, GLKVertexAttribColor, "color");
+}
+
+- (void)useDefaultUniformValues
+{
+    glUniform1i([self uniformIndex:@"isOutline"], 0);
+    glUniform1f([self uniformIndex:@"alpha"], 1);
 }
 
 @end

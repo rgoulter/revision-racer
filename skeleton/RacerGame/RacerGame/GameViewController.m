@@ -463,6 +463,7 @@
                      andProjectionMatrix:(GLKMatrix4)projMat
 {
     [_program use];
+    [_program useDefaultUniformValues];
     
     GLKMatrix4 mvProjMatrix = GLKMatrix4Multiply(projMat, mvMat);
     GLKMatrix3 normalMatrix = GLKMatrix3InvertAndTranspose(GLKMatrix4GetMatrix3(mvMat), NULL);

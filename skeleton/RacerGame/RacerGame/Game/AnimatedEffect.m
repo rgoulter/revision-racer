@@ -328,4 +328,45 @@
 
 @implementation ShaderUniformEffect
 
+- (id)initWithDuration:(float)duration
+{
+    self = [super initWithDuration:duration];
+    
+    if (self) {
+        
+    }
+    
+    return self;
+}
+
+- (void)apply {
+    
+}
+
+@end
+
+
+
+@implementation FadeOutEffect {
+    GLuint _uniform;
+}
+
+- (id)initForUniform:(GLuint)uniform WithDuration:(float)duration
+{
+    self = [super initWithDuration:duration];
+    
+    if (self) {
+        _uniform = uniform;
+    }
+    
+    return self;
+}
+
+- (void)apply
+{
+    float t = self.age / self.duration; // between (0, 1).
+    
+    glUniform1f(_uniform, 1 - t);
+}
+
 @end

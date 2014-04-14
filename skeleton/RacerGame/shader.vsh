@@ -10,6 +10,7 @@ uniform mat4 modelViewProjectionMatrix;
 uniform mat3 normalMatrix;
 
 uniform bool isOutline;
+uniform float alpha;
 
 void main()
 {
@@ -19,9 +20,9 @@ void main()
     
         float nDotVP = max(0.0, dot(eyeNormal, normalize(lightPosition)));
     
-        colorVarying = vec4(color, 1) * nDotVP * 0.5 + vec4(color, 1) * 0.5;
+        colorVarying = vec4(color, alpha) * nDotVP * 0.5 + vec4(color, alpha) * 0.5;
     } else {
-        colorVarying = vec4(0, 0, 0, 1);
+        colorVarying = vec4(0, 0, 0, alpha);
     }
     
     gl_Position = modelViewProjectionMatrix * position;

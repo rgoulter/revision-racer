@@ -15,6 +15,7 @@ enum uniform
     UNIFORM_MODELVIEWPROJECTION_MATRIX,
     UNIFORM_NORMAL_MATRIX,
     UNIFORM_ISOUTLINE_BOOL,
+    UNIFORM_ALPHA_FLOAT,
     NUM_UNIFORMS
 };
 
@@ -40,6 +41,8 @@ enum
 //- (GLuint)attributeIndex:(NSString *)attributeName;
 
 - (GLuint)uniformIndex:(NSString *)uniformName;
+
+- (void)useDefaultUniformValues;
 
 - (void)bindAttributes;
 

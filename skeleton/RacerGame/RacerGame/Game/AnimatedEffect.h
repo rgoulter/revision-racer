@@ -77,4 +77,14 @@
 
 @interface ShaderUniformEffect : AnimatedEffect
 
+- (id)initWithDuration:(float)duration;
+
+- (void)apply;
+
+@end
+
+@interface FadeOutEffect : ShaderUniformEffect
+
+- (id)initForUniform:(GLuint)uniform WithDuration:(float)duration;
+
 @end

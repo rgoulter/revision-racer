@@ -38,14 +38,7 @@
         _uniformEffects = [NSMutableArray array];
         
         for (AnimatedEffect *effect in effects) {
-            if ([effect isKindOfClass:[TransformationEffect class]]) {
-                [_transformEffects addObject:effect];
-            } else if ([effect isKindOfClass:[ShaderUniformEffect class]]) {
-                [_uniformEffects addObject:effect];
-            } else {
-                // All effects should be one or the other.
-                assert(false);
-            }
+            [self addEffect:effect];
         }
     }
     
@@ -92,12 +85,28 @@
 
 
 
+- (void)addEffect:(AnimatedEffect*)effect
+{
+    if ([effect isKindOfClass:[TransformationEffect class]]) {
+        [_transformEffects addObject:effect];
+    } else if ([effect isKindOfClass:[ShaderUniformEffect class]]) {
+        assert(_uniformEffects != nil);
+        [_uniformEffects addObject:effect];
+        assert(_uniformEffects.count > 0);
+    } else {
+        // All effects should be one or the other.
+        assert(false);
+    }
+}
+
+
+
 - (void)draw
 {
-    // transform?
-    // atm, transformation w/ GLKit is handled in the
-    // GLKViewController whatever, since that's where the
-    // .modelViewMatrix can be accessed. :/
+    // Set the effect uniforms here. (Slightly awkward **DESIGN**).
+    for (ShaderUniformEffect *effect in _uniformEffects) {
+        [effect apply];
+    }
     
     [_shape draw];
 }
@@ -108,15 +117,32 @@
 {
     _age += timeSinceLastUpdate;
     
-    // TODO: Tick all effects..
     [self.path tick:timeSinceLastUpdate];
     
+    
+    // Tick effects, remove the ones which have expired.
     for (TransformationEffect *effect in _transformEffects) {
         [effect tick:timeSinceLastUpdate];
     }
     
     for (ShaderUniformEffect *effect in _uniformEffects) {
         [effect tick:timeSinceLastUpdate];
+    }
+    
+    [self removeExpiredEffectsFrom:_transformEffects];
+    [self removeExpiredEffectsFrom:_uniformEffects];
+}
+
+
+
+- (void)removeExpiredEffectsFrom:(NSMutableArray*)array
+{
+    for (int i = (int)array.count - 1; i >= 0; i--) {
+        AnimatedEffect *effect = [array objectAtIndex:i];
+        
+        if (effect.isExpired) {
+            [array removeObjectAtIndex:i];
+        }
     }
 }
 

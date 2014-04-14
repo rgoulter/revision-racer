@@ -40,8 +40,15 @@
     NSArray *debris = [aster debrisPieces];
     [aster tick:INFINITY];
     
+    NSLog(@"Program Uniform idx for alpha: %d", [self.program uniformIndex:@"alpha"]);
+    
     for (Asteroid *debrisAster in debris) {
         [self.deadAsteroids addObject:debrisAster];
+        
+        // **MAGIC** debris duration is 1.5 seconds.
+        [debrisAster addEffect:[[FadeOutEffect alloc]
+                                initForUniform:[self.program uniformIndex:@"alpha"]
+                                WithDuration:1.5]];
     }
 }
 
@@ -284,7 +291,7 @@
     [self prepareToDrawWithModelViewMatrix:self.effect.transform.modelviewMatrix
                        andProjectionMatrix:self.effect.transform.projectionMatrix];
     glUniform1i([self.program uniformIndex:@"isOutline"], 1);
-    [star.shape draw];
+    [star draw];
     
     
     // Draw "Actual"
@@ -300,7 +307,7 @@
     [self prepareToDrawWithModelViewMatrix:self.effect.transform.modelviewMatrix
                        andProjectionMatrix:self.effect.transform.projectionMatrix];
     glUniform1i([self.program uniformIndex:@"isOutline"], 0);
-    [star.shape draw];
+    [star draw];
 }
 
 
@@ -333,6 +340,8 @@
     
     for (SpaceObject *star in self.stars) {
         assert([star.shape isKindOfClass:[BOStarCluster class]]);
+        
+        [self.starShaderProgram useDefaultUniformValues];
         
         GLKMatrix4 modelMat = [star transformation:GLKMatrix4Identity];
         GLKMatrix4 mvProjMatrix = GLKMatrix4Multiply(self.effect.transform.projectionMatrix, modelMat);
