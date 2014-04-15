@@ -68,6 +68,7 @@
 		D9B22A0F18DB1F1800DDBA11 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D9B22A0D18DB1F1800DDBA11 /* InfoPlist.strings */; };
 		D9B22A1118DB1F1800DDBA11 /* RacerGameTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D9B22A1018DB1F1800DDBA11 /* RacerGameTests.m */; };
 		D9EB9B9E18FD601F004AA081 /* ActivityModal.m in Sources */ = {isa = PBXBuildFile; fileRef = D9EB9B9D18FD601F004AA081 /* ActivityModal.m */; };
+		D9EB9BA118FD7E00004AA081 /* FlashSetSummary.xib in Resources */ = {isa = PBXBuildFile; fileRef = D9EB9BA018FD7E00004AA081 /* FlashSetSummary.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -185,6 +186,7 @@
 		D9B22A0E18DB1F1800DDBA11 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D9B22A1018DB1F1800DDBA11 /* RacerGameTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RacerGameTests.m; sourceTree = "<group>"; };
 		D9EB9B9D18FD601F004AA081 /* ActivityModal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityModal.m; sourceTree = "<group>"; };
+		D9EB9BA018FD7E00004AA081 /* FlashSetSummary.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FlashSetSummary.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -359,6 +361,7 @@
 		D96BA52418EAFE2400D29E82 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				D9EB9B9F18FD7DCE004AA081 /* FlashSetSummary */,
 				D96BA52A18EB328400D29E82 /* ActivityModal */,
 				D96BA52518EAFEB300D29E82 /* SetSelectionTableItem.xib */,
 				D96BA52718EB038100D29E82 /* SetSelectionTableItem.h */,
@@ -469,6 +472,14 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		D9EB9B9F18FD7DCE004AA081 /* FlashSetSummary */ = {
+			isa = PBXGroup;
+			children = (
+				D9EB9BA018FD7E00004AA081 /* FlashSetSummary.xib */,
+			);
+			name = FlashSetSummary;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -551,6 +562,7 @@
 				D96BA52C18EB32AE00D29E82 /* ActivityModal.xib in Resources */,
 				D9B229F018DB1F1800DDBA11 /* InfoPlist.strings in Resources */,
 				D9B229F918DB1F1800DDBA11 /* Main.storyboard in Resources */,
+				D9EB9BA118FD7E00004AA081 /* FlashSetSummary.xib in Resources */,
 				0280A1E918EEE6FF006B50B4 /* shader.vsh in Resources */,
 				02505AF218F57819008F8563 /* starcluster.fsh in Resources */,
 				D96BA52618EAFEB300D29E82 /* SetSelectionTableItem.xib in Resources */,
