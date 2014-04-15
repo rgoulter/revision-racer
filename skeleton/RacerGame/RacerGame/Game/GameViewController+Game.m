@@ -89,6 +89,12 @@
     
     [self.playerShip incorrectWobble];
     
+    FlashEffect *flash = [[FlashEffect alloc]
+                          initForUniform:[self.program uniformIndex:@"alpha"]
+                            WithDuration:2.0
+                               AndPeriod:0.6];
+    [self.playerShip addEffect:flash];
+    
     // Tidy up asteroids..
     // **DEP** The design here is a little strange at this point.
     [self gameQuestionAnsweredEffect];

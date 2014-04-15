@@ -38,7 +38,8 @@
 
 - (id)initInView:(UIView *)v
 {
-    self = [super init];
+    BOShape *spaceshipShape = [[BOSpaceShipShape alloc] init];
+    self = [super initWithShape:spaceshipShape Path:nil andEffects:nil];
     
     if (self) {
         _view = v;
@@ -46,10 +47,6 @@
         _pointOnScreen = CGPointMake(0, 0);
         _destinationPointOnScreen = CGPointMake(0, 0);
         _deltaPositionVector = CGPointMake(0, 0);
-        
-        // GLKit Logic.
-        // For shape, let's use our own cube.
-        _shape = [[BOSpaceShipShape alloc] init];
         
         _distTillCanNextAnswer = -1;
     }
@@ -66,7 +63,6 @@
 - (void)answeredQuestion
 {
     // **MAGIC** (particularly since this is 'independent' of screen size).
-    NSLog(@"ANSWERED QN");
     _distTillCanNextAnswer = 100;
 }
 
@@ -84,23 +80,11 @@
     self.speedPerSecond = sp;
 }
 
-- (void)setUp
-{
-    [_shape setUp];
-}
-
-- (void)tearDown
-{
-    [_shape tearDown];
-}
-
-- (void)draw
-{
-    [_shape draw];
-}
-
 - (void)tick:(NSTimeInterval)timeSinceLastUpdate
 {
+    [super tick:timeSinceLastUpdate];
+    
+    
     // Aim for "destination"
     CGPoint relDestination = CGPointMake(_destinationPointOnScreen.x - _pointOnScreen.x,
                                          _destinationPointOnScreen.y - _pointOnScreen.y);
@@ -147,7 +131,6 @@
 
 - (void)incorrectWobble
 {
-    NSLog(@"Spaceship wobble");
     int sign = (arc4random() % 10 < 5) ? +1 : -1;
     _rotDZ = sign * 2 * M_PI;
 }

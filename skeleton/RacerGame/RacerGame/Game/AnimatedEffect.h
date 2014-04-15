@@ -88,3 +88,9 @@
 - (id)initForUniform:(GLuint)uniform WithDuration:(float)duration;
 
 @end
+
+@interface FlashEffect : ShaderUniformEffect
+
+- (id)initForUniform:(GLuint)uniform WithDuration:(float)duration AndPeriod:(float)period;
+
+@end

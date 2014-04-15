@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import "Shapes.h"
+#import "SpaceObject.h"
 
 // **GAMERULE** SpaceShip Speed:
 // High Speed for: whenever user taps, drags, clicks button..
@@ -17,7 +18,7 @@
 #define SPACESHIP_HIGH_SPEED 1200
 #define SPACESHIP_LOW_SPEED 600
 
-@interface SpaceShip : NSObject
+@interface SpaceShip : SpaceObject
 
 // "can answer" = in a state which input is acceptable.
 // (e.g. is not moving quickly, has moved since last..).
@@ -28,8 +29,6 @@
 @property CGPoint destinationPointOnScreen;
 
 @property float speedPerSecond;
-
-@property (readonly) BOShape *shape;
 
 @property (readonly) CGPoint deltaPositionVector; // change in position
 @property (readonly) CGFloat speed; // speed on screen
@@ -46,12 +45,6 @@
 
 // Start a wobble effect for an incorrect answer
 - (void)incorrectWobble;
-
-- (void)setUp;
-- (void)tearDown;
-- (void)draw;
-- (void)tick:(NSTimeInterval)timeSinceLastUpdate;
-- (GLKMatrix4)transformation:(GLKMatrix4)mat;
 
 - (void)respondToPanGesture:(UIPanGestureRecognizer*)recog;
 - (void)respondToTapGesture:(UITapGestureRecognizer*)recog;

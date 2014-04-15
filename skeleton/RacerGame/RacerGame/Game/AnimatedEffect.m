@@ -370,3 +370,38 @@
 }
 
 @end
+
+
+
+@implementation FlashEffect {
+    GLuint _uniform;
+    float _period;
+}
+
+- (id)initForUniform:(GLuint)uniform WithDuration:(float)duration AndPeriod:(float)period
+{
+    self = [super initWithDuration:duration];
+    
+    if (self) {
+        _uniform = uniform;
+        _period = period;
+    }
+    
+    return self;
+}
+
+- (void)apply
+{
+    float t = self.age / self.duration; // between (0, 1).
+    
+    // period = 2, duration = 4. So, halfway = t == 0.5 => full "period"
+    // period = 2 duration = 6, so t ~~ 0.3 => full "period"
+    float y = sinf(2 * M_PI * t * self.duration / _period); //  * _period / self.duration
+    
+    float highAlpha = 0.8f;
+    float lowAlpha = 0.3f;
+    
+    glUniform1f(_uniform, y > 0 ? lowAlpha : highAlpha);
+}
+
+@end
