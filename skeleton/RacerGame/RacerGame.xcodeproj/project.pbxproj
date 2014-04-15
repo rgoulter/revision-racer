@@ -49,7 +49,6 @@
 		D96BA52618EAFEB300D29E82 /* SetSelectionTableItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = D96BA52518EAFEB300D29E82 /* SetSelectionTableItem.xib */; };
 		D96BA52918EB038100D29E82 /* SetSelectionTableItem.m in Sources */ = {isa = PBXBuildFile; fileRef = D96BA52818EB038100D29E82 /* SetSelectionTableItem.m */; };
 		D96BA52C18EB32AE00D29E82 /* ActivityModal.xib in Resources */ = {isa = PBXBuildFile; fileRef = D96BA52B18EB32AE00D29E82 /* ActivityModal.xib */; };
-		D96BA52F18EB365C00D29E82 /* ActivityModal.m in Sources */ = {isa = PBXBuildFile; fileRef = D96BA52E18EB365C00D29E82 /* ActivityModal.m */; };
 		D991E55D18ED4A32003A4801 /* Resources.m in Sources */ = {isa = PBXBuildFile; fileRef = D991E55C18ED4A32003A4801 /* Resources.m */; };
 		D991E56018ED5E69003A4801 /* FlashSetItemAttributes.m in Sources */ = {isa = PBXBuildFile; fileRef = D991E55F18ED5E69003A4801 /* FlashSetItemAttributes.m */; };
 		D991E56318EDB129003A4801 /* UserInfoLogic.m in Sources */ = {isa = PBXBuildFile; fileRef = D991E56218EDB129003A4801 /* UserInfoLogic.m */; };
@@ -68,6 +67,7 @@
 		D9B22A0718DB1F1800DDBA11 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9B229E918DB1F1800DDBA11 /* UIKit.framework */; };
 		D9B22A0F18DB1F1800DDBA11 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D9B22A0D18DB1F1800DDBA11 /* InfoPlist.strings */; };
 		D9B22A1118DB1F1800DDBA11 /* RacerGameTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D9B22A1018DB1F1800DDBA11 /* RacerGameTests.m */; };
+		D9EB9B9E18FD601F004AA081 /* ActivityModal.m in Sources */ = {isa = PBXBuildFile; fileRef = D9EB9B9D18FD601F004AA081 /* ActivityModal.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -157,7 +157,6 @@
 		D96BA52818EB038100D29E82 /* SetSelectionTableItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetSelectionTableItem.m; sourceTree = "<group>"; };
 		D96BA52B18EB32AE00D29E82 /* ActivityModal.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ActivityModal.xib; sourceTree = "<group>"; };
 		D96BA52D18EB365C00D29E82 /* ActivityModal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityModal.h; sourceTree = "<group>"; };
-		D96BA52E18EB365C00D29E82 /* ActivityModal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityModal.m; sourceTree = "<group>"; };
 		D991E55B18ED4A32003A4801 /* Resources.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Resources.h; sourceTree = "<group>"; };
 		D991E55C18ED4A32003A4801 /* Resources.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Resources.m; sourceTree = "<group>"; };
 		D991E55E18ED5E69003A4801 /* FlashSetItemAttributes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlashSetItemAttributes.h; sourceTree = "<group>"; };
@@ -185,6 +184,7 @@
 		D9B22A0C18DB1F1800DDBA11 /* RacerGameTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "RacerGameTests-Info.plist"; sourceTree = "<group>"; };
 		D9B22A0E18DB1F1800DDBA11 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D9B22A1018DB1F1800DDBA11 /* RacerGameTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RacerGameTests.m; sourceTree = "<group>"; };
+		D9EB9B9D18FD601F004AA081 /* ActivityModal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityModal.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -370,9 +370,9 @@
 		D96BA52A18EB328400D29E82 /* ActivityModal */ = {
 			isa = PBXGroup;
 			children = (
+				D9EB9B9D18FD601F004AA081 /* ActivityModal.m */,
 				D96BA52B18EB32AE00D29E82 /* ActivityModal.xib */,
 				D96BA52D18EB365C00D29E82 /* ActivityModal.h */,
-				D96BA52E18EB365C00D29E82 /* ActivityModal.m */,
 			);
 			name = ActivityModal;
 			sourceTree = "<group>";
@@ -593,7 +593,6 @@
 				029E57F118EC1723007EB6E8 /* GameAnimationState.m in Sources */,
 				D96BA50C18E8A73100D29E82 /* FlashSetItem.m in Sources */,
 				02505AEB18F54AA3008F8563 /* GameViewController+Game.m in Sources */,
-				D96BA52F18EB365C00D29E82 /* ActivityModal.m in Sources */,
 				0262758218E91F4F00CDAA24 /* GameQuestion.m in Sources */,
 				02FB32D818ED627E00991ABA /* SpaceShip.m in Sources */,
 				029E580618EC64AF007EB6E8 /* UIAnswerButton.m in Sources */,
@@ -608,6 +607,7 @@
 				D991E56018ED5E69003A4801 /* FlashSetItemAttributes.m in Sources */,
 				0280A1EE18EF1087006B50B4 /* SpaceShipShape.m in Sources */,
 				02505B0018F698BB008F8563 /* BOAsteroidShape.m in Sources */,
+				D9EB9B9E18FD601F004AA081 /* ActivityModal.m in Sources */,
 				02A30C8B18ECF9A6005F7ED7 /* QuestionState.m in Sources */,
 				02505AFC18F69781008F8563 /* BODodecahedron.m in Sources */,
 				029E57F718EC17B2007EB6E8 /* AnswerState.m in Sources */,

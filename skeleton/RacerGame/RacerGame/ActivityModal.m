@@ -9,9 +9,9 @@
 #import "ActivityModal.h"
 
 @interface ActivityModal ()
-
 @property (strong, nonatomic) IBOutlet UILabel *activityText;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *indicator;
+@property (strong, nonatomic) IBOutlet UIView *visibleRect;
 
 @end
 
@@ -26,6 +26,7 @@
         // Initialization code
         CGPoint center = CGPointMake(frame.size.width/2, frame.size.height/2);
         self.center = center;
+        self.visibleRect.layer.cornerRadius = 10.0;
         [self.indicator startAnimating];
     }
     return self;

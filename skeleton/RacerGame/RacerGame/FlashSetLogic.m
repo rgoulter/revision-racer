@@ -107,6 +107,7 @@
         }
         persistableFlashSetItem.term = eachCard.term;
         persistableFlashSetItem.definition = eachCard.definition;
+        //TODO: Perhaps not add another item to the set if it already has one?!
         [persistentFlashSet addHasCardsObject:persistableFlashSetItem];
     }
     
