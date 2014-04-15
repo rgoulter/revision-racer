@@ -471,6 +471,8 @@
     // **MAGIC**
     glUniformMatrix4fv([_program uniformIndex:@"modelViewProjectionMatrix"], 1, 0, mvProjMatrix.m);
     glUniformMatrix3fv([_program uniformIndex:@"normalMatrix"], 1, 0, normalMatrix.m);
+    
+    glUniform3f([_program uniformIndex:@"backgroundColor"], SPACEBG_R,  SPACEBG_G,  SPACEBG_B);
 }
 
 

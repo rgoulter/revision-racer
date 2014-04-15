@@ -11,6 +11,7 @@ uniform mat3 normalMatrix;
 
 uniform bool isOutline;
 uniform float alpha;
+uniform vec3 backgroundColor;
 
 void main()
 {
@@ -20,10 +21,15 @@ void main()
     
         float nDotVP = max(0.0, dot(eyeNormal, normalize(lightPosition)));
     
-        colorVarying = vec4(color, alpha) * nDotVP * 0.5 + vec4(color, alpha) * 0.5;
+        colorVarying = vec4(color, 1) * nDotVP * 0.5 + vec4(color, 1) * 0.5;
     } else {
-        colorVarying = vec4(0, 0, 0, alpha);
+        colorVarying = vec4(0, 0, 0, 1);
     }
+    
+    // For a nicer "fade-out" effect,
+    // blend the color with the background based on the
+    // somewhat mis-named "alpha" uniform.
+    colorVarying = alpha * colorVarying + (1.0 - alpha) * vec4(backgroundColor, 1);
     
     gl_Position = modelViewProjectionMatrix * position;
 }
