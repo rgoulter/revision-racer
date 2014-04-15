@@ -13,6 +13,7 @@
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *indicator;
 @property (strong, nonatomic) IBOutlet UIView *visibleRect;
 
+
 @end
 
 @implementation ActivityModal
@@ -41,6 +42,7 @@
 {
     [self.activityText setText:text];
 }
+
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.

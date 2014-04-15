@@ -22,6 +22,7 @@
 @property (strong, nonatomic) IBOutlet UITableView *setTable;
 @property (strong, nonatomic) NSArray* listOfUserSets;
 @property (strong, nonatomic) FlashSetInfoAttributes* selectedSetForGame;
+@property (strong, nonatomic) ActivityModal* statusModal;
 @end
 
 @implementation SetSelectorViewController
@@ -52,6 +53,7 @@
     
     
     [self.setTable setRowHeight:item.bounds.size.height];
+    
     // Do any additional setup after loading the view.
 }
 
@@ -65,16 +67,31 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (IBAction)signInUser:(id)sender {
-    //Check if user is signed in
-    //TODO: Read Quizlet API for expiring tokens/codes to initiate sign-ins
-    
-    
+- (void)initiateLogin
+{
     QuizletAPI* quizletApi = [QuizletAPI quizletApi];
     quizletApi.delegate = self;
     [quizletApi initiateLogin];
 }
 
+- (IBAction)signInUser:(id)sender {
+    //Check if user is signed in
+    //TODO: Read Quizlet API for expiring tokens/codes to initiate sign-ins
+    [self.statusModal setText:@"Logging in to Quizlet.."];
+    [self.view addSubview:self.statusModal];
+    
+    [self performSelector:@selector(initiateLogin) withObject:nil afterDelay:2];
+}
+
+#pragma mark - Getters
+- (ActivityModal *)statusModal
+{
+    if (!_statusModal) {
+        _statusModal = [[ActivityModal alloc] initWithFrame:self.view.frame];
+    }
+    
+    return _statusModal;
+}
 
 #pragma mark - Navigation
 
@@ -95,6 +112,14 @@
     }
 }
 
+- (void)downloadAllFlashSets:(UserInfoAttributes*)userInfo
+{
+    self.listOfUserSets = [[FlashSetLogic singleton] downloadAllSetsForUserId:userInfo];
+    [self.statusModal removeFromSuperview];
+    
+    [self.setTable reloadData];
+}
+
 #pragma mark - QuizletLoginDelegate methods
 -(void)successfullyLoggedInForUserID:(UserInfoAttributes *)userInfo
 {
@@ -102,9 +127,8 @@
     NSLog(@"Actually reached the delegate at destination");
     NSLog(@"Expiry date : %@", userInfo.expiryTimestamp);
     
-    self.listOfUserSets = [[FlashSetLogic singleton] downloadAllSetsForUserId:userInfo];
-    
-    [self.setTable reloadData];
+    [self.statusModal setText:@"Downloading your flash sets.."];
+    [self performSelector:@selector(downloadAllFlashSets:) withObject:userInfo afterDelay:2];
 }
 
 - (IBAction)beginGameBtnPressed:(UIButton *)sender {
@@ -117,13 +141,7 @@
 #pragma mark UITableViewDelegate methods
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    //self.selectedSetForGame = self.listOfUserSets[[indexPath item]];
-    
-    ActivityModal* modal = [[ActivityModal alloc] initWithFrame:self.view.frame];
-    
-    [modal setText:@"Loading some shit"];
-    [self.view addSubview:modal];
+    self.selectedSetForGame = self.listOfUserSets[[indexPath item]];
 }
 
 #pragma mark UITableViewDataSource delegate methods

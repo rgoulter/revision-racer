@@ -6,15 +6,15 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view alpha="0.5" contentMode="scaleToFill" id="oi3-Ro-fjN" customClass="ActivityModal">
+        <view autoresizesSubviews="NO" alpha="0.5" contentMode="scaleToFill" id="oi3-Ro-fjN" customClass="ActivityModal">
             <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="t0N-5L-wGc">
+                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="t0N-5L-wGc">
                     <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
-                        <view alpha="0.5" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EX4-qd-57M">
+                        <view alpha="0.5" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EX4-qd-57M">
                             <rect key="frame" x="391" y="286" width="241" height="197"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
@@ -35,16 +35,10 @@
                         </view>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="768" id="XER-wu-Ikl"/>
-                        <constraint firstAttribute="centerY" secondItem="EX4-qd-57M" secondAttribute="centerY" constant="-0.5" id="eXW-wx-1wb"/>
-                        <constraint firstAttribute="centerX" secondItem="EX4-qd-57M" secondAttribute="centerX" constant="0.5" id="jAi-Kd-qsy"/>
-                        <constraint firstAttribute="width" constant="1024" id="zHK-Rw-3g2"/>
-                    </constraints>
                 </view>
             </subviews>
             <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
-            <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="activityText" destination="Ew0-qk-iFy" id="Ebj-0Z-B4E"/>
                 <outlet property="indicator" destination="Stg-Dt-EhK" id="yFE-Gd-qP4"/>
