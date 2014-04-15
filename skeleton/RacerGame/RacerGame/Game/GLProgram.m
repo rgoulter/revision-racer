@@ -349,6 +349,7 @@ typedef void (*GLLogFunction) (GLuint program, GLsizei bufsize, GLsizei* length,
     glBindAttribLocation(self.program, ATTRIB_STAR_VERTEX, "aPosition");
     glBindAttribLocation(self.program, ATTRIB_STAR_INTENSITY, "aIntensity");
     glBindAttribLocation(self.program, ATTRIB_STAR_BRIGHTNESS, "aBrightness");
+    glBindAttribLocation(self.program, ATTRIB_STAR_THICKNESS, "aThickness");
     NSLog(@"StarCluster bindAttributes::B");
 }
 

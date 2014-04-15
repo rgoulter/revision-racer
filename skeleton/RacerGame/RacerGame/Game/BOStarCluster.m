@@ -9,8 +9,8 @@
 #import "BOStarCluster.h"
 
 // We have 5 columns per star;
-// x, y, z as well as "intensity" and "traansparency".
-#define STAR_NUM_COLS 5
+// x, y, z as well as "intensity", "transparency", and "thickness".
+#define STAR_NUM_COLS 6
 
 // related S/O question
 // http://gamedev.stackexchange.com/questions/11095/opengl-es-2-0-point-sprites-size
@@ -38,14 +38,17 @@
             float x = ((float)(arc4random() % 100) / 100) - 0.5;
             float y = ((float)(arc4random() % 100) / 100) - 0.5;
             float z = ((float)(arc4random() % 100) / 100) - 0.5;
-            float u = (float)(arc4random() % 100) / 100;
-            float v = (float)(arc4random() % 100) / 100; // brightness?
+            float brightness = (float)(arc4random() % 100) / 100;
+            float intensity = (float)(arc4random() % 100) / 100; // brightness?
+            
+            float thickness = 1.0 + (float)(arc4random() % 100) / 100;
             
             _vertexData[STAR_NUM_COLS * i + 0] = x * w;
             _vertexData[STAR_NUM_COLS * i + 1] = y * h;
             _vertexData[STAR_NUM_COLS * i + 2] = z * l;
-            _vertexData[STAR_NUM_COLS * i + 3] = u;
-            _vertexData[STAR_NUM_COLS * i + 4] = v;
+            _vertexData[STAR_NUM_COLS * i + 3] = brightness;
+            _vertexData[STAR_NUM_COLS * i + 4] = intensity;
+            _vertexData[STAR_NUM_COLS * i + 5] = thickness;
         }
         
         _numPoints = n;
@@ -81,6 +84,7 @@
     glEnableVertexAttribArray(ATTRIB_STAR_VERTEX);
     glEnableVertexAttribArray(ATTRIB_STAR_BRIGHTNESS);
     glEnableVertexAttribArray(ATTRIB_STAR_INTENSITY);
+    glEnableVertexAttribArray(ATTRIB_STAR_THICKNESS);
     
     // we need the *4 since each GLfloat is 4-bytes.
     // ergo, "stride" of 6*4 is because 4*{x,y,z,nx,ny,nz}.
@@ -88,12 +92,14 @@
     glVertexAttribPointer(ATTRIB_STAR_VERTEX, 3, GL_FLOAT, GL_FALSE, STAR_NUM_COLS * sizeof(GLfloat), BUFFER_OFFSET(0));
     glVertexAttribPointer(ATTRIB_STAR_BRIGHTNESS, 1, GL_FLOAT, GL_FALSE, STAR_NUM_COLS * sizeof(GLfloat), BUFFER_OFFSET(12));
     glVertexAttribPointer(ATTRIB_STAR_INTENSITY, 1, GL_FLOAT, GL_FALSE, STAR_NUM_COLS * sizeof(GLfloat), BUFFER_OFFSET(16));
+    glVertexAttribPointer(ATTRIB_STAR_THICKNESS, 1, GL_FLOAT, GL_FALSE, STAR_NUM_COLS * sizeof(GLfloat), BUFFER_OFFSET(20));
     
     glDrawArrays(GL_POINTS, 0, _numPoints);
     
     glDisableVertexAttribArray(ATTRIB_STAR_VERTEX);
     glDisableVertexAttribArray(ATTRIB_STAR_BRIGHTNESS);
     glDisableVertexAttribArray(ATTRIB_STAR_INTENSITY);
+    glDisableVertexAttribArray(ATTRIB_STAR_THICKNESS);
     
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }

@@ -351,7 +351,9 @@
         
         GLKMatrix4 modelMat = [star transformation:GLKMatrix4Identity];
         GLKMatrix4 mvProjMatrix = GLKMatrix4Multiply(self.effect.transform.projectionMatrix, modelMat);
-        glUniformMatrix4fv([self.starShaderProgram uniformIndex:@"modelViewProjectionMatrix"], 1, 0, mvProjMatrix.m);
+        glUniformMatrix4fv([self.starShaderProgram uniformIndex:@"uModelViewProjectionMatrix"], 1, 0, mvProjMatrix.m);
+        glUniform3f([self.starShaderProgram uniformIndex:@"uBackgroundColor"], SPACEBG_R,  SPACEBG_G,  SPACEBG_B);
+        glUniform1f([self.starShaderProgram uniformIndex:@"uAlpha"], 1);
         
         [star draw];
     }
@@ -398,8 +400,11 @@
     
     // TODO: Fadein effect
     
-    SpaceObject *starfield = [[SpaceObject alloc] initWithShape:shape Path:path andEffects:@[]];
-    
+    SpaceObject *starfield = [[SpaceObject alloc] initWithShape:shape
+                                                           Path:path
+                                                     andEffects:@[[[FadeInEffect alloc]
+                                                                   initForUniform:[self.starShaderProgram uniformIndex:@"uAlpha"]
+                                                                     WithDuration:1.0]]];
     // setUp
     [starfield setUp];
     

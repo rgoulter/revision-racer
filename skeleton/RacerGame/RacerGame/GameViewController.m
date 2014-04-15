@@ -15,12 +15,6 @@
 
 #import "BOStarCluster.h"
 
-// Not sure what the best way to do color constants is;
-// SPACEBG is for glClearColor(r, g, b, a);
-#define SPACEBG_R 0.0074f
-#define SPACEBG_G 0.0031f
-#define SPACEBG_B 0.1862f
-
 
 
 

@@ -347,6 +347,32 @@
 
 
 
+@implementation FadeInEffect {
+    GLuint _uniform;
+}
+
+- (id)initForUniform:(GLuint)uniform WithDuration:(float)duration
+{
+    self = [super initWithDuration:duration];
+    
+    if (self) {
+        _uniform = uniform;
+    }
+    
+    return self;
+}
+
+- (void)apply
+{
+    float t = self.age / self.duration; // between (0, 1).
+    
+    glUniform1f(_uniform, t);
+}
+
+@end
+
+
+
 @implementation FadeOutEffect {
     GLuint _uniform;
 }

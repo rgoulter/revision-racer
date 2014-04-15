@@ -1,19 +1,24 @@
 // adapted from http://gamedev.stackexchange.com/questions/11095/opengl-es-2-0-point-sprites-size
 
-uniform mat4 modelViewProjectionMatrix;
-//uniform float uThickness;
+uniform mat4 uModelViewProjectionMatrix;
+uniform vec3 uBackgroundColor;
+uniform float uAlpha;
 
 attribute vec3 aPosition;
 attribute float aIntensity;
 attribute float aBrightness;
+attribute float aThickness;
 
 varying lowp vec4 vColor;
 
 void main() {
-    vec4 position = modelViewProjectionMatrix * vec4(aPosition.xyz, 1.);
+    vec4 position = uModelViewProjectionMatrix * vec4(aPosition.xyz, 1.);
     
     vColor = vec4(aBrightness, aBrightness, 0, aIntensity / abs(aPosition.z));
     
-    gl_PointSize = 1.0; //uThickness;
+    vColor = uAlpha * vColor +
+             (1.0 - uAlpha) * vec4(uBackgroundColor, 1);
+    
+    gl_PointSize = aThickness;
     gl_Position =  position;
 }
