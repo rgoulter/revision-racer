@@ -39,6 +39,8 @@
 - (void)viewDidLoad
 {
     NSLog(@"Active user : %@",[[UserInfoLogic singleton] getActiveUser].userId);
+    
+    self.view.backgroundColor = [UIColor colorWithRed:45.0f/225.0f green:57.0f/225.0f blue:86.0f/255.0f alpha:1.0];
     [super viewDidLoad];
     
     self.listOfUserSets = [[FlashSetLogic singleton] getSetsOfActiveUser];
