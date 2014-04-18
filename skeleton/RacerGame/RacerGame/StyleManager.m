@@ -32,4 +32,12 @@
     return formattedText;
 }
 
+-(NSAttributedString *)getAttributedButtonTextForString:(NSString *)text
+{
+    UIFont* font = [UIFont fontWithName:@"Georgia-BoldItalic" size:16];
+    NSMutableAttributedString* formattedText = [[NSMutableAttributedString alloc] initWithString:text
+                                                                                      attributes:@{                                                                                              NSForegroundColorAttributeName: [UIColor whiteColor],
+                                                                                                   NSFontAttributeName : font}];
+    return formattedText;
+}
 @end
