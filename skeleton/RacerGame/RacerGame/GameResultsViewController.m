@@ -46,7 +46,7 @@
 }
 */
 - (IBAction)mainMenuBtnPressed:(id)sender {
-    [self performSegueWithIdentifier:@"resultsToMainMenu" sender:self];
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 @end
