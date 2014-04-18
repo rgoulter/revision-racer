@@ -86,7 +86,7 @@ vertexdata* calculateVertexData(GLfloat vertices[], int indices[])
     
     
     // Seek how many points exist in the structure.
-    int totalNumPoints = 5;
+    int totalNumPoints = 0;
     int *currentFaceIndex = indices;
     
     while (currentFaceIndex[0] != -1) {

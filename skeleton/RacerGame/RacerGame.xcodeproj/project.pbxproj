@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		024D099A19014CAB005BA4BE /* BOSquarePyramid.m in Sources */ = {isa = PBXBuildFile; fileRef = 024D099919014CAB005BA4BE /* BOSquarePyramid.m */; };
 		02505AEB18F54AA3008F8563 /* GameViewController+Game.m in Sources */ = {isa = PBXBuildFile; fileRef = 02505AEA18F54AA3008F8563 /* GameViewController+Game.m */; };
 		02505AEE18F571A1008F8563 /* BOStarCluster.m in Sources */ = {isa = PBXBuildFile; fileRef = 02505AED18F571A1008F8563 /* BOStarCluster.m */; };
 		02505AF018F57801008F8563 /* starcluster.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 02505AEF18F57801008F8563 /* starcluster.vsh */; };
@@ -101,6 +102,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		024D099819014CAB005BA4BE /* BOSquarePyramid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BOSquarePyramid.h; path = RacerGame/Game/BOSquarePyramid.h; sourceTree = "<group>"; };
+		024D099919014CAB005BA4BE /* BOSquarePyramid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BOSquarePyramid.m; path = RacerGame/Game/BOSquarePyramid.m; sourceTree = "<group>"; };
 		02505AE918F54AA3008F8563 /* GameViewController+Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "GameViewController+Game.h"; path = "Game/GameViewController+Game.h"; sourceTree = "<group>"; };
 		02505AEA18F54AA3008F8563 /* GameViewController+Game.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "GameViewController+Game.m"; path = "Game/GameViewController+Game.m"; sourceTree = "<group>"; };
 		02505AEC18F571A1008F8563 /* BOStarCluster.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BOStarCluster.h; path = RacerGame/Game/BOStarCluster.h; sourceTree = "<group>"; };
@@ -287,6 +290,8 @@
 				02FB32DB18EDA9FF00991ABA /* BOCurve.m */,
 				0280A1EC18EF1087006B50B4 /* SpaceShipShape.h */,
 				0280A1ED18EF1087006B50B4 /* SpaceShipShape.m */,
+				024D099819014CAB005BA4BE /* BOSquarePyramid.h */,
+				024D099919014CAB005BA4BE /* BOSquarePyramid.m */,
 			);
 			name = "BO Shapes";
 			sourceTree = "<group>";
@@ -734,6 +739,7 @@
 				0255045F18F05E3500A984D0 /* GameRules.m in Sources */,
 				D96BA51B18E8B87B00D29E82 /* FlashSetInfo.m in Sources */,
 				D9B9F2F4190274F000AD1A2E /* UserInfo.m in Sources */,
+				024D099A19014CAB005BA4BE /* BOSquarePyramid.m in Sources */,
 				02505AF918F69624008F8563 /* BOIcosahedron.m in Sources */,
 				029E580918EC6507007EB6E8 /* UIQuestionLabel.m in Sources */,
 				D991E56318EDB129003A4801 /* UserInfoLogic.m in Sources */,

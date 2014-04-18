@@ -236,11 +236,10 @@
     // Draws the SpaceShip object (of _playerShip),
     // using coordinates from self.view.
     
-    GLKMatrix4 modelMatrix = GLKMatrix4Identity;
     CGRect viewFrame = self.view.frame;
     
     // Move the spaceship "forward" from the screen/camera.
-    modelMatrix = GLKMatrix4Translate(modelMatrix, 0, 0, -5);
+    GLKMatrix4 rhsMat = GLKMatrix4Translate(GLKMatrix4Identity, 0, 0, -5);
     
     
     // Translate the spaceship, corresponding to the point on the screen.
@@ -252,25 +251,29 @@
     // Scale to ScreenSize <- WorldSize
     GLfloat sw = 6 / viewFrame.size.width;
     GLfloat sh = 5 / viewFrame.size.height;
-    modelMatrix = GLKMatrix4Scale(modelMatrix, sw, -(sh), 1);
+    rhsMat = GLKMatrix4Scale(rhsMat, sw, -(sh), 1);
     
     // Translate, since worldcoord's origin is in center of screen.
-    modelMatrix = GLKMatrix4Translate(modelMatrix, -viewFrame.size.width / 2, -viewFrame.size.height / 2, 0);
-    modelMatrix = [self.playerShip transformation:modelMatrix];
+    rhsMat = GLKMatrix4Translate(rhsMat, -viewFrame.size.width / 2, -viewFrame.size.height / 2, 0);
+    
+    ////modelMatrix = [self.playerShip transformation:modelMatrix];
     
     // Scale to WorldSize <- ScreenSize (inverse of above).
-    modelMatrix = GLKMatrix4Scale(modelMatrix, 1 / (sw), -1 / (sh), 1);
+    GLKMatrix4 lhsMat = GLKMatrix4Scale(GLKMatrix4Identity, 1 / (sw), -1 / (sh), 1);
     
     
     // Now draw the spaceship, since the modelviewMatrix has the right position.
     // **HACK** Awkward hack, check to make sure SpaceShip is drawn the right way. (-z).
-    modelMatrix = GLKMatrix4Scale(modelMatrix, 0.4, 0.4, -0.4); // Scale model down.
-    self.effect.transform.modelviewMatrix = modelMatrix;
+    lhsMat = GLKMatrix4Scale(lhsMat, 0.4, 0.4, -0.4); // Scale model down.
     
     //[_program use];
-    [self prepareToDrawWithModelViewMatrix:self.effect.transform.modelviewMatrix
-                       andProjectionMatrix:self.effect.transform.projectionMatrix];
-    [self.playerShip draw];
+    [self.playerShip draw:^(GLKMatrix4 modelMatrix) {
+        GLKMatrix4 mat = GLKMatrix4Multiply(rhsMat, modelMatrix);
+        mat = GLKMatrix4Multiply(mat, lhsMat);
+        
+        [self prepareToDrawWithModelViewMatrix:mat
+                           andProjectionMatrix:self.effect.transform.projectionMatrix];
+    }];
 }
 
 
@@ -279,41 +282,34 @@
 {
     // Draw an asteroid with an outline effect
     // Calculate model view matrix.
-    GLKMatrix4 modelMatrix;
     GLfloat scale = 0.25;
+    GLKMatrix4 lhsMat;
     
     // Draw "Shadow"
     glDisable(GL_DEPTH_TEST);
     
-    modelMatrix = GLKMatrix4Identity; //GLKMatrix4Scale(GLKMatrix4Identity, scale, scale, scale);
-    modelMatrix = [star transformation:modelMatrix];
+    // We can scale the object down by applying the scale matrix after the transformation
+    lhsMat = GLKMatrix4Scale(GLKMatrix4Identity, scale, scale, scale);
+    lhsMat = GLKMatrix4Scale(lhsMat, 1.1, 1.1, 1.1);
     
-    // We can scale the object down by applying the scale matrix here.
-    modelMatrix = GLKMatrix4Scale(modelMatrix, scale, scale, scale);
-    
-    modelMatrix = GLKMatrix4Scale(modelMatrix, 1.1, 1.1, 1.1);
-    
-    self.effect.transform.modelviewMatrix = modelMatrix;
-    [self prepareToDrawWithModelViewMatrix:self.effect.transform.modelviewMatrix
-                       andProjectionMatrix:self.effect.transform.projectionMatrix];
     glUniform1i([self.program uniformIndex:@"isOutline"], 1);
-    [star draw];
+    [star draw:^(GLKMatrix4 modelMatrix) {
+        [self prepareToDrawWithModelViewMatrix:GLKMatrix4Multiply(modelMatrix, lhsMat)
+                           andProjectionMatrix:self.effect.transform.projectionMatrix];
+    }];
     
     
     // Draw "Actual"
     glEnable(GL_DEPTH_TEST);
     
-    // We can scale the object down by applying the scale matrix here.
-    modelMatrix = GLKMatrix4Identity; //GLKMatrix4Scale(GLKMatrix4Identity, scale, scale, scale);
-    modelMatrix = [star transformation:modelMatrix];
-    modelMatrix = GLKMatrix4Scale(modelMatrix, scale, scale, scale);
+    // We can scale the object down by applying the scale matrix after the transformation
+    lhsMat = GLKMatrix4Scale(GLKMatrix4Identity, scale, scale, scale);
     
-    self.effect.transform.modelviewMatrix = modelMatrix;
-    
-    [self prepareToDrawWithModelViewMatrix:self.effect.transform.modelviewMatrix
-                       andProjectionMatrix:self.effect.transform.projectionMatrix];
     glUniform1i([self.program uniformIndex:@"isOutline"], 0);
-    [star draw];
+    [star draw:^(GLKMatrix4 modelMatrix) {
+        [self prepareToDrawWithModelViewMatrix:GLKMatrix4Multiply(modelMatrix, lhsMat)
+                           andProjectionMatrix:self.effect.transform.projectionMatrix];
+    }];
 }
 
 
@@ -349,13 +345,12 @@
         
         [self.starShaderProgram useDefaultUniformValues];
         
-        GLKMatrix4 modelMat = [star transformation:GLKMatrix4Identity];
-        GLKMatrix4 mvProjMatrix = GLKMatrix4Multiply(self.effect.transform.projectionMatrix, modelMat);
-        glUniformMatrix4fv([self.starShaderProgram uniformIndex:@"uModelViewProjectionMatrix"], 1, 0, mvProjMatrix.m);
-        glUniform3f([self.starShaderProgram uniformIndex:@"uBackgroundColor"], SPACEBG_R,  SPACEBG_G,  SPACEBG_B);
-        glUniform1f([self.starShaderProgram uniformIndex:@"uAlpha"], 1);
-        
-        [star draw];
+        [star draw:^(GLKMatrix4 modelMat) {
+            GLKMatrix4 mvProjMatrix = GLKMatrix4Multiply(self.effect.transform.projectionMatrix, modelMat);
+            glUniformMatrix4fv([self.starShaderProgram uniformIndex:@"uModelViewProjectionMatrix"], 1, 0, mvProjMatrix.m);
+            glUniform3f([self.starShaderProgram uniformIndex:@"uBackgroundColor"], SPACEBG_R,  SPACEBG_G,  SPACEBG_B);
+            glUniform1f([self.starShaderProgram uniformIndex:@"uAlpha"], 1);
+        }];
     }
 }
 

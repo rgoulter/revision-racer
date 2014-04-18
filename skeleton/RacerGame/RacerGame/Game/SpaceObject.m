@@ -101,12 +101,22 @@
 
 
 
-- (void)draw
+- (void)draw:(void (^)(GLKMatrix4))modelViewMatCallback
 {
+    // callback with the model transformation matrix for this
+    // SpaceObject.
+    // callback *before* setting uniforms, as the preparation step
+    // may set the uniforms
+    
+    // Prepare for drawing
+    GLKMatrix4 modelMat = [self transformation:GLKMatrix4Identity];
+    modelViewMatCallback(modelMat);
+    
     // Set the effect uniforms here. (Slightly awkward **DESIGN**).
     for (ShaderUniformEffect *effect in _uniformEffects) {
         [effect apply];
     }
+    
     
     [_shape draw];
 }

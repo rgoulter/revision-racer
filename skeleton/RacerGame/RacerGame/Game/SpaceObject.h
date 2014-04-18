@@ -41,6 +41,6 @@
 - (void)tick:(NSTimeInterval)timeSinceLastUpdate;
 
 - (GLKMatrix4)transformation:(GLKMatrix4)mat;
-- (void)draw;
+- (void)draw:(void (^)(GLKMatrix4))modelViewMatCallback;
 
 @end
