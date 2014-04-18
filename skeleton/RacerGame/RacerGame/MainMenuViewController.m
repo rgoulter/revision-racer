@@ -8,6 +8,7 @@
 
 #import "MainMenuViewController.h"
 #import "SetSelectorViewController.h"
+#import "StyleManager.h"
 
 @interface MainMenuViewController ()
 @property (strong, nonatomic) SetSelectorViewController* setSelectionViewController;
@@ -32,10 +33,7 @@
     self.view.backgroundColor = [UIColor colorWithRed:45.0f/225.0f green:57.0f/225.0f blue:86.0f/255.0f alpha:1.0];
     
     //Set Button text
-    NSMutableAttributedString* formattedText = [[NSMutableAttributedString alloc] initWithString:@"New Game"
-                                                                                      attributes:@{NSStrokeWidthAttributeName : @(-1),
-                                                                                                   NSStrokeColorAttributeName : [UIColor whiteColor],
-                                                                                                   NSForegroundColorAttributeName: [UIColor redColor]}];
+    NSAttributedString* formattedText = [[StyleManager manager] getAttributedTitleForString:@"New game"];
     [self.customNewGameButton setAttributedTitle:formattedText forState:UIControlStateNormal];
 }
 

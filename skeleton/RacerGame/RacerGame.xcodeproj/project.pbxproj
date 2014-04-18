@@ -67,6 +67,7 @@
 		D9B22A0718DB1F1800DDBA11 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9B229E918DB1F1800DDBA11 /* UIKit.framework */; };
 		D9B22A0F18DB1F1800DDBA11 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D9B22A0D18DB1F1800DDBA11 /* InfoPlist.strings */; };
 		D9B22A1118DB1F1800DDBA11 /* RacerGameTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D9B22A1018DB1F1800DDBA11 /* RacerGameTests.m */; };
+		D9B9F2D719012FA600AD1A2E /* StyleManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D9B9F2D619012FA600AD1A2E /* StyleManager.m */; };
 		D9EB9B9E18FD601F004AA081 /* ActivityModal.m in Sources */ = {isa = PBXBuildFile; fileRef = D9EB9B9D18FD601F004AA081 /* ActivityModal.m */; };
 		D9EB9BA118FD7E00004AA081 /* FlashSetSummary.xib in Resources */ = {isa = PBXBuildFile; fileRef = D9EB9BA018FD7E00004AA081 /* FlashSetSummary.xib */; };
 /* End PBXBuildFile section */
@@ -185,6 +186,8 @@
 		D9B22A0C18DB1F1800DDBA11 /* RacerGameTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "RacerGameTests-Info.plist"; sourceTree = "<group>"; };
 		D9B22A0E18DB1F1800DDBA11 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D9B22A1018DB1F1800DDBA11 /* RacerGameTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RacerGameTests.m; sourceTree = "<group>"; };
+		D9B9F2D519012FA600AD1A2E /* StyleManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StyleManager.h; sourceTree = "<group>"; };
+		D9B9F2D619012FA600AD1A2E /* StyleManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StyleManager.m; sourceTree = "<group>"; };
 		D9EB9B9D18FD601F004AA081 /* ActivityModal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityModal.m; sourceTree = "<group>"; };
 		D9EB9BA018FD7E00004AA081 /* FlashSetSummary.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FlashSetSummary.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -330,6 +333,8 @@
 				D96BA47A18E876A300D29E82 /* URLHelper.m */,
 				D991E55B18ED4A32003A4801 /* Resources.h */,
 				D991E55C18ED4A32003A4801 /* Resources.m */,
+				D9B9F2D519012FA600AD1A2E /* StyleManager.h */,
+				D9B9F2D619012FA600AD1A2E /* StyleManager.m */,
 			);
 			name = Utilties;
 			sourceTree = "<group>";
@@ -617,6 +622,7 @@
 				D991E55D18ED4A32003A4801 /* Resources.m in Sources */,
 				0280A1E718EEE4B0006B50B4 /* GLProgram.m in Sources */,
 				D991E56018ED5E69003A4801 /* FlashSetItemAttributes.m in Sources */,
+				D9B9F2D719012FA600AD1A2E /* StyleManager.m in Sources */,
 				0280A1EE18EF1087006B50B4 /* SpaceShipShape.m in Sources */,
 				02505B0018F698BB008F8563 /* BOAsteroidShape.m in Sources */,
 				D9EB9B9E18FD601F004AA081 /* ActivityModal.m in Sources */,
