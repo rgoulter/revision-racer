@@ -15,7 +15,9 @@
 #import "SetSelectionTableItem.h"
 #import "ActivityModal.h"
 #import "Resources.h"
+#import "NavigationButton.h"
 #import "UserInfoLogic.h"
+#import "StyleManager.h"
 
 @interface SetSelectorViewController ()
 
@@ -23,6 +25,7 @@
 @property (strong, nonatomic) NSArray* listOfUserSets;
 @property (strong, nonatomic) FlashSetInfoAttributes* selectedSetForGame;
 @property (strong, nonatomic) ActivityModal* statusModal;
+@property (strong, nonatomic) IBOutlet NavigationButton *backNavigation;
 @end
 
 @implementation SetSelectorViewController
@@ -39,6 +42,9 @@
 - (void)viewDidLoad
 {
     NSLog(@"Active user : %@",[[UserInfoLogic singleton] getActiveUser].userId);
+    
+    StyleManager* manager = [StyleManager manager];
+    [self.backNavigation setAttributedTitle:[manager getAttributedButtonTextForString:@"Back"] forState:UIControlStateNormal];
     
     self.view.backgroundColor = [UIColor colorWithRed:45.0f/225.0f green:57.0f/225.0f blue:86.0f/255.0f alpha:1.0];
     [super viewDidLoad];

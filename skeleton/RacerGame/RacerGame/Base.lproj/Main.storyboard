@@ -50,8 +50,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hMj-6B-sX7">
-                                <rect key="frame" x="20" y="20" width="35" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hMj-6B-sX7" customClass="NavigationButton">
+                                <rect key="frame" x="20" y="20" width="72" height="54"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Back">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -70,7 +70,7 @@
                                     <action selector="signInUser:" destination="RXd-Aj-ZkL" eventType="touchUpInside" id="krq-dz-rVD"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9cH-M4-x7W">
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9cH-M4-x7W" customClass="NavigationButton">
                                 <rect key="frame" x="785" y="704" width="219" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
@@ -117,6 +117,7 @@
                     </view>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <connections>
+                        <outlet property="backNavigation" destination="hMj-6B-sX7" id="Flx-KK-Jeh"/>
                         <outlet property="setTable" destination="wiV-CM-e9Y" id="I7N-lW-0DW"/>
                         <segue destination="T0N-km-FSq" kind="push" identifier="setSelectionToGame" id="EKm-Ff-sN7"/>
                     </connections>

@@ -68,6 +68,7 @@
 		D9B22A0F18DB1F1800DDBA11 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D9B22A0D18DB1F1800DDBA11 /* InfoPlist.strings */; };
 		D9B22A1118DB1F1800DDBA11 /* RacerGameTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D9B22A1018DB1F1800DDBA11 /* RacerGameTests.m */; };
 		D9B9F2D719012FA600AD1A2E /* StyleManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D9B9F2D619012FA600AD1A2E /* StyleManager.m */; };
+		D9B9F2DB1901511400AD1A2E /* NavigationButton.m in Sources */ = {isa = PBXBuildFile; fileRef = D9B9F2DA1901511400AD1A2E /* NavigationButton.m */; };
 		D9EB9B9E18FD601F004AA081 /* ActivityModal.m in Sources */ = {isa = PBXBuildFile; fileRef = D9EB9B9D18FD601F004AA081 /* ActivityModal.m */; };
 		D9EB9BA118FD7E00004AA081 /* FlashSetSummary.xib in Resources */ = {isa = PBXBuildFile; fileRef = D9EB9BA018FD7E00004AA081 /* FlashSetSummary.xib */; };
 /* End PBXBuildFile section */
@@ -188,6 +189,8 @@
 		D9B22A1018DB1F1800DDBA11 /* RacerGameTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RacerGameTests.m; sourceTree = "<group>"; };
 		D9B9F2D519012FA600AD1A2E /* StyleManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StyleManager.h; sourceTree = "<group>"; };
 		D9B9F2D619012FA600AD1A2E /* StyleManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StyleManager.m; sourceTree = "<group>"; };
+		D9B9F2D91901511400AD1A2E /* NavigationButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavigationButton.h; sourceTree = "<group>"; };
+		D9B9F2DA1901511400AD1A2E /* NavigationButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NavigationButton.m; sourceTree = "<group>"; };
 		D9EB9B9D18FD601F004AA081 /* ActivityModal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityModal.m; sourceTree = "<group>"; };
 		D9EB9BA018FD7E00004AA081 /* FlashSetSummary.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FlashSetSummary.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -366,6 +369,7 @@
 		D96BA52418EAFE2400D29E82 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				D9B9F2D8190150B300AD1A2E /* NavigationButtons */,
 				D9EB9B9F18FD7DCE004AA081 /* FlashSetSummary */,
 				D96BA52A18EB328400D29E82 /* ActivityModal */,
 				D96BA52518EAFEB300D29E82 /* SetSelectionTableItem.xib */,
@@ -475,6 +479,15 @@
 				D9B22A0D18DB1F1800DDBA11 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		D9B9F2D8190150B300AD1A2E /* NavigationButtons */ = {
+			isa = PBXGroup;
+			children = (
+				D9B9F2D91901511400AD1A2E /* NavigationButton.h */,
+				D9B9F2DA1901511400AD1A2E /* NavigationButton.m */,
+			);
+			name = NavigationButtons;
 			sourceTree = "<group>";
 		};
 		D9EB9B9F18FD7DCE004AA081 /* FlashSetSummary */ = {
@@ -599,6 +612,7 @@
 				D96BA47618E8764000D29E82 /* QuizletAPI.m in Sources */,
 				D991E56618EDB7D1003A4801 /* UserInfo.m in Sources */,
 				D96BA47E18E8965B00D29E82 /* Model.xcdatamodeld in Sources */,
+				D9B9F2DB1901511400AD1A2E /* NavigationButton.m in Sources */,
 				0262757718E90E6C00CDAA24 /* GameViewController.m in Sources */,
 				025504AE18F15F4C00A984D0 /* Asteroid.m in Sources */,
 				0255045F18F05E3500A984D0 /* GameRules.m in Sources */,
