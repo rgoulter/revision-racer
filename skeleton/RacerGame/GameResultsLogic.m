@@ -52,7 +52,22 @@
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"GameResultDetails"
                                               inManagedObjectContext:self.context];
     
-    NSPredicate* matchCondition = [NSPredicate predicateWithFormat:@"]
+    NSPredicate* matchCondition = [NSPredicate predicateWithFormat:@"flashCardId = %@",itemId];
+    
+    [fetchRequest setEntity:entity];
+    [fetchRequest setPredicate:matchCondition];
+    
+    NSError* error = nil;
+    NSArray* fetchedObjects = [self.context executeFetchRequest:fetchRequest error:&error];
+    
+    //TODO: Possibly assert count = 1?
+    if (!error) {
+        [self.context save:&error];
+        if ([fetchedObjects count] > 0) {
+            GameResultDetails* objectToDelete = [fetchedObjects lastObject];
+            [self.context deleteObject:objectToDelete];
+        }
+    }
 }
 
 //Returns nil if no sets have been played or no sets are present

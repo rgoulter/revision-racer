@@ -10,7 +10,7 @@
 #import "SetSelectorViewController.h"
 #import "StyleManager.h"
 #import "GameResultsLogic.h"
-#import "GameResultInfo.h"
+#import "GameResultDetails.h"
 #import "Resources.h"
 #import "UserInfoLogic.h"
 
@@ -55,21 +55,18 @@
     [self.navigationController pushViewController:self.setSelectionViewController
                                          animated:YES];
      */
-   
-        GameResultInfo* newObj = [NSEntityDescription insertNewObjectForEntityForName:@"GameResultInfo" inManagedObjectContext:[Resources singleton].managedObjectContext];
-        newObj.setId = @(15);
-        newObj.playedDate = [NSDate dateWithTimeIntervalSince1970:0];
-        newObj.score = @(1000*4);
-    newObj.userId = [[UserInfoLogic singleton] getPersistentActiveUser].userId;
-    
-    
+   /*
+        GameResultDetails* newObj = [NSEntityDescription insertNewObjectForEntityForName:@"GameResultDetails" inManagedObjectContext:[Resources singleton].managedObjectContext];
+        newObj.flashCardId = @(20);
+        newObj.totalGuesses = @(10);
+    newObj.correctGuesses = @(4);
     
     NSError *error;
     if (![[Resources singleton].managedObjectContext save:&error]) {
         NSLog(@"Problem while persisting sample results: %@", [error localizedDescription]);
     }
-    
-    [[GameResultsLogic singleton] getTotalNumberOfSetsPlayed];
+    */
+    [[GameResultsLogic singleton] deleteDetailsForItemWithId:@(20)];
 }
 
 @end
