@@ -48,7 +48,11 @@
 
 -(void)deleteDetailsForItemWithId:(NSNumber*)itemId
 {
-    //TODO: Add implementation
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"GameResultDetails"
+                                              inManagedObjectContext:self.context];
+    
+    NSPredicate* matchCondition = [NSPredicate predicateWithFormat:@"]
 }
 
 //Returns nil if no sets have been played or no sets are present
