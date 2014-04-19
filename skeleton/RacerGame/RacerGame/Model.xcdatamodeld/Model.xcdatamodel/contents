@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5063" systemVersion="13C64" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5064" systemVersion="13C64" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="FlashSetInfo" representedClassName="FlashSetInfo" syncable="YES">
         <attribute name="createdDate" attributeType="Date" syncable="YES"/>
         <attribute name="id" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
@@ -13,16 +13,30 @@
         <attribute name="id" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="term" attributeType="String" syncable="YES"/>
     </entity>
+    <entity name="GameResultDetails" syncable="YES">
+        <attribute name="correctGuesses" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="flashCardId" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="totalGuesses" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+    </entity>
+    <entity name="GameResultInfo" syncable="YES">
+        <attribute name="playedDate" attributeType="Date" syncable="YES"/>
+        <attribute name="score" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="setId" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <relationship name="hasDetails" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="GameResultDetails" syncable="YES"/>
+    </entity>
     <entity name="UserInfo" representedClassName="UserInfo" syncable="YES">
         <attribute name="accessToken" attributeType="String" syncable="YES"/>
         <attribute name="expiryTimestamp" attributeType="Date" syncable="YES"/>
         <attribute name="isActive" attributeType="Boolean" syncable="YES"/>
         <attribute name="userId" attributeType="String" syncable="YES"/>
         <relationship name="canSee" toMany="YES" deletionRule="Cascade" destinationEntity="FlashSetInfo" inverseName="isVisibleTo" inverseEntity="FlashSetInfo" syncable="YES"/>
+        <relationship name="hasPlayed" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="GameResultInfo" syncable="YES"/>
     </entity>
     <elements>
-        <element name="FlashSetInfo" positionX="-9018" positionY="-2494" width="171" height="133"/>
+        <element name="FlashSetInfo" positionX="-9018" positionY="-2494" width="171" height="135"/>
         <element name="FlashSetItem" positionX="-8732" positionY="-2374" width="128" height="88"/>
-        <element name="UserInfo" positionX="-9137" positionY="-2664" width="128" height="120"/>
+        <element name="UserInfo" positionX="-9137" positionY="-2664" width="128" height="133"/>
+        <element name="GameResultInfo" positionX="-8937" positionY="-2511" width="128" height="103"/>
+        <element name="GameResultDetails" positionX="-8928" positionY="-2502" width="128" height="88"/>
     </elements>
 </model>

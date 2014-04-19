@@ -97,6 +97,7 @@
         persistentFlashSet.title = flashSet.title;
     }
     
+    //TODO: Delete cards present in db which have been deleted server side
     for (FlashSetItemAttributes* eachCard in setOfCards) {
         FlashSetItem* persistableFlashSetItem = [self getPersistentSetItemForId:eachCard.id];
         
@@ -122,7 +123,6 @@
 {
     NSMutableSet* returnSet = [NSMutableSet set];
     
-    //TODO: Make async
     NSData* response = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
     
     NSArray* jsonData = [NSJSONSerialization JSONObjectWithData:response
@@ -130,10 +130,6 @@
                                                           error:nil];
     
     for (NSDictionary* rawSetData in jsonData) {
-        //TODO: See if another object exists for the same id
-        //If it does and equal to current object, do nothing
-        //If it does and unequal(use modified), update
-        //If it does not exist, create
         
         FlashSetInfoAttributes* flashSet = [[FlashSetInfoAttributes alloc] init];
         flashSet.id = [rawSetData objectForKey:@"id"];
