@@ -281,33 +281,26 @@
 - (void)drawAsteroid:(SpaceObject*)star
 {
     // Draw an asteroid with an outline effect
-    // Calculate model view matrix.
-    GLfloat scale = 0.25;
-    GLKMatrix4 lhsMat;
+    
     
     // Draw "Shadow"
     glDisable(GL_DEPTH_TEST);
     
     // We can scale the object down by applying the scale matrix after the transformation
-    lhsMat = GLKMatrix4Scale(GLKMatrix4Identity, scale, scale, scale);
-    lhsMat = GLKMatrix4Scale(lhsMat, 1.1, 1.1, 1.1);
+    GLKMatrix4 lhsMat = GLKMatrix4Scale(GLKMatrix4Identity, 1.1, 1.1, 1.1);
     
-    glUniform1i([self.program uniformIndex:@"isOutline"], 1);
     [star draw:^(GLKMatrix4 modelMatrix) {
         [self prepareToDrawWithModelViewMatrix:GLKMatrix4Multiply(modelMatrix, lhsMat)
                            andProjectionMatrix:self.effect.transform.projectionMatrix];
+        glUniform1i([self.program uniformIndex:@"isOutline"], 1);
     }];
     
     
     // Draw "Actual"
     glEnable(GL_DEPTH_TEST);
     
-    // We can scale the object down by applying the scale matrix after the transformation
-    lhsMat = GLKMatrix4Scale(GLKMatrix4Identity, scale, scale, scale);
-    
-    glUniform1i([self.program uniformIndex:@"isOutline"], 0);
     [star draw:^(GLKMatrix4 modelMatrix) {
-        [self prepareToDrawWithModelViewMatrix:GLKMatrix4Multiply(modelMatrix, lhsMat)
+        [self prepareToDrawWithModelViewMatrix:modelMatrix
                            andProjectionMatrix:self.effect.transform.projectionMatrix];
     }];
 }
