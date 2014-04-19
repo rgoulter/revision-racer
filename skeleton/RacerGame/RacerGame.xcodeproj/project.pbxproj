@@ -69,6 +69,8 @@
 		D9B22A1118DB1F1800DDBA11 /* RacerGameTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D9B22A1018DB1F1800DDBA11 /* RacerGameTests.m */; };
 		D9B9F2D719012FA600AD1A2E /* StyleManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D9B9F2D619012FA600AD1A2E /* StyleManager.m */; };
 		D9B9F2DB1901511400AD1A2E /* NavigationButton.m in Sources */ = {isa = PBXBuildFile; fileRef = D9B9F2DA1901511400AD1A2E /* NavigationButton.m */; };
+		D9B9F2DE19023FFF00AD1A2E /* GameResultInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = D9B9F2DD19023FFF00AD1A2E /* GameResultInfo.m */; };
+		D9B9F2E11902400000AD1A2E /* GameResultDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = D9B9F2E01902400000AD1A2E /* GameResultDetails.m */; };
 		D9EB9B9E18FD601F004AA081 /* ActivityModal.m in Sources */ = {isa = PBXBuildFile; fileRef = D9EB9B9D18FD601F004AA081 /* ActivityModal.m */; };
 		D9EB9BA118FD7E00004AA081 /* FlashSetSummary.xib in Resources */ = {isa = PBXBuildFile; fileRef = D9EB9BA018FD7E00004AA081 /* FlashSetSummary.xib */; };
 /* End PBXBuildFile section */
@@ -191,6 +193,10 @@
 		D9B9F2D619012FA600AD1A2E /* StyleManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StyleManager.m; sourceTree = "<group>"; };
 		D9B9F2D91901511400AD1A2E /* NavigationButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavigationButton.h; sourceTree = "<group>"; };
 		D9B9F2DA1901511400AD1A2E /* NavigationButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NavigationButton.m; sourceTree = "<group>"; };
+		D9B9F2DC19023FFF00AD1A2E /* GameResultInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameResultInfo.h; sourceTree = "<group>"; };
+		D9B9F2DD19023FFF00AD1A2E /* GameResultInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameResultInfo.m; sourceTree = "<group>"; };
+		D9B9F2DF1902400000AD1A2E /* GameResultDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameResultDetails.h; sourceTree = "<group>"; };
+		D9B9F2E01902400000AD1A2E /* GameResultDetails.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameResultDetails.m; sourceTree = "<group>"; };
 		D9EB9B9D18FD601F004AA081 /* ActivityModal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityModal.m; sourceTree = "<group>"; };
 		D9EB9BA018FD7E00004AA081 /* FlashSetSummary.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FlashSetSummary.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -362,6 +368,10 @@
 				D991E56518EDB7D1003A4801 /* UserInfo.m */,
 				D96BA50A18E8A73100D29E82 /* FlashSetItem.h */,
 				D96BA50B18E8A73100D29E82 /* FlashSetItem.m */,
+				D9B9F2DF1902400000AD1A2E /* GameResultDetails.h */,
+				D9B9F2E01902400000AD1A2E /* GameResultDetails.m */,
+				D9B9F2DC19023FFF00AD1A2E /* GameResultInfo.h */,
+				D9B9F2DD19023FFF00AD1A2E /* GameResultInfo.m */,
 			);
 			name = CoreData;
 			sourceTree = "<group>";
@@ -618,6 +628,7 @@
 				0255045F18F05E3500A984D0 /* GameRules.m in Sources */,
 				D96BA51B18E8B87B00D29E82 /* FlashSetInfo.m in Sources */,
 				02505AF918F69624008F8563 /* BOIcosahedron.m in Sources */,
+				D9B9F2DE19023FFF00AD1A2E /* GameResultInfo.m in Sources */,
 				029E580918EC6507007EB6E8 /* UIQuestionLabel.m in Sources */,
 				D991E56318EDB129003A4801 /* UserInfoLogic.m in Sources */,
 				D96BA47318E86BB900D29E82 /* SetSelectorViewController.m in Sources */,
@@ -628,6 +639,7 @@
 				02FB32D818ED627E00991ABA /* SpaceShip.m in Sources */,
 				029E580618EC64AF007EB6E8 /* UIAnswerButton.m in Sources */,
 				029E57FA18EC1AEF007EB6E8 /* StarfieldStar.m in Sources */,
+				D9B9F2E11902400000AD1A2E /* GameResultDetails.m in Sources */,
 				D96BA47B18E876A300D29E82 /* URLHelper.m in Sources */,
 				02505AEE18F571A1008F8563 /* BOStarCluster.m in Sources */,
 				D96BA52918EB038100D29E82 /* SetSelectionTableItem.m in Sources */,
