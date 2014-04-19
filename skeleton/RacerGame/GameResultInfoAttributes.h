@@ -14,7 +14,7 @@
 @property (nonatomic, strong) NSDate * playedDate;
 @property (nonatomic, strong) NSNumber * score;
 @property (nonatomic, strong) NSNumber * setId;
-@property (nonatomic, strong) NSSet *hasDetails;
+@property (nonatomic, strong) NSString *userId;
 
 -(id)initWithGameResultInfo:(GameResultInfo*)result;
 

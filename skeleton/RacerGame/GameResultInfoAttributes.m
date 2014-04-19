@@ -16,7 +16,7 @@
         self.playedDate = result.playedDate;
         self.score = result.score;
         self.setId = result.setId;
-        self.hasDetails = result.hasDetails;
+        self.userId = result.userId;
     }
     
     return self;

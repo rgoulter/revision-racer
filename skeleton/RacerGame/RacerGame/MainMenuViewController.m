@@ -10,7 +10,8 @@
 #import "SetSelectorViewController.h"
 #import "StyleManager.h"
 #import "GameResultsLogic.h"
-#import "GameResultDetails.h"
+#import "GameResultDetailsAttributes.h"
+#import "GameResultInfoAttributes.h"
 #import "Resources.h"
 #import "UserInfoLogic.h"
 
@@ -55,18 +56,25 @@
     [self.navigationController pushViewController:self.setSelectionViewController
                                          animated:YES];
      */
-   /*
-        GameResultDetails* newObj = [NSEntityDescription insertNewObjectForEntityForName:@"GameResultDetails" inManagedObjectContext:[Resources singleton].managedObjectContext];
-        newObj.flashCardId = @(20);
-        newObj.totalGuesses = @(10);
-    newObj.correctGuesses = @(4);
+   
+    GameResultInfoAttributes* result = [[GameResultInfoAttributes alloc] init];
+    result.score = @(20);
+    result.playedDate = [NSDate date];
+    result.setId = @(59);
+    result.userId = [[UserInfoLogic singleton] getActiveUser].userId;
     
-    NSError *error;
-    if (![[Resources singleton].managedObjectContext save:&error]) {
-        NSLog(@"Problem while persisting sample results: %@", [error localizedDescription]);
+    NSMutableSet* detailsSet = [NSMutableSet set];
+    
+    for (int i = 1; i<=5; i++) {
+        GameResultDetailsAttributes* newObj = [[GameResultDetailsAttributes alloc] init];
+        newObj.flashCardId = @(i);
+        newObj.totalGuesses = @(10);
+        newObj.correctGuesses = @(4);
+        
+        [detailsSet addObject:newObj];
     }
-    */
-    [[GameResultsLogic singleton] deleteDetailsForItemWithId:@(20)];
+    
+    [[GameResultsLogic singleton] saveResults:result withDetails:detailsSet];
 }
 
 @end

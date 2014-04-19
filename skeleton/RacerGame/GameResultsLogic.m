@@ -43,7 +43,29 @@
 -(void)saveResults:(GameResultInfoAttributes*)result
        withDetails:(NSSet*)details
 {
-    //TODO: Add implementation
+    GameResultInfo* entity = [NSEntityDescription insertNewObjectForEntityForName:@"GameResultInfo"
+                                                                inManagedObjectContext:self.context];
+    entity.setId = result.setId;
+    entity.playedDate = result.playedDate;
+    entity.score = result.score;
+    entity.userId = [[UserInfoLogic singleton] getPersistentActiveUser].userId;
+    
+    for (GameResultDetailsAttributes* currentItem in details) {
+        GameResultDetails* persistentDetail = [NSEntityDescription insertNewObjectForEntityForName:@"GameResultDetails"
+                                                                            inManagedObjectContext:self.context];
+        persistentDetail.flashCardId = currentItem.flashCardId;
+        persistentDetail.totalGuesses = currentItem.totalGuesses;
+        persistentDetail.correctGuesses = currentItem.correctGuesses;
+        
+        [entity addHasDetailsObject:persistentDetail];
+    }
+    
+    NSError* error = nil;
+    [self.context save:&error];
+    
+    if (error) {
+        NSLog(@"Error encountered while saving results : %@", [error localizedDescription]);
+    }
 }
 
 -(void)deleteDetailsForItemWithId:(NSNumber*)itemId
