@@ -15,6 +15,8 @@
 @property float age;
 @property float duration;
 
+@property (readonly) float t;
+
 @end
 
 
@@ -42,7 +44,19 @@
 
 - (BOOL)isExpired
 {
-    return _age > _duration;
+    return _duration > 0 && _age > _duration;
+}
+
+
+
+- (float)t
+{
+    if (_duration > 0) {
+        return self.age / self.duration;
+    } else {
+        float dur = fabsf(_duration);
+        return remainderf(self.age / dur, dur); // between (0, 1).
+    }
 }
 
 
@@ -365,7 +379,7 @@
 {
     // **MAGIC** assumes StarGLProgram
     _uniform = [prog uniformIndex:@"uAlpha"];
-    float t = self.age / self.duration; // between (0, 1).
+    float t = self.t;
     
     glUniform1f(_uniform, t);
 }
@@ -392,7 +406,7 @@
 {
     // **MAGIC** assumes Main GLProgram
     _uniform = [prog uniformIndex:@"alpha"];
-    float t = self.age / self.duration; // between (0, 1).
+    float t = self.t;
     
     glUniform1f(_uniform, 1 - t);
 }
@@ -421,7 +435,7 @@
 {
     // **MAGIC** assumes Main GLProgram
     _uniform = [prog uniformIndex:@"alpha"];
-    float t = self.age / self.duration; // between (0, 1).
+    float t = self.t;
     
     float y = sinf(2 * M_PI * t * self.duration / _period);
     
@@ -429,6 +443,44 @@
     float lowAlpha = 0.3f;
     
     glUniform1f(_uniform, y > 0 ? lowAlpha : highAlpha);
+}
+
+@end
+
+
+
+@implementation SinusoidalEffect {
+    float _a, _b, _c, _d;
+    NSString* _uniform;
+}
+
+// y = A sin(Bx + C) + D;
+- (id)initWithAmplitude:(float)A Frequency:(float)B YOffset:(float)D Duration:(float)duration ForUniform:(NSString*)uniname
+{
+    self = [super initWithDuration:duration];
+    
+    if (self) {
+        _a = A;
+        _b = B;
+        _c = 0;
+        _d = D;
+        
+        _uniform = uniname;
+    }
+    
+    return self;
+}
+
+- (void)applyForProgram:(GLProgram*)prog
+{
+    // **MAGIC** assumes Main GLProgram
+    GLuint uniform = [prog uniformIndex:_uniform];
+    float t = self.t;
+    
+    // y = A * sin(B * t + C) + D
+    float y = _d + _a * sinf(_b * t + _c);
+    
+    glUniform1f(uniform, y);
 }
 
 @end

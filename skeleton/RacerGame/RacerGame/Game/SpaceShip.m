@@ -15,6 +15,51 @@
 
 #import "SpaceShip.h"
 #import "SpaceShipShape.h"
+#import "BOSquarePyramid.h"
+
+
+
+@interface AfterBurner : SpaceObject
+@end
+
+@implementation AfterBurner
+
+- (id)init
+{
+    BOSquarePyramid *pyra = [[BOSquarePyramid alloc] init];
+    ShaderUniformEffect *sinFX = [[SinusoidalEffect alloc]
+                               initWithAmplitude:0.05
+                                       Frequency:M_PI * 2
+                                         YOffset:0.3
+                                        Duration:-0.4  // **TODO**: Indefinite time
+                                      ForUniform:@"alpha"];
+    self = [super initWithShape:pyra Path:nil andEffects:@[sinFX]];
+    
+    if (self) {
+    }
+    
+    return self;
+}
+
+- (void)drawWithProgram:(GLProgram *)prog andCallback:(void (^)(GLKMatrix4))modelViewMatCallback
+{
+    // draw the afterburner with a translation.
+    
+    GLKMatrix4 lhsMat = GLKMatrix4Translate(GLKMatrix4Identity, 0, 0, 0.5);
+    
+    GLKMatrix4 scaleMat = GLKMatrix4Scale(GLKMatrix4Identity, 0.1, 0.1, 2);
+    lhsMat = GLKMatrix4Multiply(lhsMat, scaleMat);
+    
+    // Intercept draw-call from parent so we scale down the asteroid..
+    // We can scale the object down by applying the scale matrix after the transformation
+    [super drawWithProgram:prog andCallback:^(GLKMatrix4 mvMat) {
+        modelViewMatCallback(lhsMat);
+    }];
+}
+
+@end
+
+
 
 @interface SpaceShip ()
 
@@ -35,6 +80,9 @@
 @end
 
 @implementation SpaceShip
+{
+    AfterBurner* _afterburner;
+}
 
 - (id)initInView:(UIView *)v
 {
@@ -49,10 +97,24 @@
         _deltaPositionVector = CGPointMake(0, 0);
         
         _distTillCanNextAnswer = -1;
+        
+        _afterburner = [[AfterBurner alloc] init];
     }
     
     return self;
 }
+
+- (void)setUp
+{
+    [super setUp];
+    [_afterburner setUp];
+}
+
+- (void)tearDown
+{
+    [_afterburner tearDown];
+    [super tearDown];
+};
 
 - (BOOL)canAnswer
 {
@@ -121,6 +183,8 @@
     if (abs(_rotDZ) < minRotDZ) { _rotDZ = 0; _rotZ = 0; }
     _rotDZ *= (1 - decayPerSecond * timeSinceLastUpdate);
     
+    [_afterburner tick:timeSinceLastUpdate];
+    
     
     if (_distTillCanNextAnswer >= 0) {
         _distTillCanNextAnswer -= [self speed];
@@ -137,6 +201,15 @@
         GLKMatrix4 lhsMat = GLKMatrix4Scale(GLKMatrix4Identity, scale, scale, -scale); // Scale model down.
         
         modelViewMatCallback(GLKMatrix4Multiply(mvMat, lhsMat));
+    }];
+    
+    GLKMatrix4 spaceshipTransform = [self transformation:GLKMatrix4Identity];
+    [_afterburner drawWithProgram:prog andCallback:^(GLKMatrix4 mvMat){
+        // ???
+        
+        //modelViewMatCallback(GLKMatrix4Multiply(mvMat, spaceshipTransform));
+        modelViewMatCallback(GLKMatrix4Multiply(spaceshipTransform, mvMat));
+        //modelViewMatCallback(spaceshipTransform);
     }];
 }
 

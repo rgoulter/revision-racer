@@ -102,3 +102,10 @@
 - (id)initWithDuration:(float)duration AndPeriod:(float)period;
 
 @end
+
+@interface SinusoidalEffect : ShaderUniformEffect
+
+// y = A sin(Bx + C) + D;
+- (id)initWithAmplitude:(float)A Frequency:(float)B YOffset:(float)D Duration:(float)duration ForUniform:(NSString*)uniname;
+
+@end

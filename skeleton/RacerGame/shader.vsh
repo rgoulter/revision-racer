@@ -30,6 +30,7 @@ void main()
     // blend the color with the background based on the
     // somewhat mis-named "alpha" uniform.
     colorVarying = alpha * colorVarying + (1.0 - alpha) * vec4(backgroundColor, 1);
+    colorVarying.a = alpha;
     
     gl_Position = modelViewProjectionMatrix * position;
 }
