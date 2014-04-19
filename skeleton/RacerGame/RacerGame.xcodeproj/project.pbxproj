@@ -72,6 +72,7 @@
 		D9B9F2DE19023FFF00AD1A2E /* GameResultInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = D9B9F2DD19023FFF00AD1A2E /* GameResultInfo.m */; };
 		D9B9F2E11902400000AD1A2E /* GameResultDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = D9B9F2E01902400000AD1A2E /* GameResultDetails.m */; };
 		D9B9F2E51902409300AD1A2E /* GameResultInfoAttributes.m in Sources */ = {isa = PBXBuildFile; fileRef = D9B9F2E41902409300AD1A2E /* GameResultInfoAttributes.m */; };
+		D9B9F2E81902420D00AD1A2E /* GameResultDetailsAttributes.m in Sources */ = {isa = PBXBuildFile; fileRef = D9B9F2E71902420D00AD1A2E /* GameResultDetailsAttributes.m */; };
 		D9EB9B9E18FD601F004AA081 /* ActivityModal.m in Sources */ = {isa = PBXBuildFile; fileRef = D9EB9B9D18FD601F004AA081 /* ActivityModal.m */; };
 		D9EB9BA118FD7E00004AA081 /* FlashSetSummary.xib in Resources */ = {isa = PBXBuildFile; fileRef = D9EB9BA018FD7E00004AA081 /* FlashSetSummary.xib */; };
 /* End PBXBuildFile section */
@@ -200,6 +201,8 @@
 		D9B9F2E01902400000AD1A2E /* GameResultDetails.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameResultDetails.m; sourceTree = "<group>"; };
 		D9B9F2E31902409300AD1A2E /* GameResultInfoAttributes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameResultInfoAttributes.h; sourceTree = "<group>"; };
 		D9B9F2E41902409300AD1A2E /* GameResultInfoAttributes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameResultInfoAttributes.m; sourceTree = "<group>"; };
+		D9B9F2E61902420D00AD1A2E /* GameResultDetailsAttributes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameResultDetailsAttributes.h; sourceTree = "<group>"; };
+		D9B9F2E71902420D00AD1A2E /* GameResultDetailsAttributes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameResultDetailsAttributes.m; sourceTree = "<group>"; };
 		D9EB9B9D18FD601F004AA081 /* ActivityModal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityModal.m; sourceTree = "<group>"; };
 		D9EB9BA018FD7E00004AA081 /* FlashSetSummary.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FlashSetSummary.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -413,6 +416,8 @@
 				D991E55F18ED5E69003A4801 /* FlashSetItemAttributes.m */,
 				D9B9F2E31902409300AD1A2E /* GameResultInfoAttributes.h */,
 				D9B9F2E41902409300AD1A2E /* GameResultInfoAttributes.m */,
+				D9B9F2E61902420D00AD1A2E /* GameResultDetailsAttributes.h */,
+				D9B9F2E71902420D00AD1A2E /* GameResultDetailsAttributes.m */,
 			);
 			name = Attributes;
 			sourceTree = "<group>";
@@ -639,6 +644,7 @@
 				D991E56318EDB129003A4801 /* UserInfoLogic.m in Sources */,
 				D96BA47318E86BB900D29E82 /* SetSelectorViewController.m in Sources */,
 				029E57F118EC1723007EB6E8 /* GameAnimationState.m in Sources */,
+				D9B9F2E81902420D00AD1A2E /* GameResultDetailsAttributes.m in Sources */,
 				D96BA50C18E8A73100D29E82 /* FlashSetItem.m in Sources */,
 				02505AEB18F54AA3008F8563 /* GameViewController+Game.m in Sources */,
 				0262758218E91F4F00CDAA24 /* GameQuestion.m in Sources */,
