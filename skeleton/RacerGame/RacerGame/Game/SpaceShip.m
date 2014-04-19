@@ -127,6 +127,18 @@
     }
 }
 
+- (void)draw:(void (^)(GLKMatrix4))modelViewMatCallback
+{
+    // Intercept draw-call from parent so we scale down the asteroid..
+    // We can scale the object down by applying the scale matrix after the transformation
+    [super draw:^(GLKMatrix4 mvMat) {
+        // **HACK** Awkward hack, check to make sure SpaceShip is drawn the right way. (-z).
+        GLfloat scale = 0.4;
+        GLKMatrix4 lhsMat = GLKMatrix4Scale(GLKMatrix4Identity, scale, scale, -scale); // Scale model down.
+        
+        modelViewMatCallback(GLKMatrix4Multiply(mvMat, lhsMat));
+    }];
+}
 
 
 - (void)incorrectWobble

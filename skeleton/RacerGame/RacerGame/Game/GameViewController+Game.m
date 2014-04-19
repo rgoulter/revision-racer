@@ -261,11 +261,6 @@
     // Scale to WorldSize <- ScreenSize (inverse of above).
     GLKMatrix4 lhsMat = GLKMatrix4Scale(GLKMatrix4Identity, 1 / (sw), -1 / (sh), 1);
     
-    
-    // Now draw the spaceship, since the modelviewMatrix has the right position.
-    // **HACK** Awkward hack, check to make sure SpaceShip is drawn the right way. (-z).
-    lhsMat = GLKMatrix4Scale(lhsMat, 0.4, 0.4, -0.4); // Scale model down.
-    
     //[_program use];
     [self.playerShip draw:^(GLKMatrix4 modelMatrix) {
         GLKMatrix4 mat = GLKMatrix4Multiply(rhsMat, modelMatrix);
