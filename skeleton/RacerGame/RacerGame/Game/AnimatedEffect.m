@@ -339,7 +339,7 @@
     return self;
 }
 
-- (void)apply {
+- (void)applyForProgram:(GLProgram*)prog {
     
 }
 
@@ -351,19 +351,20 @@
     GLuint _uniform;
 }
 
-- (id)initForUniform:(GLuint)uniform WithDuration:(float)duration
+- (id)initWithDuration:(float)duration
 {
     self = [super initWithDuration:duration];
     
     if (self) {
-        _uniform = uniform;
     }
     
     return self;
 }
 
-- (void)apply
+- (void)applyForProgram:(GLProgram*)prog
 {
+    // **MAGIC** assumes StarGLProgram
+    _uniform = [prog uniformIndex:@"uAlpha"];
     float t = self.age / self.duration; // between (0, 1).
     
     glUniform1f(_uniform, t);
@@ -377,19 +378,20 @@
     GLuint _uniform;
 }
 
-- (id)initForUniform:(GLuint)uniform WithDuration:(float)duration
+- (id)initWithDuration:(float)duration
 {
     self = [super initWithDuration:duration];
     
     if (self) {
-        _uniform = uniform;
     }
     
     return self;
 }
 
-- (void)apply
+- (void)applyForProgram:(GLProgram*)prog
 {
+    // **MAGIC** assumes Main GLProgram
+    _uniform = [prog uniformIndex:@"alpha"];
     float t = self.age / self.duration; // between (0, 1).
     
     glUniform1f(_uniform, 1 - t);
@@ -404,25 +406,24 @@
     float _period;
 }
 
-- (id)initForUniform:(GLuint)uniform WithDuration:(float)duration AndPeriod:(float)period
+- (id)initWithDuration:(float)duration AndPeriod:(float)period
 {
     self = [super initWithDuration:duration];
     
     if (self) {
-        _uniform = uniform;
         _period = period;
     }
     
     return self;
 }
 
-- (void)apply
+- (void)applyForProgram:(GLProgram*)prog
 {
+    // **MAGIC** assumes Main GLProgram
+    _uniform = [prog uniformIndex:@"alpha"];
     float t = self.age / self.duration; // between (0, 1).
     
-    // period = 2, duration = 4. So, halfway = t == 0.5 => full "period"
-    // period = 2 duration = 6, so t ~~ 0.3 => full "period"
-    float y = sinf(2 * M_PI * t * self.duration / _period); //  * _period / self.duration
+    float y = sinf(2 * M_PI * t * self.duration / _period);
     
     float highAlpha = 0.8f;
     float lowAlpha = 0.3f;

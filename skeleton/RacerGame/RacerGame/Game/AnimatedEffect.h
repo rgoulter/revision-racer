@@ -11,6 +11,8 @@
 #import "Shapes.h"
 #import "BOCurve.h"
 
+#import "GLProgram.h"
+
 @interface AnimatedEffect : NSObject
 
 @property (readonly) float age;
@@ -79,24 +81,24 @@
 
 - (id)initWithDuration:(float)duration;
 
-- (void)apply;
+- (void)applyForProgram:(GLProgram*)prog;
 
 @end
 
 @interface FadeInEffect : ShaderUniformEffect
 
-- (id)initForUniform:(GLuint)uniform WithDuration:(float)duration;
+- (id)initWithDuration:(float)duration;
 
 @end
 
 @interface FadeOutEffect : ShaderUniformEffect
 
-- (id)initForUniform:(GLuint)uniform WithDuration:(float)duration;
+- (id)initWithDuration:(float)duration;
 
 @end
 
 @interface FlashEffect : ShaderUniformEffect
 
-- (id)initForUniform:(GLuint)uniform WithDuration:(float)duration AndPeriod:(float)period;
+- (id)initWithDuration:(float)duration AndPeriod:(float)period;
 
 @end

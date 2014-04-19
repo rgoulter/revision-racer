@@ -14,6 +14,7 @@
 #import "Shapes.h"
 #import "BOCurve.h"
 
+#import "GLProgram.h"
 #import "AnimatedEffect.h"
 
 
@@ -41,6 +42,6 @@
 - (void)tick:(NSTimeInterval)timeSinceLastUpdate;
 
 - (GLKMatrix4)transformation:(GLKMatrix4)mat;
-- (void)draw:(void (^)(GLKMatrix4))modelViewMatCallback;
+- (void)drawWithProgram:(GLProgram*)prog andCallback:(void (^)(GLKMatrix4))modelViewMatCallback;
 
 @end

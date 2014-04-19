@@ -47,8 +47,7 @@
         
         // **MAGIC** debris duration is 1.5 seconds.
         [debrisAster addEffect:[[FadeOutEffect alloc]
-                                initForUniform:[self.program uniformIndex:@"alpha"]
-                                WithDuration:1.5]];
+                                initWithDuration:1.5]];
     }
 }
 
@@ -90,8 +89,7 @@
     [self.playerShip incorrectWobble];
     
     FlashEffect *flash = [[FlashEffect alloc]
-                          initForUniform:[self.program uniformIndex:@"alpha"]
-                            WithDuration:2.0
+                          initWithDuration:2.0
                                AndPeriod:0.6];
     [self.playerShip addEffect:flash];
     
@@ -262,7 +260,7 @@
     GLKMatrix4 lhsMat = GLKMatrix4Scale(GLKMatrix4Identity, 1 / (sw), -1 / (sh), 1);
     
     //[_program use];
-    [self.playerShip draw:^(GLKMatrix4 modelMatrix) {
+    [self.playerShip drawWithProgram:self.program andCallback:^(GLKMatrix4 modelMatrix) {
         GLKMatrix4 mat = GLKMatrix4Multiply(rhsMat, modelMatrix);
         mat = GLKMatrix4Multiply(mat, lhsMat);
         
@@ -284,7 +282,7 @@
     // We can scale the object down by applying the scale matrix after the transformation
     GLKMatrix4 lhsMat = GLKMatrix4Scale(GLKMatrix4Identity, 1.1, 1.1, 1.1);
     
-    [star draw:^(GLKMatrix4 modelMatrix) {
+    [star drawWithProgram:self.program andCallback:^(GLKMatrix4 modelMatrix) {
         [self prepareToDrawWithModelViewMatrix:GLKMatrix4Multiply(modelMatrix, lhsMat)
                            andProjectionMatrix:self.effect.transform.projectionMatrix];
         glUniform1i([self.program uniformIndex:@"isOutline"], 1);
@@ -294,7 +292,7 @@
     // Draw "Actual"
     glEnable(GL_DEPTH_TEST);
     
-    [star draw:^(GLKMatrix4 modelMatrix) {
+    [star drawWithProgram:self.program andCallback:^(GLKMatrix4 modelMatrix) {
         [self prepareToDrawWithModelViewMatrix:modelMatrix
                            andProjectionMatrix:self.effect.transform.projectionMatrix];
     }];
@@ -333,7 +331,7 @@
         
         [self.starShaderProgram useDefaultUniformValues];
         
-        [star draw:^(GLKMatrix4 modelMat) {
+        [star drawWithProgram:self.starShaderProgram andCallback:^(GLKMatrix4 modelMat) {
             GLKMatrix4 mvProjMatrix = GLKMatrix4Multiply(self.effect.transform.projectionMatrix, modelMat);
             glUniformMatrix4fv([self.starShaderProgram uniformIndex:@"uModelViewProjectionMatrix"], 1, 0, mvProjMatrix.m);
             glUniform3f([self.starShaderProgram uniformIndex:@"uBackgroundColor"], SPACEBG_R,  SPACEBG_G,  SPACEBG_B);
@@ -386,8 +384,7 @@
     SpaceObject *starfield = [[SpaceObject alloc] initWithShape:shape
                                                            Path:path
                                                      andEffects:@[[[FadeInEffect alloc]
-                                                                   initForUniform:[self.starShaderProgram uniformIndex:@"uAlpha"]
-                                                                     WithDuration:1.0]]];
+                                                                   initWithDuration:1.0]]];
     // setUp
     [starfield setUp];
     

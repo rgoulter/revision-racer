@@ -101,7 +101,7 @@
 
 
 
-- (void)draw:(void (^)(GLKMatrix4))modelViewMatCallback
+- (void)drawWithProgram:(GLProgram*)prog andCallback:(void (^)(GLKMatrix4))modelViewMatCallback
 {
     // callback with the model transformation matrix for this
     // SpaceObject.
@@ -114,7 +114,7 @@
     
     // Set the effect uniforms here. (Slightly awkward **DESIGN**).
     for (ShaderUniformEffect *effect in _uniformEffects) {
-        [effect apply];
+        [effect applyForProgram:prog];
     }
     
     

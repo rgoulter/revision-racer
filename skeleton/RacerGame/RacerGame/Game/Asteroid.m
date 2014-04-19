@@ -41,11 +41,11 @@
     [super tearDown];
 }
 
-- (void)draw:(void (^)(GLKMatrix4))modelViewMatCallback
+- (void)drawWithProgram:(GLProgram*)prog andCallback:(void (^)(GLKMatrix4))modelViewMatCallback
 {
     // Intercept draw-call from parent so we scale down the asteroid..
     // We can scale the object down by applying the scale matrix after the transformation
-    [super draw:^(GLKMatrix4 mvMat) {
+    [super drawWithProgram:prog andCallback:^(GLKMatrix4 mvMat) {
         GLfloat scale = 0.25;
         GLKMatrix4 lhsMat = GLKMatrix4Scale(GLKMatrix4Identity, scale, scale, scale);
         
