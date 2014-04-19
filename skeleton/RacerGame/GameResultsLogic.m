@@ -90,6 +90,7 @@
             
             NSDictionary* highestCount = [sortedArray firstObject];
             idOfMostPlayedSet = [highestCount objectForKey:@"setId"];
+            NSLog(@"Id of most frequently played set: %@",idOfMostPlayedSet);
         } else {
             return nil;
         }
@@ -123,7 +124,6 @@
             
             GameResultInfo* latestSet = [sortedArray firstObject];
             idOfLastPlayedSet = latestSet.setId;
-            NSLog(@"Id of last played set: %@",idOfLastPlayedSet);
         } else {
             return nil;
         }

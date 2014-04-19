@@ -57,7 +57,7 @@
      */
    
         GameResultInfo* newObj = [NSEntityDescription insertNewObjectForEntityForName:@"GameResultInfo" inManagedObjectContext:[Resources singleton].managedObjectContext];
-        newObj.setId = @(7);
+        newObj.setId = @(5);
         newObj.playedDate = [NSDate dateWithTimeIntervalSince1970:0];
         newObj.score = @(1000*4);
     newObj.userId = [[UserInfoLogic singleton] getPersistentActiveUser].userId;
@@ -69,7 +69,7 @@
         NSLog(@"Problem while persisting sample results: %@", [error localizedDescription]);
     }
     
-    [[GameResultsLogic singleton] getLastPlayedSet];
+    [[GameResultsLogic singleton] getMostFrequentlyPlayedSet];
 }
 
 @end
