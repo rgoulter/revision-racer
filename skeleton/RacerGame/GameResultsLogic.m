@@ -90,7 +90,6 @@
             
             NSDictionary* highestCount = [sortedArray firstObject];
             idOfMostPlayedSet = [highestCount objectForKey:@"setId"];
-            NSLog(@"Id of most frequently played set: %@",idOfMostPlayedSet);
         } else {
             return nil;
         }
@@ -134,6 +133,28 @@
 
 -(NSUInteger)getTotalNumberOfSetsPlayed
 {
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"GameResultInfo"
+                                              inManagedObjectContext:self.context];
+    
+    NSString* activeUserId = [[UserInfoLogic singleton]getPersistentActiveUser].userId;
+    NSPredicate* matchCondition = [NSPredicate predicateWithFormat:@"userId LIKE %@",activeUserId];
+    
+    NSPropertyDescription* setIdProperty = [[entity propertiesByName] objectForKey:@"setId"];
+    
+    [fetchRequest setEntity:entity];
+    [fetchRequest setPropertiesToFetch:@[setIdProperty]];
+    [fetchRequest setResultType:NSDictionaryResultType];
+    [fetchRequest setPredicate:matchCondition];
+    fetchRequest.returnsDistinctResults = YES;
+    
+    NSError* error = nil;
+    NSArray* fetchedObjects = [self.context executeFetchRequest:fetchRequest error:&error];
+    
+    if (!error) {
+        NSLog(@"Number of total sets played : %lu",(unsigned long)[fetchedObjects count]);
+        return [fetchedObjects count];
+    }
     return 0;
 }
 
