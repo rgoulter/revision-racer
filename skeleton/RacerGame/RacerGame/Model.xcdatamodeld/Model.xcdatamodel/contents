@@ -22,6 +22,7 @@
         <attribute name="playedDate" attributeType="Date" syncable="YES"/>
         <attribute name="score" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="setId" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="userId" attributeType="String" syncable="YES"/>
         <relationship name="hasDetails" toMany="YES" deletionRule="Cascade" destinationEntity="GameResultDetails" syncable="YES"/>
     </entity>
     <entity name="UserInfo" representedClassName="UserInfo" syncable="YES">
@@ -30,13 +31,12 @@
         <attribute name="isActive" attributeType="Boolean" syncable="YES"/>
         <attribute name="userId" attributeType="String" syncable="YES"/>
         <relationship name="canSee" toMany="YES" deletionRule="Cascade" destinationEntity="FlashSetInfo" inverseName="isVisibleTo" inverseEntity="FlashSetInfo" syncable="YES"/>
-        <relationship name="hasPlayed" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="GameResultInfo" syncable="YES"/>
     </entity>
     <elements>
         <element name="FlashSetInfo" positionX="-9018" positionY="-2494" width="171" height="135"/>
         <element name="FlashSetItem" positionX="-8732" positionY="-2374" width="128" height="88"/>
         <element name="GameResultDetails" positionX="-8928" positionY="-2502" width="128" height="88"/>
-        <element name="GameResultInfo" positionX="-8937" positionY="-2511" width="128" height="105"/>
-        <element name="UserInfo" positionX="-9137" positionY="-2664" width="128" height="133"/>
+        <element name="GameResultInfo" positionX="-8937" positionY="-2511" width="128" height="118"/>
+        <element name="UserInfo" positionX="-9137" positionY="-2664" width="128" height="120"/>
     </elements>
 </model>

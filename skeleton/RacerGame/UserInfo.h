@@ -2,7 +2,7 @@
 //  UserInfo.h
 //  RacerGame
 //
-//  Created by Hunar Khanna on 4/4/14.
+//  Created by Hunar Khanna on 19/4/14.
 //  Copyright (c) 2014 Hunar Khanna. All rights reserved.
 //
 
@@ -15,8 +15,8 @@
 
 @property (nonatomic, retain) NSString * accessToken;
 @property (nonatomic, retain) NSDate * expiryTimestamp;
-@property (nonatomic, retain) NSString * userId;
 @property (nonatomic, retain) NSNumber * isActive;
+@property (nonatomic, retain) NSString * userId;
 @property (nonatomic, retain) NSSet *canSee;
 @end
 

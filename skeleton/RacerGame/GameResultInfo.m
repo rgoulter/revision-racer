@@ -7,6 +7,7 @@
 //
 
 #import "GameResultInfo.h"
+#import "GameResultDetails.h"
 
 
 @implementation GameResultInfo
@@ -14,6 +15,7 @@
 @dynamic playedDate;
 @dynamic score;
 @dynamic setId;
+@dynamic userId;
 @dynamic hasDetails;
 
 @end

@@ -9,6 +9,10 @@
 #import "MainMenuViewController.h"
 #import "SetSelectorViewController.h"
 #import "StyleManager.h"
+#import "GameResultsLogic.h"
+#import "GameResultInfo.h"
+#import "Resources.h"
+#import "UserInfoLogic.h"
 
 @interface MainMenuViewController ()
 @property (strong, nonatomic) SetSelectorViewController* setSelectionViewController;
@@ -44,10 +48,28 @@
 }
 
 - (IBAction)newGameButtonPressed:(id)sender {
-    NSLog(@"New game button pressed..");
+    NSLog(@"Testing game results logic..");
     
+    /*
     //Launch segue to level/set selector
-    [self.navigationController pushViewController:self.setSelectionViewController animated:YES];
+    [self.navigationController pushViewController:self.setSelectionViewController
+                                         animated:YES];
+     */
+   
+        GameResultInfo* newObj = [NSEntityDescription insertNewObjectForEntityForName:@"GameResultInfo" inManagedObjectContext:[Resources singleton].managedObjectContext];
+        newObj.setId = @(7);
+        newObj.playedDate = [NSDate dateWithTimeIntervalSince1970:0];
+        newObj.score = @(1000*4);
+    newObj.userId = [[UserInfoLogic singleton] getPersistentActiveUser].userId;
+    
+    
+    
+    NSError *error;
+    if (![[Resources singleton].managedObjectContext save:&error]) {
+        NSLog(@"Problem while persisting sample results: %@", [error localizedDescription]);
+    }
+    
+    [[GameResultsLogic singleton] getLastPlayedSet];
 }
 
 @end

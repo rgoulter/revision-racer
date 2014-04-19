@@ -9,19 +9,21 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
+@class GameResultDetails;
 
 @interface GameResultInfo : NSManagedObject
 
 @property (nonatomic, retain) NSDate * playedDate;
 @property (nonatomic, retain) NSNumber * score;
 @property (nonatomic, retain) NSNumber * setId;
+@property (nonatomic, retain) NSString * userId;
 @property (nonatomic, retain) NSSet *hasDetails;
 @end
 
 @interface GameResultInfo (CoreDataGeneratedAccessors)
 
-- (void)addHasDetailsObject:(NSManagedObject *)value;
-- (void)removeHasDetailsObject:(NSManagedObject *)value;
+- (void)addHasDetailsObject:(GameResultDetails *)value;
+- (void)removeHasDetailsObject:(GameResultDetails *)value;
 - (void)addHasDetails:(NSSet *)values;
 - (void)removeHasDetails:(NSSet *)values;
 
