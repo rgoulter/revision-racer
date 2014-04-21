@@ -37,6 +37,15 @@
     
 }
 
+-(void)setSelected:(BOOL)selected
+{
+    self.layer.borderWidth = 5;
+    if (selected) {
+        self.layer.borderColor = [UIColor orangeColor].CGColor;
+    } else {
+        self.layer.borderColor = [UIColor clearColor].CGColor;
+    }
+}
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.

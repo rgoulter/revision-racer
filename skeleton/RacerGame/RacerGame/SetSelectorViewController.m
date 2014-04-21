@@ -22,7 +22,6 @@
 
 @interface SetSelectorViewController ()
 
-@property (strong, nonatomic) IBOutlet UITableView *setTable;
 @property (strong, nonatomic) IBOutlet UICollectionView *flashSetCollection;
 @property (strong, nonatomic) NSArray* listOfUserSets;
 @property (strong, nonatomic) FlashSetInfoAttributes* selectedSetForGame;
@@ -52,19 +51,7 @@
     [super viewDidLoad];
     
     self.listOfUserSets = [[FlashSetLogic singleton] getSetsOfActiveUser];
-    
-    /*
-    [self.setTable setDataSource:self];
-    [self.setTable registerClass:[UITableViewCell class] forCellReuseIdentifier:@"SimpleCell"];
-    [self.setTable setDelegate:self];
-    UINib* customCellNib = [UINib nibWithNibName:@"SetSelectionTableItem" bundle:[NSBundle mainBundle]];
-    [self.setTable registerNib:customCellNib forCellReuseIdentifier:@"CustomCell"];
-    
-    SetSelectionTableItem* item = [[[NSBundle mainBundle] loadNibNamed:@"SetSelectionTableItem" owner:nil options:nil] lastObject];
-    
-    
-    [self.setTable setRowHeight:item.bounds.size.height];
-     */
+
     // Do any additional setup after loading the view.
     
     UICollectionViewFlowLayout* gridLayout = [[UICollectionViewFlowLayout alloc] init];
@@ -79,6 +66,7 @@
     
     self.flashSetCollection.collectionViewLayout = gridLayout;
     [self.flashSetCollection setDataSource:self];
+    [self.flashSetCollection setDelegate:self];
     [self.flashSetCollection setBackgroundColor:[UIColor clearColor]];
     
 }
@@ -143,7 +131,7 @@
     self.listOfUserSets = [[FlashSetLogic singleton] downloadAllSetsForUserId:userInfo];
     [self.statusModal removeFromSuperview];
     
-    [self.setTable reloadData];
+    [self.flashSetCollection reloadData];
 }
 
 #pragma mark - QuizletLoginDelegate methods
@@ -164,34 +152,16 @@
     [self performSegueWithIdentifier:@"setSelectionToGame" sender:self];
 }
 
-#pragma mark UITableViewDelegate methods
+#pragma mark UICollectionViewDelegate methods
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     self.selectedSetForGame = self.listOfUserSets[[indexPath item]];
 }
 
-#pragma mark UITableViewDataSource delegate methods
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 1;
-}
-
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return [self.listOfUserSets count];
-}
-
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    UITableViewCell* defaultCell = [tableView dequeueReusableCellWithIdentifier:@"CustomCell"];
-    //UITableViewCell* defaultCell = [tableView dequeueReusableCellWithIdentifier:<#(NSString *)#>]
-    FlashSetInfoAttributes* requiredSet = self.listOfUserSets[[indexPath section]];
-    
-    SetSelectionTableItem* myCell = (SetSelectionTableItem*)defaultCell;
-    [myCell setDataSource:requiredSet];
-    [myCell setBackgroundColor:[UIColor clearColor]];
-    
-    return myCell;
+    self.selectedSetForGame = self.listOfUserSets[[indexPath item]];
+    NSLog(@"Cell %lu selected",[indexPath item]);
 }
 
 #pragma mark UICollectionViewDataSource delegate methods
