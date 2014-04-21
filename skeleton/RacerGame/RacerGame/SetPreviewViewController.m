@@ -86,6 +86,14 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    UICollectionViewCell* customCell = [collectionView cellForItemAtIndexPath:indexPath];
+    FlashSetItemPreview* myCell = (FlashSetItemPreview*)customCell;
+
+    [myCell flipCard];
+}
+
 #pragma mark UICollectionViewDataSourceDelegate methods
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
@@ -93,7 +101,7 @@
 {
     UICollectionViewCell* customCell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PreviewCell"
                                                                                  forIndexPath:indexPath];
-    FlashSetItemAttributes* requiredSet = self.setContents[[indexPath item]];
+    FlashSetItemAttributes* requiredSet = self.setContents[[indexPath section]];
     
     FlashSetItemPreview* myCell = (FlashSetItemPreview*)customCell;
     [myCell setDataSource:requiredSet];
@@ -102,7 +110,6 @@
 
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
-    NSLog(@"Number of items in set : %lu",[self.setContents count]);
     return [self.setContents count];
 }
 

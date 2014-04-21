@@ -12,4 +12,6 @@
 @interface FlashSetItemPreview : UICollectionViewCell
 
 -(void)setDataSource:(FlashSetItemAttributes*)item;
+
+-(void)flipCard;
 @end

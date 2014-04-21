@@ -26,10 +26,27 @@
     return self;
 }
 
+
 -(void)setDataSource:(FlashSetItemAttributes *)item
 {
     self.backingSetItem = item;
+    [self.currentFaceType setText:@"Term"];
+    [self.currentFaceText setText:self.backingSetItem.term];
 }
+
+-(void)flipCard
+{
+        if ([self.currentFaceType.text isEqualToString:@"Term"]) {
+            NSLog(@"CALL 1??");
+            [self.currentFaceType setText:@"Definition"];
+            [self.currentFaceText setText:self.backingSetItem.definition];
+        } else {
+            NSLog(@"CALL 2??");
+            [self.currentFaceType setText:@"Term"];
+            [self.currentFaceText setText:self.backingSetItem.term];
+        }
+}
+
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
