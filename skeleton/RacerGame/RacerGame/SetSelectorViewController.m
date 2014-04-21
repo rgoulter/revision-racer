@@ -60,7 +60,7 @@
     
     UICollectionViewFlowLayout* gridLayout = [[UICollectionViewFlowLayout alloc] init];
     gridLayout.minimumInteritemSpacing = 5;
-    gridLayout.sectionInset = UIEdgeInsetsMake(15, 28, 15, 28);
+    gridLayout.sectionInset = UIEdgeInsetsMake(15, 45, 15, 45);
 
     UINib* customCellNib = [UINib nibWithNibName:@"FlashSetSummary" bundle:[NSBundle mainBundle]];
     [self.flashSetCollection registerNib:customCellNib forCellWithReuseIdentifier:@"CustomCell"];
