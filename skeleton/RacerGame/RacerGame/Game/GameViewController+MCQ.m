@@ -92,6 +92,15 @@
 
 
 
+- (QuestionGenerationContext*)questionGenerationContext
+{
+    return [[QuestionGenerationContext alloc]
+            initWithAnswers:[self currentAnswerStates]
+                andDuration:self.gameRules.questionDuration];
+}
+
+
+
 - (void)questionAnswered:(QuestionState*)qnState
 {
     // This is called when the question has been 'invoked'
@@ -178,9 +187,7 @@
     
     // Now set a new qn.
     QuestionState *nextQnState = [self.questionUI associatedQuestionState];
-    QuestionGenerationContext *qnGenCtx = [[QuestionGenerationContext alloc]
-                                           initWithAnswers:[self currentAnswerStates]
-                                           andDuration:self.gameRules.questionDuration];
+    QuestionGenerationContext *qnGenCtx = [self questionGenerationContext];
     nextQnState = [nextQnState nextQuestionStateFromContext:qnGenCtx];
     
     
