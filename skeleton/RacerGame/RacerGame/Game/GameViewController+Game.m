@@ -69,7 +69,7 @@
 
 - (void)gameEffectForCorrectAnswer
 {
-//    [self checkQnAnsStateRep]; TODO
+    [self checkQnAnsStateRep];
     
     [self explodeAsteroidForSelectedAnswer];
     
@@ -89,7 +89,7 @@
 
 - (void)gameEffectForIncorrectAnswer
 {
-//    [self checkQnAnsStateRep]; TODO
+    [self checkQnAnsStateRep];
     
     // The user answered the question correctly,
     // so we make the game easier for them by increasing

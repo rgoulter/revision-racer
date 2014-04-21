@@ -32,7 +32,7 @@
     self = [super init];
     
     if (self) {
-        _questionDuration = 5;
+        _questionDuration = 6;
     }
     
     return self;
@@ -72,7 +72,7 @@
 
 - (float)minimumQuestionDuration
 {
-    return 1; // **MAGIC**
+    return 3; // **MAGIC**
 }
 
 

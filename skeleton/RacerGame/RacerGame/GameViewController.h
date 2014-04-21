@@ -52,6 +52,7 @@
 - (CGPoint)spaceshipRestPosition;
 - (CGPoint)worldPointForLaneNum:(NSUInteger)idx;
 - (void)selectAnswerUI:(id<AnswerUI>)answerUI;
+- (void)checkQnAnsStateRep;
 @property (readonly) GLProgram *program;
 @property (readonly) GLProgram *starShaderProgram;
 
