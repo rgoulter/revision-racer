@@ -67,16 +67,31 @@
 
 
 
+- (void)updateScoreLabels
+{
+    [self.scoreLabel setText:[NSString stringWithFormat:@"Score %3d", self.gameRules.score]];
+    [self.scoreComboLabel setText:[NSString stringWithFormat:@"Combo %d", self.gameRules.combo]];
+    
+    // Make scorecombo label visible only if we have
+    // a combo
+    [self.scoreComboLabel setAlpha:self.gameRules.combo > 0 ? 1 : 0];
+    
+    // Set the label colors;
+    UIColor *col = [UIColor whiteColor];
+    self.scoreLabel.textColor = col;
+    self.scoreComboLabel.textColor = col;
+}
+
+
+
 - (void)gameEffectForCorrectAnswer
 {
     [self checkQnAnsStateRep];
     
-    [self explodeAsteroidForSelectedAnswer];
+    [self.gameRules updateRulesForCorrectAnswer];
+    [self updateScoreLabels];
     
-    // The user answered the question correctly,
-    // so we make the game harder for them by decreasing
-    // the amount of time for them to answer questions.
-    [self.gameRules decreaseQuestionDuration];
+    [self explodeAsteroidForSelectedAnswer];
     
     // Tidy up asteroids..
     // **DEP** The design here is a little strange at this point.
@@ -91,10 +106,8 @@
 {
     [self checkQnAnsStateRep];
     
-    // The user answered the question correctly,
-    // so we make the game easier for them by increasing
-    // the amount of time for them to answer questions.
-    [self.gameRules increaseQuestionDuration];
+    [self.gameRules updateRulesForIncorrectAnswer];
+    [self updateScoreLabels];
     
     [self.playerShip incorrectWobble];
     

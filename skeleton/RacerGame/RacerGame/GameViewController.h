@@ -36,6 +36,8 @@
 @property (strong, nonatomic) GLKBaseEffect *effect;
 
 @property (weak, nonatomic) IBOutlet UIQuestionLabel *questionLabel;
+@property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
+@property (weak, nonatomic) IBOutlet UILabel *scoreComboLabel;
 
 @property (readonly) GameRules *gameRules;
 

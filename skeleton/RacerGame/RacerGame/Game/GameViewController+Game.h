@@ -22,6 +22,10 @@
 @property NSMutableArray *deadAsteroids; // **HACK**
 @property NSMutableArray *laneAsteroids; // **HACK**
 
+// Borrow these labelso from GameVC.
+@property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
+@property (weak, nonatomic) IBOutlet UILabel *scoreComboLabel;
+
 - (void)setUpGameObjects;
 - (void)explodeAsteroid:(Asteroid*)aster;
 - (void)addLaneAsteroid:(NSUInteger)idx;

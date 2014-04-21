@@ -15,8 +15,14 @@
 - (void)increaseQuestionDuration;
 - (void)increaseQuestionDurationByAmount:(NSTimeInterval)delta;
 
+- (void)updateRulesForCorrectAnswer;
+- (void)updateRulesForIncorrectAnswer;
+
 @property (readonly) float minimumQuestionDuration;
 @property (readonly) float maximumQuestionDuration;
 @property (readonly) float questionDuration;
+
+@property (readonly) int score;
+@property (readonly) int combo;
 
 @end

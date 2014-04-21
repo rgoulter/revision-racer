@@ -18,6 +18,9 @@
 
 @property float questionDuration;
 
+@property int score;
+@property int combo;
+
 @end
 
 @implementation GameRules
@@ -98,6 +101,34 @@
 - (float)questionDuration
 {
     return _questionDuration; // seconds
+}
+
+
+
+- (void)updateRulesForCorrectAnswer
+{
+    // The user answered the question correctly,
+    // so we make the game harder for them by decreasing
+    // the amount of time for them to answer questions.
+    [self decreaseQuestionDuration];
+    
+    
+    // Increase score; more for higher combo.
+    _score += _combo > 0 ? 15 : 10;
+    _combo += 1;
+}
+
+
+
+- (void)updateRulesForIncorrectAnswer
+{
+    // The user answered the question correctly,
+    // so we make the game easier for them by increasing
+    // the amount of time for them to answer questions.
+    [self increaseQuestionDuration];
+    
+    // Don't increase score; reset combo.
+    _combo = 0;
 }
 
 @end
