@@ -76,6 +76,7 @@
 		D9B9F2F4190274F000AD1A2E /* UserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = D9B9F2F3190274F000AD1A2E /* UserInfo.m */; };
 		D9B9F2F71905079E00AD1A2E /* SetSelectionCell.png in Resources */ = {isa = PBXBuildFile; fileRef = D9B9F2F61905079E00AD1A2E /* SetSelectionCell.png */; };
 		D9B9F2FD19050B4900AD1A2E /* FlashSetSummary.m in Sources */ = {isa = PBXBuildFile; fileRef = D9B9F2FC19050B4900AD1A2E /* FlashSetSummary.m */; };
+		D9B9F2FF1905169100AD1A2E /* UpdateSetButtonImage.png in Resources */ = {isa = PBXBuildFile; fileRef = D9B9F2FE1905169100AD1A2E /* UpdateSetButtonImage.png */; };
 		D9EB9B9E18FD601F004AA081 /* ActivityModal.m in Sources */ = {isa = PBXBuildFile; fileRef = D9EB9B9D18FD601F004AA081 /* ActivityModal.m */; };
 		D9EB9BA118FD7E00004AA081 /* FlashSetSummary.xib in Resources */ = {isa = PBXBuildFile; fileRef = D9EB9BA018FD7E00004AA081 /* FlashSetSummary.xib */; };
 /* End PBXBuildFile section */
@@ -211,6 +212,7 @@
 		D9B9F2F61905079E00AD1A2E /* SetSelectionCell.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = SetSelectionCell.png; path = ../../Assets/SetSelectionCell.png; sourceTree = "<group>"; };
 		D9B9F2FB19050B4900AD1A2E /* FlashSetSummary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlashSetSummary.h; sourceTree = "<group>"; };
 		D9B9F2FC19050B4900AD1A2E /* FlashSetSummary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlashSetSummary.m; sourceTree = "<group>"; };
+		D9B9F2FE1905169100AD1A2E /* UpdateSetButtonImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = UpdateSetButtonImage.png; path = ../../Assets/UpdateSetButtonImage.png; sourceTree = "<group>"; };
 		D9EB9B9D18FD601F004AA081 /* ActivityModal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityModal.m; sourceTree = "<group>"; };
 		D9EB9BA018FD7E00004AA081 /* FlashSetSummary.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FlashSetSummary.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -524,6 +526,7 @@
 		D9B9F2F51905078B00AD1A2E /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				D9B9F2FE1905169100AD1A2E /* UpdateSetButtonImage.png */,
 				D9B9F2F61905079E00AD1A2E /* SetSelectionCell.png */,
 			);
 			name = Assets;
@@ -616,6 +619,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D9B229FE18DB1F1800DDBA11 /* Images.xcassets in Resources */,
+				D9B9F2FF1905169100AD1A2E /* UpdateSetButtonImage.png in Resources */,
 				0280A1EB18EEE70E006B50B4 /* shader.fsh in Resources */,
 				02505AF018F57801008F8563 /* starcluster.vsh in Resources */,
 				D96BA52C18EB32AE00D29E82 /* ActivityModal.xib in Resources */,
