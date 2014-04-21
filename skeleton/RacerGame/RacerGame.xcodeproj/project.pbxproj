@@ -74,6 +74,8 @@
 		D9B9F2EB1902463800AD1A2E /* GameResultsLogic.m in Sources */ = {isa = PBXBuildFile; fileRef = D9B9F2EA1902463800AD1A2E /* GameResultsLogic.m */; };
 		D9B9F2F1190274EF00AD1A2E /* GameResultInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = D9B9F2F0190274EF00AD1A2E /* GameResultInfo.m */; };
 		D9B9F2F4190274F000AD1A2E /* UserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = D9B9F2F3190274F000AD1A2E /* UserInfo.m */; };
+		D9B9F2F71905079E00AD1A2E /* SetSelectionCell.png in Resources */ = {isa = PBXBuildFile; fileRef = D9B9F2F61905079E00AD1A2E /* SetSelectionCell.png */; };
+		D9B9F2FD19050B4900AD1A2E /* FlashSetSummary.m in Sources */ = {isa = PBXBuildFile; fileRef = D9B9F2FC19050B4900AD1A2E /* FlashSetSummary.m */; };
 		D9EB9B9E18FD601F004AA081 /* ActivityModal.m in Sources */ = {isa = PBXBuildFile; fileRef = D9EB9B9D18FD601F004AA081 /* ActivityModal.m */; };
 		D9EB9BA118FD7E00004AA081 /* FlashSetSummary.xib in Resources */ = {isa = PBXBuildFile; fileRef = D9EB9BA018FD7E00004AA081 /* FlashSetSummary.xib */; };
 /* End PBXBuildFile section */
@@ -206,6 +208,9 @@
 		D9B9F2F0190274EF00AD1A2E /* GameResultInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameResultInfo.m; sourceTree = "<group>"; };
 		D9B9F2F2190274F000AD1A2E /* UserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfo.h; sourceTree = "<group>"; };
 		D9B9F2F3190274F000AD1A2E /* UserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfo.m; sourceTree = "<group>"; };
+		D9B9F2F61905079E00AD1A2E /* SetSelectionCell.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = SetSelectionCell.png; path = ../../Assets/SetSelectionCell.png; sourceTree = "<group>"; };
+		D9B9F2FB19050B4900AD1A2E /* FlashSetSummary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlashSetSummary.h; sourceTree = "<group>"; };
+		D9B9F2FC19050B4900AD1A2E /* FlashSetSummary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlashSetSummary.m; sourceTree = "<group>"; };
 		D9EB9B9D18FD601F004AA081 /* ActivityModal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityModal.m; sourceTree = "<group>"; };
 		D9EB9BA018FD7E00004AA081 /* FlashSetSummary.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FlashSetSummary.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -390,6 +395,7 @@
 		D96BA52418EAFE2400D29E82 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				D9B9F2F51905078B00AD1A2E /* Assets */,
 				D9B9F2D8190150B300AD1A2E /* NavigationButtons */,
 				D9EB9B9F18FD7DCE004AA081 /* FlashSetSummary */,
 				D96BA52A18EB328400D29E82 /* ActivityModal */,
@@ -515,10 +521,20 @@
 			name = NavigationButtons;
 			sourceTree = "<group>";
 		};
+		D9B9F2F51905078B00AD1A2E /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				D9B9F2F61905079E00AD1A2E /* SetSelectionCell.png */,
+			);
+			name = Assets;
+			sourceTree = "<group>";
+		};
 		D9EB9B9F18FD7DCE004AA081 /* FlashSetSummary */ = {
 			isa = PBXGroup;
 			children = (
 				D9EB9BA018FD7E00004AA081 /* FlashSetSummary.xib */,
+				D9B9F2FB19050B4900AD1A2E /* FlashSetSummary.h */,
+				D9B9F2FC19050B4900AD1A2E /* FlashSetSummary.m */,
 			);
 			name = FlashSetSummary;
 			sourceTree = "<group>";
@@ -608,6 +624,7 @@
 				D9EB9BA118FD7E00004AA081 /* FlashSetSummary.xib in Resources */,
 				0280A1E918EEE6FF006B50B4 /* shader.vsh in Resources */,
 				02505AF218F57819008F8563 /* starcluster.fsh in Resources */,
+				D9B9F2F71905079E00AD1A2E /* SetSelectionCell.png in Resources */,
 				D96BA52618EAFEB300D29E82 /* SetSelectionTableItem.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -627,6 +644,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D9B9F2FD19050B4900AD1A2E /* FlashSetSummary.m in Sources */,
 				02505AF618F6957F008F8563 /* BOShape.m in Sources */,
 				D96BA52318E92F1700D29E82 /* FlashSetInfoAttributes.m in Sources */,
 				D9B229FC18DB1F1800DDBA11 /* MainMenuViewController.m in Sources */,

@@ -18,10 +18,12 @@
 #import "NavigationButton.h"
 #import "UserInfoLogic.h"
 #import "StyleManager.h"
+#import "FlashSetSummary.h"
 
 @interface SetSelectorViewController ()
 
 @property (strong, nonatomic) IBOutlet UITableView *setTable;
+@property (strong, nonatomic) IBOutlet UICollectionView *flashSetCollection;
 @property (strong, nonatomic) NSArray* listOfUserSets;
 @property (strong, nonatomic) FlashSetInfoAttributes* selectedSetForGame;
 @property (strong, nonatomic) ActivityModal* statusModal;
@@ -51,6 +53,7 @@
     
     self.listOfUserSets = [[FlashSetLogic singleton] getSetsOfActiveUser];
     
+    /*
     [self.setTable setDataSource:self];
     [self.setTable registerClass:[UITableViewCell class] forCellReuseIdentifier:@"SimpleCell"];
     [self.setTable setDelegate:self];
@@ -61,7 +64,23 @@
     
     
     [self.setTable setRowHeight:item.bounds.size.height];
+     */
     // Do any additional setup after loading the view.
+    
+    UICollectionViewFlowLayout* gridLayout = [[UICollectionViewFlowLayout alloc] init];
+    gridLayout.minimumInteritemSpacing = 20;
+    gridLayout.sectionInset = UIEdgeInsetsMake(5, 10, 5, 10);
+
+    UINib* customCellNib = [UINib nibWithNibName:@"FlashSetSummary" bundle:[NSBundle mainBundle]];
+    [self.flashSetCollection registerNib:customCellNib forCellWithReuseIdentifier:@"CustomCell"];
+    
+    UICollectionViewCell* item = [[[NSBundle mainBundle] loadNibNamed:@"FlashSetSummary" owner:nil options:nil] lastObject];
+    gridLayout.itemSize = item.bounds.size;
+    
+    self.flashSetCollection.collectionViewLayout = gridLayout;
+    [self.flashSetCollection setDataSource:self];
+    [self.flashSetCollection setBackgroundColor:[UIColor clearColor]];
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -175,4 +194,26 @@
     return myCell;
 }
 
+#pragma mark UICollectionViewDataSource delegate methods
+-(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
+                 cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    UICollectionViewCell* customCell = [collectionView dequeueReusableCellWithReuseIdentifier:@"CustomCell"
+                                                                                 forIndexPath:indexPath];
+    FlashSetInfoAttributes* requiredSet = self.listOfUserSets[[indexPath item]];
+    
+    FlashSetSummary* myCell = (FlashSetSummary*)customCell;
+    [myCell setDataSource:requiredSet];
+    return customCell;
+}
+
+-(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+    return [self.listOfUserSets count];
+}
+
+-(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
+{
+    return 1;
+}
 @end
