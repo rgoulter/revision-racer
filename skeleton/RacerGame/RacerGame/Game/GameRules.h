@@ -10,6 +10,16 @@
 
 @interface GameRules : NSObject
 
+- (id)initWithStartingQuestionDuration:(float)duration
+                          andTimeLimit:(NSTimeInterval)timeLimit;
+- (id)initWithStartingQuestionDuration:(float)duration
+                      andNumberOfLives:(int)numLives;
+- (id)initWithStartingQuestionDuration:(float)duration
+                      andNumberOfLives:(int)numLives
+                          andTimeLimit:(NSTimeInterval)timeLimit;
+
++ (GameRules*)defaultGameRules;
+
 - (void)decreaseQuestionDuration;
 - (void)decreaseQuestionDurationByAmount:(NSTimeInterval)delta;
 - (void)increaseQuestionDuration;

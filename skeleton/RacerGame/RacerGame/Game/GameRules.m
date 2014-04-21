@@ -30,6 +30,77 @@
 
 
 
+- (id)initWithStartingQuestionDuration:(float)duration
+                      andNumberOfLives:(int)numLives
+                          andTimeLimit:(NSTimeInterval)timeLimit
+{
+    self = [super init];
+    
+    if (self) {
+        _questionDuration = duration;
+        
+        _timeLimitEnabled = YES;
+        _livesEnabled = YES;
+        
+        _numLivesRemaining = numLives;
+        _timeRemaining = timeLimit;
+    }
+    
+    return self;
+}
+
+
+
+- (id)initWithStartingQuestionDuration:(float)duration
+                          andTimeLimit:(NSTimeInterval)timeLimit
+{
+    self = [super init];
+    
+    if (self) {
+        _questionDuration = duration;
+        
+        _timeLimitEnabled = YES;
+        _livesEnabled = NO;
+        
+        _timeRemaining = timeLimit;
+    }
+    
+    return self;
+}
+
+
+
+- (id)initWithStartingQuestionDuration:(float)duration
+                      andNumberOfLives:(int)numLives
+{
+    self = [super init];
+    
+    if (self) {
+        _questionDuration = duration;
+        
+        _timeLimitEnabled = NO;
+        _livesEnabled = YES;
+        
+        _numLivesRemaining = numLives;
+    }
+    
+    return self;
+}
+
+
+
+
++ (GameRules*)defaultGameRules
+{
+    return [[GameRules alloc] initWithStartingQuestionDuration:6
+                                              andNumberOfLives:3
+                                                  andTimeLimit:30];
+}
+
+
+
+
+
 - (id)init
 {
     self = [super init];

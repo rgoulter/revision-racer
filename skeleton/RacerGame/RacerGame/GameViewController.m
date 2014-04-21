@@ -74,7 +74,7 @@
     _gameOverAlertView.alertViewStyle = UIAlertViewStyleDefault;
     
     
-    _gameRules = [[GameRules alloc] init];
+    _gameRules = [GameRules defaultGameRules];
     
     [self setUpGameObjects];
     
