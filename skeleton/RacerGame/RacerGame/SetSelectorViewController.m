@@ -61,7 +61,6 @@
     
     
     [self.setTable setRowHeight:item.bounds.size.height];
-    
     // Do any additional setup after loading the view.
 }
 
@@ -155,6 +154,11 @@
 #pragma mark UITableViewDataSource delegate methods
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    return 1;
+}
+
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
     return [self.listOfUserSets count];
 }
 
@@ -162,10 +166,11 @@
 {
     UITableViewCell* defaultCell = [tableView dequeueReusableCellWithIdentifier:@"CustomCell"];
     //UITableViewCell* defaultCell = [tableView dequeueReusableCellWithIdentifier:<#(NSString *)#>]
-    FlashSetInfoAttributes* requiredSet = self.listOfUserSets[[indexPath item]];
+    FlashSetInfoAttributes* requiredSet = self.listOfUserSets[[indexPath section]];
     
     SetSelectionTableItem* myCell = (SetSelectionTableItem*)defaultCell;
     [myCell setDataSource:requiredSet];
+    [myCell setBackgroundColor:[UIColor clearColor]];
     
     return myCell;
 }

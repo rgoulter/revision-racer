@@ -12,6 +12,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *setTitle;
 @property (strong, nonatomic) IBOutlet UILabel *lastUpdatedText;
 @property (strong, nonatomic) IBOutlet UIButton *updateButton;
+@property (strong, nonatomic) IBOutlet UIView *background;
 
 @property (strong, nonatomic) FlashSetInfoAttributes* backingData;
 @end
@@ -21,6 +22,9 @@
 - (void)awakeFromNib
 {
     // Initialization code
+    
+    self.background.layer.cornerRadius = 10;
+    self.background.backgroundColor = [UIColor colorWithRed:(237.0/255.0) green:(234.0/255.0) blue:(228.0/255.0) alpha:2.0];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
@@ -43,4 +47,5 @@
 - (IBAction)updateButtonPressed:(id)sender {
     NSLog(@"Update set button pressed");
 }
+
 @end
