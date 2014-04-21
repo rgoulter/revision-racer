@@ -163,18 +163,34 @@
         <!--Set Preview View Controller-->
         <scene sceneID="ov6-aW-aYA">
             <objects>
-                <viewController id="zZ8-a0-NXR" customClass="SetPreviewViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SetPreviewViewController" id="zZ8-a0-NXR" customClass="SetPreviewViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="2kr-Ui-6Em"/>
                         <viewControllerLayoutGuide type="bottom" id="cGz-Gh-mhR"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="M7A-Qi-gSb" customClass="SetPre">
+                    <view key="view" contentMode="scaleToFill" id="M7A-Qi-gSb">
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RTJ-We-y5C" customClass="NavigationButton">
+                                <rect key="frame" x="20" y="19" width="72" height="54"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Back">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="backButtonPressed:" destination="zZ8-a0-NXR" eventType="touchUpInside" id="Fff-6f-049"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
+                    <navigationItem key="navigationItem" id="b0a-al-c1k"/>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                    <connections>
+                        <outlet property="backNavigation" destination="RTJ-We-y5C" id="u88-lH-pMh"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dux-Lp-Wi3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

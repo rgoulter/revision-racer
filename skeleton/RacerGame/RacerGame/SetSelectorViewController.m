@@ -19,6 +19,7 @@
 #import "UserInfoLogic.h"
 #import "StyleManager.h"
 #import "FlashSetSummary.h"
+#import "SetPreviewViewController.h"
 
 @interface SetSelectorViewController ()
 
@@ -166,6 +167,9 @@
 
 - (IBAction)previewButtonPressed:(id)sender {
     NSLog(@"Preview button pressed");
+    
+    SetPreviewViewController* previewViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"SetPreviewViewController"];
+    [self.navigationController pushViewController:previewViewController animated:YES];
 }
 
 

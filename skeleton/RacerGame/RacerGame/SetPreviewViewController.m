@@ -7,8 +7,11 @@
 //
 
 #import "SetPreviewViewController.h"
+#import "NavigationButton.h"
+#import "StyleManager.h"
 
 @interface SetPreviewViewController ()
+@property (strong, nonatomic) IBOutlet NavigationButton *backNavigation;
 
 @end
 
@@ -27,12 +30,19 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    StyleManager* manager = [StyleManager manager];
+    [self.backNavigation setAttributedTitle:[manager getAttributedButtonTextForString:@"Back"]
+                                   forState:UIControlStateNormal];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (IBAction)backButtonPressed:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 /*
