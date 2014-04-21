@@ -18,6 +18,8 @@
 @property (strong, nonatomic) FlashSetInfoAttributes* backingFlashSet;
 @property (strong, nonatomic) NSArray* setContents;
 @property (strong, nonatomic) IBOutlet UICollectionView *setItemsCollection;
+@property (strong, nonatomic) IBOutlet UIView *collectionViewBackground;
+
 @end
 
 @implementation SetPreviewViewController
@@ -66,6 +68,8 @@
     [self.setItemsCollection setDataSource:self];
     [self.setItemsCollection setDelegate:self];
     [self.setItemsCollection setBackgroundColor:[UIColor clearColor]];
+    
+    self.collectionViewBackground.layer.cornerRadius = 10;
 }
 
 - (void)didReceiveMemoryWarning

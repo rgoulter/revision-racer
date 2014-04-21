@@ -172,6 +172,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZHg-Pm-EKn">
+                                <rect key="frame" x="112" y="112" width="798" height="578"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.84729534650000005" green="0.84729534650000005" blue="0.84729534650000005" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RTJ-We-y5C" customClass="NavigationButton">
                                 <rect key="frame" x="20" y="19" width="72" height="54"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -201,12 +206,13 @@
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <connections>
                         <outlet property="backNavigation" destination="RTJ-We-y5C" id="u88-lH-pMh"/>
+                        <outlet property="collectionViewBackground" destination="ZHg-Pm-EKn" id="rOD-g9-xXJ"/>
                         <outlet property="setItemsCollection" destination="4ZD-Qp-4jf" id="omb-30-aIA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dux-Lp-Wi3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2703" y="-18"/>
+            <point key="canvasLocation" x="2724" y="-4"/>
         </scene>
         <!--Game Results View Controller-->
         <scene sceneID="f8o-f9-CcR">
