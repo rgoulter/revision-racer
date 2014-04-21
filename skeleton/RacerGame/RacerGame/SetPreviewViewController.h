@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FlashSetInfoAttributes.h"
 
-@interface SetPreviewViewController : UIViewController
+@interface SetPreviewViewController : UIViewController<UICollectionViewDataSource, UICollectionViewDelegate>
+
+-(void)setFlashSetToPreview:(FlashSetInfoAttributes*)flashSet;
 
 @end

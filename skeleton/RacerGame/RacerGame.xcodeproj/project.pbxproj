@@ -78,6 +78,8 @@
 		D9B9F2FD19050B4900AD1A2E /* FlashSetSummary.m in Sources */ = {isa = PBXBuildFile; fileRef = D9B9F2FC19050B4900AD1A2E /* FlashSetSummary.m */; };
 		D9B9F2FF1905169100AD1A2E /* UpdateSetButtonImage.png in Resources */ = {isa = PBXBuildFile; fileRef = D9B9F2FE1905169100AD1A2E /* UpdateSetButtonImage.png */; };
 		D9B9F30219051F3A00AD1A2E /* SetPreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D9B9F30119051F3A00AD1A2E /* SetPreviewViewController.m */; };
+		D9B9F30519053BEF00AD1A2E /* FlashSetItemPreview.xib in Resources */ = {isa = PBXBuildFile; fileRef = D9B9F30419053BEF00AD1A2E /* FlashSetItemPreview.xib */; };
+		D9B9F30819053DF000AD1A2E /* FlashSetItemPreview.m in Sources */ = {isa = PBXBuildFile; fileRef = D9B9F30719053DF000AD1A2E /* FlashSetItemPreview.m */; };
 		D9EB9B9E18FD601F004AA081 /* ActivityModal.m in Sources */ = {isa = PBXBuildFile; fileRef = D9EB9B9D18FD601F004AA081 /* ActivityModal.m */; };
 		D9EB9BA118FD7E00004AA081 /* FlashSetSummary.xib in Resources */ = {isa = PBXBuildFile; fileRef = D9EB9BA018FD7E00004AA081 /* FlashSetSummary.xib */; };
 /* End PBXBuildFile section */
@@ -216,6 +218,9 @@
 		D9B9F2FE1905169100AD1A2E /* UpdateSetButtonImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = UpdateSetButtonImage.png; path = ../../Assets/UpdateSetButtonImage.png; sourceTree = "<group>"; };
 		D9B9F30019051F3A00AD1A2E /* SetPreviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetPreviewViewController.h; sourceTree = "<group>"; };
 		D9B9F30119051F3A00AD1A2E /* SetPreviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetPreviewViewController.m; sourceTree = "<group>"; };
+		D9B9F30419053BEF00AD1A2E /* FlashSetItemPreview.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FlashSetItemPreview.xib; sourceTree = "<group>"; };
+		D9B9F30619053DF000AD1A2E /* FlashSetItemPreview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlashSetItemPreview.h; sourceTree = "<group>"; };
+		D9B9F30719053DF000AD1A2E /* FlashSetItemPreview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlashSetItemPreview.m; sourceTree = "<group>"; };
 		D9EB9B9D18FD601F004AA081 /* ActivityModal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityModal.m; sourceTree = "<group>"; };
 		D9EB9BA018FD7E00004AA081 /* FlashSetSummary.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FlashSetSummary.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -402,6 +407,7 @@
 		D96BA52418EAFE2400D29E82 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				D9B9F30319053B9300AD1A2E /* FlashSetItem */,
 				D9B9F2F51905078B00AD1A2E /* Assets */,
 				D9B9F2D8190150B300AD1A2E /* NavigationButtons */,
 				D9EB9B9F18FD7DCE004AA081 /* FlashSetSummary */,
@@ -537,6 +543,16 @@
 			name = Assets;
 			sourceTree = "<group>";
 		};
+		D9B9F30319053B9300AD1A2E /* FlashSetItem */ = {
+			isa = PBXGroup;
+			children = (
+				D9B9F30419053BEF00AD1A2E /* FlashSetItemPreview.xib */,
+				D9B9F30619053DF000AD1A2E /* FlashSetItemPreview.h */,
+				D9B9F30719053DF000AD1A2E /* FlashSetItemPreview.m */,
+			);
+			name = FlashSetItem;
+			sourceTree = "<group>";
+		};
 		D9EB9B9F18FD7DCE004AA081 /* FlashSetSummary */ = {
 			isa = PBXGroup;
 			children = (
@@ -623,6 +639,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D9B9F30519053BEF00AD1A2E /* FlashSetItemPreview.xib in Resources */,
 				D9B229FE18DB1F1800DDBA11 /* Images.xcassets in Resources */,
 				D9B9F2FF1905169100AD1A2E /* UpdateSetButtonImage.png in Resources */,
 				0280A1EB18EEE70E006B50B4 /* shader.fsh in Resources */,
@@ -684,6 +701,7 @@
 				0262758218E91F4F00CDAA24 /* GameQuestion.m in Sources */,
 				02FB32D818ED627E00991ABA /* SpaceShip.m in Sources */,
 				029E580618EC64AF007EB6E8 /* UIAnswerButton.m in Sources */,
+				D9B9F30819053DF000AD1A2E /* FlashSetItemPreview.m in Sources */,
 				029E57FA18EC1AEF007EB6E8 /* StarfieldStar.m in Sources */,
 				D9B9F2E11902400000AD1A2E /* GameResultDetails.m in Sources */,
 				D96BA47B18E876A300D29E82 /* URLHelper.m in Sources */,

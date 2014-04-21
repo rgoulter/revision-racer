@@ -9,10 +9,15 @@
 #import "SetPreviewViewController.h"
 #import "NavigationButton.h"
 #import "StyleManager.h"
+#import "FlashSetLogic.h"
+#import "FlashSetItemAttributes.h"
+#import "FlashSetItemPreview.h"
 
 @interface SetPreviewViewController ()
 @property (strong, nonatomic) IBOutlet NavigationButton *backNavigation;
-
+@property (strong, nonatomic) FlashSetInfoAttributes* backingFlashSet;
+@property (strong, nonatomic) NSArray* setContents;
+@property (strong, nonatomic) IBOutlet UICollectionView *setItemsCollection;
 @end
 
 @implementation SetPreviewViewController
@@ -26,13 +31,41 @@
     return self;
 }
 
+-(NSArray *)setContents
+{
+    if (!_setContents) {
+        _setContents = [[[FlashSetLogic singleton] getAllItemsInSet:self.backingFlashSet.id] allObjects];
+    }
+    return _setContents;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.view.backgroundColor = [UIColor colorWithRed:45.0f/225.0f green:57.0f/225.0f blue:86.0f/255.0f alpha:1.0];
+    
+    //Initialize the "Back" button
     StyleManager* manager = [StyleManager manager];
     [self.backNavigation setAttributedTitle:[manager getAttributedButtonTextForString:@"Back"]
                                    forState:UIControlStateNormal];
+    
+    //Get all the items in the set
+    
+    UICollectionViewFlowLayout* gridLayout = [[UICollectionViewFlowLayout alloc] init];
+    gridLayout.minimumInteritemSpacing = 25;
+    gridLayout.sectionInset = UIEdgeInsetsMake(15, 0, 15, 0);
+    
+    UINib* customCellNib = [UINib nibWithNibName:@"FlashSetItemPreview" bundle:[NSBundle mainBundle]];
+    [self.setItemsCollection registerNib:customCellNib forCellWithReuseIdentifier:@"PreviewCell"];
+    
+    UICollectionViewCell* item = [[[NSBundle mainBundle] loadNibNamed:@"FlashSetItemPreview" owner:nil options:nil] lastObject];
+    gridLayout.itemSize = item.bounds.size;
+    
+    self.setItemsCollection.collectionViewLayout = gridLayout;
+    [self.setItemsCollection setDataSource:self];
+    [self.setItemsCollection setDelegate:self];
+    [self.setItemsCollection setBackgroundColor:[UIColor clearColor]];
 }
 
 - (void)didReceiveMemoryWarning
@@ -41,8 +74,42 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark Public methods
+
+-(void)setFlashSetToPreview:(FlashSetInfoAttributes *)flashSet
+{
+    self.backingFlashSet = flashSet;
+}
+
+#pragma mark Private Methods
 - (IBAction)backButtonPressed:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+#pragma mark UICollectionViewDataSourceDelegate methods
+
+-(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
+                 cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    UICollectionViewCell* customCell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PreviewCell"
+                                                                                 forIndexPath:indexPath];
+    FlashSetItemAttributes* requiredSet = self.setContents[[indexPath item]];
+    
+    FlashSetItemPreview* myCell = (FlashSetItemPreview*)customCell;
+    [myCell setDataSource:requiredSet];
+    return customCell;
+}
+
+-(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
+{
+    NSLog(@"Number of items in set : %lu",[self.setContents count]);
+    return [self.setContents count];
+}
+
+-(NSInteger)collectionView:(UICollectionView *)collectionView
+    numberOfItemsInSection:(NSInteger)section
+{
+    return 1;
 }
 
 /*

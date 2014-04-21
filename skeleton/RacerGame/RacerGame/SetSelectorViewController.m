@@ -169,6 +169,7 @@
     NSLog(@"Preview button pressed");
     
     SetPreviewViewController* previewViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"SetPreviewViewController"];
+    [previewViewController setFlashSetToPreview:self.selectedSetForGame];
     [self.navigationController pushViewController:previewViewController animated:YES];
 }
 
