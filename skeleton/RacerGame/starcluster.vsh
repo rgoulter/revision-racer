@@ -14,10 +14,11 @@ varying lowp vec4 vColor;
 void main() {
     vec4 position = uModelViewProjectionMatrix * vec4(aPosition.xyz, 1.);
     
-    vColor = vec4(aBrightness, aBrightness, 0, aIntensity / abs(aPosition.z));
+    vColor = vec4(aBrightness, aBrightness, 0, uAlpha);
     
-    vColor = uAlpha * vColor +
+    vColor = (0.7 + 0.3 * aIntensity) * vColor +
              (1.0 - uAlpha) * vec4(uBackgroundColor, 1);
+    vColor.a = uAlpha;
     
     gl_PointSize = aThickness;
     gl_Position =  position;
