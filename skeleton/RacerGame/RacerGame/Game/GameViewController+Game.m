@@ -31,6 +31,11 @@
     self.stars = [[NSMutableArray alloc] init];
     self.deadAsteroids = [[NSMutableArray alloc] init];
     self.laneAsteroids = [[NSMutableArray alloc] init];
+    
+    assert(self.gameRules != nil);
+    
+    [self updateNumLives];
+    [self updateScoreLabels];
 }
 
 
@@ -84,6 +89,13 @@
 
 
 
+- (void)updateNumLives
+{
+    [self.livesVC setNumLives:self.gameRules.numLivesRemaining];
+}
+
+
+
 - (void)gameEffectForCorrectAnswer
 {
     [self checkQnAnsStateRep];
@@ -119,6 +131,9 @@
     // Tidy up asteroids..
     // **DEP** The design here is a little strange at this point.
     [self gameQuestionAnsweredEffect];
+    
+    // Update num lives.
+    [self updateNumLives];
 }
 
 
@@ -248,6 +263,22 @@
     [self tickAsteroids];
     
     
+    // Game Rules
+    [self.gameRules tick:self.timeSinceLastUpdate];
+    if (self.gameRules.isOutOfLives) {
+        [self gameOverWithMessage:@"You answered too many questions incorrectly"];
+    } else if (self.gameRules.isOutOfTime) {
+        [self gameOverWithMessage:@"Time is over"];
+    }
+    
+    // Update Time Remaining label.
+    if (self.gameRules.timeLimitEnabled) {
+        float timeRemaining = self.gameRules.timeRemaining;
+        int m = (int)(timeRemaining) / 60;
+        int s = (int)(timeRemaining) % 60;
+        
+        self.timeRemainingLabel.text = [NSString stringWithFormat:@"%d:%02d", m, s];
+    }
 }
 
 

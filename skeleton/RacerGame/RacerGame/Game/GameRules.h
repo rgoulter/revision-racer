@@ -18,11 +18,22 @@
 - (void)updateRulesForCorrectAnswer;
 - (void)updateRulesForIncorrectAnswer;
 
+- (void)tick:(NSTimeInterval)timeSinceLastUpdate;
+
 @property (readonly) float minimumQuestionDuration;
 @property (readonly) float maximumQuestionDuration;
 @property (readonly) float questionDuration;
 
 @property (readonly) int score;
 @property (readonly) int combo;
+
+@property NSTimeInterval timeRemaining;
+@property int numLivesRemaining;
+
+@property BOOL timeLimitEnabled;
+@property BOOL livesEnabled;
+
+@property (readonly) BOOL isOutOfLives;
+@property (readonly) BOOL isOutOfTime;
 
 @end

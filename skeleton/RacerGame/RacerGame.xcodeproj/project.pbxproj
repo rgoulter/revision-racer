@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		02113D98190536CD006BA260 /* spaceship_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 02113D97190536CD006BA260 /* spaceship_icon.png */; };
+		02113D9E19053E8B006BA260 /* SpaceShipIconView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 02113D9D19053E8B006BA260 /* SpaceShipIconView.xib */; };
+		02113DA219054220006BA260 /* LivesCounterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02113DA019054220006BA260 /* LivesCounterViewController.m */; };
 		024D099A19014CAB005BA4BE /* BOSquarePyramid.m in Sources */ = {isa = PBXBuildFile; fileRef = 024D099919014CAB005BA4BE /* BOSquarePyramid.m */; };
 		02505AEB18F54AA3008F8563 /* GameViewController+Game.m in Sources */ = {isa = PBXBuildFile; fileRef = 02505AEA18F54AA3008F8563 /* GameViewController+Game.m */; };
 		02505AEE18F571A1008F8563 /* BOStarCluster.m in Sources */ = {isa = PBXBuildFile; fileRef = 02505AED18F571A1008F8563 /* BOStarCluster.m */; };
@@ -102,6 +105,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		02113D97190536CD006BA260 /* spaceship_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spaceship_icon.png; sourceTree = SOURCE_ROOT; };
+		02113D9D19053E8B006BA260 /* SpaceShipIconView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SpaceShipIconView.xib; sourceTree = SOURCE_ROOT; };
+		02113D9F19054220006BA260 /* LivesCounterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LivesCounterViewController.h; path = Game/LivesCounterViewController.h; sourceTree = "<group>"; };
+		02113DA019054220006BA260 /* LivesCounterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LivesCounterViewController.m; path = Game/LivesCounterViewController.m; sourceTree = "<group>"; };
 		024D099819014CAB005BA4BE /* BOSquarePyramid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BOSquarePyramid.h; path = RacerGame/Game/BOSquarePyramid.h; sourceTree = "<group>"; };
 		024D099919014CAB005BA4BE /* BOSquarePyramid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BOSquarePyramid.m; path = RacerGame/Game/BOSquarePyramid.m; sourceTree = "<group>"; };
 		02505AE918F54AA3008F8563 /* GameViewController+Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "GameViewController+Game.h"; path = "Game/GameViewController+Game.h"; sourceTree = "<group>"; };
@@ -374,6 +381,8 @@
 				0262758418E9387900CDAA24 /* GameResultsViewController.m */,
 				D9B9F30019051F3A00AD1A2E /* SetPreviewViewController.h */,
 				D9B9F30119051F3A00AD1A2E /* SetPreviewViewController.m */,
+				02113D9F19054220006BA260 /* LivesCounterViewController.h */,
+				02113DA019054220006BA260 /* LivesCounterViewController.m */,
 			);
 			name = VControllers;
 			sourceTree = "<group>";
@@ -516,6 +525,8 @@
 		D9B229EB18DB1F1800DDBA11 /* RacerGame */ = {
 			isa = PBXGroup;
 			children = (
+				02113D9D19053E8B006BA260 /* SpaceShipIconView.xib */,
+				02113D97190536CD006BA260 /* spaceship_icon.png */,
 				02D60BBA18F7A765000E8EA0 /* CS3217_background1.png */,
 				D9B229F418DB1F1800DDBA11 /* AppDelegate.h */,
 				D9B229F518DB1F1800DDBA11 /* AppDelegate.m */,
@@ -693,8 +704,10 @@
 				02D60BBB18F7A765000E8EA0 /* CS3217_background1.png in Resources */,
 				D9B229F018DB1F1800DDBA11 /* InfoPlist.strings in Resources */,
 				D9B229F918DB1F1800DDBA11 /* Main.storyboard in Resources */,
+				02113D98190536CD006BA260 /* spaceship_icon.png in Resources */,
 				D9EB9BA118FD7E00004AA081 /* FlashSetSummary.xib in Resources */,
 				0280A1E918EEE6FF006B50B4 /* shader.vsh in Resources */,
+				02113D9E19053E8B006BA260 /* SpaceShipIconView.xib in Resources */,
 				02505AF218F57819008F8563 /* starcluster.fsh in Resources */,
 				D9B9F2F71905079E00AD1A2E /* SetSelectionCell.png in Resources */,
 				D9DFC6AA190693D400B08DBC /* SecondaryButtons.png in Resources */,
@@ -728,6 +741,7 @@
 				D96BA51E18E8BBC800D29E82 /* FlashSetLogic.m in Sources */,
 				D9B9F30219051F3A00AD1A2E /* SetPreviewViewController.m in Sources */,
 				02505B0A18F6BEB7008F8563 /* AnimatedEffect.m in Sources */,
+				02113DA219054220006BA260 /* LivesCounterViewController.m in Sources */,
 				02505B0718F6BBB1008F8563 /* SpaceObject.m in Sources */,
 				D96BA47618E8764000D29E82 /* QuizletAPI.m in Sources */,
 				D9B9F2E51902409300AD1A2E /* GameResultInfoAttributes.m in Sources */,

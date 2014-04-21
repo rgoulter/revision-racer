@@ -20,7 +20,9 @@
 
 # pragma mark - Initialisation
 
-@interface GameViewController ()
+@interface GameViewController () <UIAlertViewDelegate>
+
+@property UIAlertView *gameOverAlertView;
 
 // MCQ Category properties
 @property id<QuestionUI> questionUI;
@@ -63,9 +65,18 @@
     }
     
     
-    [self setUpGameObjects];
+    _gameOverAlertView = [[UIAlertView alloc] initWithTitle:@"Game Over"
+                                                    message:@""
+                                                   delegate:self
+                                          cancelButtonTitle:nil
+                                          otherButtonTitles:@"Ok", nil] ;
+    _gameOverAlertView.tag = 2;
+    _gameOverAlertView.alertViewStyle = UIAlertViewStyleDefault;
+    
     
     _gameRules = [[GameRules alloc] init];
+    
+    [self setUpGameObjects];
     
     
     
@@ -376,6 +387,19 @@
     [self performSegueWithIdentifier:@"gameToResults" sender:self];
 }
 
+- (void)gameOverWithMessage:(NSString*)message
+{
+    if (!_gameOverAlertView.visible) {
+        _gameOverAlertView.message = message;
+        [_gameOverAlertView show];
+    }
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    [self performSegueWithIdentifier:@"gameToResults" sender:self];
+}
+
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
@@ -389,6 +413,8 @@
         // Set the Selected Set information for the game VC.
         // TODO
         // gameVC.flashSet = ...;
+    } else if ([segue.identifier isEqualToString:@"GameVCembedsLivesVC"]) {
+        _livesVC = (LivesCounterViewController*)segue.destinationViewController;
     }
 }
 

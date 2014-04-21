@@ -36,9 +36,24 @@
     
     if (self) {
         _questionDuration = 6;
+        
+        _timeLimitEnabled = YES;
+        _livesEnabled = YES;
+        
+        _numLivesRemaining = 3; // **MAGIC**
+        _timeRemaining = 30; // **MAGIC** Very low initially
     }
     
     return self;
+}
+
+
+
+- (void)tick:(NSTimeInterval)timeSinceLastUpdate
+{
+    if (_timeLimitEnabled) {
+        _timeRemaining -= timeSinceLastUpdate;
+    }
 }
 
 
@@ -129,6 +144,22 @@
     
     // Don't increase score; reset combo.
     _combo = 0;
+    
+    _numLivesRemaining -= 1;
+}
+
+
+
+- (BOOL)isOutOfLives
+{
+    return _livesEnabled && _numLivesRemaining < 0;
+}
+
+
+
+- (BOOL)isOutOfTime
+{
+    return _timeLimitEnabled && _timeRemaining < 0;
 }
 
 @end

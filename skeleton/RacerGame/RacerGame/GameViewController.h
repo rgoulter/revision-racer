@@ -21,6 +21,7 @@
 
 #import "UIQuestionLabel.h"
 #import "UIAnswerButton.h"
+#import "LivesCounterViewController.h"
 
 // Not sure what the best way to do color constants is;
 // SPACEBG is for glClearColor(r, g, b, a);
@@ -38,8 +39,10 @@
 @property (weak, nonatomic) IBOutlet UIQuestionLabel *questionLabel;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 @property (weak, nonatomic) IBOutlet UILabel *scoreComboLabel;
+@property (weak, nonatomic) IBOutlet UILabel *timeRemainingLabel;
 
 @property (readonly) GameRules *gameRules;
+@property (weak, readonly) LivesCounterViewController *livesVC;
 
 @property FlashSetInfoAttributes *flashSet;
 
@@ -55,6 +58,7 @@
 - (CGPoint)worldPointForLaneNum:(NSUInteger)idx;
 - (void)selectAnswerUI:(id<AnswerUI>)answerUI;
 - (void)checkQnAnsStateRep;
+- (void)gameOverWithMessage:(NSString*)message;
 @property (readonly) GLProgram *program;
 @property (readonly) GLProgram *starShaderProgram;
 

@@ -311,6 +311,20 @@
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cpb-cR-7ui">
+                                <rect key="frame" x="20" y="648" width="500" height="100"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <connections>
+                                    <segue destination="gne-Cv-HyR" kind="embed" identifier="GameVCembedsLivesVC" id="jW2-Yw-EYZ"/>
+                                </connections>
+                            </containerView>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="99:99" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PsF-Dw-tYF" userLabel="TimeRemainingLabel">
+                                <rect key="frame" x="395" y="717" width="234" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <color key="textColor" name="alternateSelectedControlTextColor" catalog="System" colorSpace="catalog"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Score: 0000" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iXZ-yd-0bV" userLabel="ScoreLabel">
                                 <rect key="frame" x="20" y="100" width="275" height="60"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -379,12 +393,89 @@
                         <outlet property="questionLabel" destination="BMP-jN-bm9" id="Sae-GU-ECN"/>
                         <outlet property="scoreComboLabel" destination="HJe-pc-Dbo" id="Nmb-qf-b0K"/>
                         <outlet property="scoreLabel" destination="iXZ-yd-0bV" id="s77-mf-eb6"/>
+                        <outlet property="timeRemainingLabel" destination="PsF-Dw-tYF" id="RzL-dO-K2q"/>
                         <segue destination="hFx-kF-305" kind="push" identifier="gameToResults" id="j9l-vs-oYR"/>
                     </connections>
                 </glkViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8V4-zb-aPa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2840" y="1124"/>
+        </scene>
+        <!--Lives Counter View Controller-->
+        <scene sceneID="zar-Bl-B51">
+            <objects>
+                <viewController id="gne-Cv-HyR" customClass="LivesCounterViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Rc9-hB-aIN"/>
+                        <viewControllerLayoutGuide type="bottom" id="hCt-ie-vJm"/>
+                    </layoutGuides>
+                    <view key="view" opaque="NO" contentMode="scaleToFill" id="5Ry-eT-x93">
+                        <rect key="frame" x="0.0" y="0.0" width="500" height="100"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lives" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NZI-tq-Fd5">
+                                <rect key="frame" x="3" y="0.0" width="114" height="100"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="50"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <collectionView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" minimumZoomScale="0.0" maximumZoomScale="0.0" bouncesZoom="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="3BK-E2-5Ub">
+                                <rect key="frame" x="125" y="0.0" width="375" height="100"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="EOU-NW-sur">
+                                    <size key="itemSize" width="64" height="64"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SpaceShipCollectionViewCell" id="Hge-Id-aQo">
+                                        <rect key="frame" x="0.0" y="18" width="64" height="64"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="64" height="64"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="spaceship_icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="ZAT-aq-aeQ">
+                                                    <rect key="frame" x="0.0" y="0.0" width="64" height="64"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                </imageView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="ZAT-aq-aeQ" secondAttribute="bottom" id="60K-kE-6Pn"/>
+                                            <constraint firstItem="ZAT-aq-aeQ" firstAttribute="leading" secondItem="Hge-Id-aQo" secondAttribute="leading" id="gcT-gz-31Y"/>
+                                            <constraint firstItem="ZAT-aq-aeQ" firstAttribute="top" secondItem="Hge-Id-aQo" secondAttribute="top" id="gxS-NG-3Go"/>
+                                            <constraint firstAttribute="trailing" secondItem="ZAT-aq-aeQ" secondAttribute="trailing" id="hC8-PQ-g5p"/>
+                                        </constraints>
+                                    </collectionViewCell>
+                                </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="gne-Cv-HyR" id="v8n-kV-tLy"/>
+                                    <outlet property="delegate" destination="gne-Cv-HyR" id="br5-aS-UYC"/>
+                                </connections>
+                            </collectionView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="3BK-E2-5Ub" firstAttribute="leading" secondItem="NZI-tq-Fd5" secondAttribute="trailing" constant="8" id="23d-Dr-KIx"/>
+                            <constraint firstItem="3BK-E2-5Ub" firstAttribute="top" secondItem="Rc9-hB-aIN" secondAttribute="bottom" id="5JZ-WE-fTE"/>
+                            <constraint firstItem="NZI-tq-Fd5" firstAttribute="top" secondItem="Rc9-hB-aIN" secondAttribute="bottom" id="I3f-I3-RhD"/>
+                            <constraint firstItem="3BK-E2-5Ub" firstAttribute="leading" secondItem="5Ry-eT-x93" secondAttribute="leading" constant="125" id="PCG-Dd-1TE"/>
+                            <constraint firstAttribute="trailing" secondItem="3BK-E2-5Ub" secondAttribute="trailing" id="RYT-2p-8sy"/>
+                            <constraint firstItem="hCt-ie-vJm" firstAttribute="top" secondItem="3BK-E2-5Ub" secondAttribute="bottom" id="hdm-3g-VWM"/>
+                            <constraint firstItem="hCt-ie-vJm" firstAttribute="top" secondItem="NZI-tq-Fd5" secondAttribute="bottom" id="xyy-iE-jW3"/>
+                        </constraints>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                    </view>
+                    <connections>
+                        <outlet property="livesCollectionView" destination="3BK-E2-5Ub" id="NKq-ub-HF1"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="D5P-5r-UEu" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3080" y="2178"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="hjP-bj-Uuc">
@@ -455,6 +546,7 @@
     </scenes>
     <resources>
         <image name="CS3217_background1.png" width="960" height="540"/>
+        <image name="spaceship_icon.png" width="256" height="256"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
