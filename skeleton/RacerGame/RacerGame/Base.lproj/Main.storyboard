@@ -128,6 +128,9 @@
                                 <state key="normal" title="Update">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="updateButtonPressed:" destination="RXd-Aj-ZkL" eventType="touchUpInside" id="wMS-KO-gBm"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DfO-IB-Oax">
                                 <rect key="frame" x="958" y="413" width="54" height="30"/>
@@ -135,6 +138,9 @@
                                 <state key="normal" title="Preview">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="previewButtonPressed:" destination="RXd-Aj-ZkL" eventType="touchUpInside" id="JYk-y9-ajn"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -145,12 +151,34 @@
                         <outlet property="backNavigation" destination="hMj-6B-sX7" id="Flx-KK-Jeh"/>
                         <outlet property="collectionViewBackground" destination="g0U-HD-KZv" id="idx-bn-XH1"/>
                         <outlet property="flashSetCollection" destination="Grr-FL-oNi" id="KL8-7A-6hw"/>
+                        <outlet property="setPreviewButton" destination="DfO-IB-Oax" id="rHk-Ml-3mQ"/>
+                        <outlet property="setUpdateButton" destination="xvK-dK-FIR" id="XA5-ka-vGl"/>
                         <segue destination="T0N-km-FSq" kind="push" identifier="setSelectionToGame" id="EKm-Ff-sN7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ceb-rr-9Pe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1416" y="-18"/>
+        </scene>
+        <!--Set Preview View Controller-->
+        <scene sceneID="ov6-aW-aYA">
+            <objects>
+                <viewController id="zZ8-a0-NXR" customClass="SetPreviewViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="2kr-Ui-6Em"/>
+                        <viewControllerLayoutGuide type="bottom" id="cGz-Gh-mhR"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="M7A-Qi-gSb" customClass="SetPre">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                    </view>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Dux-Lp-Wi3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2703" y="-18"/>
         </scene>
         <!--Game Results View Controller-->
         <scene sceneID="f8o-f9-CcR">

@@ -28,6 +28,8 @@
 @property (strong, nonatomic) FlashSetInfoAttributes* selectedSetForGame;
 @property (strong, nonatomic) ActivityModal* statusModal;
 @property (strong, nonatomic) IBOutlet NavigationButton *backNavigation;
+@property (strong, nonatomic) IBOutlet UIButton *setUpdateButton;
+@property (strong, nonatomic) IBOutlet UIButton *setPreviewButton;
 @end
 
 @implementation SetSelectorViewController
@@ -71,6 +73,10 @@
     [self.flashSetCollection setBackgroundColor:[UIColor clearColor]];
     
     self.collectionViewBackground.layer.cornerRadius = 10;
+    
+    //Disable update/preview buttons when view is first loaded
+    [self.setPreviewButton setEnabled:NO];
+    [self.setUpdateButton setEnabled:NO];
 }
 
 - (void)didReceiveMemoryWarning
@@ -154,14 +160,22 @@
     [self performSegueWithIdentifier:@"setSelectionToGame" sender:self];
 }
 
-#pragma mark UICollectionViewDelegate methods
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    self.selectedSetForGame = self.listOfUserSets[[indexPath item]];
+- (IBAction)updateButtonPressed:(id)sender {
+    NSLog(@"Update button pressed");
 }
+
+- (IBAction)previewButtonPressed:(id)sender {
+    NSLog(@"Preview button pressed");
+}
+
+
+#pragma mark UICollectionViewDelegate methods
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    [self.setUpdateButton setEnabled:YES];
+    [self.setPreviewButton setEnabled:YES];
+    
     self.selectedSetForGame = self.listOfUserSets[[indexPath item]];
     NSLog(@"Cell %lu selected",[indexPath item]);
 }

@@ -77,6 +77,7 @@
 		D9B9F2F71905079E00AD1A2E /* SetSelectionCell.png in Resources */ = {isa = PBXBuildFile; fileRef = D9B9F2F61905079E00AD1A2E /* SetSelectionCell.png */; };
 		D9B9F2FD19050B4900AD1A2E /* FlashSetSummary.m in Sources */ = {isa = PBXBuildFile; fileRef = D9B9F2FC19050B4900AD1A2E /* FlashSetSummary.m */; };
 		D9B9F2FF1905169100AD1A2E /* UpdateSetButtonImage.png in Resources */ = {isa = PBXBuildFile; fileRef = D9B9F2FE1905169100AD1A2E /* UpdateSetButtonImage.png */; };
+		D9B9F30219051F3A00AD1A2E /* SetPreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D9B9F30119051F3A00AD1A2E /* SetPreviewViewController.m */; };
 		D9EB9B9E18FD601F004AA081 /* ActivityModal.m in Sources */ = {isa = PBXBuildFile; fileRef = D9EB9B9D18FD601F004AA081 /* ActivityModal.m */; };
 		D9EB9BA118FD7E00004AA081 /* FlashSetSummary.xib in Resources */ = {isa = PBXBuildFile; fileRef = D9EB9BA018FD7E00004AA081 /* FlashSetSummary.xib */; };
 /* End PBXBuildFile section */
@@ -213,6 +214,8 @@
 		D9B9F2FB19050B4900AD1A2E /* FlashSetSummary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlashSetSummary.h; sourceTree = "<group>"; };
 		D9B9F2FC19050B4900AD1A2E /* FlashSetSummary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlashSetSummary.m; sourceTree = "<group>"; };
 		D9B9F2FE1905169100AD1A2E /* UpdateSetButtonImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = UpdateSetButtonImage.png; path = ../../Assets/UpdateSetButtonImage.png; sourceTree = "<group>"; };
+		D9B9F30019051F3A00AD1A2E /* SetPreviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetPreviewViewController.h; sourceTree = "<group>"; };
+		D9B9F30119051F3A00AD1A2E /* SetPreviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetPreviewViewController.m; sourceTree = "<group>"; };
 		D9EB9B9D18FD601F004AA081 /* ActivityModal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityModal.m; sourceTree = "<group>"; };
 		D9EB9BA018FD7E00004AA081 /* FlashSetSummary.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FlashSetSummary.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -333,6 +336,8 @@
 				02505AEA18F54AA3008F8563 /* GameViewController+Game.m */,
 				0262758318E9387900CDAA24 /* GameResultsViewController.h */,
 				0262758418E9387900CDAA24 /* GameResultsViewController.m */,
+				D9B9F30019051F3A00AD1A2E /* SetPreviewViewController.h */,
+				D9B9F30119051F3A00AD1A2E /* SetPreviewViewController.m */,
 			);
 			name = VControllers;
 			sourceTree = "<group>";
@@ -656,6 +661,7 @@
 				02FB32DC18EDA9FF00991ABA /* BOCurve.m in Sources */,
 				0262758518E9387900CDAA24 /* GameResultsViewController.m in Sources */,
 				D96BA51E18E8BBC800D29E82 /* FlashSetLogic.m in Sources */,
+				D9B9F30219051F3A00AD1A2E /* SetPreviewViewController.m in Sources */,
 				D96BA47618E8764000D29E82 /* QuizletAPI.m in Sources */,
 				D9B9F2E51902409300AD1A2E /* GameResultInfoAttributes.m in Sources */,
 				D96BA47E18E8965B00D29E82 /* Model.xcdatamodeld in Sources */,
