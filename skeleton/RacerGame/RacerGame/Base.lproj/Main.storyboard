@@ -173,7 +173,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZHg-Pm-EKn">
-                                <rect key="frame" x="112" y="112" width="798" height="578"/>
+                                <rect key="frame" x="226" y="112" width="593" height="578"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.84729534650000005" green="0.84729534650000005" blue="0.84729534650000005" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
@@ -188,7 +188,7 @@
                                 </connections>
                             </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="4ZD-Qp-4jf">
-                                <rect key="frame" x="128" y="123" width="768" height="555"/>
+                                <rect key="frame" x="243" y="123" width="562" height="555"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="eme-yj-gEe">
                                     <size key="itemSize" width="50" height="50"/>
@@ -198,6 +198,13 @@
                                 </collectionViewFlowLayout>
                                 <cells/>
                             </collectionView>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Select Set To Play" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L39-lK-yid">
+                                <rect key="frame" x="407" y="31" width="328" height="59"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="35"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
@@ -207,6 +214,7 @@
                     <connections>
                         <outlet property="backNavigation" destination="RTJ-We-y5C" id="u88-lH-pMh"/>
                         <outlet property="collectionViewBackground" destination="ZHg-Pm-EKn" id="rOD-g9-xXJ"/>
+                        <outlet property="previewTitleLabel" destination="L39-lK-yid" id="WD6-va-v1c"/>
                         <outlet property="setItemsCollection" destination="4ZD-Qp-4jf" id="omb-30-aIA"/>
                     </connections>
                 </viewController>

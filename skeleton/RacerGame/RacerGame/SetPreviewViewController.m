@@ -19,6 +19,7 @@
 @property (strong, nonatomic) NSArray* setContents;
 @property (strong, nonatomic) IBOutlet UICollectionView *setItemsCollection;
 @property (strong, nonatomic) IBOutlet UIView *collectionViewBackground;
+@property (strong, nonatomic) IBOutlet UILabel *previewTitleLabel;
 
 @end
 
@@ -70,6 +71,9 @@
     [self.setItemsCollection setBackgroundColor:[UIColor clearColor]];
     
     self.collectionViewBackground.layer.cornerRadius = 10;
+    
+    //Set the preview mode title to set name
+    [self.previewTitleLabel setText:self.backingFlashSet.title];
 }
 
 - (void)didReceiveMemoryWarning
