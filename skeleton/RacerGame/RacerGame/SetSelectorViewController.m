@@ -23,6 +23,7 @@
 @interface SetSelectorViewController ()
 
 @property (strong, nonatomic) IBOutlet UICollectionView *flashSetCollection;
+@property (strong, nonatomic) IBOutlet UIView *collectionViewBackground;
 @property (strong, nonatomic) NSArray* listOfUserSets;
 @property (strong, nonatomic) FlashSetInfoAttributes* selectedSetForGame;
 @property (strong, nonatomic) ActivityModal* statusModal;
@@ -55,8 +56,8 @@
     // Do any additional setup after loading the view.
     
     UICollectionViewFlowLayout* gridLayout = [[UICollectionViewFlowLayout alloc] init];
-    gridLayout.minimumInteritemSpacing = 20;
-    gridLayout.sectionInset = UIEdgeInsetsMake(5, 10, 5, 10);
+    gridLayout.minimumInteritemSpacing = 5;
+    gridLayout.sectionInset = UIEdgeInsetsMake(15, 28, 15, 28);
 
     UINib* customCellNib = [UINib nibWithNibName:@"FlashSetSummary" bundle:[NSBundle mainBundle]];
     [self.flashSetCollection registerNib:customCellNib forCellWithReuseIdentifier:@"CustomCell"];
@@ -69,6 +70,7 @@
     [self.flashSetCollection setDelegate:self];
     [self.flashSetCollection setBackgroundColor:[UIColor clearColor]];
     
+    self.collectionViewBackground.layer.cornerRadius = 10;
 }
 
 - (void)didReceiveMemoryWarning

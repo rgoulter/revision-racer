@@ -41,6 +41,6 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="SetSelectionCell.png" width="433" height="439"/>
+        <image name="SetSelectionCell.png" width="339" height="311"/>
     </resources>
 </document>
