@@ -36,15 +36,16 @@
 
 -(void)flipCard
 {
+    [UIView transitionWithView:self duration:1 options:UIViewAnimationOptionTransitionFlipFromRight animations:^{
         if ([self.currentFaceType.text isEqualToString:@"Term"]) {
-            NSLog(@"CALL 1??");
             [self.currentFaceType setText:@"Definition"];
             [self.currentFaceText setText:self.backingSetItem.definition];
         } else {
-            NSLog(@"CALL 2??");
             [self.currentFaceType setText:@"Term"];
             [self.currentFaceText setText:self.backingSetItem.term];
         }
+    } completion:NULL];
+    
 }
 
 /*
