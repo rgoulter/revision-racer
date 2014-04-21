@@ -73,6 +73,11 @@
     
     [self explodeAsteroidForSelectedAnswer];
     
+    // The user answered the question correctly,
+    // so we make the game harder for them by decreasing
+    // the amount of time for them to answer questions.
+    [self.gameRules decreaseQuestionDuration];
+    
     // Tidy up asteroids..
     // **DEP** The design here is a little strange at this point.
     // Would prefer more like:
@@ -85,6 +90,11 @@
 - (void)gameEffectForIncorrectAnswer
 {
 //    [self checkQnAnsStateRep]; TODO
+    
+    // The user answered the question correctly,
+    // so we make the game easier for them by increasing
+    // the amount of time for them to answer questions.
+    [self.gameRules increaseQuestionDuration];
     
     [self.playerShip incorrectWobble];
     
