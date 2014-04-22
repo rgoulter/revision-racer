@@ -93,7 +93,7 @@
                                     <action selector="signInUser:" destination="RXd-Aj-ZkL" eventType="touchUpInside" id="iFu-XV-gxf"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9cH-M4-x7W" customClass="NavigationButton">
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9cH-M4-x7W" customClass="NavigationButton">
                                 <rect key="frame" x="785" y="704" width="219" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
@@ -114,6 +114,7 @@
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nkl-lq-jqo">
                                 <rect key="frame" x="478" y="704" width="51" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="onTintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                             </switch>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Training" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dx6-N9-dPL">
                                 <rect key="frame" x="386" y="709" width="60" height="21"/>
@@ -164,6 +165,7 @@
                         <outlet property="setPreviewButton" destination="DfO-IB-Oax" id="rHk-Ml-3mQ"/>
                         <outlet property="setUpdateButton" destination="xvK-dK-FIR" id="XA5-ka-vGl"/>
                         <outlet property="signInOutButton" destination="tbh-PV-ErE" id="u2Y-fY-Rum"/>
+                        <outlet property="startGameButton" destination="9cH-M4-x7W" id="adz-M5-Nhd"/>
                         <segue destination="T0N-km-FSq" kind="push" identifier="setSelectionToGame" id="EKm-Ff-sN7"/>
                     </connections>
                 </viewController>

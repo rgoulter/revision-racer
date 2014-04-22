@@ -33,6 +33,7 @@
 @property (strong, nonatomic) IBOutlet NavigationButton *backNavigation;
 @property (strong, nonatomic) IBOutlet UIButton *setUpdateButton;
 @property (strong, nonatomic) IBOutlet UIButton *setPreviewButton;
+@property (strong, nonatomic) IBOutlet NavigationButton *startGameButton;
 @property (strong, nonatomic) IBOutlet UILabel *emptyCollectionViewLabel;
 
 
@@ -56,6 +57,7 @@
     
     StyleManager* manager = [StyleManager manager];
     [self.backNavigation setAttributedTitle:[manager getAttributedButtonTextForString:@"Back"] forState:UIControlStateNormal];
+    [self.startGameButton setAttributedTitle:[manager getAttributedButtonTextForString:@"Start Game"] forState:UIControlStateNormal];
     
     self.view.backgroundColor = [UIColor colorWithRed:45.0f/225.0f green:57.0f/225.0f blue:86.0f/255.0f alpha:1.0];
     [super viewDidLoad];
