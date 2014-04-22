@@ -33,6 +33,7 @@
 @property (strong, nonatomic) IBOutlet NavigationButton *backNavigation;
 @property (strong, nonatomic) IBOutlet UIButton *setUpdateButton;
 @property (strong, nonatomic) IBOutlet UIButton *setPreviewButton;
+@property (strong, nonatomic) IBOutlet UILabel *emptyCollectionViewLabel;
 @end
 
 @implementation SetSelectorViewController
@@ -128,6 +129,27 @@
     return _statusModal;
 }
 
+#pragma mark - Setters
+- (void)setListOfUserSets:(NSArray *)listOfUserSets
+{
+    _listOfUserSets = listOfUserSets;
+    [self.flashSetCollection reloadData];
+    
+    if (!self.listOfUserSets || ([self.listOfUserSets count] == 0)) {
+        if (![[UserInfoLogic singleton] getActiveUser]) {
+            [self.emptyCollectionViewLabel setText:@"You are not logged to any Quizlet account"];
+        } else {
+            [self.emptyCollectionViewLabel setText:@"You are currently do not have any sets in your account"];
+        }
+    } else {
+        [self.emptyCollectionViewLabel setText:@""];
+    }
+    
+    //By default
+    [self.setUpdateButton setEnabled:NO];
+    [self.setPreviewButton setEnabled:NO];
+}
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -194,10 +216,7 @@
         //Initiate logout
         [[UserInfoLogic singleton] logoutCurrentUser];
         self.listOfUserSets = nil;
-        [self.setUpdateButton setEnabled:NO];
-        [self.setPreviewButton setEnabled:NO];
         [self.signInOutButton refreshButtonText];
-        [self.flashSetCollection reloadData];
     }
 }
 
@@ -234,4 +253,5 @@
 {
     return 1;
 }
+
 @end
