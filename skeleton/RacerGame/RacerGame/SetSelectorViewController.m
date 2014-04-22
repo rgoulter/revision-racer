@@ -207,7 +207,12 @@
     SyncResponse backendResponse = [[FlashSetLogic singleton] syncServerDataOfSet:self.selectedSetForGame.id];
     
     [self performSelector:@selector(hideActivityModal) withObject:self afterDelay:2];
-
+    
+    if (backendResponse == ERROR) {
+        NSLog(@"Error encountered while updating the set");
+    } else {
+        self.listOfUserSets = [[FlashSetLogic singleton] getSetsOfActiveUser];
+    }
 }
 
 - (IBAction)previewButtonPressed:(id)sender {
