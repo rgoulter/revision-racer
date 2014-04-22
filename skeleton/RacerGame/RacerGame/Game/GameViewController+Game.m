@@ -356,7 +356,6 @@
 
 - (void)drawGameObjects
 {
-    // TODO: draw stars
     for (Asteroid *aster in self.laneAsteroids) {
         [self drawAsteroid:aster];
         
@@ -432,8 +431,6 @@
                         initWithStartX:0 Y:0 Z:-60
                         EndX:0 Y:0 Z:30
                         Duration:self.gameRules.questionDuration];
-    
-    // TODO: Fadein effect
     
     SpaceObject *starfield = [[SpaceObject alloc] initWithShape:shape
                                                            Path:path
