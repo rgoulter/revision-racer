@@ -36,7 +36,7 @@
 
 -(void)flipCard
 {
-    [UIView transitionWithView:self duration:1 options:UIViewAnimationOptionTransitionFlipFromRight animations:^{
+    [UIView transitionWithView:self duration:0.5 options:UIViewAnimationOptionTransitionFlipFromRight animations:^{
         if ([self.currentFaceType.text isEqualToString:@"Term"]) {
             [self.currentFaceType setText:@"Definition"];
             [self.currentFaceText setText:self.backingSetItem.definition];

@@ -58,8 +58,8 @@
     //Get all the items in the set
     
     UICollectionViewFlowLayout* gridLayout = [[UICollectionViewFlowLayout alloc] init];
-    gridLayout.minimumInteritemSpacing = 25;
-    gridLayout.sectionInset = UIEdgeInsetsMake(15, 0, 15, 0);
+    gridLayout.minimumInteritemSpacing = 15;
+    gridLayout.sectionInset = UIEdgeInsetsMake(10, 0, 10, 0);
     
     UINib* customCellNib = [UINib nibWithNibName:@"FlashSetItemPreview" bundle:[NSBundle mainBundle]];
     [self.setItemsCollection registerNib:customCellNib forCellWithReuseIdentifier:@"PreviewCell"];
@@ -111,7 +111,7 @@
 {
     UICollectionViewCell* customCell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PreviewCell"
                                                                                  forIndexPath:indexPath];
-    FlashSetItemAttributes* requiredSet = self.setContents[[indexPath section]];
+    FlashSetItemAttributes* requiredSet = self.setContents[[indexPath item]];
     
     FlashSetItemPreview* myCell = (FlashSetItemPreview*)customCell;
     [myCell setDataSource:requiredSet];
@@ -120,13 +120,13 @@
 
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
-    return [self.setContents count];
+    return 1;
 }
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView
     numberOfItemsInSection:(NSInteger)section
 {
-    return 1;
+    return [self.setContents count];
 }
 
 /*
