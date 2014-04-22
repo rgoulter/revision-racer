@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface GameResultsViewController : UIViewController
+@interface GameResultsViewController : UIViewController<UITableViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UILabel *resultsLabel;
 
