@@ -37,7 +37,9 @@
 -(NSArray *)setContents
 {
     if (!_setContents) {
-        _setContents = [[[FlashSetLogic singleton] getAllItemsInSet:self.backingFlashSet.id] allObjects];
+        NSArray* unsortedArray = [[[FlashSetLogic singleton] getAllItemsInSet:self.backingFlashSet.id] allObjects];
+        NSSortDescriptor* sortByTerm = [NSSortDescriptor sortDescriptorWithKey:@"term" ascending:YES];
+        _setContents = [unsortedArray sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortByTerm]];
     }
     return _setContents;
 }

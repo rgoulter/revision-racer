@@ -214,7 +214,8 @@
     
     returnSet = [returnSet setByAddingObjectsFromSet:[self downloadSetsForRequest:request]];
     
-    return [returnSet allObjects];
+    NSSortDescriptor* sortByName = [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES];
+    return [[returnSet allObjects] sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortByName]];
 }
 
 -(NSArray*)getSetsOfActiveUser
@@ -228,7 +229,9 @@
         FlashSetInfoAttributes* attribObject = [[FlashSetInfoAttributes alloc] initWithFlashSetInfo:eachSet];
         [returnList addObject:attribObject];
     }
-    return returnList;
+    
+    NSSortDescriptor* sortByName = [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES];
+    return [returnList sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortByName]];
 }
 
 
