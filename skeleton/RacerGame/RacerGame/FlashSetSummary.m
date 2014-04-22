@@ -30,11 +30,6 @@
 -(void)setDataSource:(FlashSetInfoAttributes *)flashSet
 {
     self.backingData = flashSet;
-    
-    [self.setName setText:self.backingData.title];
-    NSString* lastUpdatedString = [NSString stringWithFormat:@"Last updated on %@",self.backingData.modifiedDate];
-    [self.lastUpdatedText setText:lastUpdatedString];
-    
 }
 
 -(void)setSelected:(BOOL)selected
@@ -47,6 +42,25 @@
     }
 }
 
+-(void)setBackingData:(FlashSetInfoAttributes *)backingData
+{
+    _backingData = backingData;
+    
+    
+    [self.setName setText: backingData.title];
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setTimeStyle:NSDateFormatterNoStyle];
+    [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
+    NSLocale *sgLocale = [NSLocale currentLocale];
+    [dateFormatter setLocale:sgLocale];
+    
+    [dateFormatter setDoesRelativeDateFormatting:YES];
+    NSString* dateString = [dateFormatter stringFromDate:backingData.modifiedDate];
+    
+    NSString* lastUpdatedString = [NSString stringWithFormat:@"Last updated : %@",dateString];
+    [self.lastUpdatedText setText:lastUpdatedString];
+}
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.

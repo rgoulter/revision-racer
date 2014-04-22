@@ -10,6 +10,12 @@
 #import "UserInfoAttributes.h"
 #import "FlashSetInfoAttributes.h"
 
+typedef enum {
+    UPDATED,
+    DELETED,
+    ERROR
+}SyncResponse;
+
 @interface FlashSetLogic : NSObject
 
 +(FlashSetLogic*)singleton;
@@ -22,5 +28,5 @@
 
 -(NSArray*)getSetsOfActiveUser;
 
--(NSString*)updateSet:(NSNumber*)setId;
+-(SyncResponse)syncServerDataOfSet:(NSNumber *)setId;
 @end

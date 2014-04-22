@@ -19,6 +19,8 @@
 
 @property(strong,nonatomic)NSManagedObjectContext* context;
 
+-(NSDate*)convertNumToDate:(NSNumber*)numDate;
+
 @end
 
 @implementation FlashSetLogic
@@ -85,6 +87,7 @@
     FlashSetInfo* persistentFlashSet = [self getPersistentSetForId:flashSet.id];
     
     if(persistentFlashSet) {
+        [activeUser removeCanSeeObject:persistentFlashSet];
         [self.context deleteObject:persistentFlashSet];
         
         NSError* errorWhileDeletingSet = nil;
@@ -92,16 +95,14 @@
         if (errorWhileDeletingSet) {
             NSLog(@"Error encountered : %@",[errorWhileDeletingSet localizedDescription]);
         }
-    } else {
-        persistentFlashSet = [NSEntityDescription insertNewObjectForEntityForName:@"FlashSetInfo"
-                                                            inManagedObjectContext:self.context];
-        persistentFlashSet.id = flashSet.id;
-        persistentFlashSet.modifiedDate = flashSet.modifiedDate;
-        persistentFlashSet.createdDate = flashSet.createdDate;
-        persistentFlashSet.title = flashSet.title;
     }
+    persistentFlashSet = [NSEntityDescription insertNewObjectForEntityForName:@"FlashSetInfo"
+                                                            inManagedObjectContext:self.context];
+    persistentFlashSet.id = flashSet.id;
+    persistentFlashSet.modifiedDate = flashSet.modifiedDate;
+    persistentFlashSet.createdDate = flashSet.createdDate;
+    persistentFlashSet.title = flashSet.title;
     
-    //TODO: Delete cards present in db which have been deleted server side
     for (FlashSetItemAttributes* eachCard in setOfCards) {
         FlashSetItem* persistableFlashSetItem = [self getPersistentSetItemForId:eachCard.id];
         
@@ -110,14 +111,14 @@
         persistableFlashSetItem.id = eachCard.id;
         persistableFlashSetItem.term = eachCard.term;
         persistableFlashSetItem.definition = eachCard.definition;
-        //TODO: Perhaps not add another item to the set if it already has one?!
+
         [persistentFlashSet addHasCardsObject:persistableFlashSetItem];
     }
     
     [activeUser addCanSeeObject:persistentFlashSet];
     NSError *error;
     if (![self.context save:&error]) {
-        NSLog(@"Problem while persisting Flash set and items: %@", [error localizedDescription]);
+        NSLog(@"Problem while persisting Flash set and items: %@", [error debugDescription]);
     }
 }
 
@@ -137,11 +138,9 @@
         flashSet.id = [rawSetData objectForKey:@"id"];
         flashSet.title= [rawSetData objectForKey:@"title"];
         
-        NSTimeInterval timeInterval = [[rawSetData objectForKey:@"created_date"] doubleValue];
-        flashSet.createdDate = [NSDate dateWithTimeIntervalSince1970:timeInterval];
+        flashSet.createdDate = [self convertNumToDate:[rawSetData objectForKey:@"created_date"]];
         
-        timeInterval = [[rawSetData objectForKey:@"modified_date"] doubleValue];
-        flashSet.modifiedDate = [NSDate dateWithTimeIntervalSince1970:timeInterval];
+        flashSet.modifiedDate = [self convertNumToDate:[rawSetData objectForKey:@"modified_date"]];
         
         //Fetch all the terms in the set
         
@@ -233,17 +232,22 @@
 }
 
 
--(NSString *)syncServerDataOfSet:(NSNumber *)setId
+-(SyncResponse)syncServerDataOfSet:(NSNumber *)setId
 {
     UserInfo* activeUser = [[UserInfoLogic singleton] getPersistentActiveUser];
     //Make a request to get the details of this set
     
     NSURLRequest* setDownloadRequest = [URLHelper getSetDetailsRequestForSet:setId AccessToken:activeUser.accessToken];
-    NSData* response = [NSURLConnection sendSynchronousRequest:setDownloadRequest returningResponse:nil error:nil];
+    NSError* errorWhileDownloading = nil;
+    NSData* response = [NSURLConnection sendSynchronousRequest:setDownloadRequest returningResponse:nil error:&errorWhileDownloading];
     
     NSDictionary* jsonData = [NSJSONSerialization JSONObjectWithData:response
                                                         options:kNilOptions
                                                           error:nil];
+    if (errorWhileDownloading) {
+        return ERROR;
+    }
+    
     /*
      Check for the following cases:
      1. Updating a set which has been deleted on the server but present locally
@@ -265,17 +269,22 @@
         
         //TODO: Possibly use status codes
         if (errorWhileDeletingLocally) {
-            return [errorWhileDeletingLocally localizedDescription];
+            NSLog(@"Error encounter while deleting local data : %@",[errorWhileDeletingLocally localizedDescription]);
         }
-        return @"This set has been deleted on the server";
+        return DELETED;
     }
     
     
     FlashSetInfoAttributes* setToBeUpdated = [[FlashSetInfoAttributes alloc] init];
-    setToBeUpdated.modifiedDate = [jsonData objectForKey:@"modified_date"];
+    setToBeUpdated.modifiedDate = [self convertNumToDate:[jsonData objectForKey:@"modified_date"]];
     setToBeUpdated.title = [jsonData objectForKey:@"title"];
-    setToBeUpdated.createdDate = [jsonData objectForKey:@"created_date"];
+    setToBeUpdated.createdDate = [self convertNumToDate:[jsonData objectForKey:@"created_date"]];
     setToBeUpdated.id = [jsonData objectForKey:@"id"];
+    
+    NSLog(@"Modified date : %@",setToBeUpdated.modifiedDate);
+    NSLog(@"ID : %@",setToBeUpdated.id);
+    NSLog(@"Title : %@",setToBeUpdated.title);
+    NSLog(@"Created date : %@",setToBeUpdated.createdDate);
     
     NSArray* downloadedTerms = [jsonData objectForKey:@"terms"];
     NSMutableSet* setTerms = [NSMutableSet set];
@@ -290,8 +299,14 @@
     
     [self updateFlashSet:setToBeUpdated withItems:setTerms];
     
-    return @"Some return string";
+    return UPDATED;
 }
 
+#pragma mark Private methods
 
+-(NSDate *)convertNumToDate:(NSNumber *)numDate
+{
+    NSTimeInterval interval = [numDate doubleValue];
+    return [NSDate dateWithTimeIntervalSince1970:interval];
+}
 @end

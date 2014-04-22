@@ -34,6 +34,9 @@
 @property (strong, nonatomic) IBOutlet UIButton *setUpdateButton;
 @property (strong, nonatomic) IBOutlet UIButton *setPreviewButton;
 @property (strong, nonatomic) IBOutlet UILabel *emptyCollectionViewLabel;
+
+
+-(void)hideActivityModal;
 @end
 
 @implementation SetSelectorViewController
@@ -198,7 +201,13 @@
 
 - (IBAction)updateButtonPressed:(id)sender {
     NSLog(@"Update button pressed");
-    NSString* output = [[FlashSetLogic singleton] updateSet:self.selectedSetForGame.id];
+    [self.statusModal setText:[NSString stringWithFormat:@"Syncing data of set\n\"%@\"",self.selectedSetForGame.title]];
+    [self.view addSubview:self.statusModal];
+    
+    SyncResponse backendResponse = [[FlashSetLogic singleton] syncServerDataOfSet:self.selectedSetForGame.id];
+    
+    [self performSelector:@selector(hideActivityModal) withObject:self afterDelay:2];
+
 }
 
 - (IBAction)previewButtonPressed:(id)sender {
@@ -255,4 +264,8 @@
     return 1;
 }
 
+-(void)hideActivityModal
+{
+    [self.statusModal removeFromSuperview];
+}
 @end
