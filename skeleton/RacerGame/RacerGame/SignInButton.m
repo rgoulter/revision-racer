@@ -9,6 +9,7 @@
 #import "SignInButton.h"
 #import "UserInfoLogic.h"
 
+#define CUSTOM_GREEN [UIColor colorWithRed:(51.0/255.0) green:(156.0/255.0) blue:(9.0/255.0) alpha:1.0]
 @implementation SignInButton
 
 - (id)initWithFrame:(CGRect)frame
@@ -29,7 +30,7 @@
         self.titleLabel.font = [UIFont fontWithName:@"Georgia-Bold" size:18];
         
         [self buttonReleased];
-        [self setTitleColor:[UIColor greenColor] forState:UIControlStateHighlighted];
+        [self setTitleColor:CUSTOM_GREEN forState:UIControlStateHighlighted];
         [self setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         
         [self addTarget:self action:@selector(buttonPressed) forControlEvents:UIControlEventTouchDown];
@@ -58,7 +59,7 @@
 
 -(void)buttonReleased
 {
-    self.backgroundColor = [UIColor greenColor];
+    self.backgroundColor = CUSTOM_GREEN;
 }
 /*
 // Only override drawRect: if you perform custom drawing.
