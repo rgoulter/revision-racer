@@ -18,4 +18,5 @@
 
 -(UserInfo*)getPersistentActiveUser;
 
+-(void)logoutCurrentUser;
 @end

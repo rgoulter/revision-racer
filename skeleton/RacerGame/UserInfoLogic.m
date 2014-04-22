@@ -136,4 +136,17 @@
     return nil;
 }
 
+-(void)logoutCurrentUser
+{
+    UserInfo* currentActiveUser = [self getPersistentActiveUser];
+    currentActiveUser.isActive = @(NO);
+    
+    NSError* error;
+    [self.context save:&error];
+    
+    if (error) {
+        NSLog(@"Error encountered while logging out current user : %@",[error localizedDescription]);
+    }
+}
+
 @end

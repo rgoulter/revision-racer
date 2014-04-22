@@ -7,6 +7,7 @@
 //
 
 #import "SignInButton.h"
+#import "UserInfoLogic.h"
 
 @implementation SignInButton
 
@@ -34,22 +35,30 @@
         [self addTarget:self action:@selector(buttonPressed) forControlEvents:UIControlEventTouchDown];
         [self addTarget:self action:@selector(buttonReleased) forControlEvents:UIControlEventTouchUpInside];
         [self addTarget:self action:@selector(buttonReleased) forControlEvents:UIControlEventTouchUpOutside];
+        
+        [self refreshButtonText];
     }
     return self;
 }
 
+-(void)refreshButtonText
+{
+    UserInfoAttributes* activeUser = [[UserInfoLogic singleton] getActiveUser];
+    if (activeUser) {
+        [self setTitle:activeUser.userId forState:UIControlStateNormal];
+    } else {
+        [self setTitle:@"Sign In" forState:UIControlStateNormal];
+    }
+}
+
 -(void)buttonPressed
 {
-    NSLog(@"Changing the background color to green");
     self.backgroundColor = [UIColor whiteColor];
 }
 
 -(void)buttonReleased
 {
-    NSLog(@"Changing the background color to white");
     self.backgroundColor = [UIColor greenColor];
-    UIAlertView* myAlert = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"LOl" delegate:nil cancelButtonTitle:@"Nopes" otherButtonTitles: nil];
-    [myAlert show];
 }
 /*
 // Only override drawRect: if you perform custom drawing.

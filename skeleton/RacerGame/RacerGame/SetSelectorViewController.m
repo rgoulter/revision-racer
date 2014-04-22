@@ -20,12 +20,14 @@
 #import "StyleManager.h"
 #import "FlashSetSummary.h"
 #import "SetPreviewViewController.h"
+#import "SignInButton.h"
 
 @interface SetSelectorViewController ()
 
 @property (strong, nonatomic) IBOutlet UICollectionView *flashSetCollection;
 @property (strong, nonatomic) IBOutlet UIView *collectionViewBackground;
 @property (strong, nonatomic) NSArray* listOfUserSets;
+@property (strong, nonatomic) IBOutlet SignInButton *signInOutButton;
 @property (strong, nonatomic) FlashSetInfoAttributes* selectedSetForGame;
 @property (strong, nonatomic) ActivityModal* statusModal;
 @property (strong, nonatomic) IBOutlet NavigationButton *backNavigation;
@@ -100,10 +102,20 @@
 - (IBAction)signInUser:(id)sender {
     //Check if user is signed in
     //TODO: Read Quizlet API for expiring tokens/codes to initiate sign-ins
-    [self.statusModal setText:@"Logging in to Quizlet.."];
-    [self.view addSubview:self.statusModal];
-    
-    [self performSelector:@selector(initiateLogin) withObject:nil afterDelay:2];
+    UserInfoAttributes* activeUser = [[UserInfoLogic singleton] getActiveUser];
+    if (activeUser) {
+        UIAlertView* logoutAlertView = [[UIAlertView alloc] initWithTitle:@"Confirm Logout?"
+                                                                  message:@"Are you sure you wish to logout?"
+                                                                 delegate:self
+                                                        cancelButtonTitle:@"YES"
+                                                        otherButtonTitles:@"NO", nil];
+        [logoutAlertView show];
+    } else {
+        [self.statusModal setText:@"Logging in to Quizlet.."];
+        [self.view addSubview:self.statusModal];
+        
+        [self performSelector:@selector(initiateLogin) withObject:nil afterDelay:2];
+    }
 }
 
 #pragma mark - Getters
@@ -152,6 +164,7 @@
     
     [self.statusModal setText:@"Downloading your flash sets.."];
     [self performSelector:@selector(downloadAllFlashSets:) withObject:userInfo afterDelay:2];
+    [self.signInOutButton refreshButtonText];
 }
 
 - (IBAction)beginGameBtnPressed:(UIButton *)sender {
@@ -173,6 +186,20 @@
     [self.navigationController pushViewController:previewViewController animated:YES];
 }
 
+#pragma mark UIAlertViewDelegate methods
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    //"Yes" clicked
+    if (buttonIndex == 0) {
+        //Initiate logout
+        [[UserInfoLogic singleton] logoutCurrentUser];
+        self.listOfUserSets = nil;
+        [self.setUpdateButton setEnabled:NO];
+        [self.setPreviewButton setEnabled:NO];
+        [self.signInOutButton refreshButtonText];
+        [self.flashSetCollection reloadData];
+    }
+}
 
 #pragma mark UICollectionViewDelegate methods
 

@@ -10,4 +10,5 @@
 
 @interface SignInButton : UIButton
 
+-(void)refreshButtonText;
 @end
