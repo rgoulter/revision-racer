@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "UserInfoAttributes.h"
 #import "FlashSetInfoAttributes.h"
+#import "FlashSetItemAttributes.h"
 
 typedef enum {
     UPDATED,
@@ -29,4 +30,6 @@ typedef enum {
 -(NSArray*)getSetsOfActiveUser;
 
 -(SyncResponse)syncServerDataOfSet:(NSNumber *)setId;
+
+-(FlashSetItemAttributes*)getSetItemForId:(NSNumber*)flashCardId;
 @end

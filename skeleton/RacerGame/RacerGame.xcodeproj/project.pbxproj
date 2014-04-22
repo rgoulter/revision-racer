@@ -82,6 +82,8 @@
 		D9B9F30519053BEF00AD1A2E /* FlashSetItemPreview.xib in Resources */ = {isa = PBXBuildFile; fileRef = D9B9F30419053BEF00AD1A2E /* FlashSetItemPreview.xib */; };
 		D9B9F30819053DF000AD1A2E /* FlashSetItemPreview.m in Sources */ = {isa = PBXBuildFile; fileRef = D9B9F30719053DF000AD1A2E /* FlashSetItemPreview.m */; };
 		D9DFC6AA190693D400B08DBC /* SecondaryButtons.png in Resources */ = {isa = PBXBuildFile; fileRef = D9DFC6A9190693D400B08DBC /* SecondaryButtons.png */; };
+		D9DFC6AD1906A58900B08DBC /* GameResultTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D9DFC6AC1906A58900B08DBC /* GameResultTableCell.xib */; };
+		D9DFC6B01906A74B00B08DBC /* GameResultTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D9DFC6AF1906A74B00B08DBC /* GameResultTableCell.m */; };
 		D9EB9B9E18FD601F004AA081 /* ActivityModal.m in Sources */ = {isa = PBXBuildFile; fileRef = D9EB9B9D18FD601F004AA081 /* ActivityModal.m */; };
 		D9EB9BA118FD7E00004AA081 /* FlashSetSummary.xib in Resources */ = {isa = PBXBuildFile; fileRef = D9EB9BA018FD7E00004AA081 /* FlashSetSummary.xib */; };
 /* End PBXBuildFile section */
@@ -226,6 +228,9 @@
 		D9B9F30619053DF000AD1A2E /* FlashSetItemPreview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlashSetItemPreview.h; sourceTree = "<group>"; };
 		D9B9F30719053DF000AD1A2E /* FlashSetItemPreview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlashSetItemPreview.m; sourceTree = "<group>"; };
 		D9DFC6A9190693D400B08DBC /* SecondaryButtons.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = SecondaryButtons.png; path = ../../Assets/SecondaryButtons.png; sourceTree = "<group>"; };
+		D9DFC6AC1906A58900B08DBC /* GameResultTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GameResultTableCell.xib; sourceTree = "<group>"; };
+		D9DFC6AE1906A74B00B08DBC /* GameResultTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameResultTableCell.h; sourceTree = "<group>"; };
+		D9DFC6AF1906A74B00B08DBC /* GameResultTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameResultTableCell.m; sourceTree = "<group>"; };
 		D9EB9B9D18FD601F004AA081 /* ActivityModal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityModal.m; sourceTree = "<group>"; };
 		D9EB9BA018FD7E00004AA081 /* FlashSetSummary.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FlashSetSummary.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -421,6 +426,7 @@
 		D96BA52418EAFE2400D29E82 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				D9DFC6AB1906A50700B08DBC /* GameResultTableCell */,
 				D91A36F21906254F00CD4722 /* SignInButton */,
 				D9B9F30319053B9300AD1A2E /* FlashSetItem */,
 				D9B9F2F51905078B00AD1A2E /* Assets */,
@@ -569,6 +575,16 @@
 			name = FlashSetItem;
 			sourceTree = "<group>";
 		};
+		D9DFC6AB1906A50700B08DBC /* GameResultTableCell */ = {
+			isa = PBXGroup;
+			children = (
+				D9DFC6AC1906A58900B08DBC /* GameResultTableCell.xib */,
+				D9DFC6AE1906A74B00B08DBC /* GameResultTableCell.h */,
+				D9DFC6AF1906A74B00B08DBC /* GameResultTableCell.m */,
+			);
+			name = GameResultTableCell;
+			sourceTree = "<group>";
+		};
 		D9EB9B9F18FD7DCE004AA081 /* FlashSetSummary */ = {
 			isa = PBXGroup;
 			children = (
@@ -668,6 +684,7 @@
 				02505AF218F57819008F8563 /* starcluster.fsh in Resources */,
 				D9B9F2F71905079E00AD1A2E /* SetSelectionCell.png in Resources */,
 				D9DFC6AA190693D400B08DBC /* SecondaryButtons.png in Resources */,
+				D9DFC6AD1906A58900B08DBC /* GameResultTableCell.xib in Resources */,
 				D96BA52618EAFEB300D29E82 /* SetSelectionTableItem.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -709,6 +726,7 @@
 				02505AF918F69624008F8563 /* BOIcosahedron.m in Sources */,
 				029E580918EC6507007EB6E8 /* UIQuestionLabel.m in Sources */,
 				D991E56318EDB129003A4801 /* UserInfoLogic.m in Sources */,
+				D9DFC6B01906A74B00B08DBC /* GameResultTableCell.m in Sources */,
 				D96BA47318E86BB900D29E82 /* SetSelectorViewController.m in Sources */,
 				029E57F118EC1723007EB6E8 /* GameAnimationState.m in Sources */,
 				D9B9F2E81902420D00AD1A2E /* GameResultDetailsAttributes.m in Sources */,

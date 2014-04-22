@@ -10,6 +10,7 @@
 
 @interface GameResultsViewController ()
 
+@property (strong, nonatomic) IBOutlet UITableView *statisticsTable;
 @end
 
 @implementation GameResultsViewController
@@ -26,6 +27,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.view.backgroundColor = [UIColor lightGrayColor];
+    self.statisticsTable.separatorColor = [UIColor lightGrayColor];
     // Do any additional setup after loading the view.
 }
 
