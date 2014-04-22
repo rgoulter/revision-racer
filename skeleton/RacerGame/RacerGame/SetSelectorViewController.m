@@ -198,6 +198,7 @@
 
 - (IBAction)updateButtonPressed:(id)sender {
     NSLog(@"Update button pressed");
+    NSString* output = [[FlashSetLogic singleton] updateSet:self.selectedSetForGame.id];
 }
 
 - (IBAction)previewButtonPressed:(id)sender {

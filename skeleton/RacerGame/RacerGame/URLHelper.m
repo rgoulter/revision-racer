@@ -14,6 +14,7 @@
 #define LOGIN_URL @"https://quizlet.com/authorize"
 #define CREATED_SETS_URL @"https://api.quizlet.com/2.0/users/%@/sets"
 #define FAVORITE_SETS_URL @"https://api.quizlet.com/2.0/users/%@/favorites"
+#define SET_DETAILS_URL @"https://api.quizlet.com/2.0/sets/%@"
 #define TOKEN_URL @"https://api.quizlet.com/oauth/token"
 
 @implementation URLHelper
@@ -90,4 +91,10 @@
     return [self createDownloadRequestForURLString:requiredURL withAccessToken:token];
 }
 
++(NSURLRequest*)getSetDetailsRequestForSet:(NSNumber*)setId
+                               AccessToken:(NSString*)token;
+{
+    NSString* requiredURL = [NSString stringWithFormat:SET_DETAILS_URL, setId];
+    return [self createDownloadRequestForURLString:requiredURL withAccessToken:token];
+}
 @end

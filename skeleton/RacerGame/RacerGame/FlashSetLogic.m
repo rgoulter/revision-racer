@@ -85,9 +85,13 @@
     FlashSetInfo* persistentFlashSet = [self getPersistentSetForId:flashSet.id];
     
     if(persistentFlashSet) {
-        persistentFlashSet.modifiedDate = flashSet.modifiedDate;
-        persistentFlashSet.createdDate = flashSet.createdDate;
-        persistentFlashSet.title = flashSet.title;
+        [self.context deleteObject:persistentFlashSet];
+        
+        NSError* errorWhileDeletingSet = nil;
+        [self.context save:&errorWhileDeletingSet];
+        if (errorWhileDeletingSet) {
+            NSLog(@"Error encountered : %@",[errorWhileDeletingSet localizedDescription]);
+        }
     } else {
         persistentFlashSet = [NSEntityDescription insertNewObjectForEntityForName:@"FlashSetInfo"
                                                             inManagedObjectContext:self.context];
@@ -101,11 +105,9 @@
     for (FlashSetItemAttributes* eachCard in setOfCards) {
         FlashSetItem* persistableFlashSetItem = [self getPersistentSetItemForId:eachCard.id];
         
-        if (!persistableFlashSetItem) {
-            persistableFlashSetItem = [NSEntityDescription insertNewObjectForEntityForName:@"FlashSetItem"
+        persistableFlashSetItem = [NSEntityDescription insertNewObjectForEntityForName:@"FlashSetItem"
                                                                     inManagedObjectContext:self.context];
-            persistableFlashSetItem.id = eachCard.id;
-        }
+        persistableFlashSetItem.id = eachCard.id;
         persistableFlashSetItem.term = eachCard.term;
         persistableFlashSetItem.definition = eachCard.definition;
         //TODO: Perhaps not add another item to the set if it already has one?!
@@ -229,4 +231,67 @@
     }
     return returnList;
 }
+
+
+-(NSString *)syncServerDataOfSet:(NSNumber *)setId
+{
+    UserInfo* activeUser = [[UserInfoLogic singleton] getPersistentActiveUser];
+    //Make a request to get the details of this set
+    
+    NSURLRequest* setDownloadRequest = [URLHelper getSetDetailsRequestForSet:setId AccessToken:activeUser.accessToken];
+    NSData* response = [NSURLConnection sendSynchronousRequest:setDownloadRequest returningResponse:nil error:nil];
+    
+    NSDictionary* jsonData = [NSJSONSerialization JSONObjectWithData:response
+                                                        options:kNilOptions
+                                                          error:nil];
+    /*
+     Check for the following cases:
+     1. Updating a set which has been deleted on the server but present locally
+     2. Deleting/adding terms which have been deleted on server
+     3. Error in case of network error
+     */
+    
+    
+    NSLog(@"Downloaded json data : %@",jsonData);
+    NSString* errorInJson = [jsonData objectForKey:@"error"];
+    NSLog(@"Error string : %@",errorInJson);
+    //Delete this set
+    if ([errorInJson isEqualToString:@"not_found"]) {
+        FlashSetInfo* flashSet = [self getPersistentSetForId:setId];
+        [self.context deleteObject:flashSet];
+        
+        NSError* errorWhileDeletingLocally = nil;
+        [self.context save:&errorWhileDeletingLocally];
+        
+        //TODO: Possibly use status codes
+        if (errorWhileDeletingLocally) {
+            return [errorWhileDeletingLocally localizedDescription];
+        }
+        return @"This set has been deleted on the server";
+    }
+    
+    
+    FlashSetInfoAttributes* setToBeUpdated = [[FlashSetInfoAttributes alloc] init];
+    setToBeUpdated.modifiedDate = [jsonData objectForKey:@"modified_date"];
+    setToBeUpdated.title = [jsonData objectForKey:@"title"];
+    setToBeUpdated.createdDate = [jsonData objectForKey:@"created_date"];
+    setToBeUpdated.id = [jsonData objectForKey:@"id"];
+    
+    NSArray* downloadedTerms = [jsonData objectForKey:@"terms"];
+    NSMutableSet* setTerms = [NSMutableSet set];
+    for (NSDictionary* eachTerm in downloadedTerms) {
+        FlashSetItemAttributes* termAttribs = [[FlashSetItemAttributes alloc] init];
+        termAttribs.id = [eachTerm objectForKey:@"id"];
+        termAttribs.term = [eachTerm objectForKey:@"term"];
+        termAttribs.definition = [eachTerm objectForKey:@"definition"];
+
+        [setTerms addObject:termAttribs];
+    }
+    
+    [self updateFlashSet:setToBeUpdated withItems:setTerms];
+    
+    return @"Some return string";
+}
+
+
 @end

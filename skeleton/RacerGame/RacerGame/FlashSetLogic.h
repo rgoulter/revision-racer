@@ -21,4 +21,6 @@
 -(NSSet*)getAllItemsInSet:(NSNumber*)setId;
 
 -(NSArray*)getSetsOfActiveUser;
+
+-(NSString*)updateSet:(NSNumber*)setId;
 @end
