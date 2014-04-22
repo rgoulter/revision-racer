@@ -36,6 +36,7 @@
 		02A30C8B18ECF9A6005F7ED7 /* QuestionState.m in Sources */ = {isa = PBXBuildFile; fileRef = 02A30C8A18ECF9A6005F7ED7 /* QuestionState.m */; };
 		02FB32D818ED627E00991ABA /* SpaceShip.m in Sources */ = {isa = PBXBuildFile; fileRef = 02FB32D718ED627E00991ABA /* SpaceShip.m */; };
 		02FB32DC18EDA9FF00991ABA /* BOCurve.m in Sources */ = {isa = PBXBuildFile; fileRef = 02FB32DB18EDA9FF00991ABA /* BOCurve.m */; };
+		D91A36F51906256F00CD4722 /* SignInButton.m in Sources */ = {isa = PBXBuildFile; fileRef = D91A36F41906256F00CD4722 /* SignInButton.m */; };
 		D96BA46F18E8675100D29E82 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D96BA46E18E8675100D29E82 /* CoreData.framework */; };
 		D96BA47318E86BB900D29E82 /* SetSelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D96BA47218E86BB900D29E82 /* SetSelectorViewController.m */; };
 		D96BA47618E8764000D29E82 /* QuizletAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = D96BA47518E8764000D29E82 /* QuizletAPI.m */; };
@@ -148,6 +149,8 @@
 		02FB32D718ED627E00991ABA /* SpaceShip.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SpaceShip.m; path = RacerGame/Game/SpaceShip.m; sourceTree = "<group>"; };
 		02FB32DA18EDA9FF00991ABA /* BOCurve.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BOCurve.h; path = RacerGame/Game/BOCurve.h; sourceTree = "<group>"; };
 		02FB32DB18EDA9FF00991ABA /* BOCurve.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BOCurve.m; path = RacerGame/Game/BOCurve.m; sourceTree = "<group>"; };
+		D91A36F31906256F00CD4722 /* SignInButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignInButton.h; sourceTree = "<group>"; };
+		D91A36F41906256F00CD4722 /* SignInButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignInButton.m; sourceTree = "<group>"; };
 		D96BA46E18E8675100D29E82 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		D96BA47118E86BB900D29E82 /* SetSelectorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetSelectorViewController.h; sourceTree = "<group>"; };
 		D96BA47218E86BB900D29E82 /* SetSelectorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetSelectorViewController.m; sourceTree = "<group>"; };
@@ -326,6 +329,15 @@
 			name = 3D;
 			sourceTree = "<group>";
 		};
+		D91A36F21906254F00CD4722 /* SignInButton */ = {
+			isa = PBXGroup;
+			children = (
+				D91A36F31906256F00CD4722 /* SignInButton.h */,
+				D91A36F41906256F00CD4722 /* SignInButton.m */,
+			);
+			name = SignInButton;
+			sourceTree = "<group>";
+		};
 		D96BA47018E867AC00D29E82 /* VControllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -407,6 +419,7 @@
 		D96BA52418EAFE2400D29E82 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				D91A36F21906254F00CD4722 /* SignInButton */,
 				D9B9F30319053B9300AD1A2E /* FlashSetItem */,
 				D9B9F2F51905078B00AD1A2E /* Assets */,
 				D9B9F2D8190150B300AD1A2E /* NavigationButtons */,
@@ -703,6 +716,7 @@
 				029E580618EC64AF007EB6E8 /* UIAnswerButton.m in Sources */,
 				D9B9F30819053DF000AD1A2E /* FlashSetItemPreview.m in Sources */,
 				029E57FA18EC1AEF007EB6E8 /* StarfieldStar.m in Sources */,
+				D91A36F51906256F00CD4722 /* SignInButton.m in Sources */,
 				D9B9F2E11902400000AD1A2E /* GameResultDetails.m in Sources */,
 				D96BA47B18E876A300D29E82 /* URLHelper.m in Sources */,
 				02505AEE18F571A1008F8563 /* BOStarCluster.m in Sources */,
