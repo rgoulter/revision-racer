@@ -92,6 +92,12 @@
         self.timeRemainingLabel.hidden = YES;
         self.timeRemainingLabel.alpha = 0;
     }
+    if (!_gameRules.scoreEnabled) {
+        self.scoreLabel.hidden = YES;
+        self.scoreLabel.alpha = 0;
+        self.scoreComboLabel.hidden = YES;
+        self.scoreComboLabel.alpha = 0;
+    }
     
     
     [self setUpGameObjects];

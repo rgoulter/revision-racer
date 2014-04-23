@@ -41,6 +41,7 @@
         
         _timeLimitEnabled = YES;
         _livesEnabled = YES;
+        _scoreEnabled = YES;
         
         _numLivesRemaining = numLives;
         _timeRemaining = timeLimit;
@@ -61,6 +62,7 @@
         
         _timeLimitEnabled = YES;
         _livesEnabled = NO;
+        _scoreEnabled = YES;
         
         _timeRemaining = timeLimit;
     }
@@ -80,6 +82,7 @@
         
         _timeLimitEnabled = NO;
         _livesEnabled = YES;
+        _scoreEnabled = YES;
         
         _numLivesRemaining = numLives;
     }
@@ -98,6 +101,7 @@
         
         _timeLimitEnabled = NO;
         _livesEnabled = NO;
+        _scoreEnabled = NO;
     }
     
     return self;
@@ -221,9 +225,11 @@
     [self decreaseQuestionDuration];
     
     
-    // Increase score; more for higher combo.
-    _score += _combo > 0 ? 15 : 10;
-    _combo += 1;
+    if (_scoreEnabled) {
+        // Increase score; more for higher combo.
+        _score += _combo > 0 ? 15 : 10;
+        _combo += 1;
+    }
 }
 
 

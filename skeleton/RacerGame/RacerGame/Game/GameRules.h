@@ -43,6 +43,7 @@
 
 @property BOOL timeLimitEnabled;
 @property BOOL livesEnabled;
+@property (readonly) BOOL scoreEnabled;
 
 @property (readonly) BOOL isOutOfLives;
 @property (readonly) BOOL isOutOfTime;
