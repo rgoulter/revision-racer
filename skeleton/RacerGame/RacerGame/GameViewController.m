@@ -26,6 +26,7 @@
 @interface GameViewController () <UIAlertViewDelegate>
 
 @property UIAlertView *gameOverAlertView;
+@property UIAlertView *pauseMenuAlertView;
 
 // MCQ Category properties
 @property id<QuestionUI> questionUI;
@@ -77,6 +78,14 @@
                                           otherButtonTitles:@"Ok", nil] ;
     _gameOverAlertView.tag = 2;
     _gameOverAlertView.alertViewStyle = UIAlertViewStyleDefault;
+    
+    _pauseMenuAlertView = [[UIAlertView alloc] initWithTitle:@"Game Paused"
+                                                     message:nil
+                                                    delegate:self
+                                           cancelButtonTitle:nil
+                                           otherButtonTitles:@"End Game", @"Resume", nil];
+    _pauseMenuAlertView.tag = 3;
+    _pauseMenuAlertView.alertViewStyle = UIAlertViewStyleDefault;
     
     
     
@@ -407,9 +416,9 @@
     [self setSpaceshipDestinationTo:pt];
 }
 
-- (IBAction)finishGameBtnPressed:(id)sender {
-    // Go to results screen.
-    [self performSegueWithIdentifier:@"gameToResults" sender:self];
+- (IBAction)pauseGameBtnPressed:(id)sender {
+    [_pauseMenuAlertView show];
+    self.paused = YES;
 }
 
 - (void)gameOverWithMessage:(NSString*)message
@@ -423,7 +432,15 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    [self performSegueWithIdentifier:@"gameToResults" sender:self];
+    if (alertView.tag == _gameOverAlertView.tag) { // GameOver alertview
+        [self performSegueWithIdentifier:@"gameToResults" sender:self];
+    } else if (alertView.tag == _pauseMenuAlertView.tag) {
+        if (buttonIndex == 0) { // Pause Menu alertview
+            [self performSegueWithIdentifier:@"gameToResults" sender:self];
+        } else if (buttonIndex == 1) { // resume
+            self.paused = NO;
+        }
+    }
 }
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
