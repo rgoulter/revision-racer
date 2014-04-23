@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GameResultInfoAttributes.h"
 
 @interface GameResultsViewController : UIViewController<UITableViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UILabel *resultsLabel;
 
+-(void)setSummaryOfResults:(GameResultInfoAttributes*)summary withDetails:(NSArray*)details;
 @end

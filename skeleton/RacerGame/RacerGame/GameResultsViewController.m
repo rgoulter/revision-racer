@@ -8,12 +8,24 @@
 
 #import "GameResultsViewController.h"
 #import "GameResultTableCell.h"
+#import "GameResultInfoAttributes.h"
+#import "FlashSetLogic.h"
+#import "NavigationButton.h"
+#import "StyleManager.h"
 
 @interface GameResultsViewController ()
 
 @property (strong, nonatomic) IBOutlet UITableView *statisticsTable;
 
 @property (strong, nonatomic) NSArray* listOfResultsDetails;
+@property (strong, nonatomic) GameResultInfoAttributes* resultSummary;
+@property (strong, nonatomic) IBOutlet NavigationButton* mainMenuNavButton;
+
+//Labels
+@property (strong, nonatomic) IBOutlet UILabel *setNameLabel;
+@property (strong, nonatomic) IBOutlet UILabel *gameScoreLabel;
+@property (strong, nonatomic) IBOutlet UILabel *accuracyLabel;
+
 @end
 
 @implementation GameResultsViewController
@@ -42,7 +54,10 @@
     
     GameResultTableCell* tableCell = [[[NSBundle mainBundle] loadNibNamed:@"GameResultTableCell" owner:nil options:nil] lastObject];
     self.statisticsTable.rowHeight = tableCell.bounds.size.height;
-
+    
+    //Set main menu button text
+    StyleManager* manager = [StyleManager manager];
+    [self.mainMenuNavButton setAttributedTitle:[manager getAttributedButtonTextForString:@"Main Menu"] forState:UIControlStateNormal];
 }
 
 - (void)didReceiveMemoryWarning
@@ -65,6 +80,12 @@
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
+#pragma mark Public methods
+-(void)setSummaryOfResults:(GameResultInfoAttributes *)summary withDetails:(NSArray *)details
+{
+    
+}
+
 #pragma mark UITableViewDataSource methods
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -85,5 +106,31 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return [self.listOfResultsDetails count];
+}
+
+#pragma mark Setters
+-(void)setResultSummary:(GameResultInfoAttributes *)resultSummary
+{
+    _resultSummary = resultSummary;
+    
+    [self.gameScoreLabel setText:[resultSummary.score stringValue]];
+    
+    NSString* nameOfSet = [[FlashSetLogic singleton] getSetForId:resultSummary.setId].title;
+    [self.setNameLabel setText:nameOfSet];
+}
+
+-(void)setListOfResultsDetails:(NSArray *)listOfResultsDetails
+{
+    _listOfResultsDetails = listOfResultsDetails;
+    
+    NSInteger totalGuesses = 0;
+    NSInteger correctGuesses = 0;
+    
+    for (GameResultDetailsAttributes* eachTerm in self.listOfResultsDetails) {
+        totalGuesses = totalGuesses + [eachTerm.totalGuesses integerValue];
+        correctGuesses = correctGuesses + [eachTerm.correctGuesses integerValue];
+    }
+    
+    [self.accuracyLabel setText:[NSString stringWithFormat:@"%@ out of %@",@(correctGuesses),@(totalGuesses)]];
 }
 @end
