@@ -202,7 +202,12 @@
     // TODO: Check whether a Revision FlashSet has been selected or not.
     // (Only perform the segue if there's a set to revise).
     
-    [self performSegueWithIdentifier:@"setSelectionToGame" sender:self];
+    if([[[FlashSetLogic singleton] getAllItemsInSet:self.selectedSetForGame.id] count] < 5) {
+        UIAlertView* insufficientSetItemsAlert = [[UIAlertView alloc] initWithTitle:@"Cannot play" message:@"You need a set with at least 5 cards to play the game!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [insufficientSetItemsAlert show];
+    } else {
+        [self performSegueWithIdentifier:@"setSelectionToGame" sender:self];
+    }
 }
 
 - (IBAction)updateButtonPressed:(id)sender {
