@@ -59,7 +59,7 @@
     [self.backNavigation setAttributedTitle:[manager getAttributedButtonTextForString:@"Back"] forState:UIControlStateNormal];
     [self.startGameButton setAttributedTitle:[manager getAttributedButtonTextForString:@"Start Game"] forState:UIControlStateNormal];
     
-    self.view.backgroundColor = [UIColor colorWithRed:45.0f/225.0f green:57.0f/225.0f blue:86.0f/255.0f alpha:1.0];
+    self.view.backgroundColor = [UIColor colorWithRed:(17.0/255.0) green:(8.0/255.0) blue:(51.0/255.0) alpha:1.0];
     [super viewDidLoad];
     
     self.listOfUserSets = [[FlashSetLogic singleton] getSetsOfActiveUser];

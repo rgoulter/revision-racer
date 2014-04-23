@@ -210,6 +210,25 @@
     return returnSet;
 }
 
+-(NSSet*)downloadStudiedSetsForRequest:(NSURLRequest*)donwloadRequest
+{
+    NSError* errorWhileDownloading = nil;
+    NSData* response = [NSURLConnection sendSynchronousRequest:donwloadRequest returningResponse:nil error:&errorWhileDownloading];
+    
+    NSArray* jsonData = [NSJSONSerialization JSONObjectWithData:response
+                                                             options:kNilOptions
+                                                               error:nil];
+
+    NSLog(@"Downloaded json data : %@",jsonData);
+    for (NSDictionary* eachSet in jsonData) {
+        NSDictionary* setInfo = [eachSet objectForKey:@"set"];
+        NSNumber* setId = [setInfo objectForKey:@"id"];
+        NSLog(@"Studied set id : %@",setId);
+        [self syncServerDataOfSet:setId];
+    }
+    return [NSSet set];
+}
+
 -(NSArray*)downloadAllSetsForUserId:(UserInfoAttributes *)user;
 {
     //TODO: Have to map them to the user
@@ -217,9 +236,9 @@
     
     NSSet* returnSet = [self downloadSetsForRequest:request];
     
-    request = [URLHelper getFavoriteSetsRequestForUser:user.userId AccessToken:user.accessToken];
+    request = [URLHelper getStudiedSetsRequestForUser:user.userId AccessToken:user.accessToken];
     
-    returnSet = [returnSet setByAddingObjectsFromSet:[self downloadSetsForRequest:request]];
+    returnSet = [returnSet setByAddingObjectsFromSet:[self downloadStudiedSetsForRequest:request]];
     
     NSSortDescriptor* sortByName = [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES];
     return [[returnSet allObjects] sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortByName]];
@@ -266,7 +285,7 @@
      */
     
     
-    NSLog(@"Downloaded json data : %@",jsonData);
+    NSLog(@"Downloaded json data for set %@: %@",setId,jsonData);
     NSString* errorInJson = [jsonData objectForKey:@"error"];
     NSLog(@"Error string : %@",errorInJson);
     //Delete this set

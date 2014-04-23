@@ -22,6 +22,7 @@
         // Initialization code
         self.titleLabel.adjustsFontSizeToFitWidth = YES;
         self.titleLabel.minimumScaleFactor = 0.2; // minimum is 20% of current font size
+        self.titleLabel.minimumScaleFactor = 0.05;
         self.titleLabel.numberOfLines = 5;
     }
     

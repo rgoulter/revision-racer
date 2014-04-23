@@ -13,7 +13,7 @@
 
 #define LOGIN_URL @"https://quizlet.com/authorize"
 #define CREATED_SETS_URL @"https://api.quizlet.com/2.0/users/%@/sets"
-#define FAVORITE_SETS_URL @"https://api.quizlet.com/2.0/users/%@/favorites"
+#define STUDIED_SETS_URL @"https://api.quizlet.com/2.0/users/%@/studied"
 #define SET_DETAILS_URL @"https://api.quizlet.com/2.0/sets/%@"
 #define TOKEN_URL @"https://api.quizlet.com/oauth/token"
 
@@ -85,9 +85,9 @@
     return [self createDownloadRequestForURLString:requiredURL withAccessToken:token];
 }
 
-+(NSURLRequest*)getFavoriteSetsRequestForUser:(NSString*)userId AccessToken:(NSString*)token
++(NSURLRequest*)getStudiedSetsRequestForUser:(NSString*)userId AccessToken:(NSString*)token
 {
-    NSString* requiredURL = [NSString stringWithFormat:FAVORITE_SETS_URL, userId];
+    NSString* requiredURL = [NSString stringWithFormat:STUDIED_SETS_URL, userId];
     return [self createDownloadRequestForURLString:requiredURL withAccessToken:token];
 }
 
