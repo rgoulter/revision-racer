@@ -7,10 +7,12 @@
 //
 
 #import "FlashSetSummary.h"
+#import "FlashSetLogic.h"
 
 @interface FlashSetSummary ()
 @property (strong, nonatomic) IBOutlet UILabel *setName;
 @property (strong, nonatomic) IBOutlet UILabel *lastUpdatedText;
+@property (strong, nonatomic) IBOutlet UILabel *numOfCards;
 
 @property (strong, nonatomic) FlashSetInfoAttributes *backingData;
 
@@ -60,6 +62,16 @@
     
     NSString* lastUpdatedString = [NSString stringWithFormat:@"Last updated : %@",dateString];
     [self.lastUpdatedText setText:lastUpdatedString];
+    
+    //Get the number of cards in the set
+    NSNumber* numberOfItemsInSet = @([[[FlashSetLogic singleton] getAllItemsInSet:backingData.id] count]);
+    NSString* displayText = nil;
+    if ([numberOfItemsInSet isEqualToNumber:@(1)]) {
+        displayText = [NSString stringWithFormat:@"%@ card",numberOfItemsInSet];
+    } else {
+        displayText = [NSString stringWithFormat:@"%@ cards",numberOfItemsInSet];
+    }
+    [self.numOfCards setText:displayText];
 }
 /*
 // Only override drawRect: if you perform custom drawing.
