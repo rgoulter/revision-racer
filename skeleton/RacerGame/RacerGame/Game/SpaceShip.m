@@ -32,7 +32,7 @@
                                        Frequency:M_PI * 2
                                          YOffset:0.3
                                         Duration:-0.4  // **TODO**: Indefinite time
-                                      ForUniform:@"alpha"];
+                                      ForUniform:@"uAlpha"];
     self = [super initWithShape:pyra Path:nil andEffects:@[sinFX]];
     
     if (self) {

@@ -405,7 +405,7 @@
 - (void)applyForProgram:(GLProgram*)prog
 {
     // **MAGIC** assumes Main GLProgram
-    _uniform = [prog uniformIndex:@"alpha"];
+    _uniform = [prog uniformIndex:@"uAlpha"];
     float t = self.t;
     
     glUniform1f(_uniform, 1 - t);
@@ -434,7 +434,7 @@
 - (void)applyForProgram:(GLProgram*)prog
 {
     // **MAGIC** assumes Main GLProgram
-    _uniform = [prog uniformIndex:@"alpha"];
+    _uniform = [prog uniformIndex:@"uAlpha"];
     float t = self.t;
     
     float y = sinf(2 * M_PI * t * self.duration / _period);

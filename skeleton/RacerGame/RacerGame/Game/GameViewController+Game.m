@@ -45,7 +45,7 @@
     NSArray *debris = [aster debrisPieces];
     [aster tick:INFINITY];
     
-    NSLog(@"Program Uniform idx for alpha: %d", [self.program uniformIndex:@"alpha"]);
+    NSLog(@"Program Uniform idx for alpha: %d", [self.program uniformIndex:@"uAlpha"]);
     
     for (Asteroid *debrisAster in debris) {
         [self.deadAsteroids addObject:debrisAster];
@@ -416,6 +416,7 @@
                           initWithShape:shape
                                    Path:path];
     [asteroid setUp];
+    [asteroid addEffect:[[FadeInEffect alloc] initWithDuration:1.5]];
     
     [self.laneAsteroids addObject:asteroid];
 }

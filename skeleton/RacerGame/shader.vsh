@@ -10,7 +10,7 @@ uniform mat4 modelViewProjectionMatrix;
 uniform mat3 normalMatrix;
 
 uniform bool isOutline;
-uniform float alpha;
+uniform float uAlpha;
 uniform vec3 backgroundColor;
 
 void main()
@@ -28,9 +28,9 @@ void main()
     
     // For a nicer "fade-out" effect,
     // blend the color with the background based on the
-    // somewhat mis-named "alpha" uniform.
-    colorVarying = alpha * colorVarying + (1.0 - alpha) * vec4(backgroundColor, 1);
-    colorVarying.a = alpha;
+    // somewhat mis-named "uAlpha" uniform.
+    colorVarying = uAlpha * colorVarying + (1.0 - uAlpha) * vec4(backgroundColor, 1);
+    colorVarying.a = uAlpha;
     
     gl_Position = modelViewProjectionMatrix * position;
 }

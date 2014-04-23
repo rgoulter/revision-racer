@@ -326,7 +326,7 @@ typedef void (*GLLogFunction) (GLuint program, GLsizei bufsize, GLsizei* length,
 - (void)useDefaultUniformValues
 {
     glUniform1i([self uniformIndex:@"isOutline"], 0);
-    glUniform1f([self uniformIndex:@"alpha"], 1);
+    glUniform1f([self uniformIndex:@"uAlpha"], 1);
 }
 
 @end
