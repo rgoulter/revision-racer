@@ -43,6 +43,10 @@
 {
     [super viewDidLoad];
     
+    //Reset values
+    self.listOfResultsDetails = self.listOfResultsDetails;
+    self.resultSummary = self.resultSummary;
+    
     self.view.backgroundColor = [UIColor lightGrayColor];
     self.statisticsTable.separatorColor = [UIColor lightGrayColor];
     self.statisticsTable.dataSource = self;
@@ -83,7 +87,8 @@
 #pragma mark Public methods
 -(void)setSummaryOfResults:(GameResultInfoAttributes *)summary withDetails:(NSArray *)details
 {
-    
+    self.resultSummary = summary;
+    self.listOfResultsDetails = details;
 }
 
 #pragma mark UITableViewDataSource methods
@@ -113,9 +118,13 @@
 {
     _resultSummary = resultSummary;
     
-    [self.gameScoreLabel setText:[resultSummary.score stringValue]];
+    NSString* score = [resultSummary.score stringValue];
+    NSLog(@"User score: %@",score);
+    [self.gameScoreLabel setText:score];
     
-    NSString* nameOfSet = [[FlashSetLogic singleton] getSetForId:resultSummary.setId].title;
+    FlashSetInfoAttributes* playedSet = [[FlashSetLogic singleton] getSetForId:resultSummary.setId];
+    NSString* nameOfSet = playedSet.title;
+    NSLog(@"Set name : %@",nameOfSet);
     [self.setNameLabel setText:nameOfSet];
 }
 

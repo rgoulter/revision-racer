@@ -176,7 +176,7 @@
 -(FlashSetInfoAttributes*)getSetForId:(NSNumber*)setId
 {
     FlashSetInfo* persistentObject = [self getPersistentSetForId:setId];
-    if (!persistentObject) {
+    if (persistentObject) {
         return [[FlashSetInfoAttributes alloc] initWithFlashSetInfo:persistentObject];
     }
     return nil;
@@ -185,7 +185,7 @@
 -(FlashSetItemAttributes*)getSetItemForId:(NSNumber*)flashCardId
 {
     FlashSetItem* persistentItem = [self getPersistentSetItemForId:flashCardId];
-    if (!persistentItem) {
+    if (persistentItem) {
         return [[FlashSetItemAttributes alloc] initWithFlashSetItem:persistentItem];
     }
     return nil;
