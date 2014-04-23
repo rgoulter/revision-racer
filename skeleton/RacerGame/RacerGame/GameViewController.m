@@ -15,7 +15,9 @@
 
 #import "GameResultsViewController.h"
 #import "BOStarCluster.h"
+#import "GameResultInfoAttributes.h"
 
+#import "UserInfoLogic.h"
 
 
 
@@ -427,9 +429,15 @@
     if ([segue.identifier isEqualToString:@"gameToResults"]) {
         GameResultsViewController *resultsVC = (GameResultsViewController*)segue.destinationViewController;
         
+        GameResultInfoAttributes *gameResultsInfo = [[GameResultInfoAttributes alloc] init];
+        gameResultsInfo.playedDate = [NSDate date];
+        gameResultsInfo.score = [NSNumber numberWithInt:self.gameRules.score];
+        gameResultsInfo.setId = self.flashSet.id;
+        gameResultsInfo.userId = [[UserInfoLogic singleton] getActiveUser].userId;
+        
         NSArray *results = [self.resultsDetailsTable allValues];
         
-        
+        [resultsVC setSummaryOfResults:gameResultsInfo withDetails:results];
     } else if ([segue.identifier isEqualToString:@"GameVCembedsLivesVC"]) {
         _livesVC = (LivesCounterViewController*)segue.destinationViewController;
     }
