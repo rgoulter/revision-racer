@@ -47,9 +47,10 @@
     self.listOfResultsDetails = self.listOfResultsDetails;
     self.resultSummary = self.resultSummary;
     
-    self.view.backgroundColor = [UIColor lightGrayColor];
-    self.statisticsTable.separatorColor = [UIColor lightGrayColor];
+    self.view.backgroundColor = [UIColor colorWithRed:(17.0/255.0) green:(8.0/255.0) blue:(51.0/255.0) alpha:1.0];
+    self.statisticsTable.separatorColor = [UIColor clearColor];
     self.statisticsTable.dataSource = self;
+    self.statisticsTable.backgroundColor = [UIColor clearColor];
     // Do any additional setup after loading the view.
     
     //Register custom table view cell

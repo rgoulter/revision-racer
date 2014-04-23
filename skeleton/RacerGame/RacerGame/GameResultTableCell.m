@@ -25,6 +25,7 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         // Initialization code
+        
     }
     return self;
 }
@@ -32,7 +33,7 @@
 -(void)setBackingData:(GameResultDetailsAttributes *)backingData
 {
     _backingData = backingData;
-
+    self.backgroundColor = [UIColor clearColor];
     FlashSetItemAttributes* setItem = [[FlashSetLogic singleton] getSetItemForId:backingData.flashCardId];
     
     [self.setTerm setText:setItem.term];
@@ -43,13 +44,6 @@
 - (void)awakeFromNib
 {
     // Initialization code
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
-{
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
 }
 
 @end
