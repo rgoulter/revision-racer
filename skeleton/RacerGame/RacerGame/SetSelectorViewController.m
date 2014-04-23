@@ -86,6 +86,8 @@
     //Disable update/preview buttons when view is first loaded
     [self.setPreviewButton setEnabled:NO];
     [self.setUpdateButton setEnabled:NO];
+    [self.startGameButton setEnabled:NO];
+    self.startGameButton.backgroundColor = [UIColor colorWithRed:(201.0/255.0) green:(201.0/255.0) blue:(201.0/255.0) alpha:1.0];
 }
 
 - (void)didReceiveMemoryWarning
@@ -153,6 +155,8 @@
     //By default
     [self.setUpdateButton setEnabled:NO];
     [self.setPreviewButton setEnabled:NO];
+    [self.startGameButton setEnabled:NO];
+    self.startGameButton.backgroundColor = [UIColor colorWithRed:(201.0/255.0) green:(201.0/255.0) blue:(201.0/255.0) alpha:1.0];
 }
 
 #pragma mark - Navigation
@@ -243,6 +247,8 @@
 {
     [self.setUpdateButton setEnabled:YES];
     [self.setPreviewButton setEnabled:YES];
+    [self.startGameButton setEnabled:YES];
+    self.startGameButton.backgroundColor = [UIColor colorWithRed:1.0 green:(189.0/255.0) blue:(36.0/255.0) alpha:1.0];
     
     self.selectedSetForGame = self.listOfUserSets[[indexPath item]];
     NSLog(@"Cell %lu selected",[indexPath item]);

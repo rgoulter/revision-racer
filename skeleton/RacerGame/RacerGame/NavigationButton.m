@@ -22,8 +22,9 @@
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
     if ((self = [super initWithCoder:aDecoder])){
-        self.backgroundColor = [UIColor colorWithRed:1.0 green:(189.0/255.0) blue:(36.0/255.0) alpha:1.0];
+        
         [self setTitle:@"Default" forState:UIControlStateNormal];
+        self.backgroundColor = [UIColor colorWithRed:1.0 green:(189.0/255.0) blue:(36.0/255.0) alpha:1.0];
     }
     return self;
 }
