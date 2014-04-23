@@ -18,10 +18,6 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        // Initialization code
-        self.adjustsFontSizeToFitWidth = YES;
-        self.minimumScaleFactor = 0.2; // minimum is 20% of current font size
-        self.numberOfLines = 3;
     }
     return self;
 }

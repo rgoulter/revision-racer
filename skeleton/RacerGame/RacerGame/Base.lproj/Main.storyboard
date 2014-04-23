@@ -419,8 +419,8 @@
                                             </button>
                                         </subviews>
                                     </view>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Question Word" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BMP-jN-bm9" customClass="UIQuestionLabel">
-                                        <rect key="frame" x="0.0" y="-56" width="984" height="211"/>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Question Word" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumFontSize="10" preferredMaxLayoutWidth="984" translatesAutoresizingMaskIntoConstraints="NO" id="BMP-jN-bm9" customClass="UIQuestionLabel">
+                                        <rect key="frame" x="0.0" y="0.0" width="984" height="140"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="80"/>
                                         <nil key="highlightedColor"/>
