@@ -6,9 +6,11 @@
 //  Copyright (c) 2014 Hunar Khanna. All rights reserved.
 //
 
-#import "StarfieldStar.h"
+#import "SpaceObject.h"
 
-@interface Asteroid : StarfieldStar
+@interface Asteroid : SpaceObject
+
+- (id)initWithShape:(BOShape*)shape Path:(PathEffect*)path;
 
 // To create the effect of exploding an Asteroid,
 //  we can either in GameVC take these "debris" pieces and manage them,

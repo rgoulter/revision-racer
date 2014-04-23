@@ -52,7 +52,7 @@
 {
     // Transfer asteroids from self.laneAsteroids to self.deadAsteroids
     for (Asteroid *aster in self.laneAsteroids) {
-        [aster extendLifeByDuration:2];
+        [aster.path extendLifeByDuration:2];
         [self.deadAsteroids addObject:aster];
     }
     
@@ -153,7 +153,7 @@
 {
     // update stars
     // **CODEDUPL** **HACK** Forgive me..
-    for (StarfieldStar *star in self.stars) {
+    for (SpaceObject *star in self.stars) {
         [star tick:self.timeSinceLastUpdate];
     }
     for (Asteroid *aster in self.deadAsteroids) {
@@ -164,9 +164,9 @@
     }
     
     for (int i = (int)[self.stars count] - 1; i >= 0; i--) {
-        StarfieldStar *star = [self.stars objectAtIndex:i];
+        SpaceObject *star = [self.stars objectAtIndex:i];
         
-        if ([star isExpired]) {
+        if ([star.path isExpired]) {
             [star tearDown];
             [self.stars removeObjectAtIndex:i];
         }
@@ -177,7 +177,7 @@
         // This is here in case we stagger answers?
         Asteroid *aster = [self.laneAsteroids objectAtIndex:i];
         
-        if ([aster isExpired]) {
+        if ([aster.path isExpired]) {
             // Do we remove lane asters here?..
             [self.laneAsteroids removeObjectAtIndex:i];
             
@@ -188,7 +188,7 @@
     for (int i = (int)[self.deadAsteroids count] - 1; i >= 0; i--) {
         Asteroid *aster = [self.deadAsteroids objectAtIndex:i];
         
-        if ([aster isExpired]) {
+        if ([aster.path isExpired]) {
             [aster tearDown];
             [self.deadAsteroids removeObjectAtIndex:i];
         }
@@ -196,7 +196,7 @@
     
     if (self.stars.count < 1) {
         [self addStarCluster];
-        StarfieldStar *latestStar = [self.stars lastObject];
+        SpaceObject *latestStar = [self.stars lastObject];
         [latestStar tick:self.gameRules.questionDuration / 2]; // **MAGIC**
     }
     if (self.stars.count < 2) {
@@ -262,7 +262,7 @@
 
 
 
-- (void)drawAsteroid:(StarfieldStar*)star
+- (void)drawAsteroid:(SpaceObject*)star
 {
     // Draw an asteroid with an outline effect
     // Calculate model view matrix.
@@ -331,7 +331,7 @@
     // draw stars
     [self.starShaderProgram use];
     
-    for (StarfieldStar *star in self.stars) {
+    for (SpaceObject *star in self.stars) {
         assert([star.shape isKindOfClass:[BOStarCluster class]]);
         
         GLKMatrix4 modelMat = [star transformation:GLKMatrix4Identity];
@@ -347,10 +347,7 @@
 
 - (void)addLaneAsteroid:(NSUInteger)idx
 {
-    NSLog(@"Generate lane %d aster", (int)idx);
-    Asteroid *asteroid = [[Asteroid alloc] init];
-    
-    asteroid.shape = [[BOAsteroidShape alloc] init];//[_starShapes objectAtIndex:rndShapeIdx];
+    BOShape *shape = [[BOAsteroidShape alloc] init];
     
     // Find destination point, depending on where the corresponding answer UI is.
     CGPoint destWorldPt = [self worldPointForLaneNum:idx];
@@ -359,14 +356,14 @@
     
     float dz = (float)(arc4random() % 100) / 10;
     
-    [asteroid setStartPositionX:x Y:y Z:-60 + dz];
-    [asteroid setEndPositionX:x Y:y Z:-5];
+    PathEffect *path = [[PathEffect alloc]
+                        initWithStartX:x Y:y Z:-60 + dz
+                        EndX:x Y:y Z:-5
+                        Duration:self.gameRules.questionDuration];
     
-    asteroid.duration = self.gameRules.questionDuration;
-    
-    
-    // setUp??
-    // TODO: Not sure how it reacts to IF it's called multiple times.
+    Asteroid *asteroid = [[Asteroid alloc]
+                          initWithShape:shape
+                                   Path:path];
     [asteroid setUp];
     
     [self.laneAsteroids addObject:asteroid];
@@ -376,15 +373,17 @@
 
 - (void)addStarCluster
 {
-    StarfieldStar *starfield = [[StarfieldStar alloc] initWithoutRotation];
-    
-    starfield.shape = [[BOStarCluster alloc] initWithNumPoints:100 inWidth:20 Height:20 Length:60];
+    BOShape *shape = [[BOStarCluster alloc] initWithNumPoints:100 inWidth:20 Height:20 Length:60];
     
     // Find destination point, depending on where the corresponding answer UI is.
-    [starfield setStartPositionX:0 Y:0 Z:-60];
-    [starfield setEndPositionX:0 Y:0 Z:30];
+    PathEffect *path = [[PathEffect alloc]
+                        initWithStartX:0 Y:0 Z:-60
+                        EndX:0 Y:0 Z:30
+                        Duration:self.gameRules.questionDuration];
     
-    starfield.duration = self.gameRules.questionDuration;
+    // TODO: Fadein effect
+    
+    SpaceObject *starfield = [[SpaceObject alloc] initWithShape:shape Path:path andEffects:@[]];
     
     // setUp
     [starfield setUp];

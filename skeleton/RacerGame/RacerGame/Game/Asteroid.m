@@ -10,6 +10,23 @@
 
 @implementation Asteroid
 
+
+
+- (id)initWithShape:(BOShape*)shape Path:(PathEffect*)path
+{
+    NSArray *effects = @[[[RotationEffect alloc] initWithRandomRotation]];
+    
+    self = [super initWithShape:shape
+                           Path:path
+                     andEffects:effects];
+    
+    if (self) {
+        
+    }
+    
+    return self;
+}
+
 - (void)setUp
 {
     assert([self.shape isKindOfClass:[BOAsteroidShape class]]);
@@ -30,8 +47,7 @@
     // the effect of the explosion will be quite strange.
     // TODO: Remove strangeness of explosion effect.
     
-    Asteroid *asteroid = [[Asteroid alloc] init];
-    asteroid.shape = tetShape;
+    BOShape *shape = tetShape;
     
     float k = 3;
     
@@ -40,10 +56,16 @@
     float dz = k * tetShape.centerX;
     
     // Here we depend on knowing current x, y, z of aster.
-    [asteroid setStartPositionX:self.x Y:self.y Z:self.z];
-    [asteroid setEndPositionX:self.x + dx Y:self.y + dy Z:self.z + dz];
+    // **MAGIC** duration
+    float x = self.path.x;
+    float y = self.path.y;
+    float z = self.path.z;
+    PathEffect *asteroidPath = [[PathEffect alloc]
+                                initWithStartX:x Y:y Z:z
+                                EndX:x + dx Y:y + dy Z:z + dz
+                                Duration:1.5];
     
-    asteroid.duration = 1.5; // **MAGIC**
+    Asteroid *asteroid = [[Asteroid alloc] initWithShape:shape Path:asteroidPath];
     
     // Setup the asteroid. Maybe bad **DESIGN**
     [asteroid setUp];

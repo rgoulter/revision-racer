@@ -8,7 +8,7 @@
 
 #import "GameViewController.h"
 
-#import "StarfieldStar.h"
+#import "SpaceObject.h"
 #import "Asteroid.h"
 #import "SpaceShip.h"
 
