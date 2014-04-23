@@ -185,8 +185,7 @@
         gameVC.flashSet = self.selectedSetForGame;
         
         // Set default or training mode
-        bool isTrainingMode = YES;
-        gameVC.gameRules = isTrainingMode ? [GameRules trainingModeGameRules] : [GameRules defaultGameRules];
+        gameVC.gameRules = self.isTrainingMode ? [GameRules trainingModeGameRules] : [GameRules defaultGameRules];
     }
 }
 
