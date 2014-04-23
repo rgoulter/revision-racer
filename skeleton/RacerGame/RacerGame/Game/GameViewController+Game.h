@@ -22,6 +22,8 @@
 @property NSMutableArray *deadAsteroids; // **HACK**
 @property NSMutableArray *laneAsteroids; // **HACK**
 
+@property float timeSinceLastAsteroid;
+
 // Borrow these labelso from GameVC.
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 @property (weak, nonatomic) IBOutlet UILabel *scoreComboLabel;

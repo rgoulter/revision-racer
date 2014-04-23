@@ -19,6 +19,7 @@
 @dynamic stars;
 @dynamic deadAsteroids; // **HACK**
 @dynamic laneAsteroids; // **HACK**
+@dynamic timeSinceLastAsteroid;
 
 
 
@@ -281,6 +282,14 @@
         
         self.timeRemainingLabel.text = [NSString stringWithFormat:@"%d:%02d", m, s];
     }
+    
+    // Moar asteroids in background
+    self.timeSinceLastAsteroid -= self.timeSinceLastUpdate;
+    if (self.timeSinceLastAsteroid < 0) {
+        [self addRandomAsteroid];
+        
+        self.timeSinceLastAsteroid = 0.35; //1.3;
+    }
 }
 
 
@@ -421,6 +430,34 @@
     [asteroid addEffect:[[FadeInEffect alloc] initWithDuration:1.5]];
     
     [self.laneAsteroids addObject:asteroid];
+}
+
+
+
+- (void)addRandomAsteroid
+{
+    BOShape *shape = [[BOAsteroidShape alloc] init];
+    
+    
+    float x;
+    
+    while (fabsf(x) * 15 < 3) { x = (float)(arc4random() % 100) / 100 - 0.5; }
+    float y;
+    while (fabsf(y) * 10 < 2) { y = (float)(arc4random() % 100) / 100 - 0.5; }
+    float dz = (float)(arc4random() % 100) / 10;
+    
+    PathEffect *path = [[PathEffect alloc]
+                        initWithStartX:x * 15 Y:y * 10 Z:-60 + dz
+                        EndX:x * 25 Y:y * 20 Z:-5
+                        Duration:self.gameRules.questionDuration];
+    
+    Asteroid *asteroid = [[Asteroid alloc]
+                          initWithShape:shape
+                                   Path:path];
+    [asteroid setUp];
+    [asteroid addEffect:[[FadeInEffect alloc] initWithDuration:1.5]];
+    
+    [self.deadAsteroids addObject:asteroid];
 }
 
 

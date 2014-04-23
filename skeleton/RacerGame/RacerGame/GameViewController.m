@@ -42,6 +42,8 @@
 @property NSMutableArray *deadAsteroids; // **HACK**
 @property NSMutableArray *laneAsteroids; // **HACK**
 
+@property float timeSinceLastAsteroid;
+
 // Cursors for Debugging & such.
 @property UIView *spaceshipPositionCursor;
 @property UIView *spaceshipDestinationCursor;
