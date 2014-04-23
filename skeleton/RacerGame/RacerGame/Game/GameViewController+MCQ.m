@@ -9,6 +9,7 @@
 #import "GameViewController+MCQ.h"
 #import "GameViewController+Game.h"
 
+#import "GameResultDetailsAttributes.h"
 
 
 @implementation GameViewController (MCQ)
@@ -17,6 +18,8 @@
 @dynamic answerUIs;
 @dynamic selectedAnswer;
 @dynamic answerGenerationContext;
+
+@dynamic resultsDetailsTable;
 
 - (void)setUpMCQ
 {
@@ -120,7 +123,11 @@
     NSString *selectedAnswerDefnString = self.selectedAnswer.question.questionText;
     NSString *questionDefnString = self.questionLabel.associatedQuestionState.question.questionText;
     
+    bool isCorrect = NO;
+    
     if ([selectedAnswerDefnString isEqualToString:questionDefnString]) {
+        isCorrect = YES;
+        
         [self.questionLabel setTextColor:correctColor];
         [[self.selectedAnswer answerUI] setTextColor:correctColor];
         
@@ -145,6 +152,25 @@
         [self gameEffectForIncorrectAnswer];
     }
     
+    
+    
+    // **DESIGN** I don't like that we deal with resultsDetailsTable
+    //  (and in particular, GameResultDetailsAttribute) here.
+    // Should be in Qn state, since that connects-to these things.
+    assert(qnState.flashCardId != nil);
+    GameResultDetailsAttributes *resultAttr = [self.resultsDetailsTable objectForKey:qnState.flashCardId];
+    if (!resultAttr) {
+        resultAttr = [[GameResultDetailsAttributes alloc] init];
+        resultAttr.flashCardId = qnState.flashCardId;
+        resultAttr.correctGuesses = @0;
+        resultAttr.totalGuesses = @0;
+    }
+    resultAttr.totalGuesses = [NSNumber numberWithInt:resultAttr.totalGuesses.intValue + 1];
+    if (isCorrect) {
+        resultAttr.correctGuesses = [NSNumber numberWithInt:resultAttr.correctGuesses.intValue + 1];
+    }
+    [self.resultsDetailsTable setObject:resultAttr forKey:qnState.flashCardId];
+    assert([self.resultsDetailsTable objectForKey:qnState.flashCardId] != nil);
     
     
     

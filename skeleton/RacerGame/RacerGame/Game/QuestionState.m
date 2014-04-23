@@ -50,6 +50,15 @@
     return self;
 }
 
+
+
+- (NSNumber*)flashCardId
+{
+    return self.question.questionFlashCardId;
+}
+
+
+
 // We generate the next question state once this one has expired.
 //
 // currentAnswerList is expected to be an NSArray of the Answers currently

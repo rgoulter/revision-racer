@@ -56,6 +56,8 @@
 @property (weak) id<QuestionSessionManager> questionManager;
 @property (weak) id<QuestionUI> questionUI;
 
+@property (readonly) NSNumber *flashCardId;
+
 - (id)initWithGameQuestion:(GameQuestion*)qn andDuration:(float)t;
 
 // We generate the next question state once this one has expired.

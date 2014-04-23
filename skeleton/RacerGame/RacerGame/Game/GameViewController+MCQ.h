@@ -30,6 +30,8 @@
 // This gives a linker **WARNING** ?? Look into this.
 @property (readonly) AnswerGenerationContext *answerGenerationContext;
 
+@property (readonly) NSMutableDictionary *resultsDetailsTable;
+
 
 - (void)setUpMCQ;
 

@@ -13,6 +13,7 @@
 #import "Resources.h"
 #import "AppDelegate.h"
 
+#import "GameResultsViewController.h"
 #import "BOStarCluster.h"
 
 
@@ -29,6 +30,8 @@
 @property NSMutableArray *answerUIs; // type: id<AnswerUI>
 @property AnswerState *selectedAnswer;
 @property (readonly) AnswerGenerationContext *answerGenerationContext;
+
+@property (readonly) NSMutableDictionary *resultsDetailsTable;
 
 // Game Category properties
 @property SpaceShip *playerShip;
@@ -95,6 +98,7 @@
     
     // Setup MCQ logic
     self.questionUI = _questionLabel;
+    _resultsDetailsTable = [NSMutableDictionary dictionary];
     [self setUpMCQ];
     
     
@@ -421,11 +425,11 @@
     
     // Setup the transition for set selection to game
     if ([segue.identifier isEqualToString:@"gameToResults"]) {
-        //GameViewController *gameVC = (GameViewController*)segue.destinationViewController;
+        GameResultsViewController *resultsVC = (GameResultsViewController*)segue.destinationViewController;
         
-        // Set the Selected Set information for the game VC.
-        // TODO
-        // gameVC.flashSet = ...;
+        NSArray *results = [self.resultsDetailsTable allValues];
+        
+        
     } else if ([segue.identifier isEqualToString:@"GameVCembedsLivesVC"]) {
         _livesVC = (LivesCounterViewController*)segue.destinationViewController;
     }

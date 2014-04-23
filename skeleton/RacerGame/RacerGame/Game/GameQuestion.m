@@ -98,6 +98,12 @@
     return item.definition;
 }
 
+- (NSNumber*)questionFlashCardId
+{
+    FlashSetItemAttributes *item = [_flashCards objectAtIndex:_correctIdx];
+    return item.id;
+}
+
 - (BOOL)isAnswerCorrect:(NSString*)answer
 {
     // There are several assumptions made here.

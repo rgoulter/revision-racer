@@ -30,6 +30,8 @@ typedef enum {kFlashSetText, kFlashSetImage, kFlashSetSound} FlashSetInputType;
 
 + (GameQuestion*)generateFromFlashSet:(FlashSetInfoAttributes*)flashSet;
 
+@property (readonly) NSNumber *questionFlashCardId;
+
 // This constructor is for the Q+A abstraction.
 // (as opposed to Q+4A). **DESIGN**
 - (id)initFromFlashSetItem:(FlashSetItemAttributes*)item;
