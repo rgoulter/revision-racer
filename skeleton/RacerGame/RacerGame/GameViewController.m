@@ -74,7 +74,20 @@
     _gameOverAlertView.alertViewStyle = UIAlertViewStyleDefault;
     
     
-    _gameRules = [GameRules defaultGameRules];
+    
+    // If gameRules weren't passed in, use default
+    if (!_gameRules) {
+        _gameRules = [GameRules trainingModeGameRules];
+    }
+    if (!_gameRules.livesEnabled) {
+        self.livesVC.view.hidden = YES;
+        self.livesVC.view.alpha = 0;
+    }
+    if (!_gameRules.timeLimitEnabled) {
+        self.timeRemainingLabel.hidden = YES;
+        self.timeRemainingLabel.alpha = 0;
+    }
+    
     
     [self setUpGameObjects];
     

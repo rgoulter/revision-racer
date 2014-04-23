@@ -19,6 +19,7 @@
                           andTimeLimit:(NSTimeInterval)timeLimit;
 
 + (GameRules*)defaultGameRules;
++ (GameRules*)trainingModeGameRules;
 
 - (void)decreaseQuestionDuration;
 - (void)decreaseQuestionDurationByAmount:(NSTimeInterval)delta;

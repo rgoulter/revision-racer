@@ -89,6 +89,22 @@
 
 
 
+- (id)initWithStartingQuestionDuration:(float)duration
+{
+    self = [super init];
+    
+    if (self) {
+        _questionDuration = duration;
+        
+        _timeLimitEnabled = NO;
+        _livesEnabled = NO;
+    }
+    
+    return self;
+}
+
+
+
 
 + (GameRules*)defaultGameRules
 {
@@ -97,6 +113,12 @@
                                                   andTimeLimit:30];
 }
 
+
+
++ (GameRules*)trainingModeGameRules
+{
+    return [[GameRules alloc] initWithStartingQuestionDuration:6];
+}
 
 
 
