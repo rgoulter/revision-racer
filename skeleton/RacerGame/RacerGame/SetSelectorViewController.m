@@ -33,11 +33,13 @@
 @property (strong, nonatomic) IBOutlet NavigationButton *backNavigation;
 @property (strong, nonatomic) IBOutlet UIButton *setUpdateButton;
 @property (strong, nonatomic) IBOutlet UIButton *setPreviewButton;
+@property (strong, nonatomic) IBOutlet UIButton *updateAllButton;
 @property (strong, nonatomic) IBOutlet NavigationButton *startGameButton;
 @property (strong, nonatomic) IBOutlet UILabel *emptyCollectionViewLabel;
 
 @property (nonatomic) BOOL isTrainingMode;
 -(void)hideActivityModal;
+- (void)downloadAllFlashSets:(UserInfoAttributes*)userInfo;
 @end
 
 @implementation SetSelectorViewController
@@ -170,6 +172,11 @@
     [self.setUpdateButton setEnabled:NO];
     [self.setPreviewButton setEnabled:NO];
     [self.startGameButton setEnabled:NO];
+    if (!listOfUserSets || [listOfUserSets count] == 0) {
+        [self.updateAllButton setEnabled:NO];
+    } else {
+        [self.updateAllButton setEnabled:YES];
+    }
     self.startGameButton.backgroundColor = [UIColor colorWithRed:(201.0/255.0) green:(201.0/255.0) blue:(201.0/255.0) alpha:1.0];
 }
 
@@ -202,13 +209,17 @@
 #pragma mark - QuizletLoginDelegate methods
 -(void)successfullyLoggedInForUserID:(UserInfoAttributes *)userInfo
 {
-    
-    NSLog(@"Actually reached the delegate at destination");
-    NSLog(@"Expiry date : %@", userInfo.expiryTimestamp);
-    
     [self.statusModal setText:@"Downloading your flash sets.."];
     [self performSelector:@selector(downloadAllFlashSets:) withObject:userInfo afterDelay:2];
     [self.signInOutButton refreshButtonText];
+}
+
+-(IBAction)updateAllFlashSets:(id)sender
+{
+    [self.view addSubview:self.statusModal];
+    [self.statusModal setText:@"Updating all your flash sets.."];
+    UserInfoAttributes* activeUser = [[UserInfoLogic singleton] getActiveUser];
+    [self downloadAllFlashSets:activeUser];
 }
 
 - (IBAction)beginGameBtnPressed:(UIButton *)sender {

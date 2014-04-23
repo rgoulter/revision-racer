@@ -94,6 +94,7 @@
 		D9DFC6B01906A74B00B08DBC /* GameResultTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D9DFC6AF1906A74B00B08DBC /* GameResultTableCell.m */; };
 		D9DFC6B219078D3C00B08DBC /* GameResultTableViewCellImage.png in Resources */ = {isa = PBXBuildFile; fileRef = D9DFC6B119078D3C00B08DBC /* GameResultTableViewCellImage.png */; };
 		D9DFC6B41907900000B08DBC /* GameResultTableBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = D9DFC6B31907900000B08DBC /* GameResultTableBackground.png */; };
+		D9DFC6B61907AFA700B08DBC /* NewGameButtonBorder.png in Resources */ = {isa = PBXBuildFile; fileRef = D9DFC6B51907AFA700B08DBC /* NewGameButtonBorder.png */; };
 		D9EB9B9E18FD601F004AA081 /* ActivityModal.m in Sources */ = {isa = PBXBuildFile; fileRef = D9EB9B9D18FD601F004AA081 /* ActivityModal.m */; };
 		D9EB9BA118FD7E00004AA081 /* FlashSetSummary.xib in Resources */ = {isa = PBXBuildFile; fileRef = D9EB9BA018FD7E00004AA081 /* FlashSetSummary.xib */; };
 /* End PBXBuildFile section */
@@ -254,6 +255,7 @@
 		D9DFC6AF1906A74B00B08DBC /* GameResultTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameResultTableCell.m; sourceTree = "<group>"; };
 		D9DFC6B119078D3C00B08DBC /* GameResultTableViewCellImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = GameResultTableViewCellImage.png; path = ../../Assets/GameResultTableViewCellImage.png; sourceTree = "<group>"; };
 		D9DFC6B31907900000B08DBC /* GameResultTableBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = GameResultTableBackground.png; path = ../../Assets/GameResultTableBackground.png; sourceTree = "<group>"; };
+		D9DFC6B51907AFA700B08DBC /* NewGameButtonBorder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = NewGameButtonBorder.png; path = ../../Assets/NewGameButtonBorder.png; sourceTree = "<group>"; };
 		D9EB9B9D18FD601F004AA081 /* ActivityModal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityModal.m; sourceTree = "<group>"; };
 		D9EB9BA018FD7E00004AA081 /* FlashSetSummary.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FlashSetSummary.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -592,6 +594,7 @@
 		D9B9F2F51905078B00AD1A2E /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				D9DFC6B51907AFA700B08DBC /* NewGameButtonBorder.png */,
 				D9DFC6B31907900000B08DBC /* GameResultTableBackground.png */,
 				D9DFC6B119078D3C00B08DBC /* GameResultTableViewCellImage.png */,
 				D9DFC6A9190693D400B08DBC /* SecondaryButtons.png */,
@@ -709,6 +712,7 @@
 			files = (
 				D9B9F30519053BEF00AD1A2E /* FlashSetItemPreview.xib in Resources */,
 				D9DFC6B41907900000B08DBC /* GameResultTableBackground.png in Resources */,
+				D9DFC6B61907AFA700B08DBC /* NewGameButtonBorder.png in Resources */,
 				D9B229FE18DB1F1800DDBA11 /* Images.xcassets in Resources */,
 				D9B9F2FF1905169100AD1A2E /* UpdateSetButtonImage.png in Resources */,
 				0280A1EB18EEE70E006B50B4 /* shader.fsh in Resources */,
