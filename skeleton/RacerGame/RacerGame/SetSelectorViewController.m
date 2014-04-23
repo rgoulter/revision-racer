@@ -36,7 +36,7 @@
 @property (strong, nonatomic) IBOutlet NavigationButton *startGameButton;
 @property (strong, nonatomic) IBOutlet UILabel *emptyCollectionViewLabel;
 
-
+@property (nonatomic) BOOL isTrainingMode;
 -(void)hideActivityModal;
 @end
 
@@ -88,6 +88,9 @@
     [self.setUpdateButton setEnabled:NO];
     [self.startGameButton setEnabled:NO];
     self.startGameButton.backgroundColor = [UIColor colorWithRed:(201.0/255.0) green:(201.0/255.0) blue:(201.0/255.0) alpha:1.0];
+    
+    //Set the default values
+    self.isTrainingMode = NO;
 }
 
 - (void)didReceiveMemoryWarning
@@ -105,6 +108,14 @@
     QuizletAPI* quizletApi = [QuizletAPI quizletApi];
     quizletApi.delegate = self;
     [quizletApi initiateLogin];
+}
+
+- (IBAction)gameModeSwitchPressed:(id)sender {
+    if ([sender isOn]) {
+        self.isTrainingMode = NO;
+    } else {
+        self.isTrainingMode = YES;
+    }
 }
 
 - (IBAction)signInUser:(id)sender {
