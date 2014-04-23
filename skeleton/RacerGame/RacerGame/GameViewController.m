@@ -417,6 +417,7 @@
     if (!_gameOverAlertView.visible) {
         _gameOverAlertView.message = message;
         [_gameOverAlertView show];
+        self.paused = YES;
     }
 }
 
