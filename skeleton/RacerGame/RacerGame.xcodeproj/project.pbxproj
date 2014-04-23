@@ -39,6 +39,8 @@
 		029E580618EC64AF007EB6E8 /* UIAnswerButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 029E580518EC64AF007EB6E8 /* UIAnswerButton.m */; };
 		029E580918EC6507007EB6E8 /* UIQuestionLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 029E580818EC6507007EB6E8 /* UIQuestionLabel.m */; };
 		02A30C8B18ECF9A6005F7ED7 /* QuestionState.m in Sources */ = {isa = PBXBuildFile; fileRef = 02A30C8A18ECF9A6005F7ED7 /* QuestionState.m */; };
+		02BB95A7190782E70081B5EB /* Icon-76.png in Resources */ = {isa = PBXBuildFile; fileRef = 02BB95A5190782E70081B5EB /* Icon-76.png */; };
+		02BB95A8190782E70081B5EB /* Icon-76@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 02BB95A6190782E70081B5EB /* Icon-76@2x.png */; };
 		02D60BBB18F7A765000E8EA0 /* CS3217_background1.png in Resources */ = {isa = PBXBuildFile; fileRef = 02D60BBA18F7A765000E8EA0 /* CS3217_background1.png */; };
 		02FB32D818ED627E00991ABA /* SpaceShip.m in Sources */ = {isa = PBXBuildFile; fileRef = 02FB32D718ED627E00991ABA /* SpaceShip.m */; };
 		02FB32DC18EDA9FF00991ABA /* BOCurve.m in Sources */ = {isa = PBXBuildFile; fileRef = 02FB32DB18EDA9FF00991ABA /* BOCurve.m */; };
@@ -162,6 +164,8 @@
 		029E580818EC6507007EB6E8 /* UIQuestionLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIQuestionLabel.m; path = RacerGame/Game/UIQuestionLabel.m; sourceTree = "<group>"; };
 		02A30C8918ECF9A6005F7ED7 /* QuestionState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QuestionState.h; path = RacerGame/Game/QuestionState.h; sourceTree = "<group>"; };
 		02A30C8A18ECF9A6005F7ED7 /* QuestionState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QuestionState.m; path = RacerGame/Game/QuestionState.m; sourceTree = "<group>"; };
+		02BB95A5190782E70081B5EB /* Icon-76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-76.png"; path = "../Icon-76.png"; sourceTree = "<group>"; };
+		02BB95A6190782E70081B5EB /* Icon-76@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-76@2x.png"; path = "../Icon-76@2x.png"; sourceTree = "<group>"; };
 		02D60BBA18F7A765000E8EA0 /* CS3217_background1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CS3217_background1.png; sourceTree = SOURCE_ROOT; };
 		02FB32D618ED627E00991ABA /* SpaceShip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SpaceShip.h; path = RacerGame/Game/SpaceShip.h; sourceTree = "<group>"; };
 		02FB32D718ED627E00991ABA /* SpaceShip.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SpaceShip.m; path = RacerGame/Game/SpaceShip.m; sourceTree = "<group>"; };
@@ -528,6 +532,8 @@
 				02113D9D19053E8B006BA260 /* SpaceShipIconView.xib */,
 				02113D97190536CD006BA260 /* spaceship_icon.png */,
 				02D60BBA18F7A765000E8EA0 /* CS3217_background1.png */,
+				02BB95A5190782E70081B5EB /* Icon-76.png */,
+				02BB95A6190782E70081B5EB /* Icon-76@2x.png */,
 				D9B229F418DB1F1800DDBA11 /* AppDelegate.h */,
 				D9B229F518DB1F1800DDBA11 /* AppDelegate.m */,
 				D9B229F718DB1F1800DDBA11 /* Main.storyboard */,
@@ -711,7 +717,9 @@
 				02505AF218F57819008F8563 /* starcluster.fsh in Resources */,
 				D9B9F2F71905079E00AD1A2E /* SetSelectionCell.png in Resources */,
 				D9DFC6AA190693D400B08DBC /* SecondaryButtons.png in Resources */,
+				02BB95A7190782E70081B5EB /* Icon-76.png in Resources */,
 				D9DFC6AD1906A58900B08DBC /* GameResultTableCell.xib in Resources */,
+				02BB95A8190782E70081B5EB /* Icon-76@2x.png in Resources */,
 				D96BA52618EAFEB300D29E82 /* SetSelectionTableItem.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
