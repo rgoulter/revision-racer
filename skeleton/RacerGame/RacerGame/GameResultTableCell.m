@@ -34,6 +34,7 @@
 {
     _backingData = backingData;
     self.backgroundColor = [UIColor clearColor];
+    self.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"GameResultTableViewCellImage"]];
     FlashSetItemAttributes* setItem = [[FlashSetLogic singleton] getSetItemForId:backingData.flashCardId];
     
     [self.setTerm setText:setItem.term];
