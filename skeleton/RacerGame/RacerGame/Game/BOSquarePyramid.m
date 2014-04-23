@@ -37,7 +37,7 @@ void calculateSquarePyramidData()
         calculateSquarePyramidData();
         
         [self setVertexData:gSquarePyramidVertexData->data withNumPoints:gSquarePyramidVertexData->numPoints];
-        [self setColorAllToR:1 G:1 B:0];
+        [self setColorAllToR:0 G:0 B:1];
     }
     
     return self;

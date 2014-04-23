@@ -215,7 +215,7 @@ void setVertexDataColor(GLfloat *data, int ptIdx, GLfloat r, GLfloat g, GLfloat 
 {
     // Set vertex data color to blue (rgb = 0,0,1).
     for (int i = 0; i < _numPoints; i++) {
-        setVertexDataColor(_vertexData, i, 0, 0, 1);
+        setVertexDataColor(_vertexData, i, r, g, b);
     }
 }
 
