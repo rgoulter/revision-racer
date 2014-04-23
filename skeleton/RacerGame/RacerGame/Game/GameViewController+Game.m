@@ -63,8 +63,10 @@
 {
     // Transfer asteroids from self.laneAsteroids to self.deadAsteroids
     for (Asteroid *aster in self.laneAsteroids) {
+        [aster addEffect:[[FadeOutEffect alloc] initWithDuration:aster.path.duration]];
         [aster.path extendLifeByDuration:2];
         [self.deadAsteroids addObject:aster];
+        
     }
     
     [self.laneAsteroids removeAllObjects];

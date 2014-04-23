@@ -408,7 +408,14 @@
     _uniform = [prog uniformIndex:@"uAlpha"];
     float t = self.t;
     
-    glUniform1f(_uniform, 1 - t);
+    glUniform1f(_uniform, fmaxf(0, 1 - t));
+}
+
+- (BOOL)isExpired
+{
+    // Fade out stays effective,
+    // since "out".
+    return NO;
 }
 
 @end
