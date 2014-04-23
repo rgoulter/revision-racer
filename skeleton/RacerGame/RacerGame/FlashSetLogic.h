@@ -21,7 +21,7 @@ typedef enum {
 
 +(FlashSetLogic*)singleton;
 
--(NSArray*)downloadAllSetsForUserId:(UserInfoAttributes *)user;
+-(void)downloadAllSetsForUserId:(UserInfoAttributes *)user;
 
 -(FlashSetInfoAttributes*)getSetForId:(NSNumber*)setId;
 

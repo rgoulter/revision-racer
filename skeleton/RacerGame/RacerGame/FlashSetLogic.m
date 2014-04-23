@@ -120,10 +120,8 @@
     }
 }
 
--(NSSet*)downloadSetsForRequest:(NSURLRequest*)request
+-(void)downloadSetsForRequest:(NSURLRequest*)request
 {
-    NSMutableSet* returnSet = [NSMutableSet set];
-    
     NSData* response = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
     
     NSArray* jsonData = [NSJSONSerialization JSONObjectWithData:response
@@ -155,10 +153,7 @@
         }
         
         [self updateFlashSet:flashSet withItems:flashSetItems];
-        [returnSet addObject:flashSet];
     }
-    
-    return returnSet;
 }
 
 #pragma mark - Public methods
@@ -210,7 +205,7 @@
     return returnSet;
 }
 
--(NSSet*)downloadStudiedSetsForRequest:(NSURLRequest*)donwloadRequest
+-(void)downloadStudiedSetsForRequest:(NSURLRequest*)donwloadRequest
 {
     NSError* errorWhileDownloading = nil;
     NSData* response = [NSURLConnection sendSynchronousRequest:donwloadRequest returningResponse:nil error:&errorWhileDownloading];
@@ -226,22 +221,18 @@
         NSLog(@"Studied set id : %@",setId);
         [self syncServerDataOfSet:setId];
     }
-    return [NSSet set];
 }
 
--(NSArray*)downloadAllSetsForUserId:(UserInfoAttributes *)user;
+-(void)downloadAllSetsForUserId:(UserInfoAttributes *)user;
 {
     //TODO: Have to map them to the user
     NSURLRequest* request = [URLHelper getCreatedSetsRequestForUser:user.userId AccessToken:user.accessToken];
     
-    NSSet* returnSet = [self downloadSetsForRequest:request];
+    [self downloadSetsForRequest:request];
     
     request = [URLHelper getStudiedSetsRequestForUser:user.userId AccessToken:user.accessToken];
     
-    returnSet = [returnSet setByAddingObjectsFromSet:[self downloadStudiedSetsForRequest:request]];
-    
-    NSSortDescriptor* sortByName = [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES];
-    return [[returnSet allObjects] sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortByName]];
+    [self downloadStudiedSetsForRequest:request];
 }
 
 -(NSArray*)getSetsOfActiveUser

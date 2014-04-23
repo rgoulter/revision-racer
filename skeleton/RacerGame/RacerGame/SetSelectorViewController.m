@@ -194,10 +194,9 @@
 
 - (void)downloadAllFlashSets:(UserInfoAttributes*)userInfo
 {
-    self.listOfUserSets = [[FlashSetLogic singleton] downloadAllSetsForUserId:userInfo];
+    [[FlashSetLogic singleton] downloadAllSetsForUserId:userInfo];
+    self.listOfUserSets = [[FlashSetLogic singleton] getSetsOfActiveUser];
     [self.statusModal removeFromSuperview];
-    
-    [self.flashSetCollection reloadData];
 }
 
 #pragma mark - QuizletLoginDelegate methods
