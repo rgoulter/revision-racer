@@ -113,8 +113,8 @@
 + (GameRules*)defaultGameRules
 {
     return [[GameRules alloc] initWithStartingQuestionDuration:6
-                                              andNumberOfLives:3
-                                                  andTimeLimit:30];
+                                              andNumberOfLives:5
+                                                  andTimeLimit:120];
 }
 
 
