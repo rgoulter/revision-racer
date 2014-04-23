@@ -9,7 +9,6 @@
 #import "LivesCounterViewController.h"
 
 @interface LivesCounterViewController ()
-
 @end
 
 @implementation LivesCounterViewController {
@@ -38,7 +37,6 @@
     // Because UICollectionView is buggy.
     self.livesCollectionView.backgroundColor = [UIColor clearColor];
     self.livesCollectionView.backgroundView = [[UIView alloc] initWithFrame:CGRectZero];
-
 }
 
 - (void)didReceiveMemoryWarning
@@ -63,6 +61,13 @@
     UICollectionViewCell *cell =
         [cv dequeueReusableCellWithReuseIdentifier:@"SpaceShipCollectionViewCell" forIndexPath:indexPath];
     return cell;
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView
+                  layout:(UICollectionViewLayout*)collectionViewLayout
+  sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    return CGSizeMake(32, 32);
 }
 
 - (int)numLives

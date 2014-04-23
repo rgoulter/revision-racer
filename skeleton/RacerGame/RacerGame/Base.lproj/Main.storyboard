@@ -368,7 +368,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cpb-cR-7ui">
-                                <rect key="frame" x="20" y="648" width="500" height="100"/>
+                                <rect key="frame" x="20" y="698" width="500" height="50"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <connections>
                                     <segue destination="gne-Cv-HyR" kind="embed" identifier="GameVCembedsLivesVC" id="jW2-Yw-EYZ"/>
@@ -466,18 +466,21 @@
                         <viewControllerLayoutGuide type="bottom" id="hCt-ie-vJm"/>
                     </layoutGuides>
                     <view key="view" opaque="NO" contentMode="scaleToFill" id="5Ry-eT-x93">
-                        <rect key="frame" x="0.0" y="0.0" width="500" height="100"/>
+                        <rect key="frame" x="0.0" y="0.0" width="500" height="50"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lives" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NZI-tq-Fd5">
-                                <rect key="frame" x="3" y="0.0" width="114" height="100"/>
+                                <rect key="frame" x="0.0" y="0.0" width="57" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="57" id="3oC-It-3Lp"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <collectionView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" minimumZoomScale="0.0" maximumZoomScale="0.0" bouncesZoom="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="3BK-E2-5Ub">
-                                <rect key="frame" x="125" y="0.0" width="375" height="100"/>
+                                <rect key="frame" x="65" y="0.0" width="435" height="50"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="EOU-NW-sur">
                                     <size key="itemSize" width="64" height="64"/>
@@ -487,7 +490,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SpaceShipCollectionViewCell" id="Hge-Id-aQo">
-                                        <rect key="frame" x="0.0" y="18" width="64" height="64"/>
+                                        <rect key="frame" x="0.0" y="-7" width="64" height="64"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="64" height="64"/>
@@ -515,12 +518,12 @@
                             </collectionView>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="3BK-E2-5Ub" firstAttribute="leading" secondItem="NZI-tq-Fd5" secondAttribute="trailing" constant="8" id="23d-Dr-KIx"/>
                             <constraint firstItem="3BK-E2-5Ub" firstAttribute="top" secondItem="Rc9-hB-aIN" secondAttribute="bottom" id="5JZ-WE-fTE"/>
                             <constraint firstItem="NZI-tq-Fd5" firstAttribute="top" secondItem="Rc9-hB-aIN" secondAttribute="bottom" id="I3f-I3-RhD"/>
-                            <constraint firstItem="3BK-E2-5Ub" firstAttribute="leading" secondItem="5Ry-eT-x93" secondAttribute="leading" constant="125" id="PCG-Dd-1TE"/>
                             <constraint firstAttribute="trailing" secondItem="3BK-E2-5Ub" secondAttribute="trailing" id="RYT-2p-8sy"/>
+                            <constraint firstItem="NZI-tq-Fd5" firstAttribute="leading" secondItem="5Ry-eT-x93" secondAttribute="leading" id="W30-Xh-QZt"/>
                             <constraint firstItem="hCt-ie-vJm" firstAttribute="top" secondItem="3BK-E2-5Ub" secondAttribute="bottom" id="hdm-3g-VWM"/>
+                            <constraint firstItem="3BK-E2-5Ub" firstAttribute="leading" secondItem="NZI-tq-Fd5" secondAttribute="trailing" constant="8" id="jWF-Qy-WDu"/>
                             <constraint firstItem="hCt-ie-vJm" firstAttribute="top" secondItem="NZI-tq-Fd5" secondAttribute="bottom" id="xyy-iE-jW3"/>
                         </constraints>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
