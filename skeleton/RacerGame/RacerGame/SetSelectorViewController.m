@@ -111,9 +111,12 @@
 }
 
 - (IBAction)gameModeSwitchPressed:(id)sender {
-    if ([sender isOn]) {
+    UISegmentedControl* modeSelectControl = (UISegmentedControl*)sender;
+    if ([modeSelectControl selectedSegmentIndex] == 1) {
         self.isTrainingMode = NO;
+        NSLog(@"Game mode");
     } else {
+        NSLog(@"Training mode");
         self.isTrainingMode = YES;
     }
 }
