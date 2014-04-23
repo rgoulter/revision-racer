@@ -172,9 +172,10 @@
         GameViewController *gameVC = (GameViewController*)segue.destinationViewController;
         
         gameVC.flashSet = self.selectedSetForGame;
-        // Set the Selected Set information for the game VC.
-        // TODO
-        // gameVC.flashSet = ...;
+        
+        // Set default or training mode
+        bool isTrainingMode = YES;
+        gameVC.gameRules = isTrainingMode ? [GameRules trainingModeGameRules] : [GameRules defaultGameRules];
     }
 }
 

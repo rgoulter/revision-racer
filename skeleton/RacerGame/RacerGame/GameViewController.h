@@ -41,7 +41,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *scoreComboLabel;
 @property (weak, nonatomic) IBOutlet UILabel *timeRemainingLabel;
 
-@property (readonly) GameRules *gameRules;
+@property (nonatomic) GameRules *gameRules;
 @property (weak, readonly) LivesCounterViewController *livesVC;
 
 @property FlashSetInfoAttributes *flashSet;
