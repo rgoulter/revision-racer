@@ -545,6 +545,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="SecondaryButtons.png" width="293" height="100"/>
         <image name="CS3217_background1.png" width="960" height="540"/>
         <image name="spaceship_icon.png" width="256" height="256"/>
     </resources>

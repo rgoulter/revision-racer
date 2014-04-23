@@ -19,6 +19,9 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
+        self.adjustsFontSizeToFitWidth = YES;
+        self.minimumScaleFactor = 0.2; // minimum is 20% of current font size
+        self.numberOfLines = 3;
     }
     return self;
 }
@@ -36,8 +39,6 @@
     // deals only with kFlashSetText (TEXT) answers. (i.e. no image, sound).
     
     NSString *answerLabel = qn.questionText;
-    
-    NSLog(@"Set QuestionLabel to %@", answerLabel);
     [self setText:answerLabel];
 }
 

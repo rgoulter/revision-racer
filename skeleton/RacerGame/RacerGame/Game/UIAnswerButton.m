@@ -20,6 +20,9 @@
     
     if (self) {
         // Initialization code
+        self.titleLabel.adjustsFontSizeToFitWidth = YES;
+        self.titleLabel.minimumScaleFactor = 0.2; // minimum is 20% of current font size
+        self.titleLabel.numberOfLines = 5;
     }
     
     return self;
@@ -41,7 +44,6 @@
     // deals only with kFlashSetText (TEXT) answers. (i.e. no image, sound).
     
     NSString *answerLabel = [qn.answers firstObject];
-    NSLog(@"Set AnswerLabel to %@", answerLabel);
     [self setTitle:answerLabel forState:UIControlStateNormal];
 }
 
