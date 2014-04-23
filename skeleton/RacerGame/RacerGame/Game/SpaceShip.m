@@ -17,6 +17,8 @@
 #import "SpaceShipShape.h"
 #import "BOSquarePyramid.h"
 
+#import "BOShape_Color.h"
+
 
 
 @interface AfterBurner : SpaceObject
@@ -61,6 +63,55 @@
 
 
 
+@interface ShipLaser : SpaceObject
+
+@property float length;
+
+@end
+
+@implementation ShipLaser
+
+- (id)init
+{
+    BOSquarePyramid *pyra = [[BOSquarePyramid alloc] init];
+    [pyra setColorAllToR:1 G:0 B:0];
+    
+    ShaderUniformEffect *sinFX = [[SinusoidalEffect alloc]
+                               initWithAmplitude:0.4
+                                       Frequency:M_PI * 2
+                                         YOffset:0.55
+                                        Duration:-0.2
+                                      ForUniform:@"uAlpha"];
+    self = [super initWithShape:pyra Path:nil andEffects:@[sinFX]];
+    
+    if (self) {
+        _length = 10;
+    }
+    
+    return self;
+}
+
+- (void)drawWithProgram:(GLProgram *)prog andCallback:(void (^)(GLKMatrix4))modelViewMatCallback
+{
+    // draw the afterburner with a translation.
+    
+    GLKMatrix4 lhsMat = GLKMatrix4Translate(GLKMatrix4Identity, 0, 0, -0.5);
+    
+    float thickness = 0.02;
+    GLKMatrix4 scaleMat = GLKMatrix4Scale(GLKMatrix4Identity, thickness, thickness, 2 * -fabsf(_length));
+    lhsMat = GLKMatrix4Multiply(lhsMat, scaleMat);
+    
+    // Intercept draw-call from parent so we scale down the asteroid..
+    // We can scale the object down by applying the scale matrix after the transformation
+    [super drawWithProgram:prog andCallback:^(GLKMatrix4 mvMat) {
+        modelViewMatCallback(lhsMat);
+    }];
+}
+
+@end
+
+
+
 @interface SpaceShip ()
 
 // The view which this spaceship is the "player avatar" for.
@@ -82,6 +133,8 @@
 @implementation SpaceShip
 {
     AfterBurner* _afterburner;
+    ShipLaser *_laser;
+    float _laserLife;
 }
 
 - (id)initInView:(UIView *)v
@@ -99,6 +152,8 @@
         _distTillCanNextAnswer = -1;
         
         _afterburner = [[AfterBurner alloc] init];
+        _laser = [[ShipLaser alloc] init];
+        _laserLife = 0;
     }
     
     return self;
@@ -108,11 +163,13 @@
 {
     [super setUp];
     [_afterburner setUp];
+    [_laser setUp];
 }
 
 - (void)tearDown
 {
     [_afterburner tearDown];
+    [_laser tearDown];
     [super tearDown];
 };
 
@@ -184,6 +241,8 @@
     _rotDZ *= (1 - decayPerSecond * timeSinceLastUpdate);
     
     [_afterburner tick:timeSinceLastUpdate];
+    [_laser tick:timeSinceLastUpdate];
+    if (_laserLife > 0) { _laserLife -= timeSinceLastUpdate; }
     
     
     if (_distTillCanNextAnswer >= 0) {
@@ -204,13 +263,16 @@
     }];
     
     GLKMatrix4 spaceshipTransform = [self transformation:GLKMatrix4Identity];
+    
     [_afterburner drawWithProgram:prog andCallback:^(GLKMatrix4 mvMat){
-        // ???
-        
-        //modelViewMatCallback(GLKMatrix4Multiply(mvMat, spaceshipTransform));
         modelViewMatCallback(GLKMatrix4Multiply(spaceshipTransform, mvMat));
-        //modelViewMatCallback(spaceshipTransform);
     }];
+    
+    if (_laserLife > 0) {
+        [_laser drawWithProgram:prog andCallback:^(GLKMatrix4 mvMat){
+            modelViewMatCallback(GLKMatrix4Multiply(spaceshipTransform, mvMat));
+        }];
+    }
 }
 
 
@@ -218,6 +280,14 @@
 {
     int sign = (arc4random() % 10 < 5) ? +1 : -1;
     _rotDZ = sign * 2 * M_PI;
+}
+
+
+
+- (void)fireLaserAt:(SpaceObject*)asteroid
+{
+    _laserLife = 0.8;
+    _laser.length = asteroid.position.z - self.position.z;
 }
 
 

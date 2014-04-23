@@ -363,6 +363,10 @@
         // (e.g. Race condition, Asteroids in _stars may have been removed already).
         Asteroid *correctAster = [self.laneAsteroids objectAtIndex:i]; // **HACK**, probably correct.
         [self explodeAsteroid:correctAster]; // EXPENSIVE
+        
+        // In order to explode an asteroid,
+        // the spaceship must shoot at it.
+        [self.playerShip fireLaserAt:correctAster];
     }
 }
 

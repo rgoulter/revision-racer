@@ -173,5 +173,13 @@
 
 
 
+- (GLKVector3)position
+{
+    return GLKVector3Make(_path.x, _path.y, _path.z);
+}
+
+
+
+
 
 @end

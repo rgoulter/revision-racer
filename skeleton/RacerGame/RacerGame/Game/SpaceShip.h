@@ -46,6 +46,8 @@
 // Start a wobble effect for an incorrect answer
 - (void)incorrectWobble;
 
+- (void)fireLaserAt:(SpaceObject*)asteroid;
+
 - (void)respondToPanGesture:(UIPanGestureRecognizer*)recog;
 - (void)respondToTapGesture:(UITapGestureRecognizer*)recog;
 

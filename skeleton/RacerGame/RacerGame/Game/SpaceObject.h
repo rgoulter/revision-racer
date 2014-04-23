@@ -25,9 +25,7 @@
 
 @property (nonatomic, readonly) BOCurve *pathCurve;
 
-@property (readonly) float x;
-@property (readonly) float y;
-@property (readonly) float z;
+@property (readonly) GLKVector3 position;
 
 @property (readonly) PathEffect *path;
 
