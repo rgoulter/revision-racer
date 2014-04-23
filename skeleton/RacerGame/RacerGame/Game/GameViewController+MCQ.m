@@ -230,6 +230,10 @@
    
     // **DEP** on GameVC / game
     [self gameSetUpNewQuestion];
+    
+    
+    // "unselect" the previously selected answer
+    self.selectedAnswer = nil;
 }
 
 
