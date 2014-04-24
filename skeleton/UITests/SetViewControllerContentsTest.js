@@ -78,12 +78,6 @@ function testViewControllerContent() {
 			assertTrue(setCollectionView.cells().length == 0, "Negative search works for complete string");
 		}
 		
-		//Log the user out
-		//target.frontMostApp().mainWindow().buttons()["signIn"].tap();
-		//Alert detected. Expressions for handling alerts should be moved into the UIATarget.onAlert function definition.
-		//target.frontMostApp().alert().cancelButton().tap();
-		assertEquals("You are not logged to any Quizlet account",collectionViewStatus.value());
-		
 	} else {
 		throw "Start the script with the user logged in to Quizlet";
 	}
