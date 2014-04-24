@@ -97,6 +97,7 @@
     
     //Set search bar delegate
     [self.searchField setDelegate:self];
+    [self.searchField setBackgroundImage:[UIImage new]];
 }
 
 - (void)didReceiveMemoryWarning
