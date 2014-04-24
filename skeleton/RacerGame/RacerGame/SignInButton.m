@@ -8,8 +8,11 @@
 
 #import "SignInButton.h"
 #import "UserInfoLogic.h"
+#import "Constants.h"
 
 #define CUSTOM_GREEN [UIColor colorWithRed:(51.0/255.0) green:(156.0/255.0) blue:(9.0/255.0) alpha:1.0]
+#define DEFAULT_LABEL @"Sign In"
+
 @implementation SignInButton
 
 - (id)initWithFrame:(CGRect)frame
@@ -27,7 +30,7 @@
     NSLog(@"Is this even called");
     if (self = [super initWithCoder:aDecoder]) {
         self.layer.cornerRadius = 4;
-        self.titleLabel.font = [UIFont fontWithName:@"Georgia-Bold" size:18];
+        self.titleLabel.font = REGULAR_BUTTON_FONT;
         
         [self buttonReleased];
         [self setTitleColor:CUSTOM_GREEN forState:UIControlStateHighlighted];
@@ -48,7 +51,7 @@
     if (activeUser) {
         [self setTitle:activeUser.userId forState:UIControlStateNormal];
     } else {
-        [self setTitle:@"Sign In" forState:UIControlStateNormal];
+        [self setTitle:DEFAULT_LABEL forState:UIControlStateNormal];
     }
 }
 

@@ -7,6 +7,7 @@
 //
 
 #import "StyleManager.h"
+#import "Constants.h"
 
 @implementation StyleManager
 
@@ -21,20 +22,9 @@
     return sharedObj;
 }
 
--(NSAttributedString*)getAttributedTitleForString:(NSString*)text
-{
-    UIFont* font = [UIFont fontWithName:@"Georgia" size:69];
-    NSMutableAttributedString* formattedText = [[NSMutableAttributedString alloc] initWithString:text
-                                                                                      attributes:@{NSStrokeWidthAttributeName : @(-1),
-                                                                                                   NSStrokeColorAttributeName : [UIColor whiteColor],
-                                                                                                   NSForegroundColorAttributeName: [UIColor redColor],
-                                                                                                   NSFontAttributeName : font}];
-    return formattedText;
-}
-
 -(NSAttributedString *)getAttributedButtonTextForString:(NSString *)text
 {
-    UIFont* font = [UIFont fontWithName:@"Georgia-BoldItalic" size:20];
+    UIFont* font = REGULAR_BUTTON_FONT;
     NSMutableAttributedString* formattedText = [[NSMutableAttributedString alloc] initWithString:text
                                                                                       attributes:@{                                                                                              NSForegroundColorAttributeName: [UIColor whiteColor],
                                                                                                    NSFontAttributeName : font}];

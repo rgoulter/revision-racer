@@ -12,6 +12,7 @@
 #import "FlashSetLogic.h"
 #import "FlashSetItemAttributes.h"
 #import "FlashSetItemPreview.h"
+#import "Constants.h"
 
 @interface SetPreviewViewController ()
 @property (strong, nonatomic) IBOutlet NavigationButton *backNavigation;
@@ -48,7 +49,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.view.backgroundColor = [UIColor colorWithRed:(17.0/255.0) green:(8.0/255.0) blue:(51.0/255.0) alpha:1.0];
+    self.view.backgroundColor = DEFAULT_BACKGROUND_COLOR;
     
     //Initialize the "Back" button
     StyleManager* manager = [StyleManager manager];

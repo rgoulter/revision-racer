@@ -7,6 +7,7 @@
 //
 
 #import "NavigationButton.h"
+#import "Constants.h"
 
 @implementation NavigationButton
 
@@ -24,7 +25,7 @@
     if ((self = [super initWithCoder:aDecoder])){
         
         [self setTitle:@"Default" forState:UIControlStateNormal];
-        self.backgroundColor = [UIColor colorWithRed:1.0 green:(189.0/255.0) blue:(36.0/255.0) alpha:1.0];
+        self.backgroundColor = BUTTON_ENABLED_COLOR;
     }
     return self;
 }

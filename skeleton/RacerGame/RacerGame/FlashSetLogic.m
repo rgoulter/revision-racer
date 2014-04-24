@@ -12,6 +12,7 @@
 #import "FlashSetItem.h"
 #import "Resources.h"
 #import "UserInfoLogic.h"
+#import "Constants.h"
 
 @interface FlashSetLogic ()
 
@@ -37,7 +38,7 @@
 {
     //TODO: Add assertNotNull code
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"FlashSetInfo"
+    NSEntityDescription *entity = [NSEntityDescription entityForName:FLASHSET_INFO_ENTITY_NAME
                                               inManagedObjectContext:self.context];
     [fetchRequest setEntity:entity];
     
@@ -60,7 +61,7 @@
 {
     //TODO: Add assertNotNull code
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"FlashSetItem"
+    NSEntityDescription *entity = [NSEntityDescription entityForName:FLASHSET_ITEM_ENTITY_NAME
                                               inManagedObjectContext:self.context];
     [fetchRequest setEntity:entity];
     
@@ -94,7 +95,7 @@
             NSLog(@"Error encountered : %@",[errorWhileDeletingSet localizedDescription]);
         }
     }
-    persistentFlashSet = [NSEntityDescription insertNewObjectForEntityForName:@"FlashSetInfo"
+    persistentFlashSet = [NSEntityDescription insertNewObjectForEntityForName:FLASHSET_INFO_ENTITY_NAME
                                                             inManagedObjectContext:self.context];
     persistentFlashSet.id = flashSet.id;
     persistentFlashSet.modifiedDate = flashSet.modifiedDate;
@@ -104,7 +105,7 @@
     for (FlashSetItemAttributes* eachCard in setOfCards) {
         FlashSetItem* persistableFlashSetItem = [self getPersistentSetItemForId:eachCard.id];
         
-        persistableFlashSetItem = [NSEntityDescription insertNewObjectForEntityForName:@"FlashSetItem"
+        persistableFlashSetItem = [NSEntityDescription insertNewObjectForEntityForName:FLASHSET_ITEM_ENTITY_NAME
                                                                     inManagedObjectContext:self.context];
         persistableFlashSetItem.id = eachCard.id;
         persistableFlashSetItem.term = eachCard.term;
@@ -131,23 +132,23 @@
     for (NSDictionary* rawSetData in jsonData) {
         
         FlashSetInfoAttributes* flashSet = [[FlashSetInfoAttributes alloc] init];
-        flashSet.id = [rawSetData objectForKey:@"id"];
-        flashSet.title= [rawSetData objectForKey:@"title"];
+        flashSet.id = [rawSetData objectForKey:JSON_SET_ID_KEY];
+        flashSet.title= [rawSetData objectForKey:JSON_SET_TITLE_KEY];
         
-        flashSet.createdDate = [self convertNumToDate:[rawSetData objectForKey:@"created_date"]];
+        flashSet.createdDate = [self convertNumToDate:[rawSetData objectForKey:JSON_SET_CREATED_DATE_KEY]];
         
-        flashSet.modifiedDate = [self convertNumToDate:[rawSetData objectForKey:@"modified_date"]];
+        flashSet.modifiedDate = [self convertNumToDate:[rawSetData objectForKey:JSON_SET_MODIFIED_DATE_KEY]];
         
         //Fetch all the terms in the set
         
-        NSArray* termsInSet = [rawSetData objectForKey:@"terms"];
+        NSArray* termsInSet = [rawSetData objectForKey:JSON_SET_ITEM_LIST_KEY];
         NSMutableSet* flashSetItems = [NSMutableSet set];
         
         for (NSDictionary* eachTermData in termsInSet) {
             FlashSetItemAttributes* setItem = [[FlashSetItemAttributes alloc] init];
-            setItem.id = [eachTermData objectForKey:@"id"];
-            setItem.term = [eachTermData objectForKey:@"term"];
-            setItem.definition = [eachTermData objectForKey:@"definition"];
+            setItem.id = [eachTermData objectForKey:JSON_SET_ITEM_ID_KEY];
+            setItem.term = [eachTermData objectForKey:JSON_SET_ITEM_TERM_KEY];
+            setItem.definition = [eachTermData objectForKey:JSON_SET_ITEM_DEFINITION_KEY];
             
             [flashSetItems addObject:setItem];
         }
@@ -213,12 +214,10 @@
     NSArray* jsonData = [NSJSONSerialization JSONObjectWithData:response
                                                              options:kNilOptions
                                                                error:nil];
-
-    NSLog(@"Downloaded json data : %@",jsonData);
+    
     for (NSDictionary* eachSet in jsonData) {
-        NSDictionary* setInfo = [eachSet objectForKey:@"set"];
-        NSNumber* setId = [setInfo objectForKey:@"id"];
-        NSLog(@"Studied set id : %@",setId);
+        NSDictionary* setInfo = [eachSet objectForKey:JSON_SET_KEY];
+        NSNumber* setId = [setInfo objectForKey:JSON_SET_ID_KEY];
         [self syncServerDataOfSet:setId];
     }
 }
@@ -275,8 +274,6 @@
      3. Error in case of network error
      */
     
-    
-    NSLog(@"Downloaded json data for set %@: %@",setId,jsonData);
     NSString* errorInJson = [jsonData objectForKey:@"error"];
     NSLog(@"Error string : %@",errorInJson);
     //Delete this set
@@ -296,23 +293,18 @@
     
     
     FlashSetInfoAttributes* setToBeUpdated = [[FlashSetInfoAttributes alloc] init];
-    setToBeUpdated.modifiedDate = [self convertNumToDate:[jsonData objectForKey:@"modified_date"]];
-    setToBeUpdated.title = [jsonData objectForKey:@"title"];
-    setToBeUpdated.createdDate = [self convertNumToDate:[jsonData objectForKey:@"created_date"]];
-    setToBeUpdated.id = [jsonData objectForKey:@"id"];
+    setToBeUpdated.modifiedDate = [self convertNumToDate:[jsonData objectForKey:JSON_SET_MODIFIED_DATE_KEY]];
+    setToBeUpdated.title = [jsonData objectForKey:JSON_SET_TITLE_KEY];
+    setToBeUpdated.createdDate = [self convertNumToDate:[jsonData objectForKey:JSON_SET_CREATED_DATE_KEY]];
+    setToBeUpdated.id = [jsonData objectForKey:JSON_SET_ID_KEY];
     
-    NSLog(@"Modified date : %@",setToBeUpdated.modifiedDate);
-    NSLog(@"ID : %@",setToBeUpdated.id);
-    NSLog(@"Title : %@",setToBeUpdated.title);
-    NSLog(@"Created date : %@",setToBeUpdated.createdDate);
-    
-    NSArray* downloadedTerms = [jsonData objectForKey:@"terms"];
+    NSArray* downloadedTerms = [jsonData objectForKey:JSON_SET_ITEM_LIST_KEY];
     NSMutableSet* setTerms = [NSMutableSet set];
     for (NSDictionary* eachTerm in downloadedTerms) {
         FlashSetItemAttributes* termAttribs = [[FlashSetItemAttributes alloc] init];
-        termAttribs.id = [eachTerm objectForKey:@"id"];
-        termAttribs.term = [eachTerm objectForKey:@"term"];
-        termAttribs.definition = [eachTerm objectForKey:@"definition"];
+        termAttribs.id = [eachTerm objectForKey:JSON_SET_ITEM_ID_KEY];
+        termAttribs.term = [eachTerm objectForKey:JSON_SET_ITEM_TERM_KEY];
+        termAttribs.definition = [eachTerm objectForKey:JSON_SET_ITEM_DEFINITION_KEY];
 
         [setTerms addObject:termAttribs];
     }

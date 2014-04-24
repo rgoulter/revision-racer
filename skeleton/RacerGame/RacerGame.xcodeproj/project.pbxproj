@@ -55,8 +55,6 @@
 		D96BA51B18E8B87B00D29E82 /* FlashSetInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = D96BA51A18E8B87B00D29E82 /* FlashSetInfo.m */; };
 		D96BA51E18E8BBC800D29E82 /* FlashSetLogic.m in Sources */ = {isa = PBXBuildFile; fileRef = D96BA51D18E8BBC800D29E82 /* FlashSetLogic.m */; };
 		D96BA52318E92F1700D29E82 /* FlashSetInfoAttributes.m in Sources */ = {isa = PBXBuildFile; fileRef = D96BA52218E92F1700D29E82 /* FlashSetInfoAttributes.m */; };
-		D96BA52618EAFEB300D29E82 /* SetSelectionTableItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = D96BA52518EAFEB300D29E82 /* SetSelectionTableItem.xib */; };
-		D96BA52918EB038100D29E82 /* SetSelectionTableItem.m in Sources */ = {isa = PBXBuildFile; fileRef = D96BA52818EB038100D29E82 /* SetSelectionTableItem.m */; };
 		D96BA52C18EB32AE00D29E82 /* ActivityModal.xib in Resources */ = {isa = PBXBuildFile; fileRef = D96BA52B18EB32AE00D29E82 /* ActivityModal.xib */; };
 		D991E55D18ED4A32003A4801 /* Resources.m in Sources */ = {isa = PBXBuildFile; fileRef = D991E55C18ED4A32003A4801 /* Resources.m */; };
 		D991E56018ED5E69003A4801 /* FlashSetItemAttributes.m in Sources */ = {isa = PBXBuildFile; fileRef = D991E55F18ED5E69003A4801 /* FlashSetItemAttributes.m */; };
@@ -174,6 +172,7 @@
 		02FB32D718ED627E00991ABA /* SpaceShip.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SpaceShip.m; path = RacerGame/Game/SpaceShip.m; sourceTree = "<group>"; };
 		02FB32DA18EDA9FF00991ABA /* BOCurve.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BOCurve.h; path = RacerGame/Game/BOCurve.h; sourceTree = "<group>"; };
 		02FB32DB18EDA9FF00991ABA /* BOCurve.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BOCurve.m; path = RacerGame/Game/BOCurve.m; sourceTree = "<group>"; };
+		D90A3AF81909208E002118BC /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		D91A36F31906256F00CD4722 /* SignInButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignInButton.h; sourceTree = "<group>"; };
 		D91A36F41906256F00CD4722 /* SignInButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignInButton.m; sourceTree = "<group>"; };
 		D96BA46E18E8675100D29E82 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -194,9 +193,6 @@
 		D96BA51D18E8BBC800D29E82 /* FlashSetLogic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FlashSetLogic.m; path = RacerGame/FlashSetLogic.m; sourceTree = "<group>"; };
 		D96BA52118E92F1700D29E82 /* FlashSetInfoAttributes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlashSetInfoAttributes.h; sourceTree = "<group>"; };
 		D96BA52218E92F1700D29E82 /* FlashSetInfoAttributes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlashSetInfoAttributes.m; sourceTree = "<group>"; };
-		D96BA52518EAFEB300D29E82 /* SetSelectionTableItem.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SetSelectionTableItem.xib; sourceTree = "<group>"; };
-		D96BA52718EB038100D29E82 /* SetSelectionTableItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetSelectionTableItem.h; sourceTree = "<group>"; };
-		D96BA52818EB038100D29E82 /* SetSelectionTableItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetSelectionTableItem.m; sourceTree = "<group>"; };
 		D96BA52B18EB32AE00D29E82 /* ActivityModal.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ActivityModal.xib; sourceTree = "<group>"; };
 		D96BA52D18EB365C00D29E82 /* ActivityModal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityModal.h; sourceTree = "<group>"; };
 		D991E55B18ED4A32003A4801 /* Resources.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Resources.h; sourceTree = "<group>"; };
@@ -420,6 +416,7 @@
 				D991E55C18ED4A32003A4801 /* Resources.m */,
 				D9B9F2D519012FA600AD1A2E /* StyleManager.h */,
 				D9B9F2D619012FA600AD1A2E /* StyleManager.m */,
+				D90A3AF81909208E002118BC /* Constants.h */,
 			);
 			name = Utilties;
 			sourceTree = "<group>";
@@ -464,9 +461,6 @@
 				D9B9F2D8190150B300AD1A2E /* NavigationButtons */,
 				D9EB9B9F18FD7DCE004AA081 /* FlashSetSummary */,
 				D96BA52A18EB328400D29E82 /* ActivityModal */,
-				D96BA52518EAFEB300D29E82 /* SetSelectionTableItem.xib */,
-				D96BA52718EB038100D29E82 /* SetSelectionTableItem.h */,
-				D96BA52818EB038100D29E82 /* SetSelectionTableItem.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -732,7 +726,6 @@
 				02BB95A7190782E70081B5EB /* Icon-76.png in Resources */,
 				D9DFC6AD1906A58900B08DBC /* GameResultTableCell.xib in Resources */,
 				02BB95A8190782E70081B5EB /* Icon-76@2x.png in Resources */,
-				D96BA52618EAFEB300D29E82 /* SetSelectionTableItem.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -792,7 +785,6 @@
 				D9B9F2E11902400000AD1A2E /* GameResultDetails.m in Sources */,
 				D96BA47B18E876A300D29E82 /* URLHelper.m in Sources */,
 				02505AEE18F571A1008F8563 /* BOStarCluster.m in Sources */,
-				D96BA52918EB038100D29E82 /* SetSelectionTableItem.m in Sources */,
 				D9B229F218DB1F1800DDBA11 /* main.m in Sources */,
 				0262757B18E90F4400CDAA24 /* Shapes.m in Sources */,
 				D991E55D18ED4A32003A4801 /* Resources.m in Sources */,

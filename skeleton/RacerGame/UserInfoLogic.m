@@ -8,12 +8,12 @@
 
 #import "UserInfoLogic.h"
 #import "Resources.h"
+#import "Constants.h"
 
 @interface UserInfoLogic ()
 
 @property(strong,nonatomic)NSManagedObjectContext* context;
 -(UserInfo*)getUserInfoForId:(NSString*)userId;
--(BOOL)hasSessionExpired:(UserInfo*)userInfo;
 
 @end
 
@@ -42,7 +42,6 @@
 
 -(UserInfoAttributes *)getActiveUser
 {
-    //TODO: If session has expired, consider as inactive
     UserInfo* persistentObject = [self getPersistentActiveUser];
     
     if (!persistentObject) {
@@ -56,8 +55,6 @@
 
 -(void)setActiveUser:(UserInfoAttributes *)newActiveUser
 {
-    //TODO: If doesnt exist in table, create
-    //else update status in table to active
     UserInfo* oldActiveUser = [self getPersistentActiveUser];
     
     if (oldActiveUser) {
@@ -74,7 +71,7 @@
         //else update
         UserInfo* newPersistentActiveUser = [self getUserInfoForId:newActiveUser.userId];
         if (!newPersistentActiveUser) {
-            newPersistentActiveUser = [NSEntityDescription insertNewObjectForEntityForName:@"UserInfo"
+            newPersistentActiveUser = [NSEntityDescription insertNewObjectForEntityForName:USER_INFO_ENTITY_NAME
                                                                     inManagedObjectContext:self.context];
             newPersistentActiveUser.userId = newActiveUser.userId;
         }
@@ -94,7 +91,7 @@
 -(UserInfo*)getUserInfoForId:(NSString*)userId
 {
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"UserInfo"
+    NSEntityDescription *entity = [NSEntityDescription entityForName:USER_INFO_ENTITY_NAME
                                               inManagedObjectContext:self.context];
     [fetchRequest setEntity:entity];
     
@@ -117,7 +114,7 @@
 {
     //Fetch the entry in the UserEntity
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"UserInfo"
+    NSEntityDescription *entity = [NSEntityDescription entityForName:USER_INFO_ENTITY_NAME
                                               inManagedObjectContext:self.context];
     [fetchRequest setEntity:entity];
     
@@ -127,7 +124,6 @@
     NSError *error;
     NSArray *fetchedObjects = [self.context executeFetchRequest:fetchRequest
                                                           error:&error];
-    //TODO: Assert size of fetchedObjects is 1
     if (!error) {
         if ([fetchedObjects count] > 0) {
             return [fetchedObjects lastObject];

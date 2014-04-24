@@ -10,6 +10,7 @@
 #import "FlashSetLogic.h"
 #import "Resources.h"
 #import "UserInfoLogic.h"
+#import "Constants.h"
 
 @interface GameResultsLogic()
 
@@ -43,7 +44,7 @@
 -(void)saveResults:(GameResultInfoAttributes*)result
        withDetails:(NSSet*)details
 {
-    GameResultInfo* entity = [NSEntityDescription insertNewObjectForEntityForName:@"GameResultInfo"
+    GameResultInfo* entity = [NSEntityDescription insertNewObjectForEntityForName:GAME_RESULT_INFO_ENTITY_NAME
                                                                 inManagedObjectContext:self.context];
     entity.setId = result.setId;
     entity.playedDate = result.playedDate;
@@ -51,7 +52,7 @@
     entity.userId = [[UserInfoLogic singleton] getPersistentActiveUser].userId;
     
     for (GameResultDetailsAttributes* currentItem in details) {
-        GameResultDetails* persistentDetail = [NSEntityDescription insertNewObjectForEntityForName:@"GameResultDetails"
+        GameResultDetails* persistentDetail = [NSEntityDescription insertNewObjectForEntityForName:GAME_RESULT_DETAILS_ENTITY_NAME
                                                                             inManagedObjectContext:self.context];
         persistentDetail.flashCardId = currentItem.flashCardId;
         persistentDetail.totalGuesses = currentItem.totalGuesses;
@@ -71,7 +72,7 @@
 -(void)deleteDetailsForItemWithId:(NSNumber*)itemId
 {
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"GameResultDetails"
+    NSEntityDescription *entity = [NSEntityDescription entityForName:GAME_RESULT_DETAILS_ENTITY_NAME
                                               inManagedObjectContext:self.context];
     
     NSPredicate* matchCondition = [NSPredicate predicateWithFormat:@"flashCardId = %@",itemId];
@@ -82,7 +83,6 @@
     NSError* error = nil;
     NSArray* fetchedObjects = [self.context executeFetchRequest:fetchRequest error:&error];
     
-    //TODO: Possibly assert count = 1?
     if (!error) {
         [self.context save:&error];
         if ([fetchedObjects count] > 0) {
@@ -98,7 +98,7 @@
 {
     //Group by id and count of the number of the occurences
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"GameResultInfo"
+    NSEntityDescription *entity = [NSEntityDescription entityForName:GAME_RESULT_INFO_ENTITY_NAME
                                               inManagedObjectContext:self.context];
     NSPropertyDescription* setIdAttribute = [entity.propertiesByName objectForKey:@"setId"];
     NSExpression* setIdExpression = [NSExpression expressionForKeyPath:@"setId"];
@@ -143,7 +143,7 @@
 -(FlashSetInfoAttributes*)getLastPlayedSet
 {
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"GameResultInfo"
+    NSEntityDescription *entity = [NSEntityDescription entityForName:GAME_RESULT_INFO_ENTITY_NAME
                                               inManagedObjectContext:self.context];
     
     NSString* activeUserId = [[UserInfoLogic singleton]getPersistentActiveUser].userId;
@@ -175,7 +175,7 @@
 -(NSUInteger)getTotalNumberOfSetsPlayed
 {
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"GameResultInfo"
+    NSEntityDescription *entity = [NSEntityDescription entityForName:GAME_RESULT_INFO_ENTITY_NAME
                                               inManagedObjectContext:self.context];
     
     NSString* activeUserId = [[UserInfoLogic singleton]getPersistentActiveUser].userId;

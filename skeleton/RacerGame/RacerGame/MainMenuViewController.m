@@ -35,11 +35,6 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-    self.view.backgroundColor = [UIColor colorWithRed:45.0f/225.0f green:57.0f/225.0f blue:86.0f/255.0f alpha:1.0];
-    
-    //Set Button text
-    //NSAttributedString* formattedText = [[StyleManager manager] getAttributedTitleForString:@"New game"];
-    //[self.customNewGameButton setAttributedTitle:formattedText forState:UIControlStateNormal];
 }
 
 - (void)didReceiveMemoryWarning
@@ -49,8 +44,6 @@
 }
 
 - (IBAction)newGameButtonPressed:(id)sender {
-    NSLog(@"Testing game results logic..");
-    
     //Launch segue to level/set selector
     [self.navigationController pushViewController:self.setSelectionViewController
                                          animated:YES];

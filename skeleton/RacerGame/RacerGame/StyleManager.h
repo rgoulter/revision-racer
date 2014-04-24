@@ -12,7 +12,5 @@
 
 +(StyleManager*)manager;
 
--(NSAttributedString*)getAttributedTitleForString:(NSString*)text;
-
 -(NSAttributedString*)getAttributedButtonTextForString:(NSString *)text;
 @end

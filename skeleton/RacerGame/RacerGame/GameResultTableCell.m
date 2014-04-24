@@ -9,6 +9,7 @@
 #import "GameResultTableCell.h"
 #import "FlashSetLogic.h"
 #import "FlashSetItemAttributes.h"
+#import "Constants.h"
 
 @interface GameResultTableCell ()
 @property (strong, nonatomic) IBOutlet UILabel *setTerm;
@@ -34,7 +35,7 @@
 {
     _backingData = backingData;
     self.backgroundColor = [UIColor clearColor];
-    self.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"GameResultTableViewCellImage"]];
+    self.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:GAME_RESULT_TABLE_CELL_IMAGE]];
     FlashSetItemAttributes* setItem = [[FlashSetLogic singleton] getSetItemForId:backingData.flashCardId];
     
     [self.setTerm setText:setItem.term];

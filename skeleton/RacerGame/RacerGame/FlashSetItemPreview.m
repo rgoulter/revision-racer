@@ -7,6 +7,8 @@
 //
 
 #import "FlashSetItemPreview.h"
+#define TERM_LABEL @"Term"
+#define DEFINITION_LABEL @"Definition"
 
 @interface FlashSetItemPreview ()
 @property (strong, nonatomic) IBOutlet UILabel *currentFaceType;
@@ -30,18 +32,18 @@
 -(void)setDataSource:(FlashSetItemAttributes *)item
 {
     self.backingSetItem = item;
-    [self.currentFaceType setText:@"Term"];
+    [self.currentFaceType setText:TERM_LABEL];
     [self.currentFaceText setText:self.backingSetItem.term];
 }
 
 -(void)flipCard
 {
     [UIView transitionWithView:self duration:0.5 options:UIViewAnimationOptionTransitionFlipFromRight animations:^{
-        if ([self.currentFaceType.text isEqualToString:@"Term"]) {
-            [self.currentFaceType setText:@"Definition"];
+        if ([self.currentFaceType.text isEqualToString:TERM_LABEL]) {
+            [self.currentFaceType setText:DEFINITION_LABEL];
             [self.currentFaceText setText:self.backingSetItem.definition];
         } else {
-            [self.currentFaceType setText:@"Term"];
+            [self.currentFaceType setText:TERM_LABEL];
             [self.currentFaceText setText:self.backingSetItem.term];
         }
     } completion:NULL];

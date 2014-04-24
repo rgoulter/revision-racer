@@ -12,6 +12,7 @@
 #import "FlashSetLogic.h"
 #import "NavigationButton.h"
 #import "StyleManager.h"
+#import "Constants.h"
 
 @interface GameResultsViewController ()
 
@@ -47,7 +48,7 @@
     self.listOfResultsDetails = self.listOfResultsDetails;
     self.resultSummary = self.resultSummary;
     
-    self.view.backgroundColor = [UIColor colorWithRed:(17.0/255.0) green:(8.0/255.0) blue:(51.0/255.0) alpha:1.0];
+    self.view.backgroundColor = DEFAULT_BACKGROUND_COLOR;
     self.statisticsTable.separatorColor = [UIColor clearColor];
     self.statisticsTable.dataSource = self;
     self.statisticsTable.backgroundColor = [UIColor clearColor];
@@ -120,12 +121,10 @@
     _resultSummary = resultSummary;
     
     NSString* score = [resultSummary.score stringValue];
-    NSLog(@"User score: %@",score);
     [self.gameScoreLabel setText:score];
     
     FlashSetInfoAttributes* playedSet = [[FlashSetLogic singleton] getSetForId:resultSummary.setId];
     NSString* nameOfSet = playedSet.title;
-    NSLog(@"Set name : %@",nameOfSet);
     [self.setNameLabel setText:nameOfSet];
 }
 

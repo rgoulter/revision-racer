@@ -69,7 +69,6 @@
 
 -(void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
-    //TODO: Indicate error on UI side
     NSLog(@"Error while getting access token : %@",[error localizedDescription]);
 }
 @end

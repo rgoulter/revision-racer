@@ -12,7 +12,6 @@
 #import "UserInfo.h"
 #import "GameViewController.h"
 #import "FlashSetLogic.h"
-#import "SetSelectionTableItem.h"
 #import "ActivityModal.h"
 #import "Resources.h"
 #import "NavigationButton.h"
@@ -21,6 +20,7 @@
 #import "FlashSetSummary.h"
 #import "SetPreviewViewController.h"
 #import "SignInButton.h"
+#import "Constants.h"
 
 @interface SetSelectorViewController ()
 
@@ -55,13 +55,11 @@
 
 - (void)viewDidLoad
 {
-    NSLog(@"Active user : %@",[[UserInfoLogic singleton] getActiveUser].userId);
-    
     StyleManager* manager = [StyleManager manager];
     [self.backNavigation setAttributedTitle:[manager getAttributedButtonTextForString:@"Back"] forState:UIControlStateNormal];
     [self.startGameButton setAttributedTitle:[manager getAttributedButtonTextForString:@"Start Game"] forState:UIControlStateNormal];
     
-    self.view.backgroundColor = [UIColor colorWithRed:(17.0/255.0) green:(8.0/255.0) blue:(51.0/255.0) alpha:1.0];
+    self.view.backgroundColor = DEFAULT_BACKGROUND_COLOR;
     [super viewDidLoad];
     
     self.listOfUserSets = [[FlashSetLogic singleton] getSetsOfActiveUser];
@@ -89,7 +87,7 @@
     [self.setPreviewButton setEnabled:NO];
     [self.setUpdateButton setEnabled:NO];
     [self.startGameButton setEnabled:NO];
-    self.startGameButton.backgroundColor = [UIColor colorWithRed:(201.0/255.0) green:(201.0/255.0) blue:(201.0/255.0) alpha:1.0];
+    self.startGameButton.backgroundColor = BUTTON_DISABLED_COLOR;
     
     //Set the default values
     self.isTrainingMode = NO;
@@ -116,9 +114,7 @@
     UISegmentedControl* modeSelectControl = (UISegmentedControl*)sender;
     if ([modeSelectControl selectedSegmentIndex] == 1) {
         self.isTrainingMode = NO;
-        NSLog(@"Game mode");
     } else {
-        NSLog(@"Training mode");
         self.isTrainingMode = YES;
     }
 }
@@ -223,8 +219,6 @@
 }
 
 - (IBAction)beginGameBtnPressed:(UIButton *)sender {
-    // TODO: Check whether a Revision FlashSet has been selected or not.
-    // (Only perform the segue if there's a set to revise).
     
     if([[[FlashSetLogic singleton] getAllItemsInSet:self.selectedSetForGame.id] count] < 5) {
         UIAlertView* insufficientSetItemsAlert = [[UIAlertView alloc] initWithTitle:@"Cannot play" message:@"You need a set with at least 5 cards to play the game!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
@@ -235,7 +229,6 @@
 }
 
 - (IBAction)updateButtonPressed:(id)sender {
-    NSLog(@"Update button pressed");
     [self.statusModal setText:[NSString stringWithFormat:@"Syncing data of set\n\"%@\"",self.selectedSetForGame.title]];
     [self.view addSubview:self.statusModal];
     
@@ -251,8 +244,6 @@
 }
 
 - (IBAction)previewButtonPressed:(id)sender {
-    NSLog(@"Preview button pressed");
-    
     SetPreviewViewController* previewViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"SetPreviewViewController"];
     [previewViewController setFlashSetToPreview:self.selectedSetForGame];
     [self.navigationController pushViewController:previewViewController animated:YES];
@@ -277,10 +268,9 @@
     [self.setUpdateButton setEnabled:YES];
     [self.setPreviewButton setEnabled:YES];
     [self.startGameButton setEnabled:YES];
-    self.startGameButton.backgroundColor = [UIColor colorWithRed:1.0 green:(189.0/255.0) blue:(36.0/255.0) alpha:1.0];
+    self.startGameButton.backgroundColor = BUTTON_ENABLED_COLOR;
     
     self.selectedSetForGame = self.listOfUserSets[[indexPath item]];
-    NSLog(@"Cell %lu selected",[indexPath item]);
 }
 
 #pragma mark UICollectionViewDataSource delegate methods

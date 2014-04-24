@@ -19,7 +19,6 @@
 
 @implementation URLHelper
 
-#pragma mark -
 #pragma mark private methods
 
 +(NSURLRequest*)createDownloadRequestForURLString:(NSString*)urlString
@@ -34,8 +33,6 @@
     return request;
 }
 
-
-#pragma mark -
 #pragma mark Interface/public methods
 +(NSURL*)getLoginUrl
 {

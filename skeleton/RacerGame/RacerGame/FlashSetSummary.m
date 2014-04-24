@@ -9,6 +9,8 @@
 #import "FlashSetSummary.h"
 #import "FlashSetLogic.h"
 
+#define LAST_UPDATED_LABEL_TEXT @"Last updated : %@"
+
 @interface FlashSetSummary ()
 @property (strong, nonatomic) IBOutlet UILabel *setName;
 @property (strong, nonatomic) IBOutlet UILabel *lastUpdatedText;
@@ -60,7 +62,7 @@
     [dateFormatter setDoesRelativeDateFormatting:YES];
     NSString* dateString = [dateFormatter stringFromDate:backingData.modifiedDate];
     
-    NSString* lastUpdatedString = [NSString stringWithFormat:@"Last updated : %@",dateString];
+    NSString* lastUpdatedString = [NSString stringWithFormat:LAST_UPDATED_LABEL_TEXT,dateString];
     [self.lastUpdatedText setText:lastUpdatedString];
     
     //Get the number of cards in the set
