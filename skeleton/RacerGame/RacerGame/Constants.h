@@ -35,4 +35,7 @@
 #define JSON_SET_ITEM_TERM_KEY @"term"
 #define JSON_SET_ITEM_DEFINITION_KEY @"definition"
 
+//Miscellaneous constants
+#define MINIMUM_SEARCH_STRING_LENGTH 3
+
 #endif

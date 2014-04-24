@@ -268,9 +268,8 @@
 
 -(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
-    NSString* searchedText = [searchBar text];
-    if (![searchedText isEqualToString:@""]) {
-        NSPredicate* filterPredicate = [NSPredicate predicateWithFormat:@"title CONTAINS[cd] %@",searchedText];
+    if (![searchText isEqualToString:@""] && searchText.length >= MINIMUM_SEARCH_STRING_LENGTH) {
+        NSPredicate* filterPredicate = [NSPredicate predicateWithFormat:@"title CONTAINS[cd] %@",searchText];
         self.filteredResults = [self.listOfUserSets filteredArrayUsingPredicate:filterPredicate];
     } else {
         self.filteredResults = self.listOfUserSets;

@@ -18,9 +18,11 @@
 @property (strong, nonatomic) IBOutlet NavigationButton *backNavigation;
 @property (strong, nonatomic) FlashSetInfoAttributes* backingFlashSet;
 @property (strong, nonatomic) NSArray* setContents;
+@property (strong, nonatomic) NSArray* filteredContents;
 @property (strong, nonatomic) IBOutlet UICollectionView *setItemsCollection;
 @property (strong, nonatomic) IBOutlet UIView *collectionViewBackground;
 @property (strong, nonatomic) IBOutlet UILabel *previewTitleLabel;
+@property (strong, nonatomic) IBOutlet UISearchBar *searchField;
 
 @end
 
@@ -35,14 +37,16 @@
     return self;
 }
 
--(NSArray *)setContents
+-(void)setSetContents:(NSArray *)setContents
 {
-    if (!_setContents) {
-        NSArray* unsortedArray = [[[FlashSetLogic singleton] getAllItemsInSet:self.backingFlashSet.id] allObjects];
-        NSSortDescriptor* sortByTerm = [NSSortDescriptor sortDescriptorWithKey:@"term" ascending:YES];
-        _setContents = [unsortedArray sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortByTerm]];
-    }
-    return _setContents;
+    _setContents = setContents;
+    self.filteredContents = setContents;
+}
+
+-(void)setFilteredContents:(NSArray *)filteredContents
+{
+    _filteredContents = filteredContents;
+    [self.setItemsCollection reloadData];
 }
 
 - (void)viewDidLoad
@@ -77,6 +81,9 @@
     
     //Set the preview mode title to set name
     [self.previewTitleLabel setText:self.backingFlashSet.title];
+    
+    //Set searchbar settings
+    [self.searchField setDelegate:self];
 }
 
 - (void)didReceiveMemoryWarning
@@ -90,6 +97,9 @@
 -(void)setFlashSetToPreview:(FlashSetInfoAttributes *)flashSet
 {
     self.backingFlashSet = flashSet;
+    NSArray* unsortedArray = [[[FlashSetLogic singleton] getAllItemsInSet:self.backingFlashSet.id] allObjects];
+    NSSortDescriptor* sortByTerm = [NSSortDescriptor sortDescriptorWithKey:@"term" ascending:YES];
+    self.setContents = [unsortedArray sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortByTerm]];
 }
 
 #pragma mark Private Methods
@@ -105,6 +115,18 @@
     [myCell flipCard];
 }
 
+#pragma mark UISearchBarDelegate methods
+
+-(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    if (![searchText isEqualToString:@""] && searchText.length >= MINIMUM_SEARCH_STRING_LENGTH) {
+        NSPredicate* searchPredicate = [NSPredicate predicateWithFormat:@"term CONTAINS[cd] %@ OR definition CONTAINS[cd] %@",searchText,searchText];
+        self.filteredContents = [self.setContents filteredArrayUsingPredicate:searchPredicate];
+    } else {
+        self.filteredContents = self.setContents;
+    }
+}
+
 #pragma mark UICollectionViewDataSourceDelegate methods
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
@@ -112,7 +134,7 @@
 {
     UICollectionViewCell* customCell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PreviewCell"
                                                                                  forIndexPath:indexPath];
-    FlashSetItemAttributes* requiredSet = self.setContents[[indexPath item]];
+    FlashSetItemAttributes* requiredSet = self.filteredContents[[indexPath item]];
     
     FlashSetItemPreview* myCell = (FlashSetItemPreview*)customCell;
     [myCell setDataSource:requiredSet];
@@ -127,7 +149,7 @@
 -(NSInteger)collectionView:(UICollectionView *)collectionView
     numberOfItemsInSection:(NSInteger)section
 {
-    return [self.setContents count];
+    return [self.filteredContents count];
 }
 
 /*
