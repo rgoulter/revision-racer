@@ -80,7 +80,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Grr-FL-oNi">
-                                        <rect key="frame" x="24" y="50" width="686" height="558"/>
+                                        <rect key="frame" x="24" y="87" width="686" height="521"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="kXk-ws-Nqb">
                                             <size key="itemSize" width="50" height="50"/>
@@ -91,7 +91,7 @@
                                         <cells/>
                                     </collectionView>
                                     <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="1" translatesAutoresizingMaskIntoConstraints="NO" id="L8d-0z-X1l">
-                                        <rect key="frame" x="99" y="9" width="278" height="29"/>
+                                        <rect key="frame" x="95" y="51" width="278" height="29"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <segments>
                                             <segment title="Training"/>
@@ -103,7 +103,7 @@
                                         </connections>
                                     </segmentedControl>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xvK-dK-FIR">
-                                        <rect key="frame" x="385" y="3" width="117" height="39"/>
+                                        <rect key="frame" x="387" y="45" width="117" height="39"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <state key="normal" title="Update" backgroundImage="SecondaryButtons.png">
                                             <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -114,7 +114,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DfO-IB-Oax">
-                                        <rect key="frame" x="510" y="3" width="125" height="39"/>
+                                        <rect key="frame" x="512" y="45" width="125" height="39"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <state key="normal" title="Preview" backgroundImage="SecondaryButtons.png">
                                             <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -124,6 +124,12 @@
                                             <action selector="previewButtonPressed:" destination="RXd-Aj-ZkL" eventType="touchUpInside" id="JYk-y9-ajn"/>
                                         </connections>
                                     </button>
+                                    <searchBar contentMode="redraw" fixedFrame="YES" placeholder="Enter name of a set" translatesAutoresizingMaskIntoConstraints="NO" id="gBb-Sk-Lei">
+                                        <rect key="frame" x="0.0" y="0.0" width="735" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </searchBar>
                                 </subviews>
                                 <color key="backgroundColor" red="0.84729534646739135" green="0.84729534646739135" blue="0.84729534646739135" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
@@ -173,6 +179,7 @@
                         <outlet property="collectionViewBackground" destination="g0U-HD-KZv" id="idx-bn-XH1"/>
                         <outlet property="emptyCollectionViewLabel" destination="eUw-gG-5eq" id="FSP-WZ-oQ7"/>
                         <outlet property="flashSetCollection" destination="Grr-FL-oNi" id="KL8-7A-6hw"/>
+                        <outlet property="searchField" destination="gBb-Sk-Lei" id="un9-ZB-vFZ"/>
                         <outlet property="setPreviewButton" destination="DfO-IB-Oax" id="rHk-Ml-3mQ"/>
                         <outlet property="setUpdateButton" destination="xvK-dK-FIR" id="XA5-ka-vGl"/>
                         <outlet property="signInOutButton" destination="tbh-PV-ErE" id="u2Y-fY-Rum"/>

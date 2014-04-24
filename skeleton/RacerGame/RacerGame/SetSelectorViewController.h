@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "QuizletAPI.h"
 
-@interface SetSelectorViewController : UIViewController<QuizletLoginDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UIAlertViewDelegate>
+@interface SetSelectorViewController : UIViewController<QuizletLoginDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UIAlertViewDelegate,UISearchBarDelegate>
 
 @end

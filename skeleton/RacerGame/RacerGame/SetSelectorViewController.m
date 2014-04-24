@@ -27,6 +27,7 @@
 @property (strong, nonatomic) IBOutlet UICollectionView *flashSetCollection;
 @property (strong, nonatomic) IBOutlet UIView *collectionViewBackground;
 @property (strong, nonatomic) NSArray* listOfUserSets;
+@property (strong, nonatomic) NSArray* filteredResults;
 @property (strong, nonatomic) IBOutlet SignInButton *signInOutButton;
 @property (strong, nonatomic) FlashSetInfoAttributes* selectedSetForGame;
 @property (strong, nonatomic) ActivityModal* statusModal;
@@ -36,6 +37,8 @@
 @property (strong, nonatomic) IBOutlet UIButton *updateAllButton;
 @property (strong, nonatomic) IBOutlet NavigationButton *startGameButton;
 @property (strong, nonatomic) IBOutlet UILabel *emptyCollectionViewLabel;
+
+@property (strong, nonatomic) IBOutlet UISearchBar *searchField;
 
 @property (nonatomic) BOOL isTrainingMode;
 -(void)hideActivityModal;
@@ -91,6 +94,9 @@
     
     //Set the default values
     self.isTrainingMode = NO;
+    
+    //Set search bar delegate
+    [self.searchField setDelegate:self];
 }
 
 - (void)didReceiveMemoryWarning
@@ -152,7 +158,9 @@
 - (void)setListOfUserSets:(NSArray *)listOfUserSets
 {
     _listOfUserSets = listOfUserSets;
-    [self.flashSetCollection reloadData];
+    self.filteredResults = listOfUserSets;
+    [self.searchField setText:@""];
+    //[self.flashSetCollection reloadData];
     
     if (!self.listOfUserSets || ([self.listOfUserSets count] == 0)) {
         if (![[UserInfoLogic singleton] getActiveUser]) {
@@ -174,6 +182,12 @@
         [self.updateAllButton setEnabled:YES];
     }
     self.startGameButton.backgroundColor = [UIColor colorWithRed:(201.0/255.0) green:(201.0/255.0) blue:(201.0/255.0) alpha:1.0];
+}
+
+-(void)setFilteredResults:(NSArray *)filteredResults
+{
+    _filteredResults = filteredResults;
+    [self.flashSetCollection reloadData];
 }
 
 #pragma mark - Navigation
@@ -249,6 +263,19 @@
     [self.navigationController pushViewController:previewViewController animated:YES];
 }
 
+#pragma mark UISearchBarDelegate methods
+
+-(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    NSString* searchedText = [searchBar text];
+    if (![searchedText isEqualToString:@""]) {
+        NSPredicate* filterPredicate = [NSPredicate predicateWithFormat:@"title CONTAINS[cd] %@",searchedText];
+        self.filteredResults = [self.listOfUserSets filteredArrayUsingPredicate:filterPredicate];
+    } else {
+        self.filteredResults = self.listOfUserSets;
+    }
+}
+
 #pragma mark UIAlertViewDelegate methods
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
@@ -270,7 +297,7 @@
     [self.startGameButton setEnabled:YES];
     self.startGameButton.backgroundColor = BUTTON_ENABLED_COLOR;
     
-    self.selectedSetForGame = self.listOfUserSets[[indexPath item]];
+    self.selectedSetForGame = self.filteredResults[[indexPath item]];
 }
 
 #pragma mark UICollectionViewDataSource delegate methods
@@ -279,7 +306,7 @@
 {
     UICollectionViewCell* customCell = [collectionView dequeueReusableCellWithReuseIdentifier:@"CustomCell"
                                                                                  forIndexPath:indexPath];
-    FlashSetInfoAttributes* requiredSet = self.listOfUserSets[[indexPath item]];
+    FlashSetInfoAttributes* requiredSet = self.filteredResults[[indexPath item]];
     
     FlashSetSummary* myCell = (FlashSetSummary*)customCell;
     [myCell setDataSource:requiredSet];
@@ -288,7 +315,7 @@
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return [self.listOfUserSets count];
+    return [self.filteredResults count];
 }
 
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
