@@ -27,7 +27,6 @@
 
 -(id)initWithCoder:(NSCoder *)aDecoder
 {
-    NSLog(@"Is this even called");
     if (self = [super initWithCoder:aDecoder]) {
         self.layer.cornerRadius = 4;
         self.titleLabel.font = REGULAR_BUTTON_FONT;
@@ -39,6 +38,7 @@
         [self addTarget:self action:@selector(buttonPressed) forControlEvents:UIControlEventTouchDown];
         [self addTarget:self action:@selector(buttonReleased) forControlEvents:UIControlEventTouchUpInside];
         [self addTarget:self action:@selector(buttonReleased) forControlEvents:UIControlEventTouchUpOutside];
+        [self setAccessibilityIdentifier:DEFAULT_LABEL];
         
         [self refreshButtonText];
     }
@@ -50,8 +50,10 @@
     UserInfoAttributes* activeUser = [[UserInfoLogic singleton] getActiveUser];
     if (activeUser) {
         [self setTitle:activeUser.userId forState:UIControlStateNormal];
+        [self setAccessibilityIdentifier:activeUser.userId];
     } else {
         [self setTitle:DEFAULT_LABEL forState:UIControlStateNormal];
+        [self setAccessibilityIdentifier:DEFAULT_LABEL];
     }
 }
 

@@ -52,6 +52,7 @@
     
     
     [self.setName setText: backingData.title];
+    [self.setName setAccessibilityIdentifier:backingData.title];
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setTimeStyle:NSDateFormatterNoStyle];
@@ -64,6 +65,7 @@
     
     NSString* lastUpdatedString = [NSString stringWithFormat:LAST_UPDATED_LABEL_TEXT,dateString];
     [self.lastUpdatedText setText:lastUpdatedString];
+    [self.lastUpdatedText setAccessibilityIdentifier:lastUpdatedString];
     
     //Get the number of cards in the set
     NSNumber* numberOfItemsInSet = @([[[FlashSetLogic singleton] getAllItemsInSet:backingData.id] count]);
@@ -74,6 +76,7 @@
         displayText = [NSString stringWithFormat:@"%@ cards",numberOfItemsInSet];
     }
     [self.numOfCards setText:displayText];
+    [self.numOfCards setAccessibilityIdentifier:displayText];
 }
 /*
 // Only override drawRect: if you perform custom drawing.
