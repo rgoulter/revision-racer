@@ -1,10 +1,10 @@
 #import "asserts.js"
 
-function navigateToDesiredPage() {
+test(function navigateToDesiredPage() {
 	target.frontMostApp().mainWindow().buttons()["newGameButton"].tap();
-}
+});
 
-function testViewControllerContent() {
+testOnlyIfLoggedIn(function testViewControllerContent() {
 	
 	//Check if the user is already logged in
 	buttonList["Sign In"].logElementTree();
@@ -32,59 +32,46 @@ function testViewControllerContent() {
 	var collectionViewStatus = window.staticTexts()["collectionViewStatus"];
 	assertTrue(collectionViewStatus.isValid(), "Set collection view present on screen");
 	
-	if(isUserLoggedIn) {
-		target.frontMostApp().mainWindow().logElementTree();
-		//See if the user has existing sets, none should be selected
-		//If no sets are present, then background label should present something
-		UIALogger.logMessage("Existing user logged in");
-		var setCells = setCollectionView.cells();
-		var totalNumberOfCells = setCells.length;
-		
-		if(setCells.length > 0) {
-			//Probably check properties of any one cell
-			UIALogger.logMessage("Testing when user has multiple set items");
+	var setCells = setCollectionView.cells();
+	var totalNumberOfCells = setCells.length;
+	
+	if(setCells.length > 0) {
+		//Probably check properties of any one cell
+		UIALogger.logMessage("Testing when user has multiple set items");
 
-			//Verify enable of some buttons when a set is selected
-			setCells[0].tap();
-			
-			target.pushTimeout(10);
-			previewButton.isVisible();
-			target.popTimeout();
-			assertTrue(previewButton.isEnabled(), "Preview button now enabled on screen");
-			assertTrue(updateButton.isEnabled(), "Update button now enabled on screen");
-			assertTrue(startGameButton.isEnabled(), "Start game button now enabled on screen");
-			
-			//Verify correct functioning of the search bar
-			
-			var setSearchBar = window.searchBars()[0];
-			
-			//Verify positive searches
-			//Test for substring
-			var positiveSearchResult = setCells[0].name();
-			setSearchBar.setValue(positiveSearchResult);
-			
-			assertTrue(setCollectionView.cells().length >= 1, "Positive search works for complete string");
-			
-			//Verify empty string search
-			
-			setSearchBar.setValue("");
-			assertTrue(setCollectionView.cells().length == totalNumberOfCells, "Positive search works for empty string");
-			
-			
-			//Verify negative searches
-			
-			var negativeSearchResult = "abcdefghijk";
-			setSearchBar.setValue(negativeSearchResult);
-			assertTrue(setCollectionView.cells().length == 0, "Negative search works for complete string");
-		}
+		//Verify enable of some buttons when a set is selected
+		setCells[0].tap();
 		
-	} else {
-		throw "Start the script with the user logged in to Quizlet";
+		target.pushTimeout(10);
+		previewButton.isVisible();
+		target.popTimeout();
+		assertTrue(previewButton.isEnabled(), "Preview button now enabled on screen");
+		assertTrue(updateButton.isEnabled(), "Update button now enabled on screen");
+		assertTrue(startGameButton.isEnabled(), "Start game button now enabled on screen");
+		
+		//Verify correct functioning of the search bar
+		
+		var setSearchBar = window.searchBars()[0];
+		
+		//Verify positive searches
+		//Test for substring
+		var positiveSearchResult = setCells[0].name();
+		setSearchBar.setValue(positiveSearchResult);
+		
+		assertTrue(setCollectionView.cells().length >= 1, "Positive search works for complete string");
+		
+		//Verify empty string search
+		
+		setSearchBar.setValue("");
+		assertTrue(setCollectionView.cells().length == totalNumberOfCells, "Positive search works for empty string");
+		
+		
+		//Verify negative searches
+		
+		var negativeSearchResult = "abcdefghijk";
+		setSearchBar.setValue(negativeSearchResult);
+		assertTrue(setCollectionView.cells().length == 0, "Negative search works for complete string");
 	}
-}
+});
 
-//To test the following
-
-navigateToDesiredPage();
-testViewControllerContent();
 

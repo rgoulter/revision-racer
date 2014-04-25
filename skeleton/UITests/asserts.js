@@ -32,7 +32,21 @@ function assertNotEquals(expected, actual) {
 }
 
 function waitForObject(object) {
-    target.pushTimeout(15);
+    target.pushTimeout(20);
     object.isVisible();
     target.popTimeout();
+}
+
+function test (functionToTest) {
+    functionToTest();
+}
+
+function testOnlyIfLoggedIn(functionToTest) {
+    var isUserLoggedIn = !buttonList["Sign In"].isValid();
+
+    if (isUserLoggedIn) {
+        functionToTest();
+    } else { 
+        throw "Start the script with the user logged in to Quizlet";
+    }
 }

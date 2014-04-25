@@ -1,12 +1,12 @@
 #import "asserts.js"
 
-function navigateToDesiredPage() {
+test(function navigateToDesiredPage() {
 	target.frontMostApp().mainWindow().buttons()["newGameButton"].tap();
 	
 	target.frontMostApp().mainWindow().logElementTree();
-}
+});
 
-function testSegueToPreviewPage() {
+testOnlyIfLoggedIn(function testSegueToPreviewPage() {
 
 	var cellToSelect = target.frontMostApp().mainWindow().collectionViews()[0].cells()[0];
 	
@@ -18,9 +18,9 @@ function testSegueToPreviewPage() {
 
 	buttonList["Preview"].tap();
 	target.delay(10);
-}
+});
 
-function testPreviewPageContent() {
+test(function testPreviewPageContent() {
 
 	var currentWindow = target.frontMostApp().mainWindow();
 
@@ -85,8 +85,4 @@ function testPreviewPageContent() {
 	waitForObject(actualDefinition);
 
 	assertEquals(actualDefinition.name(), searchTermText);
-}
-
-navigateToDesiredPage();
-testSegueToPreviewPage();
-testPreviewPageContent();
+});
