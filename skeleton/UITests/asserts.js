@@ -30,3 +30,9 @@ function assertNotEquals(expected, actual) {
 		UIALogger.logFail("expected = [" + expected + "], actual = ["+ actual +"]"); 
 	}
 }
+
+function waitForObject(object) {
+    target.pushTimeout(15);
+    object.isVisible();
+    target.popTimeout();
+}
