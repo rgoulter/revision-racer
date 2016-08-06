@@ -11,7 +11,7 @@
 @interface GameAnimationState : NSObject
 
 @property (nonatomic, readonly) NSTimeInterval timeToLive; // Unit: seconds.
-@property (nonatomic, readonly) NSString *description;
+@property (nonatomic, readonly) NSString *qnDescription;
 @property (nonatomic, readonly) void (^animationOverCallback)();
 
 // For generic callback-type animation states.

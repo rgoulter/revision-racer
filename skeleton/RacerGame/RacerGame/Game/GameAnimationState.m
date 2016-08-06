@@ -13,14 +13,14 @@
 
 // For generic callback-type animation states.
 - (id)initWithDuration:(NSTimeInterval)ttl
-        andDescription:(NSString*)description
+        andDescription:(NSString*)descr
            andCallback:(void (^)())f
 {
     self = [super init];
     
     if (self) {
         _timeToLive = ttl;
-        _description = description;
+        _qnDescription = descr;
         _animationOverCallback = f;
     }
     
