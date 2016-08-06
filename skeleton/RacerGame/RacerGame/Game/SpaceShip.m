@@ -237,7 +237,7 @@
     _rotZ += _rotDZ * timeSinceLastUpdate;
     if (_rotZ > maxRotZ) { _rotZ = maxRotZ; _rotDZ *= -1; }
     if (_rotZ < -maxRotZ) { _rotZ = -maxRotZ; _rotDZ *= -1; }
-    if (abs(_rotDZ) < minRotDZ) { _rotDZ = 0; _rotZ = 0; }
+    if (fabs(_rotDZ) < minRotDZ) { _rotDZ = 0; _rotZ = 0; }
     _rotDZ *= (1 - decayPerSecond * timeSinceLastUpdate);
     
     [_afterburner tick:timeSinceLastUpdate];
