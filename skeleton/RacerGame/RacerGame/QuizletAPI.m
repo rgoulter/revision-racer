@@ -42,6 +42,9 @@
         
         NSURLConnection *authConnection = [[NSURLConnection alloc] initWithRequest:authRequest delegate:self startImmediately:YES];
         
+        if (authConnection == nil) {
+            // something went wrong
+        }
     }
 }
 
