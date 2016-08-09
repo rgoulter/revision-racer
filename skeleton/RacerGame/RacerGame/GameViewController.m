@@ -63,6 +63,9 @@
 @synthesize context;
 @synthesize effect;
 
+// Implemented in +MCQ.m extension.
+@dynamic answerGenerationContext;
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
