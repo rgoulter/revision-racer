@@ -17,8 +17,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" image="CS3217_background1.png" translatesAutoresizingMaskIntoConstraints="NO" id="tyQ-Dh-5oc">
-                                <rect key="frame" x="0.0" y="0.0" width="1024" height="786"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="CS3217_background1.png" translatesAutoresizingMaskIntoConstraints="NO" id="TAs-Xd-A3A">
+                                <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5t1-yi-8xY">
                                 <rect key="frame" x="620" y="576" width="384" height="172"/>
@@ -39,10 +39,6 @@
                             </label>
                         </subviews>
                         <color key="backgroundColor" name="alternateSelectedControlTextColor" catalog="System" colorSpace="catalog"/>
-                        <constraints>
-                            <constraint firstItem="tyQ-Dh-5oc" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="E1Q-cO-hIC"/>
-                            <constraint firstAttribute="trailing" secondItem="tyQ-Dh-5oc" secondAttribute="trailing" id="NGB-k2-IYa"/>
-                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="AxR-Ss-cGQ"/>
                     <connections>
@@ -541,57 +537,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0fX-o7-5ey" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1059" y="14"/>
-        </scene>
-        <!--Collection View Controller-->
-        <scene sceneID="HQ3-lx-J1w">
-            <objects>
-                <collectionViewController autoresizesArchivedViewToFullSize="NO" id="lOy-fN-gMx" sceneMemberID="viewController">
-                    <collectionView key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" id="fGP-5F-yv4">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="3aX-l1-pcl">
-                            <size key="itemSize" width="50" height="50"/>
-                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                        </collectionViewFlowLayout>
-                        <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="KSI-x3-sXk">
-                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                </view>
-                            </collectionViewCell>
-                        </cells>
-                        <connections>
-                            <outlet property="dataSource" destination="lOy-fN-gMx" id="zle-yu-Zpl"/>
-                            <outlet property="delegate" destination="lOy-fN-gMx" id="MUe-2w-p4O"/>
-                        </connections>
-                    </collectionView>
-                </collectionViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="72G-pd-OkV" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="735" y="1762"/>
-        </scene>
-        <!--View Controller-->
-        <scene sceneID="7Nm-h5-Mhq">
-            <objects>
-                <viewController id="kzn-LC-dRd" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="Gee-gf-Qpr"/>
-                        <viewControllerLayoutGuide type="bottom" id="qLq-yn-g3H"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="ldl-30-NT1">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="P71-Ah-jkh" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
         </scene>
     </scenes>
     <resources>
