@@ -149,7 +149,7 @@
 - (ActivityModal *)statusModal
 {
     if (!_statusModal) {
-        _statusModal = [[ActivityModal alloc] initWithFrame:self.view.frame];
+        _statusModal = [ActivityModal loadWithFrame:self.view.frame];
     }
     
     return _statusModal;

@@ -10,6 +10,8 @@
 
 @interface ActivityModal : UIView
 
++(id)loadWithFrame:(CGRect)frame;
+
 -(void)setText:(NSString *)text;
 
 @end

@@ -18,19 +18,24 @@
 
 @implementation ActivityModal
 
-- (id)initWithFrame:(CGRect)frame
++(id)loadWithFrame:(CGRect)frame
 {
-    self = [[[NSBundle mainBundle] loadNibNamed:@"ActivityModal"
-                                          owner:nil
-                                        options:nil] lastObject];
-    if (self) {
+    // cf.
+    // http://stackoverflow.com/questions/13534502/ios-loadnibnamed-confusion-what-is-best-practice
+    // This code shouldn't be in 'initWithFrame', but +something.
+    ActivityModal *activityModal = [[[NSBundle mainBundle] loadNibNamed:@"ActivityModal"
+                                                                  owner:nil
+                                                                options:nil] lastObject];
+
+    if (activityModal) {
         // Initialization code
         CGPoint center = CGPointMake(frame.size.width/2, frame.size.height/2);
-        self.center = center;
-        self.visibleRect.layer.cornerRadius = 10.0;
-        [self.indicator startAnimating];
+        activityModal.center = center;
+        activityModal.visibleRect.layer.cornerRadius = 10.0;
+        [activityModal.indicator startAnimating];
     }
-    return self;
+
+    return activityModal;
 }
 
 -(void)awakeFromNib
